@@ -11,6 +11,7 @@ $RootFolder=$PSScriptRoot
 $Subcription=Read-Host "Please enter Subscription Name"
 $ResourceGroupName=Read-Host "Please enter a new Resource Group Name"
 $AADUser=Read-Host "Please enter ADD User Name (xxxx@company.xxxxx)"
+#$ADGroup=Read-Host "Please enter AD Group Name"
 $ServicePrincipalName=Read-Host "Please enter Service Principal Name for Azure Function"
 $ServicePrincipalNameWeb=Read-Host "Please enter Service Principal Name for Azure Web App"
 $Location=Read-Host "Please enter Azure DC Location"
@@ -84,6 +85,13 @@ $VMOnPIR = $deploymentParameters.parameters.'adf-ir-onp-vm-name'.value
 $WebApp = $deployment.properties.outputs.stringWebApp.value
 
 #############################################################
+# Create Security Group for Web App
+#############################################################
+$AADUserId = az ad user show --id $AADUser --query objectId --out tsv
+#az ad group create --display-name $ADGroup --mail-nickname $ADGroup
+#az ad group member check --group $ADGroup --member-id $AADUserId
+
+#############################################################
 # MSI Access
 #############################################################
 log("Creating MSI Access")
@@ -93,7 +101,6 @@ az webapp identity assign --resource-group $ResourceGroupName --name $AzureFunct
 az webapp identity assign --resource-group $ResourceGroupName --name $WebApp
 
 # Add AAD Group/User to Azure SQL Logical Server
-$AADUserId = az ad user show --id $AADUser --query objectId --out tsv
 az sql server ad-admin create --display-name $AADUser --object-id $AADUserId --resource-group $ResourceGroupName --server $SQLServer --subscription $SubcriptionId
 
 #Add Ip to SQL Firewall
@@ -285,9 +292,9 @@ New-AzureADServiceAppRoleAssignment -ObjectId $managedIdentityObjectId `
 log("Deploying Azure Data Factory Artifacts")
 
 # Create ADF Diagnostic Settings
-$logsSetting = "[{'category':'ActivityRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': false}},{'category':'PipelineRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': false}},{'category':'TriggerRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': false}}]".Replace("'",'\"')
-$metricsSetting = "[{'category':'AllMetrics','enabled':true,'retentionPolicy':{'days': 30,'enabled': false}}]".Replace("'",'\"')
-az monitor diagnostic-settings create --name ADF-Diagnostics --resource /subscriptions/$SubcriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.DataFactory/factories/$DataFactoryName --logs $logsSetting --metrics $metricsSetting --storage-account /subscriptions/$SubcriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.Storage/storageAccounts/$LogStorageAccount --workspace /subscriptions/$SubcriptionId/resourcegroups/$ResourceGroupName/providers/microsoft.operationalinsights/workspaces/$LogAnalytics
+$logsSetting = "[{'category':'ActivityRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': true}},{'category':'PipelineRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': true}},{'category':'TriggerRuns','enabled':true,'retentionPolicy':{'days': 30,'enabled': true}}]".Replace("'",'\"')
+$metricsSetting = "[{'category':'AllMetrics','enabled':true,'retentionPolicy':{'days': 30,'enabled': true}}]".Replace("'",'\"')
+az monitor diagnostic-settings create --name ADF-Diagnostics --export-to-resource-specific true --resource /subscriptions/$SubcriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.DataFactory/factories/$DataFactoryName --logs $logsSetting --metrics $metricsSetting --storage-account /subscriptions/$SubcriptionId/resourceGroups/$ResourceGroupName/providers/Microsoft.Storage/storageAccounts/$LogStorageAccount --workspace /subscriptions/$SubcriptionId/resourcegroups/$ResourceGroupName/providers/microsoft.operationalinsights/workspaces/$LogAnalytics
 
 $dfbase = "$RootFolder/../solution/DataFactory"
 

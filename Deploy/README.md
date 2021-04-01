@@ -8,14 +8,14 @@ The following Azure services will be deployed in your subscription:
 
 Name                        | Type | Pricing Tier | Pricing Info |
 ----------------------------|------|--------------|--------------|
-ADFIR-*suffix*	                | Virtual machine | Standard B4ms (4 vcpus, 16 GiB memory) | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
+ADFIR-*suffix*	                | Virtual machine | Standard D4s v3 (4 vcpus, 16 GiB memory) | https://azure.microsoft.com/en-us/pricing/details/virtual-machines/windows/
 ADFIR-*suffix*OsDisk            | Disk | E10 | https://azure.microsoft.com/en-us/pricing/details/managed-disks/
 ADFIR-*suffix*NetInt            | Network interface ||
 ads-kv-*suffix*                 | Azure KeyVault| Standard | https://azure.microsoft.com/en-au/pricing/details/key-vault/
 adsgofast-srv-*suffix*          | SQL server || 
 adsgofast                       | Azure SQL Database (Framework Metadata) | S2 DTU50 | https://azure.microsoft.com/en-us/pricing/details/sql-database/single/
 AdventureWorksLT                | Azure SQL Database (Sample DB used for testing) | S2 DTU50 | https://azure.microsoft.com/en-us/pricing/details/sql-database/single/
-Staging                         | Azure SQL Database (Staging ODS) | S2 DTU50 | https://azure.microsoft.com/en-us/pricing/details/sql-database/single/
+Staging                         | Azure SQL Database (Staging ODS) | S2 DTU100 | https://azure.microsoft.com/en-us/pricing/details/sql-database/single/
 adsgofast-vnet                  | Virtual network || https://azure.microsoft.com/en-us/pricing/details/virtual-network/
 ADSGoFastADF-*suffix*           | Data factory (V2) | Data pipelines | https://azure.microsoft.com/en-us/pricing/details/data-factory/
 appinsights-adsgofast           | Azure Monitor (Application Insights) || https://azure.microsoft.com/en-us/pricing/details/monitor/
