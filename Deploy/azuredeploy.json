@@ -59,7 +59,7 @@
         },
         "adf-ir-vm-size": {
             "type": "string",
-            "defaultValue": "Standard_B2ms",
+            "defaultValue": "Standard_D4s_v3",
             "metadata": {
                 "description": "The size of the VM"
             }
@@ -750,7 +750,7 @@
             "sku": {
                 "name": "Standard",
                 "tier": "Standard",
-                "capacity": 50
+                "capacity": 100
             },
             "properties": {
                 "collation": "SQL_Latin1_General_CP1_CI_AS",
