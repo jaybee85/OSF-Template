@@ -200,12 +200,12 @@
                   "options": {
                     "infoText": "",
                     "inputAttributes": {
-                      "placeholder": "eg. /subscriptions/92f988bf-86f1-41af-91ab-2d7cd011db48/resourceGroups/AdsTest"
+                      "placeholder": "eg. /subscriptions/92f988bf-86f1-41af-91ab-2d7cd011db48/resourceGroups/AdsTestNew"
                     }
                   },
                   "default": "",
                   "examples": [
-                    "/subscriptions/92f988bf-86f1-41af-91ab-2d7cd011db48/resourceGroups/AdsTest"
+                    "/subscriptions/92f988bf-86f1-41af-91ab-2d7cd011db48/resourceGroups/AdsTestNew"
                   ]
                 },
                 "Subscription": {
@@ -274,12 +274,11 @@
                   "type": "string",
                   "title": "Resource Group Name",
                   "options": {
-                    "infoText": "Name of the Resource Group to use for deployment."
-                  },
-                  "default": "AdsTest",
-                  "examples": [
-                    "AdsTest"
-                  ]
+                    "infoText": "Name of the Resource Group to use for deployment.",
+                    "inputAttributes": {
+                      "placeholder": "eg. AdsTest"
+                    }
+                  }                  
                 },
                 "AADUser": {
                   "$id": "#/properties/AdsOpts/properties/CD/properties/ResourceGroup/properties/AADUser",

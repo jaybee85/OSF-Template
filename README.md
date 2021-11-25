@@ -70,15 +70,23 @@ node server.js
 
 ![Form](./documentation/images/DeploymentForm.png)
 
->- [ ] Next return to the terminal window and press "Ctrl+c" twice to stop your Node application. Next type the following commands:
+>- [ ] Next return to the terminal window and press "Ctrl+c" twice to stop your Node application. Next log in to Azure and check that you are using the right subscription by using the following commands:
+
+```powershell
+pwsh
+az login #Logs you in to your Azure environment 
+az account show
+```
+>- [ ] Next return to the terminal window and use the following commands to access the directory which contains the deployment scripts and list its contents:
+
 ```powershell
 pwsh
 cd ../../workflows/
 ls
 ```
+
 >- [ ] You will now see a listing of powershell (*.ps1) files. These are the scripts that drive the deployment. To deploy the solution run the commands below in your terminal window. **Note** it is recommended that you run these one at a time and check output during each command execution for errors. 
 ```powershell
-az login #Logs you in to your Azure environment
 ./LocalDevOnly_EnvironmentSetUp.ps1 #Loads your environment settings
 ./CI_1a_BuildCode.ps1 #Builds the source code binaries 
 ./CD_0a_CreateServicePrincipals_AAD_Elevated.ps1 #Creates your Azure resource group and application registrations

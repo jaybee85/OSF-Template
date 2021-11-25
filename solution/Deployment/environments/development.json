@@ -12,12 +12,12 @@
       "EnableConfigure": true,
       "ResourceGroup": {
         "Enable": true,
-        "Id": "/subscriptions/035a1364-f00d-48e2-b582-4fe125905ee3/resourceGroups/AdsTest",
+        "Id": "/subscriptions/035a1364-f00d-48e2-b582-4fe125905ee3/resourceGroups/AdsTestNew",
         "Subscription": "Jorampon Internal Consumption",
         "Domain": "microsoft.com",
         "TenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47",
         "Location": "australiaeast",
-        "Name": "AdsTest",
+        "Name": "AdsTestNew",
         "AADUser": "jorampon@microsoft.com",
         "Hash": "DummyValueToBeReplacedAtRuntime"
       },
@@ -25,19 +25,19 @@
         "DeploymentSP": {
           "Enable": true,
           "Name": "AdsGoFastDeployer",
-          "ApplyNamePostFix": false
+          "ApplyNamePostFix": true
         },
         "WebAppAuthenticationSP": {
           "Enable": true,
           "Name": "AdsGFWebAuthSP",
           "ApplyNamePostFix": true,
-          "ClientId": "bf09a940-0d93-4a6c-8db4-49a03edfe58a"
+          "ClientId": "a6f5f6bf-25da-43c3-863e-df3588db7d56"
         },
         "FunctionAppAuthenticationSP": {
           "Enable": true,
           "Name": "AdsGFFuncAppAuthSP",
           "ApplyNamePostFix": true,
-          "ClientId": null
+          "ClientId": "584f2d03-a7e3-4fe8-9627-48f935697a68"
         }
       },
       "FolderPaths": {
