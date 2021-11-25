@@ -35,9 +35,9 @@ $body = '
     }
 }' | ConvertFrom-Json
 $body = ($body | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
-$uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/integrationRuntimes/$env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Name" + '?api-version=2018-06-01'
-Write-Host "Creating IR: $env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Name"
-$rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body $body --uri-parameters 'api-version=2018-06-01'
+$uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/integrationRuntimes/$env:AdsOpts_CD_Services_DataFactory_AzVnetIr_Name" + '?&api-version=2018-06-01'
+Write-Host "Creating IR: $env:AdsOpts_CD_Services_DataFactory_AzVnetIr_Name"
+$rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body $body 
 
 #On Prem - Note we are using a managed VNET IR to mimic on prem
 # $body = '
@@ -72,12 +72,12 @@ if (([Environment]::GetEnvironmentVariable("AdsOpts_CD_Services_DataFactory_OnPr
     }' | ConvertFrom-Json
 
     $body = ($body | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
-    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/integrationRuntimes/$env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Name" + '?api-version=2018-06-01'
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/integrationRuntimes/$env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Name" + '?&api-version=2018-06-01'
     Write-Host "Creating IR: $env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Name"
-    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body $body --uri-parameters 'api-version=2018-06-01'
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body $body 
 }
 
-$IRA_PostFix = "_" + $env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Name
+$IRA_PostFix = "_" + $env:AdsOpts_CD_Services_DataFactory_AzVnetIr_Name
 $IRB_PostFix = "_" + $env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Name
 
 $dfbase = "$env:AdsOpts_CD_FolderPaths_PublishUnZip/datafactory"
@@ -110,24 +110,14 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host ("LinkedService:" + $lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2LinkedService -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -force
-        $body = ($jsonobject | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/linkedservices/$name" 
-        write-host $uri
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
+    write-host ("LinkedService:" + $lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2LinkedService -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -force
+    $body = ($jsonobject | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/linkedservices/$name" 
+    write-host $uri
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
 
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow
-    }
+
 }
 
 #Data Factory - Dataset
@@ -146,22 +136,13 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true) -and ($lsName.Contains($IRB_PostFix) -eq $false)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host ("Dataset: " + $fileName) -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2Dataset -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
-        $body = ($jsonobject | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/datasets/$name" 
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow
-    }
+    write-host ("Dataset: " + $fileName) -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2Dataset -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
+    $body = ($jsonobject | ConvertTo-Json -compress  -Depth 10 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/datasets/$name" 
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
+    
+
 }
 
 
@@ -173,7 +154,7 @@ Set-Location "..\bin\publish\unzipped\datafactory\pipeline"
 #Data Factory - Pipelines
 Write-Host "Starting Pipelines" 
 Write-Host "Uploading Level 0 Dependencies" 
-Get-ChildItem "./" -Recurse -Include "AZ_Function*.json", "OnP_SQL_Watermark_*.json", "AZ_SQL_Watermark_*.json" | 
+Get-ChildItem "./" -Recurse -Include "AZ_Function*.json", "AZ_SQL_Watermark_*.json,  SH_SQL_Watermark_*.json" | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -188,26 +169,17 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true) -and ($lsName.Contains($IRB_PostFix) -eq $false)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -force
-        #$body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow
-    }
+
+    write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -force
+    #$body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
+
 }
 
 Write-Host "Uploading Level 1 Dependencies" 
-Get-ChildItem "./" -Recurse -Include "az_sql_full_load_*.json", "sh_sql_full_load_*.json", "onp_sql_full_load_*.json", "sh_sql_watermark_*.json" | 
+Get-ChildItem "./" -Recurse -Include "AZ_SQL_Full_Load_*.json", "SH_SQL_Full_Load_*.json" | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -222,22 +194,12 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true) -and ($lsName.Contains($IRB_PostFix) -eq $false)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
-        $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow
-    }
+    write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
+    $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
+
 }
 Write-Host "Uploading Level 3 Dependencies - Chunks" 
 Get-ChildItem "./" -Filter *chunk*.json | 
@@ -255,26 +217,16 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"    
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true) -and ($lsName.Contains($IRB_PostFix) -eq $false)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
-        $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow 
-    }
+    write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
+    $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
+    
 }
 
 Write-Host "Uploading Level 4 Dependencies" 
-Get-ChildItem "./" -Exclude "FileForUpload.json", "Master*.json","AZ_Function*.json", "OnP_SQL_Watermark_*.json", "AZ_SQL_Watermark_*.json", "*chunk*.json", "az_sql_full_load*.json", "sh_sql_full_load*.json", "onp_sql_full_load*.json", "sh_sql_watermark*.json"  | 
+Get-ChildItem "./" -Exclude "FileForUpload.json", "Master*.json","AZ_Function*.json", "OnP_SQL_Watermark_*.json", "AZ_SQL_Watermark_*.json", "*Chunk*.json", "AZ_SQL_Full_Load*.json", "SH_SQL_Full_Load*.json", "OnP_SQL_Full_Load*.json", "SH_SQL_Watermark*.json"  | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -289,55 +241,19 @@ Foreach-Object {
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
 
-    if  (
-            (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($lsName.Contains($IRB_PostFix) -eq $true)) -or
-            (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($lsName.Contains($IRA_PostFix) -eq $true) -and ($lsName.Contains($IRB_PostFix) -eq $false)) -or
-            (($lsName.Contains($IRA_PostFix) -eq $false) -and ($lsName.Contains($IRB_PostFix) -eq $false))
-        )
-    {
-        write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
-        #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
-        $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
-        $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
-        $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-    }
-    else 
-    {
-        Write-Warning "Skipped: $lsName" -ForegroundColor Black -BackgroundColor Yellow
-    }
+    write-host $fileName -ForegroundColor Yellow -BackgroundColor DarkGreen
+    #Set-AzDataFactoryV2Pipeline -DataFactoryName $env:AdsOpts_CD_Services_DataFactory_Name -ResourceGroupName $env:AdsOpts_CD_ResourceGroup_Name -Name $lsName -DefinitionFile $fileName -Force
+    $body = ($jsonobject | ConvertTo-Json -compress  -Depth 100 | Out-String).Replace('"','\"')
+    $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/pipelines/$name" 
+    $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
 }
 
 Write-Host "Processing Master" 
 Get-ChildItem "./" -Filter Master*.json | 
 Foreach-Object {
-    #filter out any undelpoyed pipelines
-    $jsonobject = $_ | Get-Content | ConvertFrom-Json
-    $name = $jsonobject.name
-    $cases = $jsonobject.properties.activities[0].typeProperties.cases
-    $casesfiltered = @()
-    foreach ($item in $cases) {
-        if  (
-                (($env:AdsOpts_CD_Services_DataFactory_OnPremVnetIr_Enable -eq "True") -and ($item.Value.Contains($IRB_PostFix) -eq $true)) -or
-                (($env:AdsOpts_CD_Services_DataFactory_AzVnetIR_Enable -eq "True") -and ($item.Value.Contains($IRA_PostFix) -eq $true) -and ($item.Value.Contains($IRB_PostFix) -eq $false)) -or
-                (($item.Value.Contains($IRA_PostFix) -eq $false) -and ($item.Value.Contains($IRB_PostFix) -eq $false))
-        )
-        {
-            #Exclude pipelines that require Self Hosted IRs (eg. Excel ) TODO - make this optional
-            if(($item.Value.Contains('Excel') -eq $false))
-            {
-                $casesfiltered = $casesfiltered + $item
-            }
-        }
-        else 
-        {
-            Write-Warning "Skipped: $item.Value" -ForegroundColor Black -BackgroundColor Yellow
-        }
-    }
-    $jsonobject.properties.activities[0].typeProperties.cases = $casesfiltered
     
-    #Persist File Back
-    $jsonobject | ConvertTo-Json  -Depth 100 | set-content $_
-
+    #filter out any undelpoyed pipelines
+ 
     $lsName = $_.BaseName 
     $fileName = $_.FullName
 
