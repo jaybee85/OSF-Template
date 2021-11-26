@@ -154,7 +154,7 @@ Set-Location "..\bin\publish\unzipped\datafactory\pipeline"
 #Data Factory - Pipelines
 Write-Host "Starting Pipelines" 
 Write-Host "Uploading Level 0 Dependencies" 
-Get-ChildItem "./" -Recurse -Include "AZ_Function*.json", "AZ_SQL_Watermark_*.json,  SH_SQL_Watermark_*.json" | 
+Get-ChildItem "./" -Recurse -Include "AZ_Function*.json", "AZ_SQL_Watermark_IR*.json",  "SH_SQL_Watermark_IR*.json" | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -179,7 +179,7 @@ Foreach-Object {
 }
 
 Write-Host "Uploading Level 1 Dependencies" 
-Get-ChildItem "./" -Recurse -Include "AZ_SQL_Full_Load_*.json", "SH_SQL_Full_Load_*.json" | 
+Get-ChildItem "./" -Recurse -Include "AZ_SQL_Full_Load_IR*.json", "SH_SQL_Full_Load_IR*.json" | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -226,7 +226,7 @@ Foreach-Object {
 }
 
 Write-Host "Uploading Level 4 Dependencies" 
-Get-ChildItem "./" -Exclude "FileForUpload.json", "Master*.json","AZ_Function*.json", "OnP_SQL_Watermark_*.json", "AZ_SQL_Watermark_*.json", "*Chunk*.json", "AZ_SQL_Full_Load*.json", "SH_SQL_Full_Load*.json", "OnP_SQL_Full_Load*.json", "SH_SQL_Watermark*.json"  | 
+Get-ChildItem "./" -Exclude "FileForUpload.json", "Master*.json","AZ_Function_Generic.json", "OnP_SQL_Watermark_IR*.json", "AZ_SQL_Watermark_IR*.json", "*Chunk*.json", "AZ_SQL_Full_Load_IR*.json", "SH_SQL_Full_Load_IR*.json", "OnP_SQL_Full_Load_IR*.json", "SH_SQL_Watermark_IR*.json"  | 
 Foreach-Object {
     $lsName = $_.BaseName 
     $fileName = $_.FullName
@@ -251,11 +251,13 @@ Foreach-Object {
 Write-Host "Processing Master" 
 Get-ChildItem "./" -Filter Master*.json | 
 Foreach-Object {
-    
-    #filter out any undelpoyed pipelines
- 
+       
     $lsName = $_.BaseName 
     $fileName = $_.FullName
+
+    #ParseOut the Name Attribute
+    $jsonobject = $_ | Get-Content | ConvertFrom-Json
+    $name = $jsonobject.name
 
     #Make a copy of the file for upload 
     Copy-Item  -Path $fileName -Destination "FileForUpload.json"
