@@ -47,6 +47,7 @@ namespace WebApplication.Models
                 entity.HasOne<ScheduleMaster>(tm => tm.ScheduleMaster).WithMany(sm => sm.TaskMasters).HasForeignKey(tm => tm.ScheduleMasterId) ;
                 entity.HasOne<SourceAndTargetSystems>(tm => tm.SourceSystem).WithMany(tt => tt.TaskMastersSource).HasForeignKey(tm => tm.SourceSystemId);
                 entity.HasOne<SourceAndTargetSystems>(tm => tm.TargetSystem).WithMany(tt => tt.TaskMastersTarget).HasForeignKey(tm => tm.TargetSystemId);
+                entity.HasOne<DataFactory>(tm => tm.DataFactory).WithMany(tt => tt.TaskMasters).HasForeignKey(tm => tm.DataFactoryId);
                 entity.Property(p => p.TaskDatafactoryIr).IsRequired();
             });
 

@@ -116,6 +116,7 @@
                             <div class="col">
                                 <label class="control-label">Data Factory IR</label>
                                 <select id="TaskDatafactoryIrSelect"></select>
+                                @Html.HiddenFor(x => x.TaskDatafactoryIr)
                             </div>
                         </div>
                     </div>
@@ -152,7 +153,7 @@
                         </div>
                         <div class="form-group" style="display:none">
                             <label asp-for="TaskDatafactoryIr" class="control-label"></label>
-                            <input asp-for="TaskDatafactoryIr" class="form-control" />
+                            <select asp-for="TaskDatafactoryIr" class="form-control" asp-items="ViewBag.TaskDatafactoryIr"></select>
                             <span asp-validation-for="TaskDatafactoryIr" class="text-danger"></span>
                         </div>
 
@@ -162,8 +163,8 @@
                             <span asp-validation-for="DependencyChainTag" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="DataFactoryId" class="control-label"></label>
-                            <input asp-for="DataFactoryId" class="form-control" />
+                            <label asp-for="DataFactoryId" class="control-label"></label>                            
+                            <select asp-for="DataFactoryId" class="form-control" asp-items="ViewBag.DataFactoryId"></select>
                             <span asp-validation-for="DataFactoryId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -219,17 +220,21 @@
 
                 $("#TaskMasterJsonSourceType").change(function () {                    
                     SetSourceSubType($(':selected', $('#TaskMasterJsonSourceType')).val());
-                    EnterStep4b();
+                    //EnterStep4b();
+                    EnterStep4a();
                 }
                 ); 
 
                 $("#TaskMasterJsonTargetType").change(function () {
                     SetTargetSubType($(':selected', $('#TaskMasterJsonTargetType')).val());
-                    CreateJsonEditor();
+                    //CreateJsonEditor();
+                    EnterStep4a();
                 }
                 ); 
                 
-
+                $("#TaskDatafactoryIrSelect").change(function () {
+                    EnterStep4a();
+                });
 
                 function GetTaskTypeMappings() {
                     var DataToPost = {};
@@ -285,7 +290,7 @@
 
 
                 function EnterStep2() {
-                
+                   var currentSourceSystemSelectedOption = $(':selected', $('#SourceSystemId'));
                     
                     currentSourceSystemSelectedOption = $(':selected', $('#SourceSystemId'));
                     $('#SourceSystemId option').remove();
@@ -303,7 +308,7 @@
 
                 function EnterStep3() {
                     //Find Selected SourceSystem
-                    var currentSourceSystemSelectedOption=  $(':selected', $('#SourceSystemId'));;
+                    var currentSourceSystemSelectedOption = $(':selected', $('#SourceSystemId'));;
                     $.each(taskTypeMappings.ValidSourceSystems, function (key, value) {
                         if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
                             currentSourceSystemSelectedOption = value;
@@ -319,7 +324,7 @@
                     })
 
                     //Populate Valid Target Systems Select
-                    currentTargetSystemSelectedOption = $(':selected', $('#TargetSystemId'));
+                    var currentTargetSystemSelectedOption = $(':selected', $('#TargetSystemId'));
                     $('#TargetSystemId option').remove();
 
                     $.each(taskTypeMappings.ValidTargetSystems, function (key, value) {
@@ -349,29 +354,31 @@
                         }
                     })
 
-                    var validSourceSubTypes = [];
-                    //FindAll taskTypeMappings that Match Selected Source System Type && Target System Type && Extract Just the SourceType
-                    $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-                        if (value.SourceSystemType === currentSourceSystemSelectedOption.SystemType && value.TargetSystemType === currentTargetSystemSelectedOption.SystemType) {
-                            if (!validSourceSubTypes.includes(value.SourceType)) { validSourceSubTypes.push(value.SourceType); }
-                        }
-                    })
+                if (!currentSourceSystemSelectedOption || !currentTargetSystemSelectedOption)
+                HideJsonEditor("Source or target system is invalid");
 
-                    //Populate Valid Source Sub Types 
-                    currentSourceSubType = GetCurrentlySelectedSourceSubType();
-                    $('#TaskMasterJsonSourceType option').remove();
+                var validSourceSubTypes = taskTypeMappings.TaskTypeMappings
+                    .filter(value => value.SourceSystemType === currentSourceSystemSelectedOption.SystemType && value.TargetSystemType === currentTargetSystemSelectedOption.SystemType)
+                    .map(value => value.SourceType)
+                    .filter((value, index, self) => self.indexOf(value) === index);
 
-                    $.each(validSourceSubTypes, function (key, value) {
-                        var opt = $('<option value="' + value+ '">' + value + '</option>')
-                        if (opt.val() == currentSourceSubType) {
-                            opt.attr('selected', 'selected');
-                        }
-                        $('#TaskMasterJsonSourceType').append(opt);
-                    })
+                //Populate Valid Source Sub Types
+                var currentSourceSubType = GetCurrentlySelectedSourceSubType();
+                $('#TaskMasterJsonSourceType option').remove();
+                if (!validSourceSubTypes.includes(currentSourceSubType))
+                    $('#TaskMasterJsonSourceType').append($('<option value=""></option>'));
 
-                    if ($(':selected', $('#TaskMasterJsonSourceType')).length > 0) {
-                        EnterStep4b();
+                $.each(validSourceSubTypes, function (key, value) {
+                    var opt = $('<option value="' + value + '">' + value + '</option>');
+                    if (opt.val() == currentSourceSubType) {
+                        opt.attr('selected', 'selected');
                     }
+                    $('#TaskMasterJsonSourceType').append(opt);
+                })
+
+                if ($(':selected', $('#TaskMasterJsonSourceType')).val()) {
+                    EnterStep4b();
+                }
                 }
 
                 function EnterStep4b() {
@@ -394,17 +401,16 @@
                     //Update SourceSubType in JSON Object
                     GetTaskMasterJson_Source();
 
-                    var validTargetSubTypes = [];
-                    //FindAll taskTypeMappings that Match Selected Source System Type && Target System Type && SourceSub Type then  Extract Just the SourceType
-                    $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-                        if (value.SourceSystemType === currentSourceSystemSelectedOption.SystemType && value.TargetSystemType === currentTargetSystemSelectedOption.SystemType && value.SourceType === currentSourceSubType) {
-                            if (!validTargetSubTypes.includes(value.TargetType)) { validTargetSubTypes.push(value.TargetType); }
-                        }
-                    })
+                    var validTargetSubTypes = taskTypeMappings.TaskTypeMappings
+                .filter(value => value.SourceSystemType === currentSourceSystemSelectedOption.SystemType && value.TargetSystemType === currentTargetSystemSelectedOption.SystemType && value.SourceType === currentSourceSubType)
+                .map(value => value.TargetType)
+                .filter((value, index, self) => self.indexOf(value) === index);
 
                     //Populate Valid Target Sub Types 
-                    currentTargetSubType = GetCurrentlySelectedTargetSubType();
-                    $('#TaskMasterJsonTargetType option').remove();
+                var currentTargetSubType = GetCurrentlySelectedTargetSubType();
+                $('#TaskMasterJsonTargetType option').remove();
+                if (!validTargetSubTypes.includes(currentTargetSubType))
+                $('#TaskMasterJsonTargetType').append($('<option value=""></option>'));
 
                     $.each(validTargetSubTypes, function (key, value) {
                         var opt = $('<option value="' + value + '">' + value + '</option>')
@@ -414,9 +420,9 @@
                         $('#TaskMasterJsonTargetType').append(opt);
                     })
 
-                    if ($(':selected', $('#TaskMasterJsonTargetType')).length > 0) {
-                        EnterStep4c();
-                    }
+                     if ($(':selected', $('#TaskMasterJsonTargetType')).val()) {
+                EnterStep4c();
+            }
                     
 
                 }
@@ -439,22 +445,22 @@
                     })
 
                     //Populate Valid Target Sub Types 
-                    var TaskDatafactoryIrSelect = GetCurrentlySelectedDatafactoryIr();   
+                    var currentDataFactoryIr = GetCurrentlySelectedDatafactoryIr();
                     $('#TaskDatafactoryIrSelect option').remove();
+                    if (!currentDataFactoryIr)
+                        $('#TaskDatafactoryIrSelect').append($('<option value=""></option>'));
 
                     $.each(validDatafactoryIrs, function (key, value) {
                         var opt = $('<option value="' + value + '">' + value + '</option>')
-                        if (opt.val() == TaskDatafactoryIrSelect) {
+                        if (opt.val() == currentDataFactoryIr) {
                             opt.attr('selected', 'selected');
                         }
                         $('#TaskDatafactoryIrSelect').append(opt);
                     })
 
-                    if ($(':selected', $('#TaskDatafactoryIrSelect')).length > 0) {
+                    if ($(':selected', $('#TaskDatafactoryIrSelect')).val()) {
                         CreateJsonEditor();
                     }
-
-
                 }
 
                 function EnterStep5() {
@@ -464,8 +470,7 @@
                 }
 
 
-                
-
+             
                 function CreateJsonEditor() {                                        
                     var TargetSystemType = GetCurrentlySelectedTargetSystem().SystemType;
                     var SourceSystemType = GetCurrentlySelectedSourceSystem().SystemType;                    
@@ -478,12 +483,23 @@
                     
                     var SelectedTaskTypeMapping;
                     $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-                        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.TargetType === TargetSubType && value.SourceType === SourceSubType && value.TaskDatafactoryIr === DatafactoryIr ) {
+                        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.TargetType === TargetSubType && value.SourceType === SourceSubType && value.TaskDatafactoryIr === DatafactoryIr) {
                             SelectedTaskTypeMapping = value;
                         }
                     })
 
-                    if (SelectedTaskTypeMapping !== undefined) {
+                if (SelectedTaskTypeMapping) {
+                var schema = SelectedTaskTypeMapping.TaskMasterJsonSchema;
+
+                if ($('#editor_holder').children().length > 0) {
+                    editor.destroy();
+                }
+
+                if (!schema) {
+                    schema = `{ \"title\": \"Task Master Json\", \"type\": \"object\" }`;
+                    toastr.warning(`Schema not found -- Task Type Mapping (${SelectedTaskTypeMapping.MappingName}) for Source System ${SelectedTaskTypeMapping.SourceSystemType}.${SourceSubType} -> Target System ${SelectedTaskTypeMapping.TargetSystemType}.${TargetSubType} has not been configured. please contact your Pipeline Administrator`);
+                }
+
                         try {
                             if ($('#editor_holder').children().length > 0) {
                                 editor.destroy();
@@ -492,7 +508,7 @@
                             editor = new JSONEditor(document.getElementById('editor_holder'), {
                                 theme: 'bootstrap4',
                                 iconlib: "fontawesome5",
-                                schema: JSON.parse(SelectedTaskTypeMapping.TaskMasterJsonSchema),
+                                schema: JSON.parse(schema),
                                 startval: JSON.parse($('#TaskMasterJson').val())
                             });
                             $('.je-switcher').parent().addClass("alert-warning");                            
@@ -509,13 +525,10 @@
                         {
                             HideJsonEditor(err);
                         }
-                    }
-                    else {
-                        HideJsonEditor(err);
-                    }
-
-
+                   } else {
+                toastr.warning(`Task Mapping for Target(${TargetSystemType}) and Source(${SourceSystemType}) was not found`);
                 }
+            }
 
                 function HideJsonEditor(err) {
                     toastr.warning("Validation errors are preventing the use of the enahanced editor. " + err, "Enhanced Editor Error");
@@ -544,8 +557,10 @@
                 }
 
                 function GetCurrentlySelectedDatafactoryIr() {
-                    var Selected = $(':selected', $('#TaskDatafactoryIrSelect')).val();                    
-                    return Selected;
+                    var selected = $(':selected', $('#TaskDatafactoryIrSelect')).val();
+                    if (!selected)
+                        selected = $('#TaskDatafactoryIr').val();
+                    return selected;
                 }
 
                 function GetCurrentlySelectedTargetSubType() {
@@ -610,7 +625,7 @@
 
                 function GetTaskMasterJson_Source() {
                     var tmj = GetTaskMasterJson();
-                    if  (tmj.Source === undefined) {
+                    if (tmj.Source === undefined) {
                             tmj.Source = {};
                     }                                        
                     $('#TaskMasterJson').val(JSON.stringify(tmj));

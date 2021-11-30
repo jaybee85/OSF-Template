@@ -60,6 +60,7 @@ namespace WebApplication.Controllers
         // GET: TaskMaster/Create
         public IActionResult Create(int? TaskGroupId)
         {
+                        
             ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x=>x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption");
             ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName");
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName");
@@ -73,9 +74,12 @@ namespace WebApplication.Controllers
                 ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName");
             }
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName");
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
             TaskMaster taskMaster = new TaskMaster();
+            taskMaster.TaskMasterJson = "{}";
+            taskMaster.DegreeOfCopyParallelism = 1;
             taskMaster.ActiveYn = true;
-            return View(taskMaster);
+            return View("EditPlus",taskMaster);
         }
 
 
@@ -125,6 +129,7 @@ namespace WebApplication.Controllers
         ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
         ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
         ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "DataFactoryId", "DataFactoryName");
             return View(taskMaster);
         }
 
@@ -170,6 +175,7 @@ namespace WebApplication.Controllers
         ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
         ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
         ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "DataFactoryId", "DataFactoryName");
             return View(taskMaster);
         }
 
