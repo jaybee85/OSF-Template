@@ -16,6 +16,6 @@ namespace WebApplication.Models
 
         public virtual SourceAndTargetSystems TargetSystem { get; set; }
 
-
+        public virtual DataFactory DataFactory { get; set; }
     }
 }
