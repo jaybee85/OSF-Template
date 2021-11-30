@@ -106,6 +106,7 @@ namespace WebApplication.Controllers
         ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
         ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
         ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
             return View(taskMaster);
         }
 
@@ -446,6 +447,7 @@ namespace WebApplication.Controllers
             ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(t => t.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(t => t.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(t => t.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
             return View(taskMaster);
         }
 
@@ -485,6 +487,7 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems, "SystemId", "SystemAuthType", taskMaster.TargetSystemId);
             ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup, "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType, "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
             return View(taskMaster);
         }
     }
