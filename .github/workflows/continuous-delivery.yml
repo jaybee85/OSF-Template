@@ -37,7 +37,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Release Build/Publish
       run: |
-          cd ./solution/Deploymentv2/terraform/
+          cd ./solution/DeploymentV2/terraform/
           zip -r ../../../Terraform.zip ./
     - uses: actions/upload-artifact@v2
       with:
