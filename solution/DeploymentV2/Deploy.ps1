@@ -117,7 +117,7 @@ else {
     Set-Location $deploymentFolderPath
     Set-Location "../WebApplication"
     dotnet restore
-    dotnet publish --no-restore --configuration Release --output '..\Deployment\bin\publish\unzipped\webapplication\'
+    dotnet publish --no-restore --configuration Release --output '..\DeploymentV2\bin\publish\unzipped\webapplication\'
     #Move back to workflows 
     Set-Location $deploymentFolderPath
     Set-Location "./bin/publish"
@@ -140,7 +140,7 @@ else {
     Set-Location $deploymentFolderPath
     Set-Location "..\FunctionApp"
     dotnet restore
-    dotnet publish --no-restore --configuration Release --output '..\Deployment\bin\publish\unzipped\functionapp\'
+    dotnet publish --no-restore --configuration Release --output '..\DeploymentV2\bin\publish\unzipped\functionapp\'
     
     Set-Location $deploymentFolderPath
     Set-Location "./bin/publish"
@@ -164,7 +164,7 @@ else {
     Set-Location $deploymentFolderPath
     Set-Location "..\Database\AdsGoFastDbUp\AdsGoFastDbUp"
     dotnet restore
-    dotnet publish --no-restore --configuration Release --output '..\..\..\Deployment\bin\publish\unzipped\database\'
+    dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\'
 
     #Add Ip to SQL Firewall
     $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
