@@ -1,6 +1,8 @@
 # Local .terraform directories
 **/.terraform/*
 
+**/arkahna/*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
