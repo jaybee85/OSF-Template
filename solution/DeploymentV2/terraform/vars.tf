@@ -164,7 +164,12 @@ variable "deploy_adls" {
   type        = bool
 }
 variable "deploy_purview" {
-  description = "Feature toggle for deploying the Azure Purview"
+  description = "Feature toggle for deploying Azure Purview"
+  default     = false
+  type        = bool
+}
+variable "deploy_sentinel" {
+  description = "Feature toggle for deploying Azure Sentinel"
   default     = false
   type        = bool
 }

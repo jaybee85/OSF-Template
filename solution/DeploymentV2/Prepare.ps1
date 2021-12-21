@@ -39,7 +39,8 @@ $providers = @('Microsoft.Storage',
 'Microsoft.Purview',
 'Microsoft.EventHub',
 'Microsoft.Compute',
-'Microsoft.PolicyInsights')
+'Microsoft.PolicyInsights',
+'Microsoft.OperationsManagement')
 
 $progress = 0
 Write-Progress -Activity "Registering Azure Resource Providers" -Status "${progress}% Complete:" -PercentComplete $progress
