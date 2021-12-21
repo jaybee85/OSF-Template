@@ -12,6 +12,20 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
   }
 }
 
+resource "azurerm_log_analytics_solution" "sentinel" {
+  count = var.deploy_sentinel ? 1 : 0
+  solution_name         = "SecurityInsights"
+  location              = var.resource_location
+  resource_group_name   = var.resource_group_name
+  workspace_resource_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  workspace_name        = azurerm_log_analytics_workspace.log_analytics_workspace.name
+
+  plan {
+    publisher = "Microsoft"
+    product   = "OMSGallery/SecurityInsights"
+  }
+}
+
 resource "azurerm_role_assignment" "loganalytics_function_app" {
   scope                = azurerm_log_analytics_workspace.log_analytics_workspace.id
   role_definition_name = "Contributor"
