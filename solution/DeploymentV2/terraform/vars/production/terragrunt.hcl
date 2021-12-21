@@ -5,10 +5,9 @@ remote_state {
     if_exists = "overwrite_terragrunt"
   }
   config = {
-    # You need to update the resource group and storage account here. 
-    # You should have created these with the Prepare.ps1 script.
-    resource_group_name  = "con-stg-rg-ads"
-    storage_account_name = "constgstadsstate"
+    # You need to update the resource group and storage account here. You should have created these with the Prepare.ps1 script.
+    resource_group_name  = "con-prd-rg-ads"
+    storage_account_name = "conprdstadsstate"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
@@ -23,8 +22,8 @@ inputs = {
   tenant_id                             = ""               # This is the Azure AD tenant ID
   subscription_id                       = ""               # The azure subscription id to deploy to
   resource_location                     = "Australia East" # The location of the resources
-  resource_group_name                   = "con-stg-rg-ads" # The resource group all resources will be deployed to
+  resource_group_name                   = "con-prd-rg-ads" # The resource group all resources will be deployed to
   owner_tag                             = "Contoso"        # Owner tag value for Azure resources
-  environment_tag                       = "stg"            # This is used on Azure tags as well as all resource names
+  environment_tag                       = "prd"            # This is used on Azure tags as well as all resource names
   ip_address                            = ""               # This is the ip address of the agent/current IP. Used to create firewall exemptions.
 }

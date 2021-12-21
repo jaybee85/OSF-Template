@@ -15,7 +15,7 @@
 # To save you double handling and finding them later, I recommend that you copy them down and update
 # the values directly into the following file:
 #
-# /azure-data-services-go-fast-codebase/solution/Deployment/terraform/vars/local/terragrunt.hcl
+# /azure-data-services-go-fast-codebase/solution/DeploymentV2/terraform/vars/local/terragrunt.hcl
 #
 # This file is used by the ./Deploy.ps1 script by default and will be used if no enviroment vars are available
 #
