@@ -8,7 +8,7 @@ on:
 jobs:
   publish-function-app:
     name: Publish Function App
-    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@task/main
+    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@main
     with:
       name: Function App
       path: ./solution/FunctionApp/
@@ -16,7 +16,7 @@ jobs:
 
   publish-web-app:
     name: Publish Web App
-    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@task/main
+    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@main
     with:
       name: Web Application
       path: ./solution/WebApplication/WebApplication/
@@ -24,7 +24,7 @@ jobs:
 
   publish-dbup-app:
     name: Publish DbUp Console App
-    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@task/main
+    uses: microsoft/azure-data-services-go-fast-codebase/.github/workflows/publish-component.yml@main
     with:
       name: DbUp Console App
       path: ./solution/Database/ADSGoFastDbUp/AdsGoFastDbUp/
