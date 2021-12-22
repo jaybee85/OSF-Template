@@ -1,5 +1,7 @@
 
-resource "azuread_application" "web" {
+resource "random_uuid" "app_reg_role_id" {}
+
+resource "azuread_application" "web_reg" {
   count           = var.deploy_azure_ad_web_app_registration ? 1 : 0
   display_name    = local.aad_webapp_name
   owners           = [data.azurerm_client_config.current.object_id]
@@ -12,7 +14,7 @@ resource "azuread_application" "web" {
   }
   app_role {
     allowed_member_types = ["User"]
-    id                   = "1a089b01-782a-4f69-b087-cc0c6d4a3f7a"
+    id                   = random_uuid.app_reg_role_id.result
     description          = "Administer features of the application"
     display_name         = "Administrator"
     enabled              = true
@@ -30,7 +32,7 @@ resource "azuread_application" "web" {
 
 resource "azuread_service_principal" "web_sp" {
   count          = var.deploy_azure_ad_web_app_registration ? 1 : 0
-  application_id = azuread_application.web[0].application_id
+  application_id = azuread_application.web_reg[0].application_id
 }
 
 resource "azurerm_app_service" "web" {
@@ -54,7 +56,7 @@ resource "azurerm_app_service" "web" {
 
     AzureAdAuth__Domain   = var.domain
     AzureAdAuth__TenantId = var.tenant_id
-    AzureAdAuth__ClientId = azuread_application.web[0].application_id
+    AzureAdAuth__ClientId = azuread_application.web_reg[0].application_id
   }
 
   site_config {

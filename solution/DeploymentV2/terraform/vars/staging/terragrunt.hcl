@@ -19,7 +19,7 @@ remote_state {
 # using TF_VAR_variablename
 inputs = {
   prefix                                = "con"            # All azure resources will be prefixed with this
-  domain                                = "arkahna.io"    # Used when configuring AAD config for Azure functions 
+  domain                                = "contoso.com"    # Used when configuring AAD config for Azure functions 
   tenant_id                             = ""               # This is the Azure AD tenant ID
   subscription_id                       = ""               # The azure subscription id to deploy to
   resource_location                     = "Australia East" # The location of the resources
@@ -27,6 +27,4 @@ inputs = {
   owner_tag                             = "Contoso"        # Owner tag value for Azure resources
   environment_tag                       = "stg"            # This is used on Azure tags as well as all resource names
   ip_address                            = ""               # This is the ip address of the agent/current IP. Used to create firewall exemptions.
-  deploy_sentinel                       = true
-  deploy_purview                        = false    
 }
