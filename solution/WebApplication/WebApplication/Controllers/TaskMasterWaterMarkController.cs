@@ -54,10 +54,22 @@ namespace WebApplication.Controllers
         }
 
         // GET: TaskMasterWaterMark/Create
-        public IActionResult Create()
+        public IActionResult Create(int taskMasterId)
         {
-            ViewData["TaskMasterId"] = new SelectList(_context.TaskMaster.OrderBy(x=>x.TaskMasterName), "TaskMasterId", "TaskMasterName");
-     TaskMasterWaterMark taskMasterWaterMark = new TaskMasterWaterMark();
+            List<TaskMaster> taskMasters;
+            if (taskMasterId != 0)
+            {
+                ViewData["TaskMasterId"] =
+                    new SelectList(_context.TaskMaster.Where(x => x.TaskMasterId == taskMasterId), "TaskMasterId",
+                        "TaskMasterName");
+            }
+            else
+            {
+                ViewData["TaskMasterId"] = 
+                    new SelectList(_context.TaskMaster.OrderBy(x => x.TaskMasterName), "TaskMasterId", "TaskMasterName");
+            }
+            
+            TaskMasterWaterMark taskMasterWaterMark = new TaskMasterWaterMark();
             taskMasterWaterMark.ActiveYn = true;
             return View(taskMasterWaterMark);
         }
