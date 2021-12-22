@@ -6,10 +6,8 @@ locals {
   sql_server_name              = (var.sql_server_name != "" ? var.sql_server_name : module.naming.sql_server.name_unique)
   webapp_name                  = (var.webapp_name != "" ? var.webapp_name : module.naming.app_service.name_unique)
   webapp_url                   = "https://${local.webapp_name}.azurewebsites.net"
-  webapp_identifier_uri        = "api://adsgofastwebportal${var.environment_tag}"
   functionapp_name             = (var.functionapp_name != "" ? var.functionapp_name : module.naming.function_app.name_unique)
   functionapp_url              = "https://${local.functionapp_name}.azurewebsites.net"
-  functionapp_identifier_uri   = "api://adsgofastfunctionapp${var.environment_tag}"
   aad_webapp_name              = (var.aad_webapp_name != "" ? var.aad_webapp_name : "ADS GoFast Web Portal (${var.environment_tag})")
   aad_functionapp_name         = (var.aad_functionapp_name != "" ? var.aad_functionapp_name : "ADS GoFast Orchestration App (${var.environment_tag})")
   vnet_name                    = (var.vnet_name != "" ? var.vnet_name : module.naming.virtual_network.name)
