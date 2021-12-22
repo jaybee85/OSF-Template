@@ -1,7 +1,8 @@
-resource "azuread_application" "function_app" {
+resource "random_uuid" "function_app_reg_role_id" {}
+
+resource "azuread_application" "function_app_reg" {
   count           = var.deploy_azure_ad_function_app_registration ? 1 : 0
   display_name    = local.aad_functionapp_name
-  identifier_uris = [local.functionapp_identifier_uri]
   web {
     homepage_url = local.functionapp_url
     implicit_grant {
@@ -10,7 +11,7 @@ resource "azuread_application" "function_app" {
   }
   app_role {
     allowed_member_types = ["Application"]
-    id                   = "99d0326c-8cb6-4ff6-a147-95ee311a31cb"
+    id                   = random_uuid.function_app_reg_role_id.result
     description          = "Used to applications to call the ADS Go Fast functions"
     display_name         = "FunctionAPICaller"
     enabled              = true
@@ -94,9 +95,9 @@ resource "azurerm_function_app" "function_app" {
 
     AzureAdAzureServicesViaAppReg__Domain       = var.domain
     AzureAdAzureServicesViaAppReg__TenantId     = var.tenant_id
-    AzureAdAzureServicesViaAppReg__Audience     = local.functionapp_identifier_uri
+    AzureAdAzureServicesViaAppReg__Audience     = "api://${azuread_application.function_app_reg[0].application_id}"
     AzureAdAzureServicesViaAppReg__ClientSecret = null
-    AzureAdAzureServicesViaAppReg__ClientId     = azuread_application.function_app[0].application_id
+    AzureAdAzureServicesViaAppReg__ClientId     = azuread_application.function_app_reg[0].application_id
 
     #Setting to null as we are using MSI
     AzureAdAzureServicesDirect__ClientId = null
