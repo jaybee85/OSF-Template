@@ -4,6 +4,7 @@ resource "random_uuid" "app_reg_role_id" {}
 resource "azuread_application" "web_reg" {
   count           = var.deploy_azure_ad_web_app_registration ? 1 : 0
   display_name    = local.aad_webapp_name
+  owners           = [data.azurerm_client_config.current.object_id]
   web {
     homepage_url  = local.webapp_url
     redirect_uris = ["${local.webapp_url}/signin-oidc"]
