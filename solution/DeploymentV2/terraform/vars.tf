@@ -111,7 +111,7 @@ variable "app_service_subnet_cidr" {
 }
 
 variable "vm_subnet_cidr" {
-  description = "CIDR of the subnet used to host synapse compute resources"
+  description = "CIDR of the subnet used to host VM compute resources"
   type        = string
   default     = "10.0.0.192/26"
 }
