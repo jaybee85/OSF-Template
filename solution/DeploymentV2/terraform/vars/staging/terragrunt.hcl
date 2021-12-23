@@ -29,4 +29,5 @@ inputs = {
   ip_address                            = "203.123.100.64"
   deploy_sentinel                       = true
   deploy_purview                        = false      
+  deploy_synapse                        = true
 }

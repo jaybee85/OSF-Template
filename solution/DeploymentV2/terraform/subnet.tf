@@ -25,8 +25,6 @@ resource "azurerm_subnet" "vm_subnet" {
   enforce_private_link_endpoint_network_policies = true
 }
 
-
-
 resource "azurerm_subnet" "app_service_subnet" {
   count                                          = (var.is_vnet_isolated ? 1 : 0)
   name                                           = local.app_service_subnet_name
