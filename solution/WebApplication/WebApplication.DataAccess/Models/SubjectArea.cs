@@ -16,8 +16,6 @@ namespace WebApplication.Models
         [Display(Name = "Target Json Schema")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please input valid Json Schema")]
         public string DefaultTargetSchema { get; set; }
-        [Display(Name = "Updated By")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please input valid User")]
         public string UpdatedBy { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ValidFrom { get; set; }
