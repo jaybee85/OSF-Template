@@ -86,7 +86,7 @@ variable "synapse_sql_password" {
 variable "allow_public_access_to_synapse_studio" {
   description = "Should the synapse studio allow access to public IPs"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "vnet_cidr" {

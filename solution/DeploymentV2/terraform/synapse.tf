@@ -1,3 +1,6 @@
+# --------------------------------------------------------------------------------------------------------------------
+# Workspace
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_storage_data_lake_gen2_filesystem" "dlfs" {
   count = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name               = local.synapse_data_lake_name
@@ -13,7 +16,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login              = var.synapse_sql_login
   sql_administrator_login_password     = var.synapse_sql_password
   sql_identity_control_enabled         = true
-  public_network_access_enabled        = true
+  public_network_access_enabled        = var.is_vnet_isolated == false
   managed_virtual_network_enabled      = true
   managed_resource_group_name           = local.synapse_resource_group_name
   #purview_id = azurerm_purview_account.purview.id
@@ -26,6 +29,9 @@ resource "azurerm_synapse_workspace" "synapse" {
   }
 }
 
+# --------------------------------------------------------------------------------------------------------------------
+# SQL Dedicated Pool
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_sql_pool" "synapse_sql_pool" {
   count = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sqlpool ? 1 : 0    
   name                 = local.synapse_workspace_name
@@ -40,6 +46,9 @@ resource "azurerm_synapse_sql_pool" "synapse_sql_pool" {
   }  
 }
 
+# --------------------------------------------------------------------------------------------------------------------
+# Spark Pool
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
   count = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sparkpool ? 1 : 0    
   name                 = local.synapse_sppool_name
@@ -64,6 +73,9 @@ resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
   }  
 }
 
+# --------------------------------------------------------------------------------------------------------------------
+# Synapse Workspace Firewall Rules (Allow Public Access)
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_firewall_rule" "public_access" {
   count                = var.deploy_adls && var.deploy_synapse && var.allow_public_access_to_synapse_studio?1:0
   name                 = "AllowAll"
@@ -72,15 +84,21 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
   end_ip_address       = "255.255.255.255"
 }
 
-# resource "azurerm_synapse_firewall_rule" "azure_access" {
-#   count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
-#   name                 = "AllowAllWindowsAzureIps"
-#   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
-#   start_ip_address     = "0.0.0.0"
-#   end_ip_address       = "0.0.0.0"
-# }
+# --------------------------------------------------------------------------------------------------------------------
+# User Access requirements
+# --------------------------------------------------------------------------------------------------------------------
+# https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-set-up-access-control
+# - Access to synapse workspace:
+#       - Synapse Contributo
+#       - Synapse User
+# - Synapse Compute Operator on the selected Apache Spark pool
+# - Storage Data Contributor on the ADLS store for Synapse 
+# - SQL Pool access
 
-
+# --------------------------------------------------------------------------------------------------------------------
+# Synapse Workspace - Managed Private Endpoints
+# --------------------------------------------------------------------------------------------------------------------
+# This managed private endpoint lets synapse read from the underlying data lake. The SQL endpoints are autocreated
 resource "azurerm_synapse_managed_private_endpoint" "adls" {
   count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                 = "AzureDataLake_PrivateEndpoint"
@@ -89,7 +107,131 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
   subresource_name     = "dfs"
 }
 
-# // Diagnostic logs--------------------------------------------------------------------------
+# --------------------------------------------------------------------------------------------------------------------
+# Network Settings to allow inbound private link traffic to the Synapse studio
+# https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-connect-to-workspace-from-restricted-network
+resource "azurerm_synapse_private_link_hub" "hub" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                = "${local.synapse_workspace_name}plinkhub"
+  resource_group_name = var.resource_group_name
+  location            = var.resource_location
+}
+
+
+resource "azurerm_private_endpoint" "synapse_web" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                = "${local.synapse_workspace_name}-web-plink"
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+  subnet_id           = azurerm_subnet.plink_subnet[0].id
+
+  private_service_connection {
+    name                           = "${local.synapse_workspace_name}-web-plink-conn"
+    private_connection_resource_id = azurerm_synapse_private_link_hub.hub[0].id
+    is_manual_connection           = false
+    subresource_names              = ["Web"]
+  }
+
+  private_dns_zone_group {
+    name                 = "privatednszonegroupweb"
+    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_gateway[0].id]
+  }
+
+  tags = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+resource "azurerm_private_endpoint" "synapse_dev" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                = "${local.synapse_workspace_name}-dev-plink"
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+  subnet_id           = azurerm_subnet.plink_subnet[0].id
+
+  private_service_connection {
+    name                           = "${local.synapse_workspace_name}-dev-plink-conn"
+    private_connection_resource_id = azurerm_synapse_workspace.synapse[0].id
+    is_manual_connection           = false
+    subresource_names              = ["Dev"]
+  }
+
+  private_dns_zone_group {
+    name                 = "privatednszonegroupdev"
+    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_studio[0].id]
+  }
+
+  tags = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+resource "azurerm_private_endpoint" "synapse_sql" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                = "${local.synapse_workspace_name}-sql-plink"
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+  subnet_id           = azurerm_subnet.plink_subnet[0].id
+
+  private_service_connection {
+    name                           = "${local.synapse_workspace_name}-sql-plink-conn"
+    private_connection_resource_id = azurerm_synapse_workspace.synapse[0].id
+    is_manual_connection           = false
+    subresource_names              = ["Sql"]
+  }
+
+  private_dns_zone_group {
+    name                 = "privatednszonegroupsql"
+    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_sql[0].id]
+  }
+
+  tags = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+resource "azurerm_private_endpoint" "synapse_sqlondemand" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                = "${local.synapse_workspace_name}-sqld-plink"
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+  subnet_id           = azurerm_subnet.plink_subnet[0].id
+
+  private_service_connection {
+    name                           = "${local.synapse_workspace_name}-sqld-plink-conn"
+    private_connection_resource_id = azurerm_synapse_workspace.synapse[0].id
+    is_manual_connection           = false
+    subresource_names              = ["SqlOnDemand"]
+  }
+
+  private_dns_zone_group {
+    name                 = "privatednszonegroupsqld"
+    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_sql[0].id]
+  }
+
+  tags = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}
+
+
+
+
+# --------------------------------------------------------------------------------------------------------------------
+# // Diagnostic logs
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
   count = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name                           = "diagnosticlogs"
