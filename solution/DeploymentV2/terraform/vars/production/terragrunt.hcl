@@ -28,4 +28,5 @@ inputs = {
   ip_address                            = ""               # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_sentinel                       = true
   deploy_purview                        = false  
+  deploy_synapse                        = true
 }

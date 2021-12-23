@@ -12,7 +12,7 @@ resource "azurerm_storage_account" "adls" {
   network_rules {
     default_action = "Deny"
     bypass         = ["Metrics", "AzureServices"]
-    ip_rules       = [var.ip_address] // This is required to allow us to create the initial containers
+    ip_rules       = [var.ip_address] // This is required to allow us to create the initial Synapse Managed Private endpoint
   }
 
   tags = local.tags
@@ -38,35 +38,12 @@ resource "azurerm_role_assignment" "adls_data_factory" {
 }
 
 
-
-
-# Add the current deployment SP to be allowed to create the containers
-# currently disabled waiting on containers to be accessible via control plane
-#   https://github.com/hashicorp/terraform-provider-azurerm/pull/14220
-#   https://github.com/hashicorp/terraform-provider-azurerm/issues/2977
-# resource "azurerm_role_assignment" "adls_cicd" {
-#   scope                = azurerm_storage_account.blob[0].id
-#   role_definition_name = "Storage Blob Data Contributor"
-#   principal_id         = data.azurerm_client_config.current.object_id
-# }
-
-
-# resource "azurerm_storage_container" "adls_landing" {
-#   name                  = "datalakelanding"
-#   storage_account_name  = azurerm_storage_account.adls[0].name
-#   container_access_type = "private"
-#   depends_on = [
-#     azurerm_role_assignment.adls_cicd
-#   ]
-# }
-# resource "azurerm_storage_container" "adls_raw" {
-#   name                  = "transient"
-#   storage_account_name  = azurerm_storage_account.adls[0].name
-#   container_access_type = "private"
-#   depends_on = [
-#     azurerm_role_assignment.adls_cicd
-#   ]
-# }
+resource "azurerm_role_assignment" "synapse" {
+  count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
+  scope                = azurerm_storage_account.adls[0].id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
+}
 
 resource "azurerm_private_endpoint" "adls_storage_private_endpoint_with_dns" {
   count               = var.deploy_adls && var.is_vnet_isolated ? 1 : 0
@@ -115,7 +92,7 @@ resource "azurerm_private_endpoint" "adls_dfs_storage_private_endpoint_with_dns"
 
   private_dns_zone_group {
     name                 = "privatednszonegroupstoragedfs"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_blob[0].id]
+    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_dfs[0].id]
   }
 
   depends_on = [

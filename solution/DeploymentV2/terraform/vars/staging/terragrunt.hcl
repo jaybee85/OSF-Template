@@ -12,7 +12,6 @@ remote_state {
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
-}
 
 # These inputs are provided to the terraform variables when deploying the environment
 # If you are deploying using pipelines, these can be overridden from environment variables
@@ -27,4 +26,8 @@ inputs = {
   owner_tag                             = "Contoso"        # Owner tag value for Azure resources
   environment_tag                       = "stg"            # This is used on Azure tags as well as all resource names
   ip_address                            = ""               # This is the ip address of the agent/current IP. Used to create firewall exemptions.
-}
+  deploy_sentinel                       = true
+  deploy_purview                        = false      
+  deploy_synapse                        = true  
+} 
+

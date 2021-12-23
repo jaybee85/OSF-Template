@@ -18,6 +18,12 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = azurerm_subnet.bastion_subnet[0].id
     public_ip_address_id = azurerm_public_ip.bastion_pip[0].id
   }
+  tags = local.tags
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 # // Diagnostic logs--------------------------------------------------------------------------

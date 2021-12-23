@@ -29,8 +29,12 @@ locals {
   bastion_ip_name              = (var.bastion_ip_name != "" ? var.bastion_ip_name : module.naming.public_ip.name)
   purview_name                 = (var.purview_name != "" ? var.purview_name : "${var.prefix}${var.environment_tag}pur${var.app_name}")
   purview_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-purview"
-  synapse_name                 = (var.synapse_name != "" ? var.synapse_name : module.naming.data_lake_analytics_account.name_unique)
   jumphost_vm_name             = module.naming.virtual_machine.name
+  synapse_data_lake_name       = (var.synapse_data_lake_name != ""? var.synapse_data_lake_name : module.naming.data_lake_store.name_unique)
+  synapse_workspace_name       = (var.synapse_workspace_name != ""? var.synapse_workspace_name : "${var.prefix}${var.environment_tag}synw${var.app_name}")
+  synapse_dwpool_name          = (var.synapse_dwpool_name != ""? var.synapse_dwpool_name : "${var.prefix}${var.environment_tag}syndp${var.app_name}")
+  synapse_sppool_name          = (var.synapse_sppool_name != ""? var.synapse_sppool_name : "${var.prefix}${var.environment_tag}synsp${var.app_name}")
+  synapse_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-synapse"
 
   tags = {
     Environment = var.environment_tag
