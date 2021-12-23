@@ -111,7 +111,8 @@ resource "azurerm_function_app" "function_app" {
   lifecycle {
     ignore_changes = [
       tags,
-      app_settings["WEBSITE_RUN_FROM_PACKAGE"]
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"],
+      app_settings["SCM_DO_BUILD_DURING_DEPLOYMENT"]
     ]
   }
 }
@@ -145,4 +146,5 @@ resource "azurerm_monitor_diagnostic_setting" "function_diagnostic_logs" {
     enabled  = false
   }
 }
+
 
