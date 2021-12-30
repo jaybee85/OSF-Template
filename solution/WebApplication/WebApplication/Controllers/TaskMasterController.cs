@@ -17,7 +17,7 @@ namespace WebApplication.Controllers
     public partial class TaskMasterController : BaseController
     {
         protected readonly AdsGoFastContext _context;
-        
+
 
         public TaskMasterController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider) : base(securityAccessProvider, roleProvider)
         {
@@ -60,10 +60,10 @@ namespace WebApplication.Controllers
         // GET: TaskMaster/Create
         public IActionResult Create(int? TaskGroupId)
         {
-                        
-            ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x=>x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption");
-            ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName");
-            ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName");
+
+            ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x => x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption");
+            ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName");
+            ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName");
 
             if (TaskGroupId != null)
             {
@@ -73,13 +73,14 @@ namespace WebApplication.Controllers
             {
                 ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName");
             }
-            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName");
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName");
             ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             TaskMaster taskMaster = new TaskMaster();
             taskMaster.TaskMasterJson = "{}";
             taskMaster.DegreeOfCopyParallelism = 1;
             taskMaster.ActiveYn = true;
-            return View("EditPlus",taskMaster);
+            return View("EditPlus", taskMaster);
         }
 
 
@@ -89,7 +90,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
+        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
         {
             if (ModelState.IsValid)
             {
@@ -99,14 +100,14 @@ namespace WebApplication.Controllers
                     return new ForbidResult();
                 }
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(IndexDataTable));
+                return Redirect(returnUrl);
             }
-        ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x=>x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
-        ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
-        ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
-        ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x => x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
+            ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
+            ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
+            ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
             return View(taskMaster);
         }
 
@@ -125,12 +126,12 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskMaster))
                 return new ForbidResult();
-        ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x=>x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
-        ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
-        ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
-        ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
+            ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x => x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
+            ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
+            ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
+            ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
             return View(taskMaster);
         }
 
@@ -155,7 +156,7 @@ namespace WebApplication.Controllers
 
                     if (!await CanPerformCurrentActionOnRecord(taskMaster))
                         return new ForbidResult();
-			
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -171,12 +172,12 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(IndexDataTable));
             }
-        ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x=>x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
-        ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
-        ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x=>x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
-        ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-        ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
+            ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(x => x.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
+            ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
+            ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
+            ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
+            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
             return View(taskMaster);
         }
 
@@ -198,7 +199,7 @@ namespace WebApplication.Controllers
                 .FirstOrDefaultAsync(m => m.TaskMasterId == id);
             if (taskMaster == null)
                 return NotFound();
-		
+
             if (!await CanPerformCurrentActionOnRecord(taskMaster))
                 return new ForbidResult();
 
@@ -215,7 +216,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskMaster))
                 return new ForbidResult();
-		
+
             _context.TaskMaster.Remove(taskMaster);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(IndexDataTable));
@@ -428,7 +429,7 @@ namespace WebApplication.Controllers
         [ChecksUserAccess]
         public async Task<IActionResult> EditPlus(long? id)
         {
-            
+
             if (id == null)
             {
                 return NotFound();
@@ -448,13 +449,14 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(t => t.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(t => t.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
             ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View(taskMaster);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> EditPlus(long id, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
+        public async Task<IActionResult> EditPlus(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
         {
             if (id != taskMaster.TaskMasterId)
                 return NotFound();
@@ -480,7 +482,8 @@ namespace WebApplication.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(IndexDataTable));
+
+                return Redirect(returnUrl);
             }
             ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster, "ScheduleMasterId", "ScheduleCronExpression", taskMaster.ScheduleMasterId);
             ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems, "SystemId", "SystemAuthType", taskMaster.SourceSystemId);
