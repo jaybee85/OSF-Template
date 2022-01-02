@@ -29,6 +29,7 @@ locals {
   bastion_ip_name              = (var.bastion_ip_name != "" ? var.bastion_ip_name : module.naming.public_ip.name)
   purview_name                 = (var.purview_name != "" ? var.purview_name : "${var.prefix}${var.environment_tag}pur${var.app_name}")
   purview_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-purview"
+  purview_ir_app_reg_name      = (var.purview_ir_app_reg_name != "" ? var.purview_ir_app_reg_name : "ADS GoFast Purview Integration Runtime (${var.environment_tag})")
   jumphost_vm_name             = module.naming.virtual_machine.name
   synapse_data_lake_name       = (var.synapse_data_lake_name != ""? var.synapse_data_lake_name : module.naming.data_lake_store.name_unique)
   synapse_workspace_name       = (var.synapse_workspace_name != ""? var.synapse_workspace_name : "${var.prefix}${var.environment_tag}synw${var.app_name}")

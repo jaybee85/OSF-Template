@@ -16,10 +16,10 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login              = var.synapse_sql_login
   sql_administrator_login_password     = var.synapse_sql_password
   sql_identity_control_enabled         = true
-  public_network_access_enabled        = var.is_vnet_isolated == false
+  public_network_access_enabled        = var.is_vnet_isolated == false || var.delay_private_access
   managed_virtual_network_enabled      = true
-  managed_resource_group_name           = local.synapse_resource_group_name
-  #purview_id = azurerm_purview_account.purview.id
+  managed_resource_group_name          = local.synapse_resource_group_name
+  purview_id                           = var.deploy_purview ? azurerm_purview_account.purview[0].id : null
 
   tags = local.tags
   lifecycle {
@@ -76,8 +76,19 @@ resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
 # --------------------------------------------------------------------------------------------------------------------
 # Synapse Workspace Firewall Rules (Allow Public Access)
 # --------------------------------------------------------------------------------------------------------------------
+resource "azurerm_synapse_firewall_rule" "cicd" {
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  name                 = "AllowGitHub"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  start_ip_address     = var.ip_address
+  end_ip_address       = var.ip_address
+}
+
+# --------------------------------------------------------------------------------------------------------------------
+# Synapse Workspace Firewall Rules (Allow Public Access)
+# --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_firewall_rule" "public_access" {
-  count                = var.deploy_adls && var.deploy_synapse && var.allow_public_access_to_synapse_studio?1:0
+  count                = var.deploy_adls && var.deploy_synapse && var.allow_public_access_to_synapse_studio? 1 : 0
   name                 = "AllowAll"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   start_ip_address     = "0.0.0.0"
@@ -99,12 +110,16 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
 # Synapse Workspace - Managed Private Endpoints
 # --------------------------------------------------------------------------------------------------------------------
 # This managed private endpoint lets synapse read from the underlying data lake. The SQL endpoints are autocreated
+# We depend on the cicd rule incase we are deploying publicly and cant access the private endpoints from GitHub
 resource "azurerm_synapse_managed_private_endpoint" "adls" {
   count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                 = "AzureDataLake_PrivateEndpoint"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   target_resource_id   = azurerm_storage_account.adls[0].id
   subresource_name     = "dfs"
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
 }
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -235,7 +250,6 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
 resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
   count = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name                           = "diagnosticlogs"
-  log_analytics_destination_type = "Dedicated"
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

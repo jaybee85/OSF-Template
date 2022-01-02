@@ -2,12 +2,11 @@ resource "azurerm_data_factory" "data_factory" {
   name                            = local.data_factory_name
   location                        = var.resource_location
   resource_group_name             = var.resource_group_name
-  public_network_enabled          = (var.is_vnet_isolated == false)
+  public_network_enabled          = var.is_vnet_isolated == false || var.delay_private_access
   managed_virtual_network_enabled = true
   identity {
     type = "SystemAssigned"
   }
-  tags = local.tags
   lifecycle {
     ignore_changes = [
       tags
