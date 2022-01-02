@@ -39,6 +39,12 @@ resource "azurerm_role_assignment" "blob_data_factory" {
   principal_id         = azurerm_data_factory.data_factory.identity[0].principal_id
 }
 
+resource "azurerm_role_assignment" "blob_purview_sp" {
+  count                = var.deploy_purview ? 1 : 0
+  scope                = azurerm_storage_account.blob[0].id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azuread_service_principal.purview_ir[0].object_id
+}
 
 # currently disabled waiting on containers to be accessible via control plane
 #   https://github.com/hashicorp/terraform-provider-azurerm/pull/14220

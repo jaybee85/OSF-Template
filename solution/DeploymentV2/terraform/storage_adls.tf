@@ -37,13 +37,20 @@ resource "azurerm_role_assignment" "adls_data_factory" {
   principal_id         = azurerm_data_factory.data_factory.identity[0].principal_id
 }
 
-
 resource "azurerm_role_assignment" "synapse" {
   count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
   scope                = azurerm_storage_account.adls[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
 }
+
+resource "azurerm_role_assignment" "adls_purview_sp" {
+  count                = var.deploy_purview ? 1 : 0
+  scope                = azurerm_storage_account.adls[0].id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = azuread_service_principal.purview_ir[0].object_id
+}
+
 
 resource "azurerm_private_endpoint" "adls_storage_private_endpoint_with_dns" {
   count               = var.deploy_adls && var.is_vnet_isolated ? 1 : 0

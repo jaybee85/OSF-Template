@@ -4,7 +4,7 @@ resource "azurerm_purview_account" "purview" {
   resource_group_name         = var.resource_group_name
   location                    = var.resource_location
   managed_resource_group_name = local.purview_resource_group_name
-  public_network_enabled      = var.is_vnet_isolated == false
+  public_network_enabled      = var.is_vnet_isolated == false || var.delay_private_access
   tags                        = local.tags
   lifecycle {
     ignore_changes = [
@@ -22,7 +22,7 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
   subnet_id           = azurerm_subnet.plink_subnet[0].id
 
   private_service_connection {
-    name                           = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink-conn"
+    name                           = "${var.prefix}-${var.environment_tag}-pura-${lower(var.app_name)}-plink-conn"
     private_connection_resource_id = azurerm_purview_account.purview[0].id
     is_manual_connection           = false
     subresource_names              = ["account"]
@@ -45,16 +45,33 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
   }
 }
 
+// Create an IR service principal (private linked resources can't use the azure hosted IRs)
+resource "azuread_application" "purview_ir" {
+  count           = var.deploy_purview && var.is_vnet_isolated  ? 1 : 0
+  display_name    = local.purview_ir_app_reg_name
+  owners           = [data.azurerm_client_config.current.object_id]
+}
+
+resource "azuread_service_principal" "purview_ir" {
+  count           = var.deploy_purview && var.is_vnet_isolated  ? 1 : 0
+  application_id = azuread_application.purview_ir[0].application_id
+}
+
+
+resource "azuread_application_password" "purview_ir" {
+  count           = var.deploy_purview && var.is_vnet_isolated  ? 1 : 0
+  application_object_id = azuread_application.purview_ir[0].object_id
+}
 
 resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
-  name                = "${var.prefix}-${var.environment_tag}-pura-${lower(var.app_name)}-plink"
+  name                = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
   subnet_id           = azurerm_subnet.plink_subnet[0].id
 
   private_service_connection {
-    name                           = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink-conn"
+    name                           = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink-conn"
     private_connection_resource_id = azurerm_purview_account.purview[0].id
     is_manual_connection           = false
     subresource_names              = ["portal"]
@@ -62,7 +79,7 @@ resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroup"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_purview[0].id]
+    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_purview_studio[0].id]
   }
 
   depends_on = [
@@ -77,7 +94,7 @@ resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
   }
 }
 
-# Azure pipelines
+# Azure private endpoints
 module "purview_ingestion_private_endpoints" {
   source                      = "./modules/purview_ingestion_private_endpoints"
   count                       = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
@@ -93,6 +110,7 @@ module "purview_ingestion_private_endpoints" {
 
 }
 
+# Grant curator so that the ADF can submit lineage into purview
 resource "azurerm_role_assignment" "purview_curator_adf" {
   count                = var.deploy_purview ? 1 : 0
   scope                = azurerm_purview_account.purview[0].id
@@ -100,6 +118,12 @@ resource "azurerm_role_assignment" "purview_curator_adf" {
   principal_id         = azurerm_data_factory.data_factory.identity[0].principal_id
 }
 
-
+# Grant curator so that  Synapse can submit lineage into purview
+resource "azurerm_role_assignment" "purview_curator_synapse" {
+  count                = var.deploy_purview && var.deploy_synapse ? 1 : 0
+  scope                = azurerm_purview_account.purview[0].id
+  role_definition_name = "Purview Data Curator (Legacy)"
+  principal_id         = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
+}
 
 

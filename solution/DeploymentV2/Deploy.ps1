@@ -21,7 +21,7 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-$environmentName = "local" # currently supports (local, staging)
+$environmentName = "staging" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 $skipTerraformDeployment = $false
 $skipWebApps = $false
@@ -223,6 +223,9 @@ else {
 
     $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Disabled"
 }
+
+#-
+
 
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Sample Files
