@@ -1,9 +1,9 @@
 resource "random_uuid" "function_app_reg_role_id" {}
 
 resource "azuread_application" "function_app_reg" {
-  count           = var.deploy_azure_ad_function_app_registration ? 1 : 0
-  owners           = [data.azurerm_client_config.current.object_id]
-  display_name    = local.aad_functionapp_name
+  count        = var.deploy_azure_ad_function_app_registration ? 1 : 0
+  owners       = [data.azurerm_client_config.current.object_id]
+  display_name = local.aad_functionapp_name
   web {
     homepage_url = local.functionapp_url
     implicit_grant {

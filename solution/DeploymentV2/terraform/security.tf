@@ -13,7 +13,7 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
 }
 
 resource "azurerm_log_analytics_solution" "sentinel" {
-  count = var.deploy_sentinel ? 1 : 0
+  count                 = var.deploy_sentinel ? 1 : 0
   solution_name         = "SecurityInsights"
   location              = var.resource_location
   resource_group_name   = var.resource_group_name
