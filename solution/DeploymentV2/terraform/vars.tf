@@ -409,7 +409,7 @@ variable "app_service_sku" {
 
 variable "synapse_sku" {
   description = "The sku/scale of the Synapse SQL Pool"
-  default = "DW100c"
+  default     = "DW100c"
   type        = string
   validation {
     condition     = contains(["DW100c", "DW200c", "DW300c", "DW400c", "DW500c", "DW1000c", "DW1500c", "DW2000c", "DW2500c", "DW3000c"], var.synapse_sku)

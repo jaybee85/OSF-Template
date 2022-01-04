@@ -1,8 +1,15 @@
 
 
 resource "random_password" "database" {
-  length  = 32
-  special = false
+  length      = 32
+  min_numeric = 1
+  min_upper   = 1
+  min_lower   = 1
+  min_special = 1
+  special     = true
+  lower       = true
+  number      = true
+  upper       = true
 }
 
 # Database Server

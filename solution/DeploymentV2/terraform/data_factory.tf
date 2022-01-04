@@ -23,13 +23,13 @@ resource "azurerm_role_assignment" "datafactory_function_app" {
 
 # // Diagnostic logs--------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "data_factory_diagnostic_logs" {
-  name                           = "diagnosticlogs"
+  name = "diagnosticlogs"
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]
   }
-  target_resource_id         = azurerm_data_factory.data_factory.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  target_resource_id             = azurerm_data_factory.data_factory.id
+  log_analytics_workspace_id     = azurerm_log_analytics_workspace.log_analytics_workspace.id
   log_analytics_destination_type = "Dedicated"
 
   log {

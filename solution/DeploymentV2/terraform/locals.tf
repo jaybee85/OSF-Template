@@ -31,10 +31,10 @@ locals {
   purview_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-purview"
   purview_ir_app_reg_name      = (var.purview_ir_app_reg_name != "" ? var.purview_ir_app_reg_name : "ADS GoFast Purview Integration Runtime (${var.environment_tag})")
   jumphost_vm_name             = module.naming.virtual_machine.name
-  synapse_data_lake_name       = (var.synapse_data_lake_name != ""? var.synapse_data_lake_name : module.naming.data_lake_store.name_unique)
-  synapse_workspace_name       = (var.synapse_workspace_name != ""? var.synapse_workspace_name : "${var.prefix}${var.environment_tag}synw${var.app_name}")
-  synapse_dwpool_name          = (var.synapse_dwpool_name != ""? var.synapse_dwpool_name : "${var.prefix}${var.environment_tag}syndp${var.app_name}")
-  synapse_sppool_name          = (var.synapse_sppool_name != ""? var.synapse_sppool_name : "${var.prefix}${var.environment_tag}synsp${var.app_name}")
+  synapse_data_lake_name       = (var.synapse_data_lake_name != "" ? var.synapse_data_lake_name : module.naming.data_lake_store.name_unique)
+  synapse_workspace_name       = (var.synapse_workspace_name != "" ? var.synapse_workspace_name : "${var.prefix}${var.environment_tag}synw${var.app_name}")
+  synapse_dwpool_name          = (var.synapse_dwpool_name != "" ? var.synapse_dwpool_name : "${var.prefix}${var.environment_tag}syndp${var.app_name}")
+  synapse_sppool_name          = (var.synapse_sppool_name != "" ? var.synapse_sppool_name : "${var.prefix}${var.environment_tag}synsp${var.app_name}")
   synapse_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-synapse"
 
   tags = {
