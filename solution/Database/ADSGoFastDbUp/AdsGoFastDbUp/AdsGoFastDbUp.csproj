@@ -14,8 +14,14 @@
     <None Remove="0-1-0-beta\A-Journaled\009-SampleTasks_TaskMasterWaterMark.sql" />
     <None Remove="0-1-0-beta\A-Journaled\010-TaskTypeMapping_Update.sql" />
     <None Remove="0-1-0-beta\A-Journaled\011-SampleTasks_SourceAndTargetSystems_Updated.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\012-ConfigureDependencies.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\012-ConfigureDependenciesFromParams.sql" />
     <None Remove="0-1-0-beta\A-Journaled\013-CreateMSILogins.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\014-SourceAndTargetSystems_JsonSchema.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\015-TaskTypeMapping_Update_NewNaming.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\016-NewTaskTypeMapping_NoIR_Updated.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
     <None Remove="0-1-0-beta\B-Always\001-Schemas.sql" />
     <None Remove="0-1-0-beta\B-Always\002-Tables.sql" />
     <None Remove="0-1-0-beta\B-Always\003-StoredProcsEtc.sql" />
@@ -40,7 +46,13 @@
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\010-TaskTypeMapping_Update.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\011-SampleTasks_SourceAndTargetSystems_Updated.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\013-CreateMSILogins.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\012-ConfigureDependencies.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\012-ConfigureDependenciesFromParams.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\014-SourceAndTargetSystems_JsonSchema.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\015-TaskTypeMapping_Update_NewNaming.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\016-NewTaskTypeMapping_NoIR_Updated.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
   </ItemGroup>
 
   <ItemGroup>
