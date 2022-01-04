@@ -22,7 +22,7 @@
    "resources": [
       {
          "apiVersion": "2018-06-01",
-         "name": "[concat(parameters('dataFactoryName'), '/','GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
+         "name": "[concat(parameters('dataFactoryName'), '/','GPL_AzureBlobFS_Excel_AzureBlobFS_Parquet_', parameters('integrationRuntimeShortName'))]",
          "properties": {
             "activities": [
                {
@@ -37,15 +37,23 @@
                   "inputs": [
                      {
                         "parameters": {
-                           "Directory": {
-                              "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
-                           },
-                           "File": {
+                           "FileName": {
                               "type": "Expression",
                               "value": "@pipeline().parameters.TaskObject.Source.DataFileName"
                            },
-                           "FileSystem": {
+                           "FirstRowAsHeader": {
+                              "type": "Expression",
+                              "value": "@pipeline().parameters.TaskObject.Source.FirstRowAsHeader"
+                           },
+                           "RelativePath": {
+                              "type": "Expression",
+                              "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
+                           },
+                           "SheetName": {
+                              "type": "Expression",
+                              "value": "@pipeline().parameters.TaskObject.Source.SheetName"
+                           },
+                           "StorageAccountContainerName": {
                               "type": "Expression",
                               "value": "@pipeline().parameters.TaskObject.Source.System.Container"
                            },
@@ -54,7 +62,7 @@
                               "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
                            }
                         },
-                        "referenceName": "[concat('GDS_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
+                        "referenceName": "[concat('GDS_AzureBlobFS_Excel_', parameters('integrationRuntimeShortName'))]",
                         "type": "DatasetReference"
                      }
                   ],
@@ -62,15 +70,15 @@
                   "outputs": [
                      {
                         "parameters": {
-                           "Directory": {
-                              "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
-                           },
-                           "File": {
+                           "FileName": {
                               "type": "Expression",
                               "value": "@pipeline().parameters.TaskObject.Target.DataFileName"
                            },
-                           "FileSystem": {
+                           "RelativePath": {
+                              "type": "Expression",
+                              "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
+                           },
+                           "StorageAccountContainerName": {
                               "type": "Expression",
                               "value": "@pipeline().parameters.TaskObject.Target.System.Container"
                            },
@@ -79,7 +87,7 @@
                               "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                            }
                         },
-                        "referenceName": "[concat('GDS_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
+                        "referenceName": "[concat('GDS_AzureBlobFS_Parquet_', parameters('integrationRuntimeShortName'))]",
                         "type": "DatasetReference"
                      }
                   ],
@@ -102,28 +110,14 @@
                            "copyBehavior": "PreserveHierarchy",
                            "type": "AzureBlobFSWriteSettings"
                         },
-                        "type": "BinarySink"
+                        "type": "ParquetSink"
                      },
                      "source": {
                         "storeSettings": {
-                           "deleteFilesAfterCompletion": {
-                              "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.DeleteAfterCompletion"
-                           },
-                           "formatSettings": {
-                              "type": "BinaryReadSettings"
-                           },
-                           "recursive": {
-                              "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.Recursively"
-                           },
-                           "type": "AzureBlobFSReadSettings",
-                           "wildcardFileName": {
-                              "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.DataFileName"
-                           }
+                           "recursive": true,
+                           "type": "AzureBlobFSReadSettings"
                         },
-                        "type": "BinarySource"
+                        "type": "ExcelSource"
                      }
                   },
                   "userProperties": [ ]

@@ -7,9 +7,10 @@ resource "azuread_application" "web_reg" {
   owners       = [data.azurerm_client_config.current.object_id]
   web {
     homepage_url  = local.webapp_url
-    redirect_uris = ["${local.webapp_url}/signin-oidc"]
+    redirect_uris = ["${local.webapp_url}/signin-oidc", "https://localhost:44385/signin-oidc"]
     implicit_grant {
       access_token_issuance_enabled = false
+      id_token_issuance_enabled     = true
     }
   }
   app_role {
@@ -33,6 +34,7 @@ resource "azuread_application" "web_reg" {
 resource "azuread_service_principal" "web_sp" {
   count          = var.deploy_azure_ad_web_app_registration ? 1 : 0
   application_id = azuread_application.web_reg[0].application_id
+  owners         = [data.azurerm_client_config.current.object_id]
 }
 
 resource "azurerm_app_service" "web" {
@@ -51,7 +53,7 @@ resource "azurerm_app_service" "web" {
     ApplicationOptions__AdsGoFastTaskMetaDataDatabaseServer = "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net"
     ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = azurerm_mssql_database.web_db[0].name
 
-    ApplicationOptions__AppInsightsWorkspaceId  = azurerm_log_analytics_workspace.log_analytics_workspace.id
+    ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
     ApplicationOptions__LogAnalyticsWorkspaceId = azurerm_log_analytics_workspace.log_analytics_workspace.id
 
     AzureAdAuth__Domain   = var.domain

@@ -50,6 +50,6 @@ output "subscription_id" {
 output "purview_name" {
   value = local.purview_name
 }
-output "purview_sp_appid" {
-  value = azuread_service_principal.purview_ir[0].application_id
+output "purview_sp_name" {
+  value = local.purview_ir_app_reg_name
 }

@@ -21,7 +21,7 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-$environmentName = "staging" # currently supports (local, staging)
+$environmentName = "arkahna" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 $skipTerraformDeployment = $false
 $skipWebApps = $false
@@ -57,6 +57,8 @@ $subscription_id = terragrunt output --raw --terragrunt-config ./vars/$environme
 $resource_group_name = terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl resource_group_name
 $webapp_name= terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl webapp_name
 $functionapp_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl functionapp_name)
+$purview_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl purview_name)
+$purview_sp_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl purview_sp_name)
 $sqlserver_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl sqlserver_name)
 $blobstorage_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl blobstorage_name)
 $adlsstorage_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl adlsstorage_name)
@@ -177,54 +179,46 @@ else {
 
     # This has been updated to use the Azure CLI cred
     dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name
-}
 
-
-#----------------------------------------------------------------------------------------------------------------
-#   Update TaskTypeJson With Latest Versions
-#----------------------------------------------------------------------------------------------------------------
-# TODO: Move this into the DbUp tool
-# Get Access Token for SQL --Note that the deployment principal or user running locally will need rights on the database
-#------------------------------------------------------------------------------------------------------------
-if($skipDatabase) {
-    Write-Host "Skipping TaskTypeJson Update"    
-}
-else {
-    Write-Host "Updating TaskTypeJson"    
-    #Install Sql Server Module
-    if (Get-Module -ListAvailable -Name SqlServer) {
-        Write-Host "SqlServer Module exists"
-    } 
-    else {
-        Write-Host "Module does not exist.. installing.."
-        Install-Module -Name SqlServer -Force
-    }
-    Set-Location $deploymentFolderPath
-    Set-Location "../TaskTypeJson/"  
-
-    $token=$(az account get-access-token --resource=https://database.windows.net/ --query accessToken --output tsv)     
-    $targetserver = $sqlserver_name + ".database.windows.net"
-    
-    Get-ChildItem "." -Filter *.json | 
-    Foreach-Object {
-        $lsName = $_.BaseName 
-        $fileName = $_.FullName
-        $jsonobject = ($_ | Get-Content).Replace("'", "''")
-        $Name = $_.BaseName
-        $sql = "Update TaskTypeMapping
-        Set TaskMasterJsonSchema = new.TaskMasterJsonSchema
-        from TaskTypeMapping ttm 
-        inner join 
-        (
-            Select MappingName = N'$Name' , TaskMasterJsonSchema = N'$jsonobject'
-        ) new on ttm.MappingName = new.MappingName"
-        Invoke-Sqlcmd -ServerInstance "${targetserver},1433" -Database $metadatadb_name -AccessToken $token -Query $sql
+    # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
+    $SqlInstalled = Get-InstalledModule SqlServer
+    if($null -eq $SqlInstalled)
+    {
+        write-host "Installing SqlServer Module"
+        Install-Module -Name SqlServer -Scope CurrentUser -Force
     }
 
-    $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Disabled"
+    $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
+    $aadUsers =  @($datafactory_name, $purview_name, $purview_sp_name)
+
+    $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
+    foreach($database in $databases)
+    {
+        
+        foreach($user in $aadUsers)
+        {
+            $sqlcommand = "
+                    DROP USER IF EXISTS [$user] 
+                    CREATE USER [$user] FROM EXTERNAL PROVIDER;
+                    ALTER ROLE db_datareader ADD MEMBER [$user];
+                    ALTER ROLE db_datawriter ADD MEMBER [$user];
+                    GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
+                    GO
+            "
+
+            write-host "Granting MSI Privileges on $database DB to $user"
+            Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
+        }
+    }
+
+    $ddlCommand = "ALTER ROLE db_ddladmin ADD MEMBER [$datafactory_name];"
+    foreach($database in $databases)
+    {
+            write-host "Granting DDL Role on $database DB to $datafactory_name"
+            Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $ddlCommand   
+    }
 }
 
-#-
 
 
 #----------------------------------------------------------------------------------------------------------------
@@ -235,11 +229,11 @@ Set-Location "../SampleFiles/"
 Write-Host "Deploying Sample files"
 
 $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
-$result = az storage account update --resource-group $resource_group_name --name $blobstorage_name --default-action Allow
 
-
+$result = az storage container create --name "datalakelanding" --account-name $adlsstorage_name --auth-mode login
 $result = az storage container create --name "datalakeraw" --account-name $adlsstorage_name --auth-mode login
 $result = az storage container create --name "datalakeraw" --account-name $blobstorage_name --auth-mode login
+$result = az storage container create --name "transientin" --account-name $blobstorage_name --auth-mode login
 
 $files = Get-ChildItem -Name
 foreach ($file in $files) {
@@ -248,7 +242,6 @@ foreach ($file in $files) {
 }
 
 $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
-$result = az storage account update --resource-group $resource_group_name --name $blobstorage_name --default-action Deny
 
 Set-Location $deploymentFolderPath
 Write-Host "Finished"
