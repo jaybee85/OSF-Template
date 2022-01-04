@@ -25,6 +25,7 @@ namespace WebApplication.Models
         public virtual DbSet<AzureStorageChangeFeedCursor> AzureStorageChangeFeedCursor { get; set; }
         public virtual DbSet<AzureStorageListing> AzureStorageListing { get; set; }
         public virtual DbSet<DataFactory> DataFactory { get; set; }
+        public virtual DbSet<IntegrationRuntime> IntegrationRuntime { get; set; }
         public virtual DbSet<Execution> Execution { get; set; }
         public virtual DbSet<FrameworkTaskRunner> FrameworkTaskRunner { get; set; }
         public virtual DbSet<ScheduleInstance> ScheduleInstance { get; set; }
@@ -347,6 +348,14 @@ namespace WebApplication.Models
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<IntegrationRuntime>(entity =>
+            {
+                entity.Property(e => e.IntegrationRuntimeName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+            });
+
+
             modelBuilder.Entity<Execution>(entity =>
             {
                 entity.HasKey(e => e.ExecutionUid)
@@ -654,11 +663,6 @@ namespace WebApplication.Models
 
                 entity.Property(e => e.TargetType)
                     .IsRequired()
-                    .HasMaxLength(128);
-
-                entity.Property(e => e.TaskDatafactoryIr)
-                    .IsRequired()
-                    .HasColumnName("TaskDatafactoryIR")
                     .HasMaxLength(128);
 
                 entity.Property(e => e.TaskInstanceJsonSchema).IsUnicode(false);

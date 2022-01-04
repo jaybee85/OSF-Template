@@ -57,15 +57,6 @@ $("#TaskMasterJsonTargetType").change(function () {
     EnterStep4a();
 });
 
-$("#TaskDatafactoryIrSelect").change(function () {
-    EnterStep4a();
-});
-
-$("#TaskDatafactoryIrSelect").change(function () {
-    EnterStep4a();
-});
-
-
 const merge = (...arguments) => {
 
     // create a new object
@@ -272,32 +263,33 @@ function EnterStep4c() {
     GetTaskMasterJson_Target();
 
 
-    var validDatafactoryIrs = [];
-    $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.SourceType === SourceSubType && value.TargetType === TargetSubType) {
-            if (!validDatafactoryIrs.includes(value.TaskDatafactoryIr)) {
-                validDatafactoryIrs.push(value.TaskDatafactoryIr);
-            }
-        }
-    })
+    //var validDatafactoryIrs = [];
+    //$.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
+    //    if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.SourceType === SourceSubType && value.TargetType === TargetSubType) {
+    //        if (!validDatafactoryIrs.includes(value.TaskDatafactoryIr)) {
+    //            validDatafactoryIrs.push(value.TaskDatafactoryIr);
+    //        }
+    //    }
+    //})
 
-    //Populate Valid Target Sub Types
-    var currentDataFactoryIr = GetCurrentlySelectedDatafactoryIr();
-    $('#TaskDatafactoryIrSelect option').remove();
-    if (!currentDataFactoryIr)
-        $('#TaskDatafactoryIrSelect').append($('<option value=""></option>'));
+    ////Populate Valid Target Sub Types
+    //var currentDataFactoryIr = GetCurrentlySelectedDatafactoryIr();
+    //$('#TaskDatafactoryIrSelect option').remove();
+    //if (!currentDataFactoryIr)
+    //    $('#TaskDatafactoryIrSelect').append($('<option value=""></option>'));
 
-    $.each(validDatafactoryIrs, function (key, value) {
-        var opt = $('<option value="' + value + '">' + value + '</option>')
-        if (opt.val() == currentDataFactoryIr) {
-            opt.attr('selected', 'selected');
-        }
-        $('#TaskDatafactoryIrSelect').append(opt);
-    })
+    //$.each(validDatafactoryIrs, function (key, value) {
+    //    var opt = $('<option value="' + value + '">' + value + '</option>')
+    //    if (opt.val() == currentDataFactoryIr) {
+    //        opt.attr('selected', 'selected');
+    //    }
+    //    $('#TaskDatafactoryIrSelect').append(opt);
+    //})
 
-    if ($(':selected', $('#TaskDatafactoryIrSelect')).val()) {
-        CreateJsonEditor();
-    }
+    //if ($(':selected', $('#TaskDatafactoryIrSelect')).val()) {
+    //    CreateJsonEditor();
+    //}
+    CreateJsonEditor();
 }
 
 function EnterStep5() {
@@ -313,14 +305,14 @@ function CreateJsonEditor() {
     var SourceSystemType = GetCurrentlySelectedSourceSystem().SystemType;
     var TargetSubType = GetCurrentlySelectedTargetSubType();
     var SourceSubType = GetCurrentlySelectedSourceSubType();
-    var DatafactoryIr = GetCurrentlySelectedDatafactoryIr();
+    /*var DatafactoryIr = GetCurrentlySelectedDatafactoryIr();*/
 
     //Update DatafactoryIr in Form Input
-    $('#TaskDatafactoryIr').val(DatafactoryIr);
+    //$('#TaskDatafactoryIr').val(DatafactoryIr);
 
     var SelectedTaskTypeMapping;
     $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.TargetType === TargetSubType && value.SourceType === SourceSubType && value.TaskDatafactoryIr === DatafactoryIr) {
+        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.TargetType === TargetSubType && value.SourceType === SourceSubType) {
             SelectedTaskTypeMapping = value;
         }
     })
@@ -397,12 +389,12 @@ function GetCurrentlySelectedTargetSystem() {
     return Selected;
 }
 
-function GetCurrentlySelectedDatafactoryIr() {
-    var selected = $(':selected', $('#TaskDatafactoryIrSelect')).val();
-    if (!selected)
-        selected = $('#TaskDatafactoryIr').val();
-    return selected;
-}
+//function GetCurrentlySelectedDatafactoryIr() {
+//    var selected = $(':selected', $('#TaskDatafactoryIrSelect')).val();
+//    if (!selected)
+//        selected = $('#TaskDatafactoryIr').val();
+//    return selected;
+//}
 
 function GetCurrentlySelectedTargetSubType() {
     if (JSON.parse($('#TaskMasterJson').val()) === undefined) {

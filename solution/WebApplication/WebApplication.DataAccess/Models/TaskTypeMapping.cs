@@ -25,9 +25,6 @@ namespace WebApplication.Models
         [Display(Name = "Target Type")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please input a valid Target Type")]
         public string TargetType { get; set; }
-        [Display(Name = "Data Factory IR")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please input valid Data Factory")]
-        public string TaskDatafactoryIr { get; set; }
         [Display(Name = "Task Type Json")]
         public string TaskTypeJson { get; set; }
         [Display(Name = "Is Active")]

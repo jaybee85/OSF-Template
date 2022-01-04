@@ -57,7 +57,7 @@ namespace WebApplication.Controllers
         public IActionResult Create()
         {
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName");
-     TaskTypeMapping taskTypeMapping = new TaskTypeMapping();
+            TaskTypeMapping taskTypeMapping = new TaskTypeMapping();
             taskTypeMapping.ActiveYn = true;
             return View(taskTypeMapping);
         }
@@ -68,7 +68,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("TaskTypeMappingId,TaskTypeId,MappingType,MappingName,SourceSystemType,SourceType,TargetSystemType,TargetType,TaskDatafactoryIr,TaskTypeJson,ActiveYn,TaskMasterJsonSchema,TaskInstanceJsonSchema")] TaskTypeMapping taskTypeMapping)
+        public async Task<IActionResult> Create([Bind("TaskTypeMappingId,TaskTypeId,MappingType,MappingName,SourceSystemType,SourceType,TargetSystemType,TargetType,TaskTypeJson,ActiveYn,TaskMasterJsonSchema,TaskInstanceJsonSchema")] TaskTypeMapping taskTypeMapping)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexDataTable));
             }
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -99,7 +99,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskTypeMapping))
                 return new ForbidResult();
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -109,7 +109,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(int id, [Bind("TaskTypeMappingId,TaskTypeId,MappingType,MappingName,SourceSystemType,SourceType,TargetSystemType,TargetType,TaskDatafactoryIr,TaskTypeJson,ActiveYn,TaskMasterJsonSchema,TaskInstanceJsonSchema")] TaskTypeMapping taskTypeMapping)
+        public async Task<IActionResult> Edit(int id, [Bind("TaskTypeMappingId,TaskTypeId,MappingType,MappingName,SourceSystemType,SourceType,TargetSystemType,TargetType,TaskTypeJson,ActiveYn,TaskMasterJsonSchema,TaskInstanceJsonSchema")] TaskTypeMapping taskTypeMapping)
         {
             if (id != taskTypeMapping.TaskTypeMappingId)
             {
@@ -140,7 +140,7 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(IndexDataTable));
             }
-        ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -205,7 +205,6 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'TargetSystemType', 'name':'TargetSystemType', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'SourceType', 'name':'TaskMasterJsonSourceType', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TargetType', 'name':'TaskMasterJsonTargetType', 'autoWidth':true }"));
-            cols.Add(JObject.Parse("{ 'data':'TaskDatafactoryIr', 'name':'DataFactoryIr', 'autoWidth':true }"));
 
             HumanizeColumns(cols);
 
@@ -370,7 +369,7 @@ namespace WebApplication.Controllers
             }
 
 
-        RetVal:
+            RetVal:
             if (taskTypeMappings.Count == 0)
             {
                 return NotFound();

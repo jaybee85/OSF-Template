@@ -89,7 +89,7 @@ namespace WebApplication.Controllers
                 await _context.SaveChangesAsync();
                 return Redirect(returnUrl);
             }
-        ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
+            ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
             return View(taskGroup);
         }
 
@@ -108,7 +108,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskGroup))
                 return new ForbidResult();
-        ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
+            ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
             ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View(taskGroup);
         }
@@ -151,7 +151,7 @@ namespace WebApplication.Controllers
 
                 return Redirect(returnUrl);
             }
-        ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
+            ViewData["SubjectAreaId"] = new SelectList(_context.SubjectArea.OrderBy(x=>x.SubjectAreaId), "SubjectAreaId", "SubjectAreaId", taskGroup.SubjectAreaId);
             return View(taskGroup);
         }
 

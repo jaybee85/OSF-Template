@@ -114,12 +114,12 @@
                                 <label class="control-label">Target Sub-Type</label>
                                 <select id="TaskMasterJsonTargetType"></select>
                             </div>
-                            <div class="col">
+                            @*<div class="col">
                                 <label class="control-label">Data Factory IR</label>
                                 <select id="TaskDatafactoryIrSelect"></select>
                                 <span asp-validation-for="TaskDatafactoryIr" class="text-danger"></span>
                                 @Html.HiddenFor(x => x.TaskDatafactoryIr)
-                            </div>
+                            </div>*@
                         </div>
                     </div>
                     <br />
@@ -144,6 +144,7 @@
                 <div class="row">
                     <div class="mx-auto">
                         <div class="form-group">
+                            <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                             <label asp-for="DegreeOfCopyParallelism" class="control-label"></label>
                             <input asp-for="DegreeOfCopyParallelism" class="form-control" />
                             <span asp-validation-for="DegreeOfCopyParallelism" class="text-danger"></span>
@@ -153,9 +154,9 @@
                                 <input class="form-check-input" asp-for="AllowMultipleActiveInstances" /> @Html.DisplayNameFor(model => model.AllowMultipleActiveInstances)
                             </label>
                         </div>
-                        <div class="form-group" style="display:none">
+                        <div class="form-group">
                             <label asp-for="TaskDatafactoryIr" class="control-label"></label>
-                            <select asp-for="TaskDatafactoryIr" class="form-control" asp-items="ViewBag.TaskDatafactoryIr"></select>
+                            <select asp-for="TaskDatafactoryIr" class="form-control" asp-items="ViewBag.IntegrationRuntimes"></select>
                             <span asp-validation-for="TaskDatafactoryIr" class="text-danger"></span>
                         </div>
 
