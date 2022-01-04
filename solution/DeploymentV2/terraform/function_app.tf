@@ -1,9 +1,11 @@
 resource "random_uuid" "function_app_reg_role_id" {}
 
+# This is used for auth in the Azure Function
 resource "azuread_application" "function_app_reg" {
-  count        = var.deploy_azure_ad_function_app_registration ? 1 : 0
-  owners       = [data.azurerm_client_config.current.object_id]
-  display_name = local.aad_functionapp_name
+  count           = var.deploy_azure_ad_function_app_registration ? 1 : 0
+  owners          = [data.azurerm_client_config.current.object_id]
+  identifier_uris = ["api://${local.functionapp_name}"]
+  display_name    = local.aad_functionapp_name
   web {
     homepage_url = local.functionapp_url
     implicit_grant {
@@ -11,7 +13,7 @@ resource "azuread_application" "function_app_reg" {
     }
   }
   app_role {
-    allowed_member_types = ["Application"]
+    allowed_member_types = ["Application", "User"]
     id                   = random_uuid.function_app_reg_role_id.result
     description          = "Used to applications to call the ADS Go Fast functions"
     display_name         = "FunctionAPICaller"
@@ -25,6 +27,34 @@ resource "azuread_application" "function_app_reg" {
       type = "Scope"
     }
   }
+}
+
+resource "azuread_service_principal" "function_app" {
+  count            = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  owners           = [data.azurerm_client_config.current.object_id]
+  application_id   = azuread_application.function_app_reg[0].application_id
+}
+
+# This allows the function app MSI to be able to call/request the Azure function App reg
+resource "azuread_app_role_assignment" "func_msi_app_role" {
+  count               = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  app_role_id         = random_uuid.function_app_reg_role_id.result
+  principal_object_id = azurerm_function_app.function_app.identity[0].principal_id
+  resource_object_id  = azuread_service_principal.function_app[0].object_id
+}
+
+# This allows the function app SP to be able to call/request the Azure function App reg / SP
+# This allows us to debug locally by using the app reg details for both auth modes
+resource "azuread_app_role_assignment" "func_sp_app_role" {
+  count               = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  app_role_id         = random_uuid.function_app_reg_role_id.result
+  principal_object_id = azuread_service_principal.function_app[0].object_id
+  resource_object_id  = azuread_service_principal.function_app[0].object_id
+}
+
+resource "azuread_application_password" "function_app" {
+  count           = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  application_object_id = azuread_application.function_app_reg[0].object_id
 }
 
 resource "azurerm_function_app" "function_app" {
@@ -55,7 +85,7 @@ resource "azurerm_function_app" "function_app" {
       for_each = var.is_vnet_isolated ? [1] : []
       content {
         priority                  = 110
-        name                      = "Allow Private Link App Service"
+        name                      = "Allow App Service Subnet"
         action                    = "Allow"
         virtual_network_subnet_id = azurerm_subnet.app_service_subnet[0].id
       }
@@ -66,14 +96,14 @@ resource "azurerm_function_app" "function_app" {
         priority    = 120
         name        = "Allow Azure Service Tag"
         action      = "Allow"
-        service_tag = "AzurePortal"
+        service_tag = "AzureCloud"
       }
     }
     dynamic "ip_restriction" {
       for_each = var.is_vnet_isolated ? [1] : []
       content {
         priority    = 130
-        name        = "Allow Private Link Subnet"
+        name        = "Allow Data Factory Service Tag"
         action      = "Allow"
         service_tag = "DataFactory"
       }
@@ -92,12 +122,12 @@ resource "azurerm_function_app" "function_app" {
     ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseServer = "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net"
     ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseName   = azurerm_mssql_database.web_db[0].name
     ApplicationOptions__ServiceConnections__CoreFunctionsURL                    = local.functionapp_url
-    ApplicationOptions__ServiceConnections__AppInsightsWorkspaceId              = azurerm_log_analytics_workspace.log_analytics_workspace.id
+    ApplicationOptions__ServiceConnections__AppInsightsWorkspaceId              = azurerm_application_insights.app_insights[0].app_id
 
     AzureAdAzureServicesViaAppReg__Domain       = var.domain
     AzureAdAzureServicesViaAppReg__TenantId     = var.tenant_id
-    AzureAdAzureServicesViaAppReg__Audience     = "api://${azuread_application.function_app_reg[0].application_id}"
-    AzureAdAzureServicesViaAppReg__ClientSecret = null
+    AzureAdAzureServicesViaAppReg__Audience     = "api://${local.functionapp_name}"
+    AzureAdAzureServicesViaAppReg__ClientSecret = azuread_application_password.function_app[0].value
     AzureAdAzureServicesViaAppReg__ClientId     = azuread_application.function_app_reg[0].application_id
 
     #Setting to null as we are using MSI

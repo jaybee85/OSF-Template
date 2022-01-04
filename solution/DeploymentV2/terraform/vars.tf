@@ -54,6 +54,12 @@ variable "domain" {
   description = "The AAD domain"
   type        = string
 }
+//Onprem linked services and pipelines won't be registered until you complete the IR registration and set this to true
+variable "is_onprem_datafactory_ir_registered" {
+  description = "Are all on-premise Integration runtimes configured?"
+  default     = false
+  type        = bool
+}
 
 variable "is_vnet_isolated" {
   description = "Whether to deploy the resources as vnet attached / private linked"
@@ -403,7 +409,7 @@ variable "app_service_sku" {
 
 variable "synapse_sku" {
   description = "The sku/scale of the Synapse SQL Pool"
-  default     = "DW100c"
+  default = "DW100c"
   type        = string
   validation {
     condition     = contains(["DW100c", "DW200c", "DW300c", "DW400c", "DW500c", "DW1000c", "DW1500c", "DW2000c", "DW2500c", "DW3000c"], var.synapse_sku)

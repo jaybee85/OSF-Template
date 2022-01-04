@@ -1,15 +1,8 @@
 
 
 resource "random_password" "database" {
-  length      = 32
-  min_numeric = 1
-  min_upper   = 1
-  min_lower   = 1
-  min_special = 1
-  special     = true
-  lower       = true
-  number      = true
-  upper       = true
+  length  = 32
+  special = false
 }
 
 # Database Server
@@ -21,7 +14,7 @@ resource "azurerm_mssql_server" "sqlserver" {
   version                       = "12.0"
   administrator_login           = var.sql_admin_username
   administrator_login_password  = random_password.database.result
-  public_network_access_enabled = false
+  public_network_access_enabled = var.is_vnet_isolated == false || var.delay_private_access
   minimum_tls_version           = "1.2"
 
   azuread_administrator {

@@ -18,3 +18,10 @@ resource "azurerm_role_assignment" "app_insights_web_app" {
   role_definition_name = "Contributor"
   principal_id         = azurerm_app_service.web[0].identity[0].principal_id
 }
+
+resource "azurerm_role_assignment" "app_insights_function_app" {
+  count                = (var.deploy_app_insights ? 1 : 0)
+  scope                = azurerm_application_insights.app_insights[0].id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+}

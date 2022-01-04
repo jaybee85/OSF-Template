@@ -167,6 +167,6 @@ resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
   key_vault_id = azurerm_key_vault.app_vault.id
   depends_on = [
     azurerm_key_vault_access_policy.cicd_access
-  ]
+  ]  
 }
 

@@ -6,30 +6,29 @@
          "metadata": "The name of the data factory",
          "type": "String"
       },
-      "integrationRuntimeShortName": {
-         "metadata": "The short name of the integration runtime this pipeline uses",
-         "type": "String"
-      },
       "integrationRuntimeName": {
          "metadata": "The name of the integration runtime this pipeline uses",
          "type": "String"
       },
-      "sharedKeyVaultUri" : {
+      "integrationRuntimeShortName": {
+         "metadata": "The short name of the integration runtime this pipeline uses",
+         "type": "String"
+      },
+      "sharedKeyVaultUri": {
          "metadata": "The uri of the shared KeyVault",
          "type": "String"
       }
-      
    },
    "resources": [
       {
          "apiVersion": "2018-06-01",
-         "name": "[concat(parameters('dataFactoryName'), '/','GPL_AzureBlobFS_AzureBlobFS_', parameters('integrationRuntimeShortName'))]",
+         "name": "[concat(parameters('dataFactoryName'), '/','GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
          "properties": {
             "activities": [
                {
                   "dependsOn": [
                      {
-                        "activity": "Pipeline AF Log - AzureBlobFS to AzureBlobFS Start",
+                        "activity": "Copy AzureBlobFS to AzureBlobFS Started",
                         "dependencyConditions": [
                            "Succeeded"
                         ]
@@ -48,11 +47,11 @@
                            },
                            "FileSystem": {
                               "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer"
+                              "value": "@pipeline().parameters.TaskObject.Source.System.Container"
                            },
                            "StorageAccountEndpoint": {
                               "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName"
+                              "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
                            }
                         },
                         "referenceName": "[concat('GDS_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
@@ -73,11 +72,11 @@
                            },
                            "FileSystem": {
                               "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                              "value": "@pipeline().parameters.TaskObject.Target.System.Container"
                            },
                            "StorageAccountEndpoint": {
                               "type": "Expression",
-                              "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                              "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
                            }
                         },
                         "referenceName": "[concat('GDS_AzureBlobFS_Binary_', parameters('integrationRuntimeShortName'))]",
@@ -106,13 +105,13 @@
                         "type": "BinarySink"
                      },
                      "source": {
-                        "formatSettings": {
-                           "type": "BinaryReadSettings"
-                        },
                         "storeSettings": {
                            "deleteFilesAfterCompletion": {
                               "type": "Expression",
                               "value": "@pipeline().parameters.TaskObject.Source.DeleteAfterCompletion"
+                           },
+                           "formatSettings": {
+                              "type": "BinaryReadSettings"
                            },
                            "recursive": {
                               "type": "Expression",
@@ -138,7 +137,7 @@
                         ]
                      }
                   ],
-                  "name": "Pipeline AF Log - AzureBlobFS to AzureBlobFS Failed",
+                  "name": "Copy AzureBlobFS to AzureBlobFS Failed",
                   "type": "ExecutePipeline",
                   "typeProperties": {
                      "parameters": {
@@ -150,7 +149,7 @@
                         "Method": "Post"
                      },
                      "pipeline": {
-                        "referenceName": "GPL_AzureFunction_Common",
+                        "referenceName": "SPL_AzureFunction",
                         "type": "PipelineReference"
                      },
                      "waitOnCompletion": false
@@ -159,19 +158,19 @@
                },
                {
                   "dependsOn": [ ],
-                  "name": "Pipeline AF Log - AzureBlobFS to AzureBlobFS Start",
+                  "name": "Copy AzureBlobFS to AzureBlobFS Started",
                   "type": "ExecutePipeline",
                   "typeProperties": {
                      "parameters": {
                         "Body": {
                            "type": "Expression",
-                           "value": "@json('{  \"TaskInstanceId\":\"@string(pipeline().parameters.TaskObject.TaskInstanceId)\",  \"ExecutionUid\":\"@string(pipeline().parameters.TaskObject.ExecutionUid)\",  \"RunId\":\"@string(pipeline().RunId)\",  \"LogTypeId\":3,  \"LogSource\":\"ADF\",  \"ActivityType\":\"Copy Blob to Blob\",  \"StartDateTimeOffSet\":\"@string(pipeline().TriggerTime)\",  \"Status\":\"Started\"}')"
+                           "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":3,\"LogSource\":\"ADF\",\"ActivityType\":\"Copy Blob to Blob\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"Status\":\"Started\"}'))"
                         },
                         "FunctionName": "Log",
                         "Method": "Post"
                      },
                      "pipeline": {
-                        "referenceName": "GPL_AzureFunction_Common",
+                        "referenceName": "SPL_AzureFunction",
                         "type": "PipelineReference"
                      },
                      "waitOnCompletion": false
@@ -187,7 +186,7 @@
                         ]
                      }
                   ],
-                  "name": "Pipeline AF Log - AzureBlobFS to AzureBlobFS Succeed",
+                  "name": "Copy AzureBlobFS to AzureBlobFS Succeed",
                   "type": "ExecutePipeline",
                   "typeProperties": {
                      "parameters": {
@@ -199,22 +198,77 @@
                         "Method": "Post"
                      },
                      "pipeline": {
-                        "referenceName": "GPL_AzureFunction_Common",
+                        "referenceName": "SPL_AzureFunction",
                         "type": "PipelineReference"
                      },
                      "waitOnCompletion": false
+                  },
+                  "userProperties": [ ]
+               },
+               {
+                  "dependsOn": [
+                     {
+                        "activity": "Copy AzureBlobStorage to AzureBlobStorage Failed",
+                        "dependencyConditions": [
+                           "Completed"
+                        ]
+                     }
+                  ],
+                  "name": "Pipeline AF Log - Failed",
+                  "type": "ExecutePipeline",
+                  "typeProperties": {
+                     "parameters": {
+                        "Body": {
+                           "type": "Expression",
+                           "value": "@json(\r\n    concat('{\"TaskInstanceId\":\"', \r\n        string(pipeline().parameters.TaskObject.TaskInstanceId), \r\n        '\",\"ExecutionUid\":\"',\r\n         string(pipeline().parameters.TaskObject.ExecutionUid), \r\n         '\",\"RunId\":\"', \r\n         string(pipeline().RunId), \r\n         '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"'\r\n         , string(pipeline().TriggerTime), \r\n         '\",\"EndDateTimeOffSet\":\"', \r\n         string(utcnow()), '\",\"Comment\":\"', \r\n         concat(pipeline().Pipeline, 'Failed'), \r\n         '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \r\n         string(pipeline().parameters.TaskObject.NumberOfRetries),\r\n         '\"}'\r\n    )\r\n)"
+                        },
+                        "FunctionName": "Log",
+                        "Method": "Post"
+                     },
+                     "pipeline": {
+                        "referenceName": "SPL_AzureFunction",
+                        "type": "PipelineReference"
+                     },
+                     "waitOnCompletion": true
+                  },
+                  "userProperties": [ ]
+               },
+               {
+                  "dependsOn": [
+                     {
+                        "activity": "Copy AzureBlobStorage to AzureBlobStorage Succeed",
+                        "dependencyConditions": [
+                           "Completed"
+                        ]
+                     }
+                  ],
+                  "name": "Pipeline AF Log - Succeed",
+                  "type": "ExecutePipeline",
+                  "typeProperties": {
+                     "parameters": {
+                        "Body": {
+                           "type": "Expression",
+                           "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', string(pipeline().parameters.TaskObject.NumberOfRetries),'\"}'))"
+                        },
+                        "FunctionName": "Log",
+                        "Method": "Post"
+                     },
+                     "pipeline": {
+                        "referenceName": "SPL_AzureFunction",
+                        "type": "PipelineReference"
+                     },
+                     "waitOnCompletion": true
                   },
                   "userProperties": [ ]
                }
             ],
             "annotations": [ ],
             "folder": {
-               "name": "[concat('ADS Go Fast/Data Movement/', parameters('integrationRuntimeName'))]"
+               "name": "[concat('ADS Go Fast/Data Movement/', parameters('integrationRuntimeShortName'))]"
             },
             "lastPublishTime": "2020-08-05T04:14:00Z",
             "parameters": {
                "TaskObject": {
-                  "defaultValue": "[concat('[[   {     \"TaskInstanceId\": 2,     \"TaskMasterId\": 1,     \"TaskStatus\": \"Untried\",     \"TaskType\": \"AzureStorageToAzureStorage_IRA\",     \"Enabled\": true,     \"ExecutionUid\": 1,     \"KeyVaultBaseUrl\": \"', parameters('sharedKeyVaultUri'), '\",     \"Source\": {       \"StorageAccountName\": \"https://adsgofastdatalakeadls.dfs.core.windows.net\",       \"Type\": \"ADLS\",       \"StorageAccountContainer\": \"datalakelanding\",       \"StorageAccountAccessMethod\": \"MSI\",       \"StorageAccountSASUriKeyVaultSecretName\": null,       \"RelativePath\": \"/Unprocessed/adsgofastdatakakeaccelsqlsvr/AWSample/SalesLT/2020/06/08/17/\",       \"DataFileName\": \"Customer_Data.parquet\",       \"SchemaFileName\": \"Customer_Schema.json\"     },     \"Target\": {       \"StorageAccountName\": \"https://adsgofastdatalakeadls.dfs.core.windows.net\",       \"Type\": \"ADLS\",       \"StorageAccountContainer\": \"datalakelanding\",       \"StorageAccountAccessMethod\": \"MSI\",       \"StorageAccountSASUriKeyVaultSecretName\": null,       \"RelativePath\": \"/Processed/adsgofastdatakakeaccelsqlsvr/AWSample/SalesLT/2020/06/08/17/\",       \"DataFileName\": \"Customer_Data.parquet\",       \"SchemaFileName\": \"Customer_Schema.json\"     },     \"DataFactory\": {       \"Id\": 1,       \"Name\": \"adsgofastdatakakeacceladf\",       \"ResourceGroup\": \"AdsGoFastDataLakeAccel\",       \"SubscriptionId\": \"035a1364-f00d-48e2-b582-4fe125905ee3\",     }   } ]]')]",
                   "type": "object"
                }
             }

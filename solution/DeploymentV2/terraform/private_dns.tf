@@ -125,7 +125,7 @@ resource "azurerm_private_dns_zone" "synapse_gateway" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse_gateway" {
-  count                 = (var.is_vnet_isolated && var.deploy_sentinel ? 1 : 0)
+  count                 = (var.is_vnet_isolated && var.deploy_sentinel  ? 1 : 0)
   name                  = "${local.vnet_name}-synapsegateway"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.synapse_gateway[0].name
@@ -133,13 +133,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_gateway" {
 }
 
 resource "azurerm_private_dns_zone" "synapse_sql" {
-  count               = (var.is_vnet_isolated && var.deploy_sentinel ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.deploy_sentinel  ? 1 : 0)
   name                = "privatelink.sql.azuresynapse.net"
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse_sql" {
-  count                 = (var.is_vnet_isolated && var.deploy_sentinel ? 1 : 0)
+  count                 = (var.is_vnet_isolated && var.deploy_sentinel  ? 1 : 0)
   name                  = "${local.vnet_name}-synapsesql"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.synapse_sql[0].name
@@ -147,13 +147,13 @@ resource "azurerm_private_dns_zone_virtual_network_link" "synapse_sql" {
 }
 
 resource "azurerm_private_dns_zone" "synapse_studio" {
-  count               = (var.is_vnet_isolated && var.deploy_sentinel ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.deploy_sentinel  ? 1 : 0)
   name                = "privatelink.dev.azuresynapse.net"
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "synapse_studio" {
-  count                 = (var.is_vnet_isolated && var.deploy_sentinel ? 1 : 0)
+  count                 = (var.is_vnet_isolated && var.deploy_sentinel  ? 1 : 0)
   name                  = "${local.vnet_name}-synapsestudio"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.synapse_studio[0].name

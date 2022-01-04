@@ -2,13 +2,13 @@
 # Workspace
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_storage_data_lake_gen2_filesystem" "dlfs" {
-  count              = var.deploy_adls && var.deploy_synapse ? 1 : 0
+  count = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name               = local.synapse_data_lake_name
   storage_account_id = azurerm_storage_account.adls[0].id
 }
 
 resource "azurerm_synapse_workspace" "synapse" {
-  count                                = var.deploy_adls && var.deploy_synapse ? 1 : 0
+  count = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name                                 = local.synapse_workspace_name
   resource_group_name                  = var.resource_group_name
   location                             = var.resource_location
@@ -33,24 +33,24 @@ resource "azurerm_synapse_workspace" "synapse" {
 # SQL Dedicated Pool
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_sql_pool" "synapse_sql_pool" {
-  count                = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sqlpool ? 1 : 0
+  count = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sqlpool ? 1 : 0    
   name                 = local.synapse_workspace_name
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   sku_name             = var.synapse_sku
   create_mode          = "Default"
-  tags                 = local.tags
+  tags = local.tags
   lifecycle {
     ignore_changes = [
       tags
     ]
-  }
+  }  
 }
 
 # --------------------------------------------------------------------------------------------------------------------
 # Spark Pool
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
-  count                = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sparkpool ? 1 : 0
+  count = var.deploy_adls && var.deploy_synapse && var.deploy_synapse_sparkpool ? 1 : 0    
   name                 = local.synapse_sppool_name
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   node_size_family     = "MemoryOptimized"
@@ -70,7 +70,7 @@ resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
     ignore_changes = [
       tags
     ]
-  }
+  }  
 }
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -88,7 +88,7 @@ resource "azurerm_synapse_firewall_rule" "cicd" {
 # Synapse Workspace Firewall Rules (Allow Public Access)
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_firewall_rule" "public_access" {
-  count                = var.deploy_adls && var.deploy_synapse && var.allow_public_access_to_synapse_studio ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.allow_public_access_to_synapse_studio? 1 : 0
   name                 = "AllowAll"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   start_ip_address     = "0.0.0.0"
@@ -117,6 +117,10 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   target_resource_id   = azurerm_storage_account.adls[0].id
   subresource_name     = "dfs"
+  // Because we deploy synapse in private (no public access) we only propose to create/destroy but never update
+  lifecycle {
+    ignore_changes = all
+  }
   depends_on = [
     azurerm_synapse_firewall_rule.cicd
   ]
@@ -126,7 +130,7 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
 # Network Settings to allow inbound private link traffic to the Synapse studio
 # https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-connect-to-workspace-from-restricted-network
 resource "azurerm_synapse_private_link_hub" "hub" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                = "${local.synapse_workspace_name}plinkhub"
   resource_group_name = var.resource_group_name
   location            = var.resource_location
@@ -134,7 +138,7 @@ resource "azurerm_synapse_private_link_hub" "hub" {
 
 
 resource "azurerm_private_endpoint" "synapse_web" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                = "${local.synapse_workspace_name}-web-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -161,7 +165,7 @@ resource "azurerm_private_endpoint" "synapse_web" {
 }
 
 resource "azurerm_private_endpoint" "synapse_dev" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                = "${local.synapse_workspace_name}-dev-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -188,7 +192,7 @@ resource "azurerm_private_endpoint" "synapse_dev" {
 }
 
 resource "azurerm_private_endpoint" "synapse_sql" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                = "${local.synapse_workspace_name}-sql-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -215,7 +219,7 @@ resource "azurerm_private_endpoint" "synapse_sql" {
 }
 
 resource "azurerm_private_endpoint" "synapse_sqlondemand" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
   name                = "${local.synapse_workspace_name}-sqld-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -249,7 +253,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
   count = var.deploy_adls && var.deploy_synapse ? 1 : 0
-  name  = "diagnosticlogs"
+  name                           = "diagnosticlogs"
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]
@@ -296,7 +300,7 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
       days    = 0
       enabled = true
     }
-  }
+  }   
   log {
     category = "IntegrationTriggerRuns"
     enabled  = true
@@ -304,7 +308,7 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
       days    = 0
       enabled = true
     }
-  }
+  }     
 
   metric {
     category = "AllMetrics"
