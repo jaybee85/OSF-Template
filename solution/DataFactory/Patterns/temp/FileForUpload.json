@@ -1,0 +1,27 @@
+  {
+  "TaskMasterName": "AdventureWorks2017 {@TableSchema@}.{@TableName@} Extract to Data Lake",
+  "TaskTypeId": 3,
+  "TaskGroupId": 3,
+  "ScheduleMasterId": 2,
+  "SourceSystemId": 6,
+  "TargetSystemId": 3,
+  "DegreeOfCopyParallelism": 1,
+  "AllowMultipleActiveInstances": 0,
+  "TaskDatafactoryIR": "OnP SH IR",
+  "Source": {
+      "Type": "Table",
+      "IncrementalType": "Full",
+      "ExtractionSQL": "",
+      "TableSchema": "{@TableSchema@}",
+      "TableName": "{@TableName@}"
+  },
+  "Target": {
+      "Type": "Parquet",
+      "RelativePath": "AdventureWorks2017/{@TableSchema@}/{@TableName@}/{yyyy}/{dd}/{hh}/",
+      "DataFileName": "{@TableSchema@}.{@TableName@}.parquet",
+      "SchemaFileName": "{@TableSchema@}.{@TableName@}.json"
+  },
+  "ActiveYN": 1,
+  "DependencyChainTag": "{@TableSchema@}.{@TableName@}",
+  "DataFactoryId":1
+} 
