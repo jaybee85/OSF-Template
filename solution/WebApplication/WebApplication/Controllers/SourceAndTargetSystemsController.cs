@@ -77,7 +77,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("SystemId,SystemName,SystemType,SystemDescription,SystemServer,SystemAuthType,SystemUserName,SystemSecretName,SystemKeyVaultBaseUrl,SystemJson,ActiveYn")] SourceAndTargetSystems sourceAndTargetSystems)
+        public async Task<IActionResult> Create([Bind("SystemId,SystemName,SystemType,SystemDescription,SystemServer,SystemAuthType,SystemUserName,SystemSecretName,SystemKeyVaultBaseUrl,SystemJson,ActiveYn,IsExternal")] SourceAndTargetSystems sourceAndTargetSystems)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, [Bind("SystemId,SystemName,SystemType,SystemDescription,SystemServer,SystemAuthType,SystemUserName,SystemSecretName,SystemKeyVaultBaseUrl,SystemJson,ActiveYn")] SourceAndTargetSystems sourceAndTargetSystems)
+        public async Task<IActionResult> Edit(long id, [Bind("SystemId,SystemName,SystemType,SystemDescription,SystemServer,SystemAuthType,SystemUserName,SystemSecretName,SystemKeyVaultBaseUrl,SystemJson,ActiveYn,IsExternal")] SourceAndTargetSystems sourceAndTargetSystems)
         {
             if (id != sourceAndTargetSystems.SystemId)
             {
