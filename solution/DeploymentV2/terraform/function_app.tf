@@ -145,6 +145,9 @@ resource "azurerm_function_app" "function_app" {
       app_settings["SCM_DO_BUILD_DURING_DEPLOYMENT"]
     ]
   }
+  depends_on = [
+    azurerm_private_endpoint.storage_private_endpoint_with_dns
+  ]
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration_func" {

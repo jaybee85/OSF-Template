@@ -16,7 +16,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   sql_administrator_login              = var.synapse_sql_login
   sql_administrator_login_password     = var.synapse_sql_password
   sql_identity_control_enabled         = true
-  public_network_access_enabled        = var.is_vnet_isolated == false || var.delay_private_access
+  public_network_access_enabled        = ((var.is_vnet_isolated == false) || (var.delay_private_access == true))
   managed_virtual_network_enabled      = true
   managed_resource_group_name          = local.synapse_resource_group_name
   purview_id                           = var.deploy_purview ? azurerm_purview_account.purview[0].id : null
