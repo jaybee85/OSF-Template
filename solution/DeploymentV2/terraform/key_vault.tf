@@ -149,6 +149,9 @@ resource "azurerm_monitor_diagnostic_setting" "app_vault_diagnostic_logs" {
 data "azurerm_function_app_host_keys" "function_app_host_key" {
   name                = azurerm_function_app.function_app.name
   resource_group_name = var.resource_group_name
+  depends_on = [
+    azurerm_app_service_virtual_network_swift_connection.vnet_integration_func
+  ]
 }
 
 
@@ -157,7 +160,8 @@ resource "azurerm_key_vault_secret" "function_app_key" {
   value        = data.azurerm_function_app_host_keys.function_app_host_key.default_function_key
   key_vault_id = azurerm_key_vault.app_vault.id
   depends_on = [
-    azurerm_key_vault_access_policy.cicd_access
+    azurerm_key_vault_access_policy.cicd_access,
+    azurerm_app_service_virtual_network_swift_connection.vnet_integration_func
   ]
 }
 
