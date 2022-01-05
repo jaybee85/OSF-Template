@@ -127,7 +127,7 @@ resource "azurerm_function_app" "function_app" {
     AzureAdAzureServicesViaAppReg__Domain       = var.domain
     AzureAdAzureServicesViaAppReg__TenantId     = var.tenant_id
     AzureAdAzureServicesViaAppReg__Audience     = "api://${local.functionapp_name}"
-    AzureAdAzureServicesViaAppReg__ClientSecret = azuread_application_password.function_app[0].value
+    AzureAdAzureServicesViaAppReg__ClientSecret = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.app_vault.name};SecretName=AzureFunctionClientSecret)"
     AzureAdAzureServicesViaAppReg__ClientId     = azuread_application.function_app_reg[0].application_id
 
     #Setting to null as we are using MSI
