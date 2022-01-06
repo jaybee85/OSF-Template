@@ -110,20 +110,6 @@ module "purview_ingestion_private_endpoints" {
 
 }
 
-# Grant curator so that the ADF can submit lineage into purview
-resource "azurerm_role_assignment" "purview_curator_adf" {
-  count                = var.deploy_purview ? 1 : 0
-  scope                = azurerm_purview_account.purview[0].id
-  role_definition_name = "Purview Data Curator (Legacy)"
-  principal_id         = azurerm_data_factory.data_factory.identity[0].principal_id
-}
 
-# Grant curator so that  Synapse can submit lineage into purview
-resource "azurerm_role_assignment" "purview_curator_synapse" {
-  count                = var.deploy_purview && var.deploy_synapse ? 1 : 0
-  scope                = azurerm_purview_account.purview[0].id
-  role_definition_name = "Purview Data Curator (Legacy)"
-  principal_id         = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
-}
 
 

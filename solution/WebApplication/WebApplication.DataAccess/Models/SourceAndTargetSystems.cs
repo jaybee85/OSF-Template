@@ -30,5 +30,7 @@ namespace WebApplication.Models
         public string SystemJson { get; set; }
         [Display(Name = "Is Active")]
         public bool ActiveYn { get; set; }
+        [Display(Name = "Is External")]
+        public bool IsExternal { get; set; }
     }
 }

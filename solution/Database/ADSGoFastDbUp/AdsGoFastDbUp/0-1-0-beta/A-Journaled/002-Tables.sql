@@ -323,6 +323,7 @@ CREATE TABLE [dbo].[SourceAndTargetSystems] (
     [SystemKeyVaultBaseUrl] NVARCHAR (500)  NULL,
     [SystemJSON]            NVARCHAR (4000) NULL,
     [ActiveYN]              BIT             NOT NULL,
+    [IsExternal]            BIT             NOT NULL,
     PRIMARY KEY CLUSTERED ([SystemId] ASC)
 );
 

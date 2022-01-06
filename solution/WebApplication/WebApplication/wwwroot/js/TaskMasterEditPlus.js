@@ -1,6 +1,45 @@
 ﻿var taskTypeMappings;
 var editor;
+
+function SourceCheck() {
+    // Show the warning if the Source System has the External Value of True
+    var currentSourceSystemSelectedOption;
+    $.each(taskTypeMappings.ValidSourceSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
+                currentSourceSystemSelectedOption = value;
+                if (value.IsExternal === true) {
+                    $("#ExternalWarningSource").show(500);
+                } else {
+                    $("#ExternalWarningSource").hide(500);
+                }
+            }
+            console.log(`Is External Value: ${value.IsExternal}`);
+        });
+}
+
+function TargetCheck() {
+    // Show the warning if the Target System has the External Value of True
+    var currentTargetSystemSelectedOption;
+    $.each(taskTypeMappings.ValidTargetSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#TargetSystemId')).val()) {
+                currentTargetSystemSelectedOption = value;
+                if (value.IsExternal === true) {
+                    $("#ExternalWarningTarget").show(500);
+                } else {
+                    $("#ExternalWarningTarget").hide(500);
+                }
+            }
+            console.log(`Is External Value: ${value.IsExternal}`);
+        });
+}
+
 $(document).ready(function () {
+    // Hide the warning by default
+    $('#ExternalWarningSource').hide();
+    $('#ExternalWarningTarget').hide();
+
     //SetAceBasePath
     window.ace.config.set("basePath", "~/lib/ace/");
 
@@ -22,6 +61,40 @@ $(document).ready(function () {
             enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
         }
     });
+
+    var source = $('#SourceSystemId');
+    source.change(() => {
+        SourceCheck();
+    });
+
+    var target = $('#TargetSystemId');
+    target.change(() => {
+        TargetCheck();
+    });
+    
+
+    $("#TaskMasterJsonSourceType").change(function () {
+        SetSourceSubType($(':selected', $('#TaskMasterJsonSourceType')).val());
+        //EnterStep4b();
+        EnterStep4a();
+    });
+
+    $("#TaskMasterJsonTargetType").change(function () {
+        SetTargetSubType($(':selected', $('#TaskMasterJsonTargetType')).val());
+        //CreateJsonEditor();
+        EnterStep4a();
+    });
+
+    $("#TaskDatafactoryIrSelect").change(function () {
+        EnterStep4a();
+    });
+
+    $("#TaskDatafactoryIrSelect").change(function () {
+        EnterStep4a();
+    });
+
+    // After get TaskTypeMappings is run, it will call EnterStep2()
+    GetTaskTypeMappings();
 });
 
 // Initialize the leaveStep event
@@ -107,9 +180,11 @@ function GetTaskTypeMappings() {
             EnterStep2();
             $('#smartwizard').smartWizard("loader", "hide");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error");
+        error: function (xhr, status, error) {
+            var errorMsg = `${xhr.status}: ${xhr.responseText}`;
+            toastr.warning(`Error - ${errorMsg}`);
             $('#smartwizard').smartWizard("loader", "hide");
+            $('#smartwizard').smartWizard("reset");
         }
     });
 };
@@ -127,58 +202,68 @@ function EnterStep2() {
         }
         $('#SourceSystemId').append(opt);
     })
-
-
-
+    SourceCheck();
 }
 
 function EnterStep3() {
     //Find Selected SourceSystem
     var currentSourceSystemSelectedOption = $(':selected', $('#SourceSystemId'));;
-    $.each(taskTypeMappings.ValidSourceSystems, function (key, value) {
-        if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
-            currentSourceSystemSelectedOption = value;
-        }
-    })
+    $.each(taskTypeMappings.ValidSourceSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
+                currentSourceSystemSelectedOption = value;
+            }
+        });
 
     var validTargetSystemTypes = [];
     //FindAll taskTypeMappings that Match Selected Source System Type
-    $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-        if (value.SourceSystemType === currentSourceSystemSelectedOption.SystemType) {
-            validTargetSystemTypes.push(value.TargetSystemType);
-        }
-    })
+    $.each(taskTypeMappings.TaskTypeMappings,
+        function(key, value) {
+            if (value.SourceSystemType === currentSourceSystemSelectedOption.SystemType) {
+                validTargetSystemTypes.push(value.TargetSystemType);
+            }
+        });
 
     //Populate Valid Target Systems Select
     var currentTargetSystemSelectedOption = $(':selected', $('#TargetSystemId'));
     $('#TargetSystemId option').remove();
 
-    $.each(taskTypeMappings.ValidTargetSystems, function (key, value) {
-        var opt = $('<option value="' + value.SystemId + '">' + value.SystemName + ' (' + value.SystemType + ') ' + '</option>')
-        if (opt.val() == currentTargetSystemSelectedOption.val()) {
-            opt.attr('selected', 'selected');
-        }
-        if (validTargetSystemTypes.includes(value.SystemType)) {
-            $('#TargetSystemId').append(opt);
-        }
-    })
-
+    $.each(taskTypeMappings.ValidTargetSystems,
+        function(key, value) {
+            var opt = $('<option value="' +
+                value.SystemId +
+                '">' +
+                value.SystemName +
+                ' (' +
+                value.SystemType +
+                ') ' +
+                '</option>')
+            if (opt.val() == currentTargetSystemSelectedOption.val()) {
+                opt.attr('selected', 'selected');
+            }
+            if (validTargetSystemTypes.includes(value.SystemType)) {
+                $('#TargetSystemId').append(opt);
+            }
+        });
+    TargetCheck();
 }
 
 function EnterStep4a() {
     //Find Selected SourceSystem && SelectedTargetSystem
     var currentSourceSystemSelectedOption;
     var currentTargetSystemSelectedOption;
-    $.each(taskTypeMappings.ValidSourceSystems, function (key, value) {
-        if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
-            currentSourceSystemSelectedOption = value;
-        }
-    })
-    $.each(taskTypeMappings.ValidTargetSystems, function (key, value) {
-        if (value.SystemId.toString() === $(':selected', $('#TargetSystemId')).val()) {
-            currentTargetSystemSelectedOption = value;
-        }
-    })
+    $.each(taskTypeMappings.ValidSourceSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
+                currentSourceSystemSelectedOption = value;
+            }
+        });
+    $.each(taskTypeMappings.ValidTargetSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#TargetSystemId')).val()) {
+                currentTargetSystemSelectedOption = value;
+            }
+        });
 
     if (!currentSourceSystemSelectedOption || !currentTargetSystemSelectedOption)
         HideJsonEditor("Source or target system is invalid");
@@ -194,13 +279,14 @@ function EnterStep4a() {
     if (!validSourceSubTypes.includes(currentSourceSubType))
         $('#TaskMasterJsonSourceType').append($('<option value=""></option>'));
 
-    $.each(validSourceSubTypes, function (key, value) {
-        var opt = $('<option value="' + value + '">' + value + '</option>');
-        if (opt.val() == currentSourceSubType) {
-            opt.attr('selected', 'selected');
-        }
-        $('#TaskMasterJsonSourceType').append(opt);
-    })
+    $.each(validSourceSubTypes,
+        function(key, value) {
+            var opt = $('<option value="' + value + '">' + value + '</option>');
+            if (opt.val() == currentSourceSubType) {
+                opt.attr('selected', 'selected');
+            }
+            $('#TaskMasterJsonSourceType').append(opt);
+        });
 
     if ($(':selected', $('#TaskMasterJsonSourceType')).val()) {
         EnterStep4b();
@@ -211,16 +297,18 @@ function EnterStep4b() {
     //Find Selected SourceSystem && SelectedTargetSystem
     var currentSourceSystemSelectedOption;
     var currentTargetSystemSelectedOption;
-    $.each(taskTypeMappings.ValidSourceSystems, function (key, value) {
-        if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
-            currentSourceSystemSelectedOption = value;
-        }
-    })
-    $.each(taskTypeMappings.ValidTargetSystems, function (key, value) {
-        if (value.SystemId.toString() === $(':selected', $('#TargetSystemId')).val()) {
-            currentTargetSystemSelectedOption = value;
-        }
-    })
+    $.each(taskTypeMappings.ValidSourceSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#SourceSystemId')).val()) {
+                currentSourceSystemSelectedOption = value;
+            }
+        });
+    $.each(taskTypeMappings.ValidTargetSystems,
+        function(key, value) {
+            if (value.SystemId.toString() === $(':selected', $('#TargetSystemId')).val()) {
+                currentTargetSystemSelectedOption = value;
+            }
+        });
 
     var currentSourceSubType = GetCurrentlySelectedSourceSubType();
 
@@ -238,13 +326,14 @@ function EnterStep4b() {
     if (!validTargetSubTypes.includes(currentTargetSubType))
         $('#TaskMasterJsonTargetType').append($('<option value=""></option>'));
 
-    $.each(validTargetSubTypes, function (key, value) {
-        var opt = $('<option value="' + value + '">' + value + '</option>')
-        if (opt.val() == currentTargetSubType) {
-            opt.attr('selected', 'selected');
-        }
-        $('#TaskMasterJsonTargetType').append(opt);
-    })
+    $.each(validTargetSubTypes,
+        function(key, value) {
+            var opt = $('<option value="' + value + '">' + value + '</option>')
+            if (opt.val() == currentTargetSubType) {
+                opt.attr('selected', 'selected');
+            }
+            $('#TaskMasterJsonTargetType').append(opt);
+        });
 
     if ($(':selected', $('#TaskMasterJsonTargetType')).val()) {
         EnterStep4c();
@@ -311,11 +400,15 @@ function CreateJsonEditor() {
     //$('#TaskDatafactoryIr').val(DatafactoryIr);
 
     var SelectedTaskTypeMapping;
-    $.each(taskTypeMappings.TaskTypeMappings, function (key, value) {
-        if (value.SourceSystemType === SourceSystemType && value.TargetSystemType === TargetSystemType && value.TargetType === TargetSubType && value.SourceType === SourceSubType) {
-            SelectedTaskTypeMapping = value;
-        }
-    })
+    $.each(taskTypeMappings.TaskTypeMappings,
+        function(key, value) {
+            if (value.SourceSystemType === SourceSystemType &&
+                value.TargetSystemType === TargetSystemType &&
+                value.TargetType === TargetSubType &&
+                value.SourceType === SourceSubType) {
+                SelectedTaskTypeMapping = value;
+            }
+        });
 
     if (SelectedTaskTypeMapping) {
         var schema = SelectedTaskTypeMapping.TaskMasterJsonSchema;
