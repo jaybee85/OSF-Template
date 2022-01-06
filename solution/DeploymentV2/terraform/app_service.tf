@@ -45,7 +45,6 @@ resource "azurerm_app_service" "web" {
   app_service_plan_id = azurerm_app_service_plan.app_service_plan[0].id
   https_only          = true
   client_cert_enabled = false
-
   app_settings = {
     WEBSITE_RUN_FROM_PACKAGE = 1
 

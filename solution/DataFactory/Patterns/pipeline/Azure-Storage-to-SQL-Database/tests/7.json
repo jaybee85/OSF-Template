@@ -1,6 +1,6 @@
 {
   "Active": true,
-  "Description": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA",
+  "Description": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_Azure",
   "JsonSchema": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
   "TaskObject": {
     "TaskInstanceId": 75,
@@ -54,7 +54,7 @@
       "Name": "adsgofastdatakakeacceladf",
       "ResourceGroup": "AdsTestDemo",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA"
+      "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_Azure"
     }
   }
 }

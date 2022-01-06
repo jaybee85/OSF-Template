@@ -1,70 +1,50 @@
 {
+  "Active": true,
+  "Description": "GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText",
+  "JsonSchema": "GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText",
   "TaskObject": {
-    "TaskInstanceId": 1,
-    "TaskMasterId": 0,
+    "TaskInstanceId": 75,
+    "TaskMasterId": 12,
     "TaskStatus": "Untried",
-    "TaskType": "SQL Database to Azure Storage",
+    "TaskType": "Azure Blob Storage Delimited to Azure Blob Storage Excel",
     "Enabled": 1,
-    "ExecutionUid": "599b3f12-9674-41ad-a030-759b7a6e45fa",
-    "NumberOfRetries": 3,
+    "ExecutionUid": "2c5924ee-b855-4d2b-bb7e-4f5dde4c4dd3",
+    "NumberOfRetries": 111,
     "DegreeOfCopyParallelism": 1,
-    "KeyVaultBaseUrl": "https://adsgfkvjkcgkaibkungm.vault.azure.net",
-    "ScheduleMasterId": "2",
-    "TaskGroupConcurrency": "10",
+    "KeyVaultBaseUrl": "https://ark-stg-adf-ads-lluv.vault.azure.net/",
+    "ScheduleMasterId": 2,
+    "TaskGroupConcurrency": 10,
     "TaskGroupPriority": 0,
-    "TaskExecutionType": "ADF",
-    "DataFactory": {
-      "Id": 1,
-      "Name": "adsgfadfjkcgkaibkungm",
-      "ResourceGroup": "AdsTestDemo",
-      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
-      "TaskDatafactoryIR": "IRA"
-    },
     "Source": {
-      "System": {
-        "SystemId": 1,
-        "SystemServer": "adsgfsvrjkcgkaibkungm.database.windows.net",
-        "AuthenticationType": "MSI",
-        "Type": "Azure SQL",
-        "Username": "",
-        "Database": "AdsGfSample",
-        "PasswordKeyVaultSecretName": "",
-        "UsernameKeyVaultSecretName": ""
-      },
-      "Instance": {
-        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
-      },
-      "ChunkField": "",
-      "ChunkSize": 0,
-      "ExtractionSQL": "",
-      "IncrementalColumnType": "",
-      "IncrementalField": "",
-      "IncrementalType": "Full",
-      "IncrementalValue": "0",
-      "TableName": "Customer",
-      "TableSchema": "SalesLT",
-      "Type": "Table",
-      "IncrementalSQLStatement": "",
-      "SQLStatement": "SELECT * FROM SalesLT.Customer",
-      "Execute": {}
+      "Type": "Azure Blob",
+      "StorageAccountName": "https://arkstgdlsadslluvadsl.dfs.core.windows.net",
+      "StorageAccountContainer": "datalakeraw",
+      "StorageAccountAccessMethod": "MSI",
+      "RelativePath": "/samples",
+      "DataFileName": "yellow_tripdata_2017-03.xlsx",
+      "FirstRowAsHeader": true,
+      "MaxConcorrentConnections": 1,
+      "SheetName": "yellow_tripdata_2017-03",
+      "SkipLineCount": 0
     },
     "Target": {
-      "System": {
-        "SystemId": 3,
-        "SystemServer": "https://blobjkcgkaibkungm.blob.core.windows.net",
-        "AuthenticationType": "MSI",
-        "Type": "Azure Blob",
-        "Username": "",
-        "Container": "datalakeraw"
-      },
-      "Instance": {
-        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/0/"
-      },
-      "DataFileName": "SalesLT.Customer.parquet",
-      "RelativePath": "/Tests/SQL Database to Azure Storage/0",
-      "SchemaFileName": "SalesLT.Customer.json",
-      "Type": "Parquet"
+      "Type": "Azure Data Lake",
+      "StorageAccountName": "https://arkstgdlsadslluvadsl.dfs.core.windows.net",
+      "StorageAccountContainer": "datalakeraw",
+      "StorageAccountAccessMethod": "MSI",
+      "RelativePath": "/samples",
+      "DataFileName": "yellow_tripdata_2017-03_csv_output.csv",
+      "FirstRowAsHeader": true,
+      "MaxConcorrentConnections": 1,
+      "Recursively": false,
+      "SkipLineCount": 0
+    },
+    "DataFactory": {
+      "Id": 1,
+      "Name": "",
+      "ResourceGroup": "",
+      "SubscriptionId": "",
+      "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText_Azure"
     }
   }
 }

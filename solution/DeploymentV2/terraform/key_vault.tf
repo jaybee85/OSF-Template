@@ -58,6 +58,7 @@ resource "azurerm_key_vault_access_policy" "adf_access" {
 }
 
 resource "azurerm_key_vault_access_policy" "purview_access" {
+  count        = var.deploy_purview ? 1 : 0
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
   object_id    = azurerm_purview_account.purview[0].identity[0].principal_id
@@ -162,6 +163,7 @@ resource "azurerm_key_vault_secret" "function_app_key" {
 }
 
 resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
+  count        = var.deploy_purview ? 1 : 0
   name         = "AzurePurviewIr"
   value        = azuread_application_password.purview_ir[0].value
   key_vault_id = azurerm_key_vault.app_vault.id

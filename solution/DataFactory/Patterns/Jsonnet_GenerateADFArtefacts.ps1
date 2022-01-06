@@ -1,5 +1,7 @@
+Import-Module .\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform
 
-$GenerateArm="true"
+$GenerateArm="false"
 
 function CoreReplacements ($string, $GFPIR, $SourceType, $SourceFormat, $TargetType, $TargetFormat) {
     $string = $string.Replace("@GFP{SourceType}", $SourceType).Replace("@GFP{SourceFormat}", $SourceFormat).Replace("@GFP{TargetType}", $TargetType).Replace("@GFP{TargetFormat}", $TargetFormat)
@@ -36,7 +38,7 @@ foreach ($pattern in $patterns)
 
         $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
         Write-Host $newname        
-        (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR="IRA" --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
+        (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR="Azure" --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
 
     }
 
@@ -57,21 +59,21 @@ foreach ($folder in ($patterns.Folder | Get-Unique))
     }
 }
 
-# This will copy the output pipeline files into the approptiate locations
+# This will copy the output pipeline files into the locations required for the terraform deployment
 if($GenerateArm -eq "true") {
-    $templates = Get-ChildItem -Path './output/*' -Exclude '*_IRA.json', '*_Azure.json' -Include "GPL[0,1,2]_Sql*.json", "GPL_Sql*.json" -Name
+    $templates = Get-ChildItem -Path './output/*' -Exclude '*_Azure.json', '*_Azure.json' -Include "GPL[0,1,2]_Sql*.json", "GPL_Sql*.json" -Name
     foreach($template in $templates) {
         Copy-Item -Path "./output/$template" -Destination "../../DeploymentV2\terraform\modules\data_factory_pipelines_selfhosted/arm/"  
     }
     Write-Host "Copied $($templates.Count) to Self Hosted Pipelines Module in Terraform folder"
 
-    $templates = Get-ChildItem -Path './output/*' -Exclude '*_IRA.json', '*_Azure.json' -Include "GPL[0,1,2]_Az*.json", "GPL_Az*.json" -Name
+    $templates = Get-ChildItem -Path './output/*' -Exclude '*_Azure.json', '*_Azure.json' -Include "GPL[0,1,2]_Az*.json", "GPL_Az*.json" -Name
     foreach($template in $templates) {
         Copy-Item -Path "./output/$template" -Destination "../../DeploymentV2\terraform\modules\data_factory_pipelines_azure/arm/"  
     }
     Write-Host "Copied $($templates.Count) to Azure Hosted Pipelines Module in Terraform folder"
 
-    $templates = Get-ChildItem -Path './output/*' -Exclude '*_IRA.json', '*_Azure.json' -Include "SPL_Az*.json" -Name
+    $templates = Get-ChildItem -Path './output/*' -Exclude '*_Azure.json', '*_Azure.json' -Include "SPL_Az*.json" -Name
     foreach($template in $templates) {
         Copy-Item -Path "./output/$template" -Destination "../../DeploymentV2\terraform\modules\data_factory_pipelines_azure/arm/"  
     }

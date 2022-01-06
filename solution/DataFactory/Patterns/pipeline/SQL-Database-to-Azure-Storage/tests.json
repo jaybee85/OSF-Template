@@ -1,7 +1,7 @@
 [
     {
         "Active":true,
-        "Description": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
+        "Description": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_Azure",
         "JsonSchema": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
         "TaskObject": {
             "TaskInstanceId": 75,
@@ -51,13 +51,13 @@
                 "Name": "adsgofastdatakakeacceladf",
                 "ResourceGroup": "AdsOpts_CD_ResourceGroup_Name",
                 "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA"
+                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_Azure"
             }
         }
     },
     {
         "Active":true,
-        "Description": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA",
+        "Description": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure",
         "JsonSchema": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
         "TaskObject": {
             "TaskInstanceId": 75,
@@ -107,13 +107,13 @@
                 "Name": "adsgofastdatakakeacceladf",
                 "ResourceGroup": "AdsOpts_CD_ResourceGroup_Name",
                 "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA"
+                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure"
             }
         }
     },
     {
         "Active":true,
-        "Description": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA - with Custom Extraction SQL",
+        "Description": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure - with Custom Extraction SQL",
         "JsonSchema": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
         "TaskObject": {
             "TaskInstanceId": 75,
@@ -163,7 +163,7 @@
                 "Name": "adsgofastdatakakeacceladf",
                 "ResourceGroup": "AdsOpts_CD_ResourceGroup_Name",
                 "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
-                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_IRA"
+                "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure"
             }
         }
     }

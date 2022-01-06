@@ -1,5 +1,5 @@
 {
-  "name": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet_IRA",
+  "name": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet_Azure",
   "properties": {
     "activities": [
       {
@@ -28,14 +28,14 @@
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Source.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
               }
             },
-            "referenceName": "GDS_AzureBlobFS_DelimitedText_IRA",
+            "referenceName": "GDS_AzureBlobFS_DelimitedText_Azure",
             "type": "DatasetReference"
           }
         ],
@@ -53,14 +53,14 @@
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountContainer"
+                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
               },
               "StorageAccountEndpoint": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.StorageAccountName"
+                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
               }
             },
-            "referenceName": "GDS_AzureBlobFS_Parquet_IRA",
+            "referenceName": "GDS_AzureBlobFS_Parquet_Azure",
             "type": "DatasetReference"
           }
         ],
@@ -107,7 +107,7 @@
               },
               "wildcardFolderPath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
               }
             },
             "type": "DelimitedTextSource"
@@ -191,11 +191,67 @@
           "waitOnCompletion": false
         },
         "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "Copy AzureBlobStorage to AzureBlobStorage Failed",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ],
+        "name": "Pipeline AF Log - Failed",
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "parameters": {
+            "Body": {
+              "type": "Expression",
+              "value": "@json(\r\n    concat('{\"TaskInstanceId\":\"', \r\n        string(pipeline().parameters.TaskObject.TaskInstanceId), \r\n        '\",\"ExecutionUid\":\"',\r\n         string(pipeline().parameters.TaskObject.ExecutionUid), \r\n         '\",\"RunId\":\"', \r\n         string(pipeline().RunId), \r\n         '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"'\r\n         , string(pipeline().TriggerTime), \r\n         '\",\"EndDateTimeOffSet\":\"', \r\n         string(utcnow()), '\",\"Comment\":\"', \r\n         concat(pipeline().Pipeline, 'Failed'), \r\n         '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \r\n         string(pipeline().parameters.TaskObject.NumberOfRetries),\r\n         '\"}'\r\n    )\r\n)"
+            },
+            "FunctionName": "Log",
+            "Method": "Post"
+          },
+          "pipeline": {
+            "referenceName": "SPL_AzureFunction",
+            "type": "PipelineReference"
+          },
+          "waitOnCompletion": true
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "Copy AzureBlobStorage to AzureBlobStorage Succeed",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ],
+        "name": "Pipeline AF Log - Succeed",
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "parameters": {
+            "Body": {
+              "type": "Expression",
+              "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', string(pipeline().parameters.TaskObject.NumberOfRetries),'\"}'))"
+            },
+            "FunctionName": "Log",
+            "Method": "Post"
+          },
+          "pipeline": {
+            "referenceName": "SPL_AzureFunction",
+            "type": "PipelineReference"
+          },
+          "waitOnCompletion": true
+        },
+        "userProperties": []
       }
     ],
     "annotations": [],
     "folder": {
-      "name": "ADS Go Fast/Data Movement/IRA"
+      "name": "ADS Go Fast/Data Movement/Azure"
     },
     "lastPublishTime": "2020-08-05T04:14:00Z",
     "parameters": {

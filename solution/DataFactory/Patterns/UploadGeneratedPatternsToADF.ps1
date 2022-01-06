@@ -1,3 +1,24 @@
+Import-Module .\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform
+
+
+if($tout.datafactory_name -eq "") {
+    $tout.datafactory_name = Read-Host "Enter the name of the data factory"
+}
+if($tout.resource_group_name -eq "") {
+    $tout.resource_group_name = Read-Host "Enter the name of the resource group"
+}
+if($tout.resource_group_id -eq "") {
+    $tout.resource_group_id = Read-Host "Enter the id of the resource group"
+}
+if($tout.keyvault_name -eq "") {
+    $tout.keyvault_name = Read-Host "Enter the name of the key vault"
+}
+if($tout.functionapp_name -eq "") {
+    $tout.functionapp_name = Read-Host "Enter the name of the function app"
+}
+
+
 function UploadADFItem ($items) {
     if ($items.count -gt 0) {
         $items | Foreach-Object {
@@ -5,17 +26,17 @@ function UploadADFItem ($items) {
             $fileName = $_.FullName
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
 
-            $uri = "https://management.azure.com/$env:AdsOpts_CD_ResourceGroup_Id/providers/Microsoft.DataFactory/factories/$env:AdsOpts_CD_Services_DataFactory_Name/"
+            $uri = "https://management.azure.com/" + $tout.resource_group_id + "/providers/Microsoft.DataFactory/factories/" + $tout.datafactory_name + "/"
 
             if ($jsonobject.type -eq "Microsoft.DataFactory/factories/linkedservices") {
                 #Swap out Key Vault Url for Function App Linked Service
                 if ($lsName -eq "AdsGoFastKeyVault") {
-                    $jsonobject.properties.typeProperties.baseUrl = "https://$env:AdsOpts_CD_Services_KeyVault_Name.vault.azure.net/"
+                    $jsonobject.properties.typeProperties.baseUrl = "https://"+$tout.keyvault_name+".vault.azure.net/"
                 }
 
                 #Swap out Function App Url
                 if ($lsName -eq "SLS_AzureFunctionApp") {
-                    $jsonobject.properties.typeProperties.functionAppUrl = "https://$env:AdsOpts_CD_Services_CoreFunctionApp_Name.azurewebsites.net"
+                    $jsonobject.properties.typeProperties.functionAppUrl = "https://"+$tout.functionapp_name+".azurewebsites.net"
                 }
             
                 $uri = $uri + "linkedservices/"

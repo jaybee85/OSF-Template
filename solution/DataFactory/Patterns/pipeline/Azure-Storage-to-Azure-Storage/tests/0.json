@@ -42,7 +42,7 @@
     "DataFactory": {
       "Id": 1,
       "Name": "ark-stg-adf-ads-lluv",
-      "ResourceGroup": "ark-stg-rg-ads",
+      "ResourceGroup": "AdsOpts_CD_ResourceGroup_Name",
       "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
       "ADFPipeline": "GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary_Azure"
     }

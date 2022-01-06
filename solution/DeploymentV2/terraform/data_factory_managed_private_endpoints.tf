@@ -1,5 +1,5 @@
 resource "azurerm_data_factory_managed_private_endpoint" "blob" {
-  count              = var.deploy_storage_account ? 1 : 0
+  count              = var.deploy_storage_account && var.is_vnet_isolated ? 1 : 0
   name               = "AzureStorage_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_storage_account.blob[0].id
@@ -12,7 +12,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "blob" {
 }
 
 resource "azurerm_data_factory_managed_private_endpoint" "adls" {
-  count              = var.deploy_adls ? 1 : 0
+  count              = var.deploy_adls && var.is_vnet_isolated ? 1 : 0
   name               = "AzureDataLake_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_storage_account.adls[0].id
@@ -25,6 +25,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "adls" {
 }
 
 resource "azurerm_data_factory_managed_private_endpoint" "keyvault" {
+  count              = var.is_vnet_isolated ? 1 : 0
   name               = "AzureKeyVault_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_key_vault.app_vault.id
@@ -37,7 +38,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "keyvault" {
 }
 
 resource "azurerm_data_factory_managed_private_endpoint" "sqlserver" {
-  count              = var.deploy_sql_server ? 1 : 0
+  count              = var.deploy_sql_server && var.is_vnet_isolated ? 1 : 0
   name               = "AzureSqlServer_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_mssql_server.sqlserver[0].id
@@ -51,7 +52,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "sqlserver" {
 
 // purview
 resource "azurerm_data_factory_managed_private_endpoint" "purview" {
-  count              = var.deploy_purview ? 1 : 0
+  count              = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   name               = "AzurePurview_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_purview_account.purview[0].id
