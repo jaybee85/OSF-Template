@@ -14,6 +14,7 @@ function SourceCheck() {
                     $("#ExternalWarningSource").hide(500);
                 }
             }
+            console.log(`Is External Value: ${value.IsExternal}`);
         });
 }
 
@@ -30,6 +31,7 @@ function TargetCheck() {
                     $("#ExternalWarningTarget").hide(500);
                 }
             }
+            console.log(`Is External Value: ${value.IsExternal}`);
         });
 }
 
@@ -178,9 +180,11 @@ function GetTaskTypeMappings() {
             EnterStep2();
             $('#smartwizard').smartWizard("loader", "hide");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error");
+        error: function (xhr, status, error) {
+            var errorMsg = `${xhr.status}: ${xhr.responseText}`;
+            toastr.warning(`Error - ${errorMsg}`);
             $('#smartwizard').smartWizard("loader", "hide");
+            $('#smartwizard').smartWizard("reset");
         }
     });
 };
