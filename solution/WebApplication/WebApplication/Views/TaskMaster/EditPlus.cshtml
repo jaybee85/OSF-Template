@@ -82,6 +82,7 @@
             <div id="step-2" class="tab-pane" role="tabpanel">
                 <div class="row">
                     <div class="mx-auto">
+                        <label id="ExternalWarningSource" class="text-danger"><i class="fas fa-exclamation-triangle" style="width:16px"></i> You have selected an External Source</label>
                         <div class="form-group">
                             <label asp-for="SourceSystemId" class="control-label"></label>
                             <select asp-for="SourceSystemId" class="form-control" asp-items="ViewBag.SourceSystemId"></select>
@@ -93,6 +94,7 @@
             <div id="step-3" class="tab-pane" role="tabpanel">
                 <div class="row">
                     <div class="mx-auto">
+                        <label id="ExternalWarningTarget" class="text-danger"><i class="fas fa-exclamation-triangle" style="width:16px"></i> You have selected an External Target</label>
                         <div class="form-group">
                             <label asp-for="TargetSystemId" class="control-label"></label>
                             <select asp-for="TargetSystemId" class="form-control" asp-items="ViewBag.TargetSystemId"></select>

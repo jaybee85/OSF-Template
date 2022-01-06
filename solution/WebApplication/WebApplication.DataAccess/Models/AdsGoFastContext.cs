@@ -445,6 +445,9 @@ namespace WebApplication.Models
                     .HasMaxLength(128);
 
                 entity.Property(e => e.SystemUserName).HasMaxLength(128);
+
+                entity.Property(e => e.IsExternal).HasColumnName("IsExternal");
+
             });
 
             modelBuilder.Entity<SourceAndTargetSystemsJsonSchema>(entity =>
