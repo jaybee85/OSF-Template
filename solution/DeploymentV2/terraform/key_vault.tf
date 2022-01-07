@@ -23,6 +23,7 @@ resource "azurerm_key_vault" "app_vault" {
 }
 
 // Grant secret and key access to the current app to store the secret values --------------------------
+// Allows the deployment service principal to compare / check state later
 resource "azurerm_key_vault_access_policy" "cicd_access" {
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
@@ -40,6 +41,7 @@ resource "azurerm_key_vault_access_policy" "cicd_access" {
   ]
 }
 
+// Allows the data factory to retrieve the azure function host key
 resource "azurerm_key_vault_access_policy" "adf_access" {
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
@@ -57,10 +59,29 @@ resource "azurerm_key_vault_access_policy" "adf_access" {
   ]
 }
 
+// Allows purview to retrieve the IR service principal password
 resource "azurerm_key_vault_access_policy" "purview_access" {
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
   object_id    = azurerm_purview_account.purview[0].identity[0].principal_id
+
+  key_permissions = [
+    "Get", "List"
+  ]
+
+  secret_permissions = [
+    "list", "get"
+  ]
+  depends_on = [
+    azurerm_key_vault.app_vault,
+  ]
+}
+
+// Allows the Azure function to retrieve the Function App - AAD App Reg - Client Secret
+resource "azurerm_key_vault_access_policy" "function_app" {
+  key_vault_id = azurerm_key_vault.app_vault.id
+  tenant_id    = var.tenant_id
+  object_id    = azurerm_function_app.function_app.identity[0].principal_id
 
   key_permissions = [
     "Get", "List"
@@ -173,4 +194,14 @@ resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
     azurerm_key_vault_access_policy.cicd_access
   ]
 }
+
+resource "azurerm_key_vault_secret" "azure_function_secret" {
+  name         = "AzureFunctionClientSecret"
+  value        = azuread_application_password.function_app[0].value
+  key_vault_id = azurerm_key_vault.app_vault.id
+  depends_on = [
+    azurerm_key_vault_access_policy.cicd_access
+  ]
+}
+
 

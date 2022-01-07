@@ -17,7 +17,7 @@ namespace WebApplication.Controllers
     public partial class TaskTypeMappingController : BaseController
     {
         protected readonly AdsGoFastContext _context;
-        
+
 
         public TaskTypeMappingController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider) : base(securityAccessProvider, roleProvider)
         {
@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
         // GET: TaskTypeMapping/Create
         public IActionResult Create()
         {
-            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName");
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName");
             TaskTypeMapping taskTypeMapping = new TaskTypeMapping();
             taskTypeMapping.ActiveYn = true;
             return View(taskTypeMapping);
@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -99,7 +99,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskTypeMapping))
                 return new ForbidResult();
-            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -124,7 +124,7 @@ namespace WebApplication.Controllers
 
                     if (!await CanPerformCurrentActionOnRecord(taskTypeMapping))
                         return new ForbidResult();
-			
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -140,7 +140,7 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x=>x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
+            ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskTypeMapping.TaskTypeId);
             return View(taskTypeMapping);
         }
 
@@ -158,7 +158,7 @@ namespace WebApplication.Controllers
                 .FirstOrDefaultAsync(m => m.TaskTypeMappingId == id);
             if (taskTypeMapping == null)
                 return NotFound();
-		
+
             if (!await CanPerformCurrentActionOnRecord(taskTypeMapping))
                 return new ForbidResult();
 
@@ -175,7 +175,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(taskTypeMapping))
                 return new ForbidResult();
-		
+
             _context.TaskTypeMapping.Remove(taskTypeMapping);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(IndexDataTable));
@@ -369,10 +369,10 @@ namespace WebApplication.Controllers
             }
 
 
-            RetVal:
+        RetVal:
             if (taskTypeMappings.Count == 0)
             {
-                return NotFound();
+                return NotFound("Task Type Mappings do not exist for this current Task Type");
             }
 
             var SourceTypes = taskTypeMappings.Select(d => d.SourceSystemType).Distinct();
