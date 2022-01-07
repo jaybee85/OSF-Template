@@ -56,7 +56,6 @@
                 "type": "SystemAssigned"
             },
             "properties": {
-                "publicNetworkAccess": "Disabled",
                 "managedResourceGroupName": "[parameters('managedResourceGroupName')]"
             }
         },
