@@ -12,6 +12,10 @@ variable "resource_location" {
   type        = string
 }
 
+variable "subscription_id" {
+  description = "The Id of the azure sub"
+  type        = string
+}
 
 variable "queue_privatelink_name" {
   description = "The name of the queue private link"

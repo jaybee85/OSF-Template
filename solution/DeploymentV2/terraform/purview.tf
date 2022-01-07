@@ -92,7 +92,7 @@ module "purview_ingestion_private_endpoints" {
   subnet_id                   = azurerm_subnet.plink_subnet[0].id
   managed_resource_group_name = local.purview_resource_group_name
   name_suffix                 = random_id.rg_deployment_unique.id
-
+  subscription_id             = var.subscription_id
 }
 
 // Create an IR service principal (private linked resources can't use the azure hosted IRs)

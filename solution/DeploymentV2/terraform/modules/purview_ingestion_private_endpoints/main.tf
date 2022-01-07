@@ -6,6 +6,9 @@ resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoin
     "purviewAccountName" = {
       value = var.purview_account_name
     },    
+    "subscriptionId" = {
+      value = var.subscription_id
+    },    
     "location" = {
       value = var.resource_location
     },
@@ -23,27 +26,9 @@ resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoin
     },
     "managedResourceGroupName" = {
       value = var.managed_resource_group_name
-    }
-  })
-  template_content = file("${path.module}/arm/privatelinks.json")
-}
-
-resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoint_dns" {
-  name                = "purview_ingestion_private_endpoints_${var.name_suffix}"
-  resource_group_name = var.resource_group_name
-  deployment_mode     = "Incremental"
-  parameters_content = jsonencode({   
-    "location" = {
-      value = var.resource_location
     },
-    "queuePrivateLinkName" = {
-      value = var.queue_privatelink_name
-    },
-    "storagePrivateLinkName" = {
-      value = var.storage_privatelink_name
-    },
-    "eventHubPrivateLinkName" = {
-      value = var.eventhub_privatelink_name
+    "resourceGroupName" = {
+      value = var.resource_group_name
     },
     "queueDnsId" = {
       value = var.queue_private_dns_id
@@ -55,5 +40,5 @@ resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoin
       value = var.servicebus_private_dns_id
     }
   })
-  template_content = file("${path.module}/arm/privatelinksDns.json")
+  template_content = file("${path.module}/arm/privatelinks.json")
 }
