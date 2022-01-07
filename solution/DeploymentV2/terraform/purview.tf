@@ -45,24 +45,6 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
   }
 }
 
-// Create an IR service principal (private linked resources can't use the azure hosted IRs)
-resource "azuread_application" "purview_ir" {
-  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  display_name = local.purview_ir_app_reg_name
-  owners       = [data.azurerm_client_config.current.object_id]
-}
-
-resource "azuread_service_principal" "purview_ir" {
-  count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  application_id = azuread_application.purview_ir[0].application_id
-}
-
-
-resource "azuread_application_password" "purview_ir" {
-  count                 = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  application_object_id = azuread_application.purview_ir[0].object_id
-}
-
 resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
   name                = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink"
@@ -110,6 +92,20 @@ module "purview_ingestion_private_endpoints" {
 
 }
 
+// Create an IR service principal (private linked resources can't use the azure hosted IRs)
+resource "azuread_application" "purview_ir" {
+  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  display_name = local.purview_ir_app_reg_name
+  owners       = [data.azurerm_client_config.current.object_id]
+}
+
+resource "azuread_service_principal" "purview_ir" {
+  count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  application_id = azuread_application.purview_ir[0].application_id
+}
 
 
-
+resource "azuread_application_password" "purview_ir" {
+  count                 = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  application_object_id = azuread_application.purview_ir[0].object_id
+}
