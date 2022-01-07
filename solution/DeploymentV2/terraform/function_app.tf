@@ -30,14 +30,14 @@ resource "azuread_application" "function_app_reg" {
 }
 
 resource "azuread_service_principal" "function_app" {
-  count            = var.deploy_azure_ad_function_app_registration  ? 1 : 0
-  owners           = [data.azurerm_client_config.current.object_id]
-  application_id   = azuread_application.function_app_reg[0].application_id
+  count          = var.deploy_azure_ad_function_app_registration ? 1 : 0
+  owners         = [data.azurerm_client_config.current.object_id]
+  application_id = azuread_application.function_app_reg[0].application_id
 }
 
 # This allows the function app MSI to be able to call/request the Azure function App reg
 resource "azuread_app_role_assignment" "func_msi_app_role" {
-  count               = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  count               = var.deploy_azure_ad_function_app_registration ? 1 : 0
   app_role_id         = random_uuid.function_app_reg_role_id.result
   principal_object_id = azurerm_function_app.function_app.identity[0].principal_id
   resource_object_id  = azuread_service_principal.function_app[0].object_id
@@ -46,14 +46,14 @@ resource "azuread_app_role_assignment" "func_msi_app_role" {
 # This allows the function app SP to be able to call/request the Azure function App reg / SP
 # This allows us to debug locally by using the app reg details for both auth modes
 resource "azuread_app_role_assignment" "func_sp_app_role" {
-  count               = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  count               = var.deploy_azure_ad_function_app_registration ? 1 : 0
   app_role_id         = random_uuid.function_app_reg_role_id.result
   principal_object_id = azuread_service_principal.function_app[0].object_id
   resource_object_id  = azuread_service_principal.function_app[0].object_id
 }
 
 resource "azuread_application_password" "function_app" {
-  count           = var.deploy_azure_ad_function_app_registration  ? 1 : 0
+  count                 = var.deploy_azure_ad_function_app_registration ? 1 : 0
   application_object_id = azuread_application.function_app_reg[0].object_id
 }
 
@@ -127,7 +127,7 @@ resource "azurerm_function_app" "function_app" {
     AzureAdAzureServicesViaAppReg__Domain       = var.domain
     AzureAdAzureServicesViaAppReg__TenantId     = var.tenant_id
     AzureAdAzureServicesViaAppReg__Audience     = "api://${local.functionapp_name}"
-    AzureAdAzureServicesViaAppReg__ClientSecret = azuread_application_password.function_app[0].value
+    AzureAdAzureServicesViaAppReg__ClientSecret = "@Microsoft.KeyVault(VaultName=${azurerm_key_vault.app_vault.name};SecretName=AzureFunctionClientSecret)"
     AzureAdAzureServicesViaAppReg__ClientId     = azuread_application.function_app_reg[0].application_id
 
     #Setting to null as we are using MSI

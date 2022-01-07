@@ -86,6 +86,9 @@ module "purview_ingestion_private_endpoints" {
   queue_privatelink_name      = "${local.purview_name}-queue-plink"
   storage_privatelink_name    = "${local.purview_name}-storage-plink"
   eventhub_privatelink_name   = "${local.purview_name}-event-plink"
+  blob_private_dns_id         = azurerm_private_dns_zone.private_dns_zone_blob[0].id
+  queue_private_dns_id        = azurerm_private_dns_zone.private_dns_zone_queue[0].id
+  servicebus_private_dns_id   = azurerm_private_dns_zone.private_dns_zone_servicebus[0].id
   subnet_id                   = azurerm_subnet.plink_subnet[0].id
   managed_resource_group_name = local.purview_resource_group_name
   name_suffix                 = random_id.rg_deployment_unique.id
