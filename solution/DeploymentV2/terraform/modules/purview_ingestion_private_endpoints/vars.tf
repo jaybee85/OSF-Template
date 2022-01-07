@@ -28,6 +28,21 @@ variable "eventhub_privatelink_name" {
   type        = string
 }
 
+variable "queue_private_dns_id" {
+  description = "The id of the queue private DNS"
+  type        = string
+}
+
+variable "blob_private_dns_id" {
+  description = "The id of the queue private DNS"
+  type        = string
+}
+
+variable "servicebus_private_dns_id" {
+  description = "The id of the queue private DNS"
+  type        = string
+}
+
 variable "subnet_id" {
   description = "The id of the subnet to attach the purview ingestion resources"
   type        = string
