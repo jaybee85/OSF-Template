@@ -189,6 +189,9 @@ resource "azurerm_private_endpoint" "synapse_dev" {
       tags
     ]
   }
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
 }
 
 resource "azurerm_private_endpoint" "synapse_sql" {
@@ -216,6 +219,9 @@ resource "azurerm_private_endpoint" "synapse_sql" {
       tags
     ]
   }
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
 }
 
 resource "azurerm_private_endpoint" "synapse_sqlondemand" {
@@ -243,6 +249,9 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
       tags
     ]
   }
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
 }
 
 

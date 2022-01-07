@@ -53,3 +53,6 @@ output "purview_name" {
 output "purview_sp_name" {
   value = local.purview_ir_app_reg_name
 }
+output "purview_sp_id" {
+  value = azuread_application.purview_ir[0].application_id
+}

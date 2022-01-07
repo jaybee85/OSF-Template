@@ -53,21 +53,23 @@ else {
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
 Write-Host "Reading Terraform Outputs"
-$subscription_id = terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl subscription_id
-$resource_group_name = terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl resource_group_name
-$webapp_name= terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl webapp_name
-$functionapp_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl functionapp_name)
-$purview_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl purview_name)
-$purview_sp_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl purview_sp_name)
-$sqlserver_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl sqlserver_name)
-$blobstorage_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl blobstorage_name)
-$adlsstorage_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl adlsstorage_name)
-$datafactory_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl datafactory_name)
-$keyvault_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl keyvault_name)
-$stagingdb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl stagingdb_name)
-$sampledb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl sampledb_name)
-$metadatadb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl metadatadb_name)
-$loganalyticsworkspace_id=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl loganalyticsworkspace_id)
+
+$outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
+
+$subscription_id =$outputs.subscription_id.value
+$resource_group_name =$outputs.resource_group_name.value
+$webapp_name= =$outputs.webapp_name.value
+$functionapp_name=$outputs.functionapp_name.value
+$purview_name=$outputs.purview_name.value
+$sqlserver_name=$outputs.sqlserver_name.value
+$blobstorage_name=$outputs.blobstorage_name.value
+$adlsstorage_name=$outputs.adlsstorage_name.value
+$datafactory_name=$outputs.datafactory_name.value
+$keyvault_name=$outputs.keyvault_name.value
+$stagingdb_name=$outputs.stagingdb_name.value
+$sampledb_name=$outputs.sampledb_name.value
+$metadatadb_name=$outputs.metadatadb_name.value
+$loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 
 
 #------------------------------------------------------------------------------------------------------------
