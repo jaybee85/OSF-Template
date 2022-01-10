@@ -20,19 +20,26 @@ namespace FunctionApp.Authentication
         }
         public async Task<string> GetAzureRestApiToken(string resourceName)
         {
-            if (_useMsi)
+            try
             {
-                Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider tokenProvider = new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider();
-                return await tokenProvider.GetAccessTokenAsync(resourceName).ConfigureAwait(false);
-            }
-            else
-            {
+                if (_useMsi)
+                {
+                    Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider tokenProvider = new Microsoft.Azure.Services.AppAuthentication.AzureServiceTokenProvider();
+                    return await tokenProvider.GetAccessTokenAsync(resourceName).ConfigureAwait(false);
+                }
+                else
+                {
 
-                AuthenticationContext context =
-                    new AuthenticationContext("https://login.windows.net/" + _authOptions.TenantId);
-                ClientCredential cc = new ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
-                AuthenticationResult result = context.AcquireTokenAsync(resourceName, cc).Result;
-                return result.AccessToken;
+                    AuthenticationContext context =
+                        new AuthenticationContext("https://login.windows.net/" + _authOptions.TenantId);
+                    ClientCredential cc = new ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
+                    AuthenticationResult result = context.AcquireTokenAsync(resourceName, cc).Result;
+                    return result.AccessToken;
+                }
+            }
+            catch
+            {
+                return "";
             }
         }
     }

@@ -23,9 +23,11 @@
 
 $environmentName = "local" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $false
-$skipWebApps = $false
-$skipDatabase = $false
+$skipTerraformDeployment = $true
+$skipWebApp = $true
+$skipFunctionApp = $false
+$skipDatabase = $true
+$skipNetworking = $true
 $deploymentFolderPath = (Get-Location).Path
 
 #----------------------------------------------------------------------------------------------------------------
@@ -69,48 +71,52 @@ $sampledb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environment
 $metadatadb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl metadatadb_name)
 $loganalyticsworkspace_id=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl loganalyticsworkspace_id)
 
-
-#------------------------------------------------------------------------------------------------------------
-# Approve the Private Link Connections that get generated from the Managed Private Links in ADF
-#------------------------------------------------------------------------------------------------------------
-Write-Host "Approving Private Link Connections"
-$links = az network private-endpoint-connection list -g $resource_group_name -n $keyvault_name --type 'Microsoft.KeyVault/vaults' |  ConvertFrom-Json
-foreach($link in $links){
-    if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
-        $id_parts = $link.id.Split("/");
-        Write-Host "- " + $id_parts[$id_parts.length-1]
-        $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $keyvault_name --type Microsoft.Keyvault/vaults --description "Approved by Deploy.ps1"
-    }
+if ($skipNetworking) {
+    Write-Host "Skipping Private Link Connnections"    
 }
-$links = az network private-endpoint-connection list -g $resource_group_name -n $sqlserver_name --type 'Microsoft.Sql/servers' |  ConvertFrom-Json
-foreach($link in $links){
-    if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
-        $id_parts = $link.id.Split("/");
-        Write-Host "- " + $id_parts[$id_parts.length-1]
-        $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $sqlserver_name --type Microsoft.Sql/servers --description "Approved by Deploy.ps1"
+else {
+    #------------------------------------------------------------------------------------------------------------
+    # Approve the Private Link Connections that get generated from the Managed Private Links in ADF
+    #------------------------------------------------------------------------------------------------------------
+    Write-Host "Approving Private Link Connections"
+    $links = az network private-endpoint-connection list -g $resource_group_name -n $keyvault_name --type 'Microsoft.KeyVault/vaults' |  ConvertFrom-Json
+    foreach($link in $links){
+        if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
+            $id_parts = $link.id.Split("/");
+            Write-Host "- " + $id_parts[$id_parts.length-1]
+            $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $keyvault_name --type Microsoft.Keyvault/vaults --description "Approved by Deploy.ps1"
+        }
     }
-}
-$links = az network private-endpoint-connection list -g $resource_group_name -n $blobstorage_name --type 'Microsoft.Storage/storageAccounts' |  ConvertFrom-Json
-foreach($link in $links){
-    if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
-        $id_parts = $link.id.Split("/");
-        Write-Host "- " + $id_parts[$id_parts.length-1]
-        $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $blobstorage_name --type Microsoft.Storage/storageAccounts --description "Approved by Deploy.ps1"
+    $links = az network private-endpoint-connection list -g $resource_group_name -n $sqlserver_name --type 'Microsoft.Sql/servers' |  ConvertFrom-Json
+    foreach($link in $links){
+        if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
+            $id_parts = $link.id.Split("/");
+            Write-Host "- " + $id_parts[$id_parts.length-1]
+            $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $sqlserver_name --type Microsoft.Sql/servers --description "Approved by Deploy.ps1"
+        }
     }
-}
-$links = az network private-endpoint-connection list -g $resource_group_name -n $adlsstorage_name --type 'Microsoft.Storage/storageAccounts' |  ConvertFrom-Json
-foreach($link in $links){
-    if($link.properties.privateLinkServiceConnectionState.status -eq "Pending"){
-        $id_parts = $link.id.Split("/");
-        Write-Host "- " + $id_parts[$id_parts.length-1]
-        $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $adlsstorage_name --type Microsoft.Storage/storageAccounts --description "Approved by Deploy.ps1"
+    $links = az network private-endpoint-connection list -g $resource_group_name -n $blobstorage_name --type 'Microsoft.Storage/storageAccounts' |  ConvertFrom-Json
+    foreach($link in $links){
+        if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
+            $id_parts = $link.id.Split("/");
+            Write-Host "- " + $id_parts[$id_parts.length-1]
+            $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $blobstorage_name --type Microsoft.Storage/storageAccounts --description "Approved by Deploy.ps1"
+        }
+    }
+    $links = az network private-endpoint-connection list -g $resource_group_name -n $adlsstorage_name --type 'Microsoft.Storage/storageAccounts' |  ConvertFrom-Json
+    foreach($link in $links){
+        if($link.properties.privateLinkServiceConnectionState.status -eq "Pending"){
+            $id_parts = $link.id.Split("/");
+            Write-Host "- " + $id_parts[$id_parts.length-1]
+            $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $adlsstorage_name --type Microsoft.Storage/storageAccounts --description "Approved by Deploy.ps1"
+        }
     }
 }
 
 #----------------------------------------------------------------------------------------------------------------
 #   Building & Deploy Web App
 #----------------------------------------------------------------------------------------------------------------
-if ($skipWebApps) {
+if ($skipWebApp) {
     Write-Host "Skipping Building & Deploying Web Application"    
 }
 else {
@@ -134,15 +140,15 @@ else {
 #----------------------------------------------------------------------------------------------------------------
 #   Building & Deploy Function App
 #----------------------------------------------------------------------------------------------------------------
-if ($skipWebApps) {
+if ($skipFunctionApp) {
     Write-Host "Skipping Building & Deploying Function Application"    
 }
 else {
     Write-Host "Building & Deploying Function Application"
     Set-Location $deploymentFolderPath
-    Set-Location "..\FunctionApp"
+    Set-Location "..\FunctionApp\FunctionApp"
     dotnet restore
-    dotnet publish --no-restore --configuration Release --output '..\DeploymentV2\bin\publish\unzipped\functionapp\'
+    dotnet publish --no-restore --configuration Release --output '..\..\DeploymentV2\bin\publish\unzipped\functionapp\'
     
     Set-Location $deploymentFolderPath
     Set-Location "./bin/publish"

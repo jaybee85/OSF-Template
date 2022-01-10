@@ -1,25 +1,17 @@
-#----------------------------------------------------------------------------------------------------------------
-# You must be logged into the Azure CLI to run this script
-#----------------------------------------------------------------------------------------------------------------
-# This script will:
-# TBA
-# 
-# You can run this script multiple times if needed.
-#----------------------------------------------------------------------------------------------------------------
+#Next Add MSIs Permissions
+#Function App MSI Access to App Role to allow chained function calls
+write-host "Granting Function App MSI Access to App Role to allow chained function calls"
+$authapp = az ad app show --id "api://$env:AdsOpts_CD_ServicePrincipals_FunctionAppAuthenticationSP_Name" | ConvertFrom-Json
+$callingappid = ((az functionapp identity show --name $env:AdsOpts_CD_Services_CoreFunctionApp_Name --resource-group $env:AdsOpts_CD_ResourceGroup_Name) | ConvertFrom-Json).principalId
+$authappid = $authapp.appId
+$permissionid =  $authapp.oauth2Permissions.id
 
-$environmentName = "local" # currently supports (local, staging)
-$myIp = (Invoke-WebRequest ifconfig.me/ip).Content
+$authappobjectid =  (az ad sp show --id $authappid | ConvertFrom-Json).objectId
 
-$deploymentFolderPath = $PWD
-Set-Location ".\terraform"
-$env:TF_VAR_ip_address = $myIp
+$body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
+$body.resourceId = $authappobjectid
+$body.appRoleId =  ($authapp.appRoles | Where-Object {$_.value -eq "FunctionAPICaller" }).id
+$body.principalId = $callingappid
+$body = ($body | ConvertTo-Json -compress | Out-String).Replace('"','\"')
 
-#------------------------------------------------------------------------------------------------------------
-# Get all the outputs from terraform so we can use them in subsequent steps
-#------------------------------------------------------------------------------------------------------------
-Write-Host "Reading Terraform Outputs"
-$tout = terraform output -json | ConvertFrom-Json
-
-
-Set-Location $deploymentFolderPath
-Write-Host "Finished"
+$result = az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$authappobjectid/appRoleAssignedTo" --headers '{\"Content-Type\":\"application/json\"}' --body $body

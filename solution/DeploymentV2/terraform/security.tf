@@ -38,7 +38,7 @@ resource "azurerm_role_assignment" "loganalytics_web_app" {
   principal_id         = azurerm_app_service.web[0].identity[0].principal_id
 }
 
-resource "azurerm_storage_account" "storage_acccount_security_logs" {
+resource "azurerm_storage_account" "storage_acccount_security_logs" {  
   name                     = local.logs_storage_account_name
   resource_group_name      = var.resource_group_name
   location                 = var.resource_location
@@ -53,7 +53,7 @@ resource "azurerm_storage_account" "storage_acccount_security_logs" {
     type = "SystemAssigned"
   }
   network_rules {
-    default_action = "Deny"
+    default_action = var.is_vnet_isolated ? "Deny" : "Allow"
     bypass         = ["Metrics", "AzureServices"]
   }
 

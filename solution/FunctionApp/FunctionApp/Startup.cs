@@ -51,7 +51,7 @@ namespace FunctionApp
             var downstreamAuthOptionsDirect = config.GetSection("AzureAdAzureServicesDirect").Get<DownstreamAuthOptionsDirect>();
             var downstreamAuthOptionsViaAppReg = config.GetSection("AzureAdAzureServicesViaAppReg").Get<DownstreamAuthOptionsViaAppReg>();
             var downstreamAuthenticationProvider = new MicrosoftAzureServicesAppAuthenticationProvider(downstreamAuthOptionsDirect, appOptions.UseMSI);
-            var downstreamViaAppRegAuthenticationProvider = new MicrosoftAzureServicesAppAuthenticationProvider(downstreamAuthOptionsViaAppReg, false);
+            var downstreamViaAppRegAuthenticationProvider = new MicrosoftAzureServicesAppAuthenticationProvider(downstreamAuthOptionsViaAppReg, appOptions.UseMSI);
 
             services.AddSingleton<TaskTypeMappingProvider>();
             services.AddSingleton<TaskMetaDataDatabase>();

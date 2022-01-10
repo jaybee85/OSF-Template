@@ -195,7 +195,7 @@
       {
         "dependsOn": [
           {
-            "activity": "Copy AzureBlobStorage to AzureBlobStorage Failed",
+            "activity": "Copy AzureBlobStorage to AzureBlobFS Failed",
             "dependencyConditions": [
               "Completed"
             ]
@@ -223,7 +223,7 @@
       {
         "dependsOn": [
           {
-            "activity": "Copy AzureBlobStorage to AzureBlobStorage Succeed",
+            "activity": "Copy AzureBlobStorage to AzureBlobFS Succeed",
             "dependencyConditions": [
               "Completed"
             ]

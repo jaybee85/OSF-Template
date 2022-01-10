@@ -54,7 +54,7 @@ namespace FunctionApp.Functions
             }
         }
 
-        private dynamic PrepareFrameworkTasksCore(Logging.Logging logging)
+        public dynamic PrepareFrameworkTasksCore(Logging.Logging logging)
         {
             _taskMetaDataDatabase.ExecuteSql(
                 $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");

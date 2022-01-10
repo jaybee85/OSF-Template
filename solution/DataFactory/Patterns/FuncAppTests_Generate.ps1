@@ -11,6 +11,16 @@ foreach ($pattern in $patterns) {
     $folder = "/pipeline/" + $pattern + "/functionapptests"
 
     Set-Location -path ($CurDir + $folder)
+
+    if (!(Test-Path "./tests"))
+    {
+        New-Item -itemType Directory -Name "tests"
+    }
+    else
+    {
+        write-host "Tests Folder already exists"
+    }
+
     $testfile = "./tests/tests.json"
     jsonnet "./GenerateTests.jsonnet" | Set-Content($testfile)
     $testfilejson = Get-Content $testfile | ConvertFrom-Json | ForEach-Object {
@@ -23,5 +33,5 @@ foreach ($pattern in $patterns) {
 
 Set-Location -path ($CurDir + '../../../')
 Write-Host $PWD.ToString()
-$AllTests | ConvertTo-Json -Depth 10 | Set-Content -Path  ($PWD.ToString() + '/FunctionApp/consoleapp/UnitTests/tests.json')
+$AllTests | ConvertTo-Json -Depth 10 | Set-Content -Path  ($PWD.ToString() + '/FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json')
 Set-Location $CurDir

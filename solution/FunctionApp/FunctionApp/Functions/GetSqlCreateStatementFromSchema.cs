@@ -53,8 +53,16 @@ namespace FunctionApp.Functions
 
         public async Task<JObject> GetSqlCreateStatementFromSchemaCore(HttpRequest req, Logging.Logging logging)
         {
+
             string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
             JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
+
+            return await GetSqlCreateStatementFromSchemaCore(data, logging);
+
+        }
+
+        public async Task<JObject> GetSqlCreateStatementFromSchemaCore(JObject data, Logging.Logging logging)
+        {           
             string createStatement;
             JArray arr;
 
@@ -69,6 +77,8 @@ namespace FunctionApp.Functions
                 string storageAccountContainer = data["StorageAccountContainer"].ToString();
                 string relativePath = data["RelativePath"].ToString();
                 string schemaFileName = data["SchemaFileName"].ToString();
+
+                if (relativePath.StartsWith("/")) { relativePath = relativePath.Remove(0, 1); }
 
                 storageAccountName = storageAccountName.Replace(".dfs.core.windows.net", "").Replace("https://", "").Replace(".blob.core.windows.net", "");
 

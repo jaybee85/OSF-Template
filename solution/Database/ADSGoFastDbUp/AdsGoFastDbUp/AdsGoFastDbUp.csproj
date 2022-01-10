@@ -52,6 +52,7 @@
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\015-TaskTypeMapping_Update_NewNaming.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\016-NewTaskTypeMapping_NoIR_Updated.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
   </ItemGroup>

@@ -132,7 +132,7 @@ local pipeline = {
 			"type": "ExecutePipeline",
 			"dependsOn": [
 				{
-					"activity": "Copy AzureBlobStorage to AzureBlobStorage Failed",
+					"activity": logFailedActivityName,
 					"dependencyConditions": [
 						"Completed"
 					]
@@ -160,7 +160,7 @@ local pipeline = {
 			"type": "ExecutePipeline",
 			"dependsOn": [
 				{
-					"activity": "Copy AzureBlobStorage to AzureBlobStorage Succeed",
+					"activity": logSuccessActivityName,
 					"dependencyConditions": [
 						"Completed"
 					]

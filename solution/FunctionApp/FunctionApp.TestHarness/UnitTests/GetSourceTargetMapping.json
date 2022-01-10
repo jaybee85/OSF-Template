@@ -1,0 +1,12 @@
+{
+  "TaskInstanceId": "19",
+  "ExecutionUid": "ae216cc7-fbe7-4d1c-b83a-ed600ec045ba",
+  "RunId": "fbcd8cef-2be3-47a1-92dd-a7d23052a113",
+  "StorageAccountName": "https://mstdevdlsadsinakblob.blob.core.windows.net",
+  "StorageAccountContainer": "datalakeraw",
+  "RelativePath": "samples/",
+  "SchemaFileName": "SalesLT.Customer.json",
+  "SourceType": "Azure Blob",
+  "TargetType": "Azure SQL",
+  "MetadataType": "Parquet"
+}

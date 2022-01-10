@@ -278,3 +278,6 @@ __pycache__/
 #Old Deploy Folder 
 Deploy/
 deploy/
+
+
+/secrets.libsonnet

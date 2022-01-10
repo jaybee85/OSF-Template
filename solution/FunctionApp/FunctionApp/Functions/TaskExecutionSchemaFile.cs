@@ -61,14 +61,23 @@ namespace FunctionApp.Functions
 
         }
 
+
         public async Task<JObject> TaskExecutionSchemaFileCore(HttpRequest req, Logging.Logging logging)
         {
             string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
+            return await TaskExecutionSchemaFileCore(data, logging);
 
+        }
+
+        public async Task<JObject> TaskExecutionSchemaFileCore(JObject data, Logging.Logging logging)
+        {
+            
             string storageAccountName = data["StorageAccountName"].ToString();
             string storageAccountContainer = data["StorageAccountContainer"].ToString();
             string relativePath = data["RelativePath"].ToString();
+
+            if (relativePath.StartsWith("/")) { relativePath = relativePath.Remove(0, 1);  }
 
             string metadataType = data["MetadataType"].ToString();
             string sourceType = data["SourceType"].ToString();
@@ -94,8 +103,16 @@ namespace FunctionApp.Functions
                 schemaFileName = schemaFileName.Replace(".json", ".parquetschema.json");
             }
 
-            AzureBlobStorageService.UploadContentToBlob(schemaStructure, storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken);
 
+            try
+            {
+                AzureBlobStorageService.UploadContentToBlob(schemaStructure, storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken);
+            }
+            catch (Exception e)
+            {
+                logging.LogErrors(new Exception($"TaskExecutionSchemaFileCore failed to upload schema file to storage:{storageAccountName},{storageAccountContainer},{relativePath},{schemaFileName}"), logging.DefaultActivityLogItem);
+                throw e;
+            }
             JArray arr = (JArray)JsonConvert.DeserializeObject(schemaStructure);
 
             JObject root = SqlDataTypeHelper.CreateMappingBetweenSourceAndTarget(arr, sourceType, targetType, metadataType);

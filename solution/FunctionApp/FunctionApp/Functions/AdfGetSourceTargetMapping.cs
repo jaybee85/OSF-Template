@@ -50,12 +50,18 @@ namespace FunctionApp.Functions
 
 
         public async Task<JObject> GetSourceTargetMappingCore(HttpRequest req,
-            Logging.Logging logging)
+        Logging.Logging logging)
         {
             using var reader = new StreamReader(req.Body);
             var requestBody = reader.ReadToEndAsync().Result;
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
+            return await GetSourceTargetMappingCore(data, logging);
+        }
 
+        public async Task<JObject> GetSourceTargetMappingCore(JObject data, 
+            Logging.Logging logging)
+        {
+           
             string storageAccountName = data["StorageAccountName"].ToString();
             string storageAccountContainer = data["StorageAccountContainer"].ToString();
             string relativePath = data["RelativePath"].ToString();
@@ -65,7 +71,7 @@ namespace FunctionApp.Functions
             string schemaFileName = data["SchemaFileName"].ToString();
 
             storageAccountName = storageAccountName.Replace(".dfs.core.windows.net", "").Replace("https://", "").Replace(".blob.core.windows.net", "");
-            using var storageToken = new TokenCredential(await _authProvider.GetAzureRestApiToken($"https://{storageAccountName}.blob.core.windows.net").ConfigureAwait(false));
+            var storageToken = new TokenCredential(await _authProvider.GetAzureRestApiToken($"https://{storageAccountName}.blob.core.windows.net").ConfigureAwait(false));
 
             string schemaStructure = AzureBlobStorageService.ReadFile(storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken);
 

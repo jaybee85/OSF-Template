@@ -1,6 +1,7 @@
 using System;
 using System.Data.SqlClient;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using FunctionApp.DataAccess;
 using FunctionApp.Models.Options;
 using Microsoft.Azure.WebJobs;
@@ -48,6 +49,7 @@ namespace FunctionApp.Functions
             if (_options.Value.TimerTriggers.EnableRunFrameworkTasks)
             {
                 using var client = _httpClientFactory.CreateClient(HttpClients.CoreFunctionsHttpClientName);
+                
                 using SqlConnection con = _taskMetaDataDatabase.GetSqlConnection();
                 
                 // Get a list of framework task runners that are currently idle

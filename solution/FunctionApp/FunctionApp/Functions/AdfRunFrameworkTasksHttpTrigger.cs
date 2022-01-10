@@ -112,9 +112,15 @@ namespace FunctionApp.Functions
             }
         }
 
+
         public async Task<dynamic> RunFrameworkTasksCore(HttpRequest req, Logging.Logging logging)
         {
             short taskRunnerId = Convert.ToInt16(req.Query["TaskRunnerId"]);
+            return await RunFrameworkTasksCore(taskRunnerId, logging);
+        }
+
+        public async Task<dynamic> RunFrameworkTasksCore(Int16 taskRunnerId, Logging.Logging logging)
+        {            
             try
             {
                 _taskMetaDataDatabase.ExecuteSql($"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");

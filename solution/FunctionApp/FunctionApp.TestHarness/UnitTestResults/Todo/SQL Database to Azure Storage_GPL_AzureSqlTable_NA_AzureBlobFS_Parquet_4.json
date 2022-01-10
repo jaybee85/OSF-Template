@@ -1,0 +1,70 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 4,
+    "TaskStatus": "Untried",
+    "TaskType": "SQL Database to Azure Storage",
+    "Enabled": 1,
+    "ExecutionUid": "8859d95b-5911-44b6-a06c-0caae42849ee",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://mst-dev-kv-ads-inak.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "mst-dev-adf-ads-inak",
+      "ResourceGroup": "adsteratest2",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
+      "TaskDatafactoryIR": "Azure"
+    },
+    "Source": {
+      "System": {
+        "SystemId": 1,
+        "SystemServer": "mst-dev-sql-ads-inak.database.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "Azure SQL",
+        "Username": "",
+        "Database": "Samples",
+        "PasswordKeyVaultSecretName": "",
+        "UsernameKeyVaultSecretName": ""
+      },
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/4/"
+      },
+      "ChunkField": "",
+      "ChunkSize": 0,
+      "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+      "IncrementalColumnType": "int",
+      "IncrementalField": "CustomerID",
+      "IncrementalType": "Watermark",
+      "IncrementalValue": "10",
+      "TableName": "Customer",
+      "TableSchema": "SalesLT",
+      "Type": "Table",
+      "IncrementalSQLStatement": "\r\n                        SELECT \r\n\t                        MAX([CustomerID]) AS newWatermark\r\n                        FROM \r\n\t                        [SalesLT].[Customer] \r\n                        WHERE [CustomerID] > 10\r\n                    ",
+      "SQLStatement": "Select top 10 * from SalesLT.Customer",
+      "Execute": {}
+    },
+    "Target": {
+      "System": {
+        "SystemId": 4,
+        "SystemServer": "https://mstdevdlsadsinakadsl.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "TargetRelativePath": "/Tests/SQL Database to Azure Storage/4/"
+      },
+      "DataFileName": "SalesLT.Customer.parquet",
+      "RelativePath": "/Tests/SQL Database to Azure Storage/4",
+      "SchemaFileName": "SalesLT.Customer.json",
+      "Type": "Parquet"
+    }
+  }
+}

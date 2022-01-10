@@ -10,9 +10,9 @@ resource "azurerm_storage_account" "adls" {
   min_tls_version          = "TLS1_2"
   allow_blob_public_access = "false"
   network_rules {
-    default_action = "Deny"
+    default_action = var.is_vnet_isolated ? "Deny" : "Allow"
     bypass         = ["Metrics", "AzureServices"]
-    ip_rules       = [var.ip_address] // This is required to allow us to create the initial Synapse Managed Private endpoint
+    ip_rules       = var.is_vnet_isolated ? [var.ip_address] : [] // This is required to allow us to create the initial Synapse Managed Private endpoint
   }
 
   tags = local.tags

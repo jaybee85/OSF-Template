@@ -87,9 +87,6 @@ if($UploadGDS -eq $true)
 
 
 
-
-
-
 Write-Host "_____________________________"
 Write-Host "Static Pipelines"
 Write-Host "_____________________________"
