@@ -45,24 +45,6 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
   }
 }
 
-// Create an IR service principal (private linked resources can't use the azure hosted IRs)
-resource "azuread_application" "purview_ir" {
-  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  display_name = local.purview_ir_app_reg_name
-  owners       = [data.azurerm_client_config.current.object_id]
-}
-
-resource "azuread_service_principal" "purview_ir" {
-  count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  application_id = azuread_application.purview_ir[0].application_id
-}
-
-
-resource "azuread_application_password" "purview_ir" {
-  count                 = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  application_object_id = azuread_application.purview_ir[0].object_id
-}
-
 resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
   name                = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink"
@@ -104,12 +86,29 @@ module "purview_ingestion_private_endpoints" {
   queue_privatelink_name      = "${local.purview_name}-queue-plink"
   storage_privatelink_name    = "${local.purview_name}-storage-plink"
   eventhub_privatelink_name   = "${local.purview_name}-event-plink"
+  blob_private_dns_id         = azurerm_private_dns_zone.private_dns_zone_blob[0].id
+  queue_private_dns_id        = azurerm_private_dns_zone.private_dns_zone_queue[0].id
+  servicebus_private_dns_id   = azurerm_private_dns_zone.private_dns_zone_servicebus[0].id
   subnet_id                   = azurerm_subnet.plink_subnet[0].id
   managed_resource_group_name = local.purview_resource_group_name
   name_suffix                 = random_id.rg_deployment_unique.id
+  subscription_id             = var.subscription_id
+}
 
+// Create an IR service principal (private linked resources can't use the azure hosted IRs)
+resource "azuread_application" "purview_ir" {
+  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  display_name = local.purview_ir_app_reg_name
+  owners       = [data.azurerm_client_config.current.object_id]
+}
+
+resource "azuread_service_principal" "purview_ir" {
+  count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  application_id = azuread_application.purview_ir[0].application_id
 }
 
 
-
-
+resource "azuread_application_password" "purview_ir" {
+  count                 = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
+  application_object_id = azuread_application.purview_ir[0].object_id
+}

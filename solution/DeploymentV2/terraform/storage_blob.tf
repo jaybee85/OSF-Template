@@ -46,33 +46,6 @@ resource "azurerm_role_assignment" "blob_purview_sp" {
   principal_id         = azuread_service_principal.purview_ir[0].object_id
 }
 
-# currently disabled waiting on containers to be accessible via control plane
-#   https://github.com/hashicorp/terraform-provider-azurerm/pull/14220
-#   https://github.com/hashicorp/terraform-provider-azurerm/issues/2977
-#  resource "azurerm_role_assignment" "blob_cicd" {
-#   scope                = azurerm_storage_account.blob[0].id
-#   role_definition_name = "Storage Blob Data Contributor"
-#   principal_id         = data.azurerm_client_config.current.object_id
-# }
-
-
-#  resource "azurerm_storage_container" "blob_landing" {
-#   name                  = "datalakelanding"
-#   storage_account_name  = azurerm_storage_account.blob[0].name
-#   container_access_type = "private"
-#   depends_on = [
-#     azurerm_role_assignment.blob_cicd
-#   ]
-# }
-
-#  resource "azurerm_storage_container" "blob_raw" {
-#   name                  = "datalakeraw"
-#   storage_account_name  = azurerm_storage_account.blob[0].name
-#   container_access_type = "private"
-#   depends_on = [
-#     azurerm_role_assignment.blob_cicd
-#   ]
-# }
 
 resource "azurerm_private_endpoint" "blob_storage_private_endpoint_with_dns" {
   count               = var.deploy_storage_account && var.is_vnet_isolated ? 1 : 0

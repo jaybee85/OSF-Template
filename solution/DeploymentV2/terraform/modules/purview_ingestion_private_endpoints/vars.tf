@@ -12,6 +12,10 @@ variable "resource_location" {
   type        = string
 }
 
+variable "subscription_id" {
+  description = "The Id of the azure sub"
+  type        = string
+}
 
 variable "queue_privatelink_name" {
   description = "The name of the queue private link"
@@ -25,6 +29,21 @@ variable "storage_privatelink_name" {
 
 variable "eventhub_privatelink_name" {
   description = "The name of the eventhub private link"
+  type        = string
+}
+
+variable "queue_private_dns_id" {
+  description = "The id of the queue private DNS"
+  type        = string
+}
+
+variable "blob_private_dns_id" {
+  description = "The id of the queue private DNS"
+  type        = string
+}
+
+variable "servicebus_private_dns_id" {
+  description = "The id of the queue private DNS"
   type        = string
 }
 

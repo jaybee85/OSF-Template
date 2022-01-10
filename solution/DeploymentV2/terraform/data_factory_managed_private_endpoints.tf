@@ -56,7 +56,7 @@ resource "azurerm_data_factory_managed_private_endpoint" "purview" {
   name               = "AzurePurview_PrivateEndpoint"
   data_factory_id    = azurerm_data_factory.data_factory.id
   target_resource_id = azurerm_purview_account.purview[0].id
-  subresource_name   = "portal"
+  subresource_name   = "account"
   lifecycle {
     ignore_changes = [
       fqdns
