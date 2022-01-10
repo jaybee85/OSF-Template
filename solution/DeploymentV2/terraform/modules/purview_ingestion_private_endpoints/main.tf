@@ -6,6 +6,9 @@ resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoin
     "purviewAccountName" = {
       value = var.purview_account_name
     },    
+    "subscriptionId" = {
+      value = var.subscription_id
+    },    
     "location" = {
       value = var.resource_location
     },
@@ -23,6 +26,18 @@ resource "azurerm_resource_group_template_deployment" "ingestion_private_endpoin
     },
     "managedResourceGroupName" = {
       value = var.managed_resource_group_name
+    },
+    "resourceGroupName" = {
+      value = var.resource_group_name
+    },
+    "queueDnsId" = {
+      value = var.queue_private_dns_id
+    },
+    "storageDnsId" = {
+      value = var.blob_private_dns_id
+    },
+    "serviceBusDnsId" = {
+      value = var.servicebus_private_dns_id
     }
   })
   template_content = file("${path.module}/arm/privatelinks.json")
