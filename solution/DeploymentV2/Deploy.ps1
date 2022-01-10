@@ -21,14 +21,19 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
+
+
+
 $environmentName = "local" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 $skipTerraformDeployment = $true
-$skipWebApp = $true
+$skipWebApp = $false
 $skipFunctionApp = $false
-$skipDatabase = $true
-$skipNetworking = $true
+$skipDatabase = $false
+$skipSampleFiles = $true
+$skipNetworking = $tout.is_vnet_isolated
 $deploymentFolderPath = (Get-Location).Path
+$AddCurrentUserAsWebAppAdmin = $true
 
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Infrastructure
@@ -55,6 +60,9 @@ else {
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
 Write-Host "Reading Terraform Outputs"
+Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform
+
 $subscription_id = terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl subscription_id
 $resource_group_name = terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl resource_group_name
 $webapp_name= terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl webapp_name
@@ -71,7 +79,7 @@ $sampledb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environment
 $metadatadb_name=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl metadatadb_name)
 $loganalyticsworkspace_id=$(terragrunt output --raw --terragrunt-config ./vars/$environmentName/terragrunt.hcl loganalyticsworkspace_id)
 
-if ($skipNetworking) {
+if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    
 }
 else {
@@ -135,6 +143,23 @@ else {
     Compress-Archive -Path '.\unzipped\webapplication\*' -DestinationPath $Path -force
 
     $result = az webapp deployment source config-zip --resource-group $resource_group_name --name $webapp_name --src $Path
+
+    if ($AddCurrentUserAsWebAppAdmin) {                
+        write-host "Adding Admin Role To WebApp"
+        $authapp = (az ad app show --id $tout.aad_webreg_id) | ConvertFrom-Json
+        $cu = az ad signed-in-user show | ConvertFrom-Json
+        $callinguser = $cu.objectId
+        $authappid = $authapp.appId
+        $authappobjectid =  (az ad sp show --id $authapp.appId | ConvertFrom-Json).objectId
+
+        $body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
+        $body.resourceId = $authappobjectid
+        $body.appRoleId =  ($authapp.appRoles | Where-Object {$_.value -eq "Administrator" }).id
+        $body.principalId = $callinguser
+        $body = ($body | ConvertTo-Json -compress | Out-String).Replace('"','\"')
+
+        $result = az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$authappobjectid/appRoleAssignedTo" --headers '{\"Content-Type\":\"application/json\"}' --body $body
+    }
 }
 
 #----------------------------------------------------------------------------------------------------------------
@@ -230,24 +255,40 @@ else {
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Sample Files
 #----------------------------------------------------------------------------------------------------------------
-Set-Location $deploymentFolderPath
-Set-Location "../SampleFiles/"
-Write-Host "Deploying Sample files"
 
-$result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
+#----------------------------------------------------------------------------------------------------------------
+if($skipSampleFiles) {
+    Write-Host "Skipping Sample Files"    
+}
+else 
+{
+    Set-Location $deploymentFolderPath
+    Set-Location "../SampleFiles/"
+    Write-Host "Deploying Sample files"
+    if ($tout.is_vnet_isolated -eq $true)
+    {
+        $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
+    }
 
-$result = az storage container create --name "datalakelanding" --account-name $adlsstorage_name --auth-mode login
-$result = az storage container create --name "datalakeraw" --account-name $adlsstorage_name --auth-mode login
-$result = az storage container create --name "datalakeraw" --account-name $blobstorage_name --auth-mode login
-$result = az storage container create --name "transientin" --account-name $blobstorage_name --auth-mode login
+    $result = az storage container create --name "datalakelanding" --account-name $adlsstorage_name --auth-mode login
+    $result = az storage container create --name "datalakeraw" --account-name $adlsstorage_name --auth-mode login
+    $result = az storage container create --name "datalakeraw" --account-name $blobstorage_name --auth-mode login
+    $result = az storage container create --name "transientin" --account-name $blobstorage_name --auth-mode login
 
-$files = Get-ChildItem -Name
-foreach ($file in $files) {
-    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $adlsstorage_name --auth-mode login
-    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $blobstorage_name --auth-mode login
+    $files = Get-ChildItem -Name
+    foreach ($file in $files) {
+        $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $adlsstorage_name --auth-mode login
+        $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $blobstorage_name --auth-mode login
+    }
+
+
+
+    if ($tout.is_vnet_isolated -eq $true)
+    {
+        $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
 }
 
-$result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
+}
 
 Set-Location $deploymentFolderPath
 Write-Host "Finished"

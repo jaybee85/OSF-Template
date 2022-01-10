@@ -53,3 +53,10 @@ output "purview_name" {
 output "purview_sp_name" {
   value = local.purview_ir_app_reg_name
 }
+output "is_vnet_isolated" {
+  value = var.is_vnet_isolated
+}
+output "aad_webreg_id" {
+  value =  azuread_application.web_reg[0].application_id
+}
+

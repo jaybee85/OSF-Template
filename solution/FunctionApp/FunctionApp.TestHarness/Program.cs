@@ -88,8 +88,8 @@ namespace FunctionApp.TestHarness
             _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
-            //InsertTestTasksIntoDb();
-            Test_GetSourceTargetMapping(_funcAppLogger);
+            InsertTestTasksIntoDb();
+            //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
 
         }
@@ -118,13 +118,27 @@ namespace FunctionApp.TestHarness
 
             var tmdb = new TaskMetaDataDatabase(_options,_authProvider);
             var con = tmdb.GetSqlConnection();
-            var sql = @"
+
+            var @sql = @"
+
+            delete from [dbo].[TaskGroup] where taskgroupid <=0;            
+            
+            SET IDENTITY_INSERT [dbo].[TaskGroup] ON
+            INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+            Values (-1,'Test Tasks',1, 0,10,null,1)
+            SET IDENTITY_INSERT [dbo].[TaskGroup] OFF
+   
+            ";
+
+            var result = con.Query(sql);
+
+            sql = @"
                     
                     delete from [dbo].[TaskMaster] where taskmasterid <=0;
 
                     delete from [dbo].[TaskInstance] where taskmasterid <=0;";
 
-            var result = con.Query(sql);
+            result = con.Query(sql);
 
             foreach (var testTaskInstance in testTaskInstances)
             {
@@ -137,7 +151,7 @@ namespace FunctionApp.TestHarness
                         TaskMasterId = T.TaskMasterId * -1,
                         TaskMasterName = T.AdfPipeline + T.TaskMasterId.ToString(),
                         TaskTypeId = T.TaskTypeId,
-                        TaskGroupId = 1,
+                        TaskGroupId = -1,
                         ScheduleMasterId = 4,
                         SourceSystemId = T.SourceSystemId,
                         TargetSystemId = T.TargetSystemId,
