@@ -31,7 +31,7 @@ $skipWebApp = $false
 $skipFunctionApp = $false
 $skipDatabase = $false
 $skipSampleFiles = $true
-$skipNetworking = $tout.is_vnet_isolated
+$skipNetworking = $true
 $deploymentFolderPath = (Get-Location).Path
 $AddCurrentUserAsWebAppAdmin = $true
 

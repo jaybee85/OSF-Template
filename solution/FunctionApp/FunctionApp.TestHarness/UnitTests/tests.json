@@ -259,7 +259,7 @@
     "TaskTypeId": 3
   },
   {
-    "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -290,13 +290,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 7,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"false\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"true\",\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"StagingTableName\": \"stg_Customer0\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"Customer0\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"false\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"true\",\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"StagingTableName\": \"stg_Customer7\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"Customer7\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -327,13 +327,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 8,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"false\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"true\",\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"StagingTableName\": \"stg_Customer1\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"Customer1\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"false\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"true\",\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"StagingTableName\": \"stg_Customer8\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"Customer8\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -364,13 +364,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 9,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata2\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata2\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata9\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata9\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -401,13 +401,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 10,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata3\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata3\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata10\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata10\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -438,13 +438,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 11,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata4\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata4\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata11\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata11\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -475,13 +475,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 12,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Json\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata5\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata5\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Json\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata12\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata12\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -512,13 +512,13 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 13,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata6\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata6\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata13\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata13\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1
   },
   {
-    "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA",
+    "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA_IRA",
     "DataFactoryId": 1,
     "DataFactoryName": "mst-dev-adf-ads-inak",
     "DataFactoryResourceGroup": "adsteratest2",
@@ -549,7 +549,7 @@
     "TaskInstanceId": 1,
     "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\"\n}",
     "TaskMasterId": 14,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Json\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata7\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata7\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcorrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Json\"\n    },\n    \"Target\": {\n        \"AutoCreateTable\": \"true\",\n        \"AutoGenerateMerge\": \"false\",\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DynamicMapping\": {\n\n        },\n        \"MergeSQL\": \"\",\n        \"PostCopySQL\": \"\",\n        \"PreCopySQL\": \"\",\n        \"SchemaFileName\": \"\",\n        \"StagingTableName\": \"stg_yellow_tripdata14\",\n        \"StagingTableSchema\": \"dbo\",\n        \"TableName\": \"yellow_tripdata14\",\n        \"TableSchema\": \"dbo\",\n        \"Type\": \"Table\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "TaskTypeId": 1

@@ -3,185 +3,30 @@
   "properties": {
     "activities": [
       {
-        "dependsOn": [
-          {
-            "activity": "Copy AzureBlobStorage to AzureBlobFS Started",
-            "dependencyConditions": [
-              "Succeeded"
-            ]
-          }
-        ],
-        "inputs": [
-          {
-            "parameters": {
-              "FileName": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.DataFileName"
-              },
-              "FirstRowAsHeader": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.FirstRowAsHeader"
-              },
-              "RelativePath": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
-              },
-              "SheetName": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.SheetName"
-              },
-              "StorageAccountContainerName": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.System.Container"
-              },
-              "StorageAccountEndpoint": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.System.SystemServer"
-              }
-            },
-            "referenceName": "GDS_AzureBlobStorage_Excel_Azure",
-            "type": "DatasetReference"
-          }
-        ],
-        "name": "Copy AzureBlobStorage to AzureBlobFS",
-        "outputs": [
-          {
-            "parameters": {
-              "FileName": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.DataFileName"
-              },
-              "RelativePath": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.RelativePath"
-              },
-              "StorageAccountContainerName": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.System.Container"
-              },
-              "StorageAccountEndpoint": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer"
-              }
-            },
-            "referenceName": "GDS_AzureBlobFS_Parquet_Azure",
-            "type": "DatasetReference"
-          }
-        ],
-        "policy": {
-          "retry": 0,
-          "retryIntervalInSeconds": 30,
-          "secureInput": false,
-          "secureOutput": false,
-          "timeout": "7.00:00:00"
-        },
-        "type": "Copy",
+        "dependsOn": [],
+        "name": "Execute Main Pipeline",
+        "type": "ExecutePipeline",
         "typeProperties": {
-          "enableStaging": false,
-          "parallelCopies": {
-            "type": "Expression",
-            "value": "@pipeline().parameters.TaskObject.DegreeOfCopyParallelism"
+          "parameters": {
+            "TaskObject": {
+              "type": "Expression",
+              "value": "@pipeline().parameters.TaskObject"
+            }
           },
-          "sink": {
-            "storeSettings": {
-              "copyBehavior": "PreserveHierarchy",
-              "type": "AzureBlobFSWriteSettings"
-            },
-            "type": "ParquetSink"
+          "pipeline": {
+            "referenceName": "GPL_AzureBlobStorage_Excel_AzureBlobFS_Parquet_Primary_Azure",
+            "type": "PipelineReference"
           },
-          "source": {
-            "storeSettings": {
-              "recursive": true,
-              "type": "AzureBlobStorageReadSettings"
-            },
-            "type": "ExcelSource"
-          }
+          "waitOnCompletion": true
         },
         "userProperties": []
       },
       {
         "dependsOn": [
           {
-            "activity": "Copy AzureBlobStorage to AzureBlobFS",
+            "activity": "Execute Main Pipeline",
             "dependencyConditions": [
               "Failed"
-            ]
-          }
-        ],
-        "name": "Copy AzureBlobStorage to AzureBlobFS Failed",
-        "type": "ExecutePipeline",
-        "typeProperties": {
-          "parameters": {
-            "Body": {
-              "type": "Expression",
-              "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Copy Blob to Blob\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"', string(activity('Copy AzureBlobStorage to AzureBlobFS').error.message), '\",\"Status\":\"Failed\"}'))"
-            },
-            "FunctionName": "Log",
-            "Method": "Post"
-          },
-          "pipeline": {
-            "referenceName": "SPL_AzureFunction",
-            "type": "PipelineReference"
-          },
-          "waitOnCompletion": false
-        },
-        "userProperties": []
-      },
-      {
-        "dependsOn": [],
-        "name": "Copy AzureBlobStorage to AzureBlobFS Started",
-        "type": "ExecutePipeline",
-        "typeProperties": {
-          "parameters": {
-            "Body": {
-              "type": "Expression",
-              "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":3,\"LogSource\":\"ADF\",\"ActivityType\":\"Copy Blob to Blob\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"Status\":\"Started\"}'))"
-            },
-            "FunctionName": "Log",
-            "Method": "Post"
-          },
-          "pipeline": {
-            "referenceName": "SPL_AzureFunction",
-            "type": "PipelineReference"
-          },
-          "waitOnCompletion": false
-        },
-        "userProperties": []
-      },
-      {
-        "dependsOn": [
-          {
-            "activity": "Copy AzureBlobStorage to AzureBlobFS",
-            "dependencyConditions": [
-              "Succeeded"
-            ]
-          }
-        ],
-        "name": "Copy AzureBlobStorage to AzureBlobFS Succeed",
-        "type": "ExecutePipeline",
-        "typeProperties": {
-          "parameters": {
-            "Body": {
-              "type": "Expression",
-              "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Copy Blob to Blob\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"RowsInserted\":\"', string(activity('Copy AzureBlobStorage to AzureBlobFS').output.filesWritten), '\",\"Comment\":\"\",\"Status\":\"Complete\"}'))"
-            },
-            "FunctionName": "Log",
-            "Method": "Post"
-          },
-          "pipeline": {
-            "referenceName": "SPL_AzureFunction",
-            "type": "PipelineReference"
-          },
-          "waitOnCompletion": false
-        },
-        "userProperties": []
-      },
-      {
-        "dependsOn": [
-          {
-            "activity": "Copy AzureBlobStorage to AzureBlobFS Failed",
-            "dependencyConditions": [
-              "Completed"
             ]
           }
         ],
@@ -191,7 +36,7 @@
           "parameters": {
             "Body": {
               "type": "Expression",
-              "value": "@json(\r\n    concat('{\"TaskInstanceId\":\"', \r\n        string(pipeline().parameters.TaskObject.TaskInstanceId), \r\n        '\",\"ExecutionUid\":\"',\r\n         string(pipeline().parameters.TaskObject.ExecutionUid), \r\n         '\",\"RunId\":\"', \r\n         string(pipeline().RunId), \r\n         '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"'\r\n         , string(pipeline().TriggerTime), \r\n         '\",\"EndDateTimeOffSet\":\"', \r\n         string(utcnow()), '\",\"Comment\":\"', \r\n         concat(pipeline().Pipeline, 'Failed'), \r\n         '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \r\n         string(pipeline().parameters.TaskObject.NumberOfRetries),\r\n         '\"}'\r\n    )\r\n)"
+              "value": "@json(\n    concat(\n        '{\"TaskInstanceId\":\"', \n        string(pipeline().parameters.TaskObject.TaskInstanceId), \n        '\",\"ExecutionUid\":\"', \n        string(pipeline().parameters.TaskObject.ExecutionUid), \n        '\",\"RunId\":\"', \n        string(pipeline().RunId), \n        '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', \n        string(pipeline().TriggerTime), \n        '\",\"EndDateTimeOffSet\":\"', \n        string(utcnow()), \n        '\",\"Comment\":\"', \n        string(activity('Execute Main Pipeline').error.message), \n        '\",\"Status\":\"Failed\",\"NumberOfRetries\":\"', \n        string(pipeline().parameters.TaskObject.NumberOfRetries),\n        '\"}'\n    )\n)"
             },
             "FunctionName": "Log",
             "Method": "Post"
@@ -207,9 +52,9 @@
       {
         "dependsOn": [
           {
-            "activity": "Copy AzureBlobStorage to AzureBlobFS Succeed",
+            "activity": "Execute Main Pipeline",
             "dependencyConditions": [
-              "Completed"
+              "Succeeded"
             ]
           }
         ],
@@ -219,7 +64,7 @@
           "parameters": {
             "Body": {
               "type": "Expression",
-              "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', string(pipeline().parameters.TaskObject.NumberOfRetries),'\"}'))"
+              "value": "@json(\n    concat(\n        '{\"TaskInstanceId\":\"', \n        string(\n            pipeline().parameters.TaskObject.TaskInstanceId\n            ), \n        '\",\"ExecutionUid\":\"', \n        string(pipeline().parameters.TaskObject.ExecutionUid), \n        '\",\"RunId\":\"', \n        string(pipeline().RunId), \n        '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Data-Movement-Master\",\"StartDateTimeOffSet\":\"', \n        string(pipeline().TriggerTime), \n        '\",\"EndDateTimeOffSet\":\"', \n        string(utcnow()), \n        '\",\"Comment\":\"\",\"Status\":\"Complete\",\"NumberOfRetries\":\"', \n        string(pipeline().parameters.TaskObject.NumberOfRetries),\n        '\"}'\n    )\n)"
             },
             "FunctionName": "Log",
             "Method": "Post"
@@ -237,7 +82,7 @@
     "folder": {
       "name": "ADS Go Fast/Data Movement/Azure"
     },
-    "lastPublishTime": "2020-08-05T04:14:00Z",
+    "lastPublishTime": "2020-08-06T06:27:14Z",
     "parameters": {
       "TaskObject": {
         "type": "object"

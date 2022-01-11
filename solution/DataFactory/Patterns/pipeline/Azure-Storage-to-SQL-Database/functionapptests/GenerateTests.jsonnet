@@ -1,3 +1,4 @@
+function(seed=0)
 local tests =
 [
     //GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_FullLoad
@@ -30,7 +31,7 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_FullLoad
@@ -63,7 +64,7 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobFS_Excel_AzureSqlTable_NA_FullLoad
@@ -96,7 +97,7 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_FullLoad
@@ -129,7 +130,7 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_FullLoad
@@ -164,7 +165,7 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobStorage_json_AzureSqlTable_NA_FullLoad
@@ -191,14 +192,14 @@ local tests =
         "StagingTableSchema":"dbo",
         "StagingTableName":"stg_yellow_tripdata",
         "AutoCreateTable": "true",
-        "PreCopySQL": "",
+        "PreCopySQL": "ALTER TABLE stg_yellow_tripdata12 ALTER COLUMN fare_amount float; ALTER TABLE stg_yellow_tripdata12 ALTER COLUMN tolls_amount float;",
         "PostCopySQL": "",
         "AutoGenerateMerge": "false",
         "MergeSQL":"", 
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_FullLoad
@@ -233,7 +234,7 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA" 
        
     },
     //GPL_AzureBlobFS_json_AzureSqlTable_NA_FullLoad
@@ -260,14 +261,14 @@ local tests =
         "StagingTableSchema":"dbo",
         "StagingTableName":"stg_yellow_tripdata",
         "AutoCreateTable": "true",
-        "PreCopySQL": "",
+        "PreCopySQL": "ALTER TABLE stg_yellow_tripdata14 ALTER COLUMN fare_amount float; ALTER TABLE stg_yellow_tripdata14 ALTER COLUMN tolls_amount float;",
         "PostCopySQL": "",
         "AutoGenerateMerge": "false",
         "MergeSQL":"", 
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA"
+        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA_IRA"
        
     }
 
@@ -279,7 +280,7 @@ local process = function(index, t)
 template(
     t.ADFPipeline,
     t.Pattern, 
-    index,//t.TestNumber,
+    seed+index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
     t.DataFilename,

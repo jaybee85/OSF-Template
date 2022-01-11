@@ -22,7 +22,7 @@
     <None Remove="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
     <None Remove="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
     <None Remove="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems" />
+    <None Remove="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems.sql" />
     <None Remove="0-1-0-beta\B-Always\001-Schemas.sql" />
     <None Remove="0-1-0-beta\B-Always\002-Tables.sql" />
     <None Remove="0-1-0-beta\B-Always\003-StoredProcsEtc.sql" />
@@ -30,6 +30,7 @@
     <None Remove="0-1-0-beta\B-Always\005-SampleTasks_Base.sql" />
     <None Remove="0-1-0-beta\B-Always\006-SampleTasks_TaskMaster.sql" />
     <None Remove="0-1-0-beta\B-Always\007-SampleTasks_TaskMasterWaterMark.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +56,7 @@
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
   </ItemGroup>
 
   <ItemGroup>

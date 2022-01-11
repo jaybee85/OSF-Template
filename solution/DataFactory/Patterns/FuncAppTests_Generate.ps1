@@ -22,7 +22,7 @@ foreach ($pattern in $patterns) {
     }
 
     $testfile = "./tests/tests.json"
-    jsonnet "./GenerateTests.jsonnet" | Set-Content($testfile)
+    jsonnet --tla-code seed=$counter "./GenerateTests.jsonnet" | Set-Content($testfile)
     $testfilejson = Get-Content $testfile | ConvertFrom-Json | ForEach-Object {
         $_.TaskMasterId = $counter
         $AllTests += $_

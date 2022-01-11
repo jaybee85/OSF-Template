@@ -1,3 +1,4 @@
+function(seed=0)
 local tests =
 [
     //GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_FullLoad
@@ -76,7 +77,7 @@ local process = function(index, t)
 template(
     t.ADFPipeline,
     t.Pattern, 
-    index,//t.TestNumber,
+    seed+index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
     t.SourceDataFilename,
