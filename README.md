@@ -65,7 +65,7 @@ To deploy the solution open **Visual Studio Code** and carry out the following s
 ``` pwsh
 cd ./solution/DeploymentV2
 ```
->- [ ] You are now ready to begin the IAC deployment. To do so follow [this detailed guide.](https://github.com/microsoft/azure-data-services-go-fast-codebase/tree/main/solution/DeploymentV2/Readme.md)
+>- [ ] You are now ready to begin the IAC deployment. To do so follow [this detailed guide.](./solution/DeploymentV2/README.md)
 
 ## Post Deployment Set-up and Instructions
 =======
