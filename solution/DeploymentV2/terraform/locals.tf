@@ -37,7 +37,7 @@ locals {
   synapse_dwpool_name          = (var.synapse_dwpool_name != "" ? var.synapse_dwpool_name : "${var.prefix}${var.environment_tag}syndp${var.app_name}")
   synapse_sppool_name          = (var.synapse_sppool_name != "" ? var.synapse_sppool_name : "${var.prefix}${var.environment_tag}synsp${var.app_name}")
   synapse_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-synapse"
-  synapse_sql_password            = ((var.is_vnet_isolated && var.synapse_sql_password == null) ? "" : var.synapse_sql_password)
+  synapse_sql_password            = ((var.deploy_synapse && var.synapse_sql_password == null) ? "" : var.synapse_sql_password)
 
   tags = {
     Environment = var.environment_tag
