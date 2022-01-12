@@ -14,7 +14,7 @@ resource "azurerm_synapse_workspace" "synapse" {
   location                             = var.resource_location
   storage_data_lake_gen2_filesystem_id = azurerm_storage_data_lake_gen2_filesystem.dlfs[0].id
   sql_administrator_login              = var.synapse_sql_login
-  sql_administrator_login_password     = var.synapse_sql_password
+  sql_administrator_login_password     = local.synapse_sql_password
   sql_identity_control_enabled         = true
   public_network_access_enabled        = ((var.is_vnet_isolated == false) || (var.delay_private_access == true))
   managed_virtual_network_enabled      = true

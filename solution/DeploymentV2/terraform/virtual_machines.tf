@@ -19,7 +19,7 @@ resource "azurerm_windows_virtual_machine" "jumphost" {
   resource_group_name = var.resource_group_name
   size                = "Standard_B2s"
   admin_username      = "adminuser"
-  admin_password      = var.jumphost_password
+  admin_password      = local.jumphost_password
   network_interface_ids = [
     azurerm_network_interface.jumphost_nic[0].id,
   ]

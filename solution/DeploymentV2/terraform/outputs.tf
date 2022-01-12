@@ -57,8 +57,8 @@ output "is_vnet_isolated" {
   value = var.is_vnet_isolated
 }
 output "aad_webreg_id" {
-  value =  azuread_application.web_reg[0].application_id
+  value = azuread_application.web_reg[0].application_id
 }
 output "purview_sp_id" {
-  value = azuread_application.purview_ir[0].application_id
+  value = var.deploy_purview ?   azuread_application.purview_ir[0].application_id : "0"
 }
