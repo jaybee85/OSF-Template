@@ -27,10 +27,10 @@
 $environmentName = "local" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 $skipTerraformDeployment = $true
-$skipWebApp = $false
-$skipFunctionApp = $false
+$skipWebApp = $true
+$skipFunctionApp = $true
 $skipDatabase = $false
-$skipSampleFiles = $false
+$skipSampleFiles = $true
 $skipNetworking = $true
 $deploymentFolderPath = (Get-Location).Path
 $AddCurrentUserAsWebAppAdmin = $true
@@ -221,25 +221,34 @@ else {
     }
 
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
-    $aadUsers =  @($datafactory_name, $purview_name, $purview_sp_name)
+    $aadUsers =  @($datafactory_name)
+
+    if(!$purview_sp_id -eq 0)
+    {
+        $aadUsers +=  $purview_name
+        $aadUsers +=  $purview_sp_name
+    }
 
     $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
     foreach($database in $databases)
     {
         
-        foreach($user in $aadUsers)
+        foreach($user in $aadUsers)        
         {
-            $sqlcommand = "
-                    DROP USER IF EXISTS [$user] 
-                    CREATE USER [$user] FROM EXTERNAL PROVIDER;
-                    ALTER ROLE db_datareader ADD MEMBER [$user];
-                    ALTER ROLE db_datawriter ADD MEMBER [$user];
-                    GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
-                    GO
-            "
+            if (![string]::IsNullOrEmpty($user))
+            {
+                $sqlcommand = "
+                        DROP USER IF EXISTS [$user] 
+                        CREATE USER [$user] FROM EXTERNAL PROVIDER;
+                        ALTER ROLE db_datareader ADD MEMBER [$user];
+                        ALTER ROLE db_datawriter ADD MEMBER [$user];
+                        GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
+                        GO
+                "
 
-            write-host "Granting MSI Privileges on $database DB to $user"
-            Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
+                write-host "Granting MSI Privileges on $database DB to $user"
+                Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
+            }
         }
     }
 
