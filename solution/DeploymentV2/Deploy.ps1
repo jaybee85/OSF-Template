@@ -30,7 +30,7 @@ $skipTerraformDeployment = $true
 $skipWebApp = $false
 $skipFunctionApp = $false
 $skipDatabase = $false
-$skipSampleFiles = $true
+$skipSampleFiles = $false
 $skipNetworking = $true
 $deploymentFolderPath = (Get-Location).Path
 $AddCurrentUserAsWebAppAdmin = $true
@@ -67,7 +67,7 @@ $outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/t
 
 $subscription_id =$outputs.subscription_id.value
 $resource_group_name =$outputs.resource_group_name.value
-$webapp_name= =$outputs.webapp_name.value
+$webapp_name =$outputs.webapp_name.value
 $functionapp_name=$outputs.functionapp_name.value
 $purview_name=$outputs.purview_name.value
 $sqlserver_name=$outputs.sqlserver_name.value
