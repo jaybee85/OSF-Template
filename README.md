@@ -56,48 +56,20 @@ Once you have set up these pre-requisites you will then need to [Clone](https://
 ## Deployment
 To deploy the solution open **Visual Studio Code** and carry out the following steps.
 
->- [ ] From the menu select "File" then "Open Folder". Navigate the directory into which you cloned the solution and from there to "solution/Deployment". Choose this folder to open in Visual Studio Code. 
->- [ ] Next, from the menu, select "View", "Command Palette". When the search box opens type "Remote-Containers: Reopen in Container". **Note** that you Docker Desktop needs to be running before you perform this step. 
+>- [ ] From the menu select "File" then "Open Folder". Navigate the directory into which you cloned the solution. It should look like the image below with a ".devcontainer" folder at the root. Open this folder in Visual Studio Code. 
+![image](https://user-images.githubusercontent.com/11702150/149238286-314b01ab-4cd8-4ac7-b3f5-32ca5a8d8661.png)
+
+>- [ ] Next, from the Visual Studio Code menu, select "View", "Command Palette". When the search box opens type "Remote-Containers: Reopen in Container". **Note** that Docker Desktop needs to be running before you perform this step. 
 >- [ ] From the menu select "Terminal", "New Terminal". A new Powershell Core window will open at the bottom of your screen. You are now running within the Docker container.
->- [ ] Deployment specifics are controlled by an environment file. You can set these specifics using a small node web application that is embedded within the source code. To access the application use the Terminal window that was creeated in the previous step and type the following commands: 
-```bash
-bash
-cd environments/Node/
-npm install 
-node server.js 
+>- [ ] You are now in the development and deployment environment. Within the new terminal window navigate to the DeploymentV2 directory using the commands below:
+``` pwsh
+cd ./solution/DeploymentV2
 ```
->- [ ] Next Open an Internet Browser and navigate to http://localhost:8080/EditSettings.html. You  should see a screen that looks like the picture below. For a vanilla deployment you only need to fill out the section titled "Primary Resource Group Settings". Fill this out now with your Azure Environment Specifics and, once done, click on the red button at the top of the form labelled "Click here to update the environment file with form changes". 
-
-![Form](./documentation/images/DeploymentForm.png)
-
->- [ ] Next return to the terminal window and press "Ctrl+c" twice to stop your Node application. Next log in to Azure and check that you are using the right subscription by using the following commands:
-
-```powershell
-pwsh
-az login #Logs you in to your Azure environment 
-az account show
-```
->- [ ] Next return to the terminal window and use the following commands to access the directory which contains the deployment scripts and list its contents:
-
-```powershell
-pwsh
-cd ../../workflows/
-ls
-```
-
->- [ ] You will now see a listing of powershell (*.ps1) files. These are the scripts that drive the deployment. To deploy the solution run the commands below in your terminal window. **Note** it is recommended that you run these one at a time and check output during each command execution for errors. 
-```powershell
-./LocalDevOnly_EnvironmentSetUp.ps1 #Loads your environment settings
-./CI_1a_BuildCode.ps1 #Builds the source code binaries 
-./CD_0a_CreateServicePrincipals_AAD_Elevated.ps1 #Creates your Azure resource group and application registrations
-./CD_1a_DeployServices.ps1 #Deploys the core Azure Services     
-./CD_2a_CreateMSIs_AAD_Elevated.ps1 #Sets up the Azure Managed Service Identities and grants privileges and access
-./CD_2b_ConfigureServices.ps1 #Publishes source code to Azure Services.
-```
+>- [ ] You are now ready to begin the IAC deployment. To do so follow [this detailed guide.](https://github.com/microsoft/azure-data-services-go-fast-codebase/tree/main/solution/DeploymentV2/Readme.md)
 
 ## Post Deployment Set-up and Instructions
 =======
-The deployment uses a concept of **Developing inside a Container** to containerize all the necessary pre-requisite component without requiring them to be installed on the local machine. Follow our [Configuring your System for Development Containers](https://code.visualstudio.com/docs/remote/containers) guide.
+Coming Soon.
 
 ---
 
