@@ -14,7 +14,7 @@ locals {
   plink_subnet_name            = (var.plink_subnet_name != "" ? var.plink_subnet_name : "${module.naming.subnet.name}-plink")
   app_service_subnet_name      = (var.app_service_subnet_name != "" ? var.plink_subnet_name : "${module.naming.subnet.name}-appservice")
   vm_subnet_name               = (var.vm_subnet_name != "" ? var.vm_subnet_name : "${module.naming.subnet.name}-vm")
-  logs_storage_account_name    = (var.logs_storage_account_name != "" ? var.logs_storage_account_name : module.naming.logs_storage_account_name.name_unique)
+  logs_storage_account_name    = (var.logs_storage_account_name != "" ? var.logs_storage_account_name : "${module.naming.storage_account.name_unique}log")
   app_service_nsg_name         = (var.app_service_nsg_name != "" ? var.app_service_nsg_name : "${module.naming.network_security_group.name}-appservice")
   plink_nsg_name               = (var.plink_nsg_name != "" ? var.plink_nsg_name : "${module.naming.network_security_group.name}-plink")
   bastion_nsg_name             = (var.bastion_nsg_name != "" ? var.bastion_nsg_name : "${module.naming.network_security_group.name}-bastion")
