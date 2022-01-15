@@ -81,6 +81,12 @@ namespace FunctionApp.Functions
                     short defaultTasksPerGroup = 0;
                     short distributionLoopCounter = 1;
 
+                    //Adjust System Wide Concurrency
+                    short AggregateGroupConcurrencyAvailable = (short)taskGroups.Sum(x => Convert.ToInt16(x.TaskGroupConcurrency));
+
+                    if (availableConcurrencySlots > AggregateGroupConcurrencyAvailable)
+                    { availableConcurrencySlots = AggregateGroupConcurrencyAvailable; }
+
                     //Distribute Concurrency Slots 
                     while (availableConcurrencySlots > 0)
                     {

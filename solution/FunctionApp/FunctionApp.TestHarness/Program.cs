@@ -88,9 +88,10 @@ namespace FunctionApp.TestHarness
             _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
-            InsertTestTasksIntoDb();
+            //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
+            DebugPrepareFrameworkTasks();
 
         }
 
@@ -126,6 +127,16 @@ namespace FunctionApp.TestHarness
             SET IDENTITY_INSERT [dbo].[TaskGroup] ON
             INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
             Values (-1,'Test Tasks',1, 0,10,null,1)
+
+            INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+            Values (-2,'Test Tasks2',1, 0,10,null,1)
+
+            INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+            Values (-3,'Test Tasks3',1, 0,10,null,1)
+
+            INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+            Values (-4,'Test Tasks4',1, 0,10,null,1)
+
             SET IDENTITY_INSERT [dbo].[TaskGroup] OFF
    
             ";
@@ -146,24 +157,28 @@ namespace FunctionApp.TestHarness
                 try
                 {
                     var T = new AdfJsonBaseTask(testTaskInstance, _funcAppLogger);
-                    var parameters = new
+
+
+                    for (int i = 1; i < 5; i++)
                     {
-                        TaskMasterId = T.TaskMasterId * -1,
-                        TaskMasterName = T.AdfPipeline + T.TaskMasterId.ToString(),
-                        TaskTypeId = T.TaskTypeId,
-                        TaskGroupId = -1,
-                        ScheduleMasterId = 4,
-                        SourceSystemId = T.SourceSystemId,
-                        TargetSystemId = T.TargetSystemId,
-                        DegreeOfCopyParallelism = T.DegreeOfCopyParallelism,
-                        AllowMultipleActiveInstances = 0,
-                        TaskDatafactoryIR = "Azure",
-                        TaskMasterJSON = T.TaskMasterJson,
-                        ActiveYN = 1,
-                        DependencyChainTag = "",
-                        DataFactoryId = T.DataFactoryId
-                    };
-                    sql = @"
+                        var parameters = new
+                        {
+                            TaskMasterId = (T.TaskMasterId * -1) - (i*100),
+                            TaskMasterName = T.AdfPipeline + T.TaskMasterId.ToString(),
+                            TaskTypeId = T.TaskTypeId,
+                            TaskGroupId = -1*i,
+                            ScheduleMasterId = 4,
+                            SourceSystemId = T.SourceSystemId,
+                            TargetSystemId = T.TargetSystemId,
+                            DegreeOfCopyParallelism = T.DegreeOfCopyParallelism,
+                            AllowMultipleActiveInstances = 0,
+                            TaskDatafactoryIR = "Azure",
+                            TaskMasterJSON = T.TaskMasterJson,
+                            ActiveYN = 1,
+                            DependencyChainTag = "",
+                            DataFactoryId = T.DataFactoryId
+                        };
+                        sql = @"
                                         
                     SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
                     insert into [dbo].[TaskMaster]
@@ -199,9 +214,10 @@ namespace FunctionApp.TestHarness
                         @DependencyChainTag                    ,
                         @DataFactoryId;  
                     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;";
-                    result = con.Query(sql, parameters);
 
+                        result = con.Query(sql, parameters);
 
+                    }
 
 
 
@@ -245,6 +261,8 @@ namespace FunctionApp.TestHarness
             FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger(_sap,_taskMetaDataDatabase, _options, _authProvider, _dataFactoryClientFactory);
             c.RunFrameworkTasksCore(1, _funcAppLogger);
         }
+
+        
 
         /// <summary>
         /// 
