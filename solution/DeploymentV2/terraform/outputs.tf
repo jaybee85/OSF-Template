@@ -65,3 +65,9 @@ output "aad_funcreg_id" {
 output "purview_sp_id" {
   value = var.deploy_purview ?   azuread_application.purview_ir[0].application_id : "0"
 }
+output "integration_runtimes" {
+  value = local.integration_runtimes
+}
+output "is_onprem_datafactory_ir_registered" {
+  value = var.is_onprem_datafactory_ir_registered
+}

@@ -22,7 +22,8 @@ module "data_factory_datasets" {
     azurerm_data_factory_linked_custom_service.blob,
     azurerm_data_factory_linked_custom_service.mssqldatabase,
     azurerm_data_factory_linked_custom_service.database,
-    azurerm_data_factory_linked_custom_service.file
+    azurerm_data_factory_linked_custom_service.file,
+    azurerm_data_factory_linked_custom_service.mssqldatabase
   ]
 }
 

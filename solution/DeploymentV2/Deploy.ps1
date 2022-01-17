@@ -21,17 +21,15 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-
-
-
 $environmentName = "local" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 $skipTerraformDeployment = $true
-$skipWebApp = $false
+$skipWebApp = $true
 $skipFunctionApp = $true
 $skipDatabase = $true
 $skipSampleFiles = $true
 $skipNetworking = $true
+$skipDataFactoryPipelines = $false
 $deploymentFolderPath = (Get-Location).Path
 $AddCurrentUserAsWebAppAdmin = $true
 
@@ -79,6 +77,17 @@ $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
+
+
+
+if ($skipDataFactoryPipelines) {
+    Write-Host "Skipping DataFactory Pipelines"    
+}
+else {
+    Set-Location ../
+    Invoke-Expression ./GenerateAndUploadADFPipelines.ps1
+    Set-Location ./terraform
+}
 
 if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    
