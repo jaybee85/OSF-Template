@@ -5,6 +5,11 @@
 
 -----------------------------------------------------------------------*/
 
+
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'DistributeTasksToRunnners')  
+DROP PROCEDURE DistributeTasksToRunnners 
+GO
+
 create procedure DistributeTasksToRunnners(@systemwideconcurrency integer) as
 BEGIN
 	DROP TABLE IF EXISTS #NewTasks
@@ -167,3 +172,4 @@ BEGIN
 	
 
 END
+GO

@@ -23,11 +23,11 @@
 
 $environmentName = "local" # currently supports (local, staging)
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $true
-$skipWebApp = $true
-$skipFunctionApp = $true
-$skipDatabase = $true
-$skipSampleFiles = $true
+$skipTerraformDeployment = $false
+$skipWebApp = $false
+$skipFunctionApp = $false
+$skipDatabase = $false
+$skipSampleFiles = $false
 $skipNetworking = $true
 $skipDataFactoryPipelines = $false
 $deploymentFolderPath = (Get-Location).Path

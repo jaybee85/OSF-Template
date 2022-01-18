@@ -25,7 +25,17 @@ Get-ChildItem ./output | foreach {
     Remove-item $_ -force
 }
 
+#Copy Static Pipelines
+$folder = "./pipeline/static"
+$templates = (Get-ChildItem -Path $folder -Filter "*.json"  -Verbose)
+foreach ($file in $templates)
+{ 
+    $content = Get-Content $file
+    $outfile = ('./output/' + $File.Name)
+    $content | Set-Content -Path $outfile 
+}
 
+#Copy IR Specific Pipelines
 foreach ($ir in $tout.integration_runtimes)
 {    
 
