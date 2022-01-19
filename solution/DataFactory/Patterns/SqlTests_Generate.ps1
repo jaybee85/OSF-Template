@@ -29,12 +29,13 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 
 $tests = (Get-Content -Path  ($PWD.ToString() + '../../../FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json') | ConvertFrom-Json)
 
+$i = 0
 foreach ($t in $tests)
 {
     Write-Host "_____________________________"
     Write-Host "Writing test number: " $i.ToString()
     Write-Host "_____________________________"
-    $TaskMasterId = ($t.TaskMasterId * -1) 
+    $TaskMasterId = ($t.TaskMasterId * -1)
     $TaskMasterName = $t.AdfPipeline + $t.TaskMasterId.ToString()
     $TaskTypeId = $t.TaskTypeId
     $TaskGroupId = ( -1, -2, -3, -4 | Get-Random  )
