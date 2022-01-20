@@ -96,8 +96,8 @@ output "synapse_workspace_name" {
   value = var.deploy_synapse ?   azurerm_synapse_workspace.synapse[0].name : ""
 }
 output "synapse_sql_pool_name" {
-  value = var.deploy_synapse_sqlpool ?   azurerm_synapse_sql_pool.synapse_sql_pool[0].name : ""
+  value = var.deploy_synapse && var.deploy_synapse_sqlpool ?   azurerm_synapse_sql_pool.synapse_sql_pool[0].name : ""
 }
 output "synapse_spark_pool_name" {
-  value = var.deploy_synapse_sparkpool ?   azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
+  value = var.deploy_synapse && var.deploy_synapse_sparkpool ?   azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
 }

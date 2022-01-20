@@ -64,7 +64,7 @@ resource "azurerm_resource_group_template_deployment" "azuresql_dataset" {
       value = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}"
     }    
     "linkedServiceName" = {
-      value = var.azuresql_linkedservice_name
+      value = var.azure_sql_linkedservice_name
     }
     "dataFactoryName" = {
       value = var.data_factory_name

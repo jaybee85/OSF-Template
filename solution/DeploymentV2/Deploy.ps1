@@ -21,9 +21,11 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-$environmentName = "local" # currently supports (local, staging)
+$environmentName = "staging" # currently supports (local, staging)
+[System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
+
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $false
+$skipTerraformDeployment = $true
 $deploymentFolderPath = (Get-Location).Path
 
 #----------------------------------------------------------------------------------------------------------------
@@ -71,15 +73,15 @@ $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 $purview_sp_name=$outputs.purview_sp_name.value
-$synapse_workspace_name=$outputs.synapse_workspace_name.value
-$synapse_sql_pool_name=$outputs.synapse_sql_pool_name.value
+$synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
+$synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
 
-$skipWebApp = if($tout.publish_web_app) {$true} else {$false}
-$skipFunctionApp = if($tout.publish_function_app) {$true} else {$false}
-$skipDatabase = if($tout.publish_database) {$true} else {$false}
-$skipSampleFiles = if($tout.publish_sample_files) {$true} else {$false}
-$skipNetworking = if($tout.configure_networking) {$true} else {$false}
-$skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$true} else {$false}
+$skipWebApp = if($tout.publish_web_app) {$false} else {$true}
+$skipFunctionApp = if($tout.publish_function_app) {$false} else {$true}
+$skipDatabase = if($tout.publish_database) {$false} else {$true}
+$skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
+$skipNetworking = if($tout.configure_networking){$false} else {$true}
+$skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 if ($skipDataFactoryPipelines) {
@@ -274,7 +276,7 @@ else {
 #----------------------------------------------------------------------------------------------------------------
 #   Configure Synapse Logins
 #----------------------------------------------------------------------------------------------------------------
-if($skipSynapse) {
+if([string]::IsNullOrEmpty($tout.synapse_workspace_name)) {
     Write-Host "Skipping Synapse SQL Users"    
 }
 else {
@@ -289,23 +291,31 @@ else {
          $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "AllowAllWindowsAzureIps" --start-ip-address "0.0.0.0" --end-ip-address "0.0.0.0"
     }
    
-
-    # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
-    $SqlInstalled = Get-InstalledModule SqlServer
-    if($null -eq $SqlInstalled)
+    if([string]::IsNullOrEmpty($synapse_sql_pool_name))
     {
-        write-host "Installing SqlServer Module"
-        Install-Module -Name SqlServer -Scope CurrentUser -Force
+        write-host "Synapse pool is not deployed."
     }
-
-
-
-    $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
-    if (![string]::IsNullOrEmpty($datafactory_name))
+    else 
     {
-        # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
-        Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "CREATE USER [$datafactory_name] FROM EXTERNAL PROVIDER"    
-        Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "EXEC sp_addrolemember 'db_owner', '$datafactory_name'"
+        # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
+        $SqlInstalled = Get-InstalledModule SqlServer
+        if($null -eq $SqlInstalled)
+        {
+            write-host "Installing SqlServer Module"
+            Install-Module -Name SqlServer -Scope CurrentUser -Force
+        }
+
+
+
+        $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
+        if (![string]::IsNullOrEmpty($datafactory_name))
+        {
+            # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
+            Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "IF NOT EXISTS (SELECT name
+    FROM [sys].[database_principals]
+    WHERE [type] = 'E' AND name = N'$datafactory_name') BEGIN CREATE USER [$datafactory_name] FROM EXTERNAL PROVIDER END"    
+            Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "EXEC sp_addrolemember 'db_owner', '$datafactory_name'"
+        }
     }
 
 
