@@ -50,19 +50,6 @@ resource "azurerm_data_factory_managed_private_endpoint" "sqlserver" {
   }
 }
 
-// purview
-resource "azurerm_data_factory_managed_private_endpoint" "purview" {
-  count              = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  name               = "AzurePurview_PrivateEndpoint"
-  data_factory_id    = azurerm_data_factory.data_factory.id
-  target_resource_id = azurerm_purview_account.purview[0].id
-  subresource_name   = "account"
-  lifecycle {
-    ignore_changes = [
-      fqdns
-    ]
-  }
-}
 
 // Synapse
 # resource "azurerm_data_factory_managed_private_endpoint" "synapse" {
@@ -72,4 +59,3 @@ resource "azurerm_data_factory_managed_private_endpoint" "purview" {
 #   target_resource_id = azurerm_mssql_server.sqlserver[0].id
 #   subresource_name   = "Sql, SqlOnDemand, Dev"
 # }
-
