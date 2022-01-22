@@ -114,7 +114,7 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
@@ -178,21 +178,9 @@
             "type": "AzureSqlSink"
           },
           "source": {
-            "formatSettings": {
-              "type": "AzureBlobFSReadSettings"
-            },
             "storeSettings": {
-              "enablePartitionDiscovery": false,
-              "recursive": false,
-              "type": "AzureBlobFSReadSettings",
-              "wildcardFileName": {
-                "type": "Expression",
-                "value": "@concat(\n    replace(\n        pipeline().parameters.TaskObject.Source.DataFileName,\n        '.parquet',\n        ''\n        ),\n    '*.parquet'\n)"
-              },
-              "wildcardFolderPath": {
-                "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
-              }
+              "recursive": true,
+              "type": "AzureBlobFSReadSettings"
             },
             "type": "ParquetSource"
           },

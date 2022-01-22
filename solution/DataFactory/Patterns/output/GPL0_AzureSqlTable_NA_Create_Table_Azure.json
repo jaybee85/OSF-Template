@@ -30,7 +30,7 @@
               "typeProperties": {
                 "body": {
                   "type": "Expression",
-                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.TableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.TableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\"}'))"
+                  "value": "@json(\n    concat('{\"TaskInstanceId\":\"', \n    string(pipeline().parameters.TaskObject.TaskInstanceId), \n    '\",\"ExecutionUid\":\"', \n    string(pipeline().parameters.TaskObject.ExecutionUid), \n    '\",\"RunId\":\"', \n    string(pipeline().RunId), \n    '\",\"TableSchema\":\"',\n    string(pipeline().parameters.TaskObject.Target.StagingTableSchema), \n    '\",\"TableName\":\"', \n    string(pipeline().parameters.TaskObject.Target.StagingTableName),\n    '\",\"TargetType\":\"', \n    string(pipeline().parameters.TaskObject.Target.System.Type),\n    '\",\"StorageAccountName\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.SystemServer), \n    '\",\"StorageAccountContainer\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.Container), \n    '\",\"RelativePath\":\"', \n    string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), \n    '\",\"SchemaFileName\":\"', \n    string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n    '\",\"DropIfExist\":\"True\"}'\n    )\n)"
                 },
                 "functionName": "GetSQLCreateStatementFromSchema",
                 "method": "POST"
@@ -84,7 +84,7 @@
                   "queryTimeout": "02:00:00",
                   "sqlReaderQuery": {
                     "type": "Expression",
-                    "value": "@activity('AF Get SQL Create Statement Staging').output.CreateStatement"
+                    "value": "@activity('AF Get Information Schema SQL Stage').output.InformationSchemaSQL"
                   },
                   "type": "AzureSqlSource"
                 }
@@ -151,7 +151,7 @@
               "typeProperties": {
                 "body": {
                   "type": "Expression",
-                  "value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.StagingTableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\",\"DropIfExist\":\"True\"}'))"
+                  "value": "@json(\n    concat('{\"TaskInstanceId\":\"', \n    string(pipeline().parameters.TaskObject.TaskInstanceId), \n    '\",\"ExecutionUid\":\"', \n    string(pipeline().parameters.TaskObject.ExecutionUid), \n    '\",\"RunId\":\"', \n    string(pipeline().RunId), \n    '\",\"TableSchema\":\"',\n    string(pipeline().parameters.TaskObject.Target.TableSchema), \n    '\",\"TableName\":\"', \n    string(pipeline().parameters.TaskObject.Target.TableName),\n    '\",\"TargetType\":\"', \n    string(pipeline().parameters.TaskObject.Target.System.Type),\n    '\",\"StorageAccountName\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.SystemServer), \n    '\",\"StorageAccountContainer\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.Container), \n    '\",\"RelativePath\":\"', \n    string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), \n    '\",\"SchemaFileName\":\"', \n    string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n    '\",\"DropIfExist\":\"True\"}'\n    )\n)"
                 },
                 "functionName": "GetSQLCreateStatementFromSchema",
                 "method": "POST"
@@ -205,7 +205,7 @@
                   "queryTimeout": "02:00:00",
                   "sqlReaderQuery": {
                     "type": "Expression",
-                    "value": "@activity('AF Get SQL Create Statement Target').output.CreateStatement"
+                    "value": "@activity('AF Get Information Schema SQL Target').output.InformationSchemaSQL"
                   },
                   "type": "AzureSqlSource"
                 }

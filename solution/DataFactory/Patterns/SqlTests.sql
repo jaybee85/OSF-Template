@@ -78,7 +78,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -141,7 +141,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -171,7 +171,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -2                          ,
         'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA2'                      ,
         1                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -209,7 +209,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -239,7 +239,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -3                          ,
         'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA3'                      ,
         1                            ,
-        -2                           ,
+        -3                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -277,7 +277,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -345,7 +345,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -375,7 +375,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -5                          ,
         'GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_IRA5'                      ,
         1                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -413,7 +413,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -443,7 +443,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -6                          ,
         'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA6'                      ,
         1                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -481,7 +481,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -511,7 +511,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -7                          ,
         'GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA7'                      ,
         1                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -549,7 +549,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -579,7 +579,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -8                          ,
         'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA8'                      ,
         1                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -617,7 +617,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -647,7 +647,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -9                          ,
         'GPL_AzureBlobFS_json_AzureSqlTable_NA_IRA9'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -685,7 +685,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -715,7 +715,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -10                          ,
         'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA_IRA10'                      ,
         1                            ,
-        -2                           ,
+        -3                           ,
         4                      ,
         3                        ,
         10                        ,
@@ -753,7 +753,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Table"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -783,7 +783,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -11                          ,
         'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet11'                      ,
         3                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -810,7 +810,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -867,7 +867,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -897,7 +897,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -13                          ,
         'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet13'                      ,
         3                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -924,7 +924,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -954,7 +954,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -14                          ,
         'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet14'                      ,
         3                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -981,7 +981,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -1011,7 +1011,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -15                          ,
         'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet15'                      ,
         3                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1038,7 +1038,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -1095,7 +1095,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     
@@ -1125,7 +1125,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -17                          ,
         'GPL_SqlServerTable_NA_AzureBlobFS_Parquet17'                      ,
         3                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         6                        ,
         4                        ,
@@ -1152,7 +1152,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     }
 }'                      ,
-        1                              ,
+        0                              ,
         ''                  ,
         1;  
     

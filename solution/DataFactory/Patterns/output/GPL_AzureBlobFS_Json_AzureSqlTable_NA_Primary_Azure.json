@@ -114,7 +114,7 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
@@ -174,13 +174,14 @@
               "type": "Expression",
               "value": "@{pipeline().parameters.TaskObject.Target.PreCopySQL}"
             },
+            "tableOption": "autoCreate",
             "type": "AzureSqlSink"
           },
           "source": {
-            "formatSettings": {
-              "type": "JsonReadSettings"
-            },
             "storeSettings": {
+              "formatSettings": {
+                "type": "JsonReadSettings"
+              },
               "recursive": true,
               "type": "AzureBlobFSReadSettings"
             },

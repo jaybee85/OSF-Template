@@ -1,9 +1,8 @@
-function(GenerateArm="true", GFPIR="{IRA}", SourceType="AzureBlobFS", SourceFormat="Excel",TargetType="AzureSqlTable",TargetFormat="NA")
+function(GenerateArm="false", GFPIR="Azure", SourceType="AzureBlobFS", SourceFormat="Excel",TargetType="AzureSqlDWTable",TargetFormat="NA")
 	
 	local Wrapper = import '../static/partials/wrapper.libsonnet';
 
-	local Create_Table_Lookup_CreateStage_TypeProperties = import './partials/Create_Table_Lookup_CreateStage_TypeProperties.libsonnet';
-	local Create_Table_Lookup_CreateTarget_TypeProperties = import './partials/Create_Table_Lookup_CreateTarget_TypeProperties.libsonnet';
+	local Create_Table_Lookup = import './partials/CreateTable/Create_Table_Lookup_TypeProperties.libsonnet';
 	
 	local pipeline = 
 	{
@@ -39,7 +38,7 @@ function(GenerateArm="true", GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForm
 									"functionName": "GetSQLCreateStatementFromSchema",
 									"method": "POST",
 									"body": {
-										"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.TableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.TableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\"}'))",
+										"value": "@json(\n    concat('{\"TaskInstanceId\":\"', \n    string(pipeline().parameters.TaskObject.TaskInstanceId), \n    '\",\"ExecutionUid\":\"', \n    string(pipeline().parameters.TaskObject.ExecutionUid), \n    '\",\"RunId\":\"', \n    string(pipeline().RunId), \n    '\",\"TableSchema\":\"',\n    string(pipeline().parameters.TaskObject.Target.StagingTableSchema), \n    '\",\"TableName\":\"', \n    string(pipeline().parameters.TaskObject.Target.StagingTableName),\n    '\",\"TargetType\":\"', \n    string(pipeline().parameters.TaskObject.Target.System.Type),\n    '\",\"StorageAccountName\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.SystemServer), \n    '\",\"StorageAccountContainer\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.Container), \n    '\",\"RelativePath\":\"', \n    string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), \n    '\",\"SchemaFileName\":\"', \n    string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n    '\",\"DropIfExist\":\"True\"}'\n    )\n)",
 										"type": "Expression"
 									}
 								},
@@ -67,7 +66,7 @@ function(GenerateArm="true", GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForm
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Create_Table_Lookup_CreateStage_TypeProperties(GenerateArm,GFPIR,TargetType,TargetFormat)
+								"typeProperties": Create_Table_Lookup(GenerateArm,GFPIR,TargetType,true)
 								
 							},
 							{
@@ -128,7 +127,7 @@ function(GenerateArm="true", GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForm
 									"functionName": "GetSQLCreateStatementFromSchema",
 									"method": "POST",
 									"body": {
-										"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"',string(pipeline().parameters.TaskObject.Target.StagingTableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableName),'\",\"StorageAccountName\":\"', string(pipeline().parameters.TaskObject.Source.System.SystemServer), '\",\"StorageAccountContainer\":\"', string(pipeline().parameters.TaskObject.Source.System.Container), '\",\"RelativePath\":\"', string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), '\",\"SchemaFileName\":\"', string(pipeline().parameters.TaskObject.Source.SchemaFileName), '\",\"DropIfExist\":\"True\"}'))",
+										"value": "@json(\n    concat('{\"TaskInstanceId\":\"', \n    string(pipeline().parameters.TaskObject.TaskInstanceId), \n    '\",\"ExecutionUid\":\"', \n    string(pipeline().parameters.TaskObject.ExecutionUid), \n    '\",\"RunId\":\"', \n    string(pipeline().RunId), \n    '\",\"TableSchema\":\"',\n    string(pipeline().parameters.TaskObject.Target.TableSchema), \n    '\",\"TableName\":\"', \n    string(pipeline().parameters.TaskObject.Target.TableName),\n    '\",\"TargetType\":\"', \n    string(pipeline().parameters.TaskObject.Target.System.Type),\n    '\",\"StorageAccountName\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.SystemServer), \n    '\",\"StorageAccountContainer\":\"', \n    string(pipeline().parameters.TaskObject.Source.System.Container), \n    '\",\"RelativePath\":\"', \n    string(pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath), \n    '\",\"SchemaFileName\":\"', \n    string(pipeline().parameters.TaskObject.Source.SchemaFileName), \n    '\",\"DropIfExist\":\"True\"}'\n    )\n)",
 										"type": "Expression"
 									}
 								},
@@ -156,7 +155,7 @@ function(GenerateArm="true", GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForm
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Create_Table_Lookup_CreateTarget_TypeProperties(GenerateArm,GFPIR,TargetType,TargetFormat)
+								"typeProperties": Create_Table_Lookup(GenerateArm,GFPIR,TargetType,false)
 							},
 							{
 								"name": "AF Log - Create Target Table Failed",

@@ -118,7 +118,7 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
               },
               "SheetName": {
                 "type": "Expression",

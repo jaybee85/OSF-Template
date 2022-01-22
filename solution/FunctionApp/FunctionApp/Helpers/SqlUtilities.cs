@@ -277,7 +277,7 @@ namespace FunctionApp.Helpers
             return sql;
         }
 
-        public static string GetCreateTable(JArray Array, string TargetTableSchema, string TargetTableName, bool DropIfExist)
+        public static string GetCreateTable(JArray Array, string TargetTableSchema, string TargetTableName, string TargetType, bool DropIfExist)
         {
             string dropIfExistStatement = null;
             string createSchema = null;
@@ -352,7 +352,7 @@ namespace FunctionApp.Helpers
 
                 string kc = r["PKEY_COLUMN"].ToString();
 
-                if (kc.Equals("True"))
+                if (kc.Equals("True") && TargetType == "Azure SQL")
                 {
                     if (createStatementPk == null)
                     {

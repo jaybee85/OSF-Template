@@ -57,21 +57,21 @@ namespace FunctionApp.TestHarness
         private readonly ISecurityAccessProvider _sap;
 
         public App(ILogger<App> logger,
-            TaskTypeMappingProvider taskTypeMappingProvider,
-            SourceAndTargetSystemJsonSchemasProvider schemasProvider,
+            //TaskTypeMappingProvider taskTypeMappingProvider,
+            //SourceAndTargetSystemJsonSchemasProvider schemasProvider,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
-            TaskMetaDataDatabase taskMetaDataDatabase, 
+            //TaskMetaDataDatabase taskMetaDataDatabase, 
             DataFactoryPipelineProvider dataFactoryPipelineProvider,
             DataFactoryClientFactory dataFactoryClientFactory,
             ISecurityAccessProvider sap)
         {
             _logger = logger;
-            _taskTypeMappingProvider = taskTypeMappingProvider;
-            _schemasProvider = schemasProvider;
+            //_taskTypeMappingProvider = taskTypeMappingProvider;
+            //_schemasProvider = schemasProvider;
             _options = options;
             _authProvider = authProvider;
-            _taskMetaDataDatabase = taskMetaDataDatabase;
+            //_taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _dataFactoryClientFactory = dataFactoryClientFactory;
             _sap = sap;
@@ -85,12 +85,12 @@ namespace FunctionApp.TestHarness
                 LogSource = "AF",
                 ExecutionUid = executionId
             };
-            _funcAppLogger.InitializeLog(_logger, activityLogItem);
+            //_funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
-            //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
+            Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();       
 
         }
@@ -458,10 +458,15 @@ namespace FunctionApp.TestHarness
                 tests = r.ReadToEnd();
             }
 
-            FunctionApp.Functions.GetSqlCreateStatementFromSchema c = new Functions.GetSqlCreateStatementFromSchema(_options, _authProvider);                            
-            var r1 = c.GetSqlCreateStatementFromSchemaCore(JObject.Parse(tests), _logging).Result;
+            //var bytes = Convert.FromBase64String("eyJUYXNrSW5zdGFuY2VJZCI6ODY1LCJUYXNrTWFzdGVySWQiOjEwMiwiVGFza1N0YXR1cyI6IlVudHJpZWQiLCJUYXNrVHlwZSI6IlNRTCBEYXRhYmFzZSB0byBBenVyZSBTdG9yYWdlIiwiRW5hYmxlZCI6MSwiRXhlY3V0aW9uVWlkIjoiZDk1NGNmZWUtNDRjMS00MTlmLTgzZDUtNTFmNzVlYWY4MDljIiwiTnVtYmVyT2ZSZXRyaWVzIjowLCJEZWdyZWVPZkNvcHlQYXJhbGxlbGlzbSI6MSwiS2V5VmF1bHRCYXNlVXJsIjoiaHR0cHM6Ly9hZHNnb2Zhc3RrZXl2YXVsdC52YXVsdC5henVyZS5uZXQvIiwiU2NoZWR1bGVNYXN0ZXJJZCI6MiwiVGFza0dyb3VwQ29uY3VycmVuY3kiOjEwLCJUYXNrR3JvdXBQcmlvcml0eSI6MCwiU291cmNlIjp7IlR5cGUiOiJTUUwgU2VydmVyIiwiRGF0YWJhc2UiOnsiU3lzdGVtTmFtZSI6ImFkc2dvZmFzdC1vbnByZSIsIk5hbWUiOiJBZHZlbnR1cmVXb3JrczIwMTciLCJBdXRoZW50aWNhdGlvblR5cGUiOiJTUUxBdXRoIiwiVXNlcm5hbWUiOiJzcWxhZGZpciIsIlBhc3N3b3JkS2V5VmF1bHRTZWNyZXROYW1lIjoiYWRzZ29mYXN0LW9ucHJlLXNxbGFkZmlyLXBhc3N3b3JkIn0sIkV4dHJhY3Rpb24iOnsiVHlwZSI6IlRhYmxlIiwiRnVsbE9ySW5jcmVtZW50YWwiOiJGdWxsIiwiSW5jcmVtZW50YWxUeXBlIjpudWxsLCJUYWJsZVNjaGVtYSI6IlNhbGVzIiwiVGFibGVOYW1lIjoiU2FsZXNPcmRlckhlYWRlciJ9fSwiVGFyZ2V0Ijp7IlR5cGUiOiJBenVyZSBCbG9iIiwiU3RvcmFnZUFjY291bnROYW1lIjoiaHR0cHM6Ly9hZHNnb2Zhc3RkYXRhbGFrZWFjY2Vsc3QuYmxvYi5jb3JlLndpbmRvd3MubmV0IiwiU3RvcmFnZUFjY291bnRDb250YWluZXIiOiJkYXRhbGFrZXJhdyIsIlN0b3JhZ2VBY2NvdW50QWNjZXNzTWV0aG9kIjoiTVNJIiwiUmVsYXRpdmVQYXRoIjoiQWR2ZW50dXJlV29ya3MyMDE3L1NhbGVzL1NhbGVzT3JkZXJIZWFkZXIvMjAyMC83LzIzLzkvMC8iLCJEYXRhRmlsZU5hbWUiOiJTYWxlcy5TYWxlc09yZGVySGVhZGVyLnBhcnF1ZXQiLCJTY2hlbWFGaWxlTmFtZSI6IlNhbGVzLlNhbGVzT3JkZXJIZWFkZXIuanNvbiIsIkZpcnN0Um93QXNIZWFkZXIiOm51bGwsIlNoZWV0TmFtZSI6bnVsbCwiU2tpcExpbmVDb3VudCI6bnVsbCwiTWF4Q29uY29ycmVudENvbm5lY3Rpb25zIjpudWxsfSwiRGF0YUZhY3RvcnkiOnsiSWQiOjEsIk5hbWUiOiJhZHNnb2Zhc3RkYXRha2FrZWFjY2VsYWRmIiwiUmVzb3VyY2VHcm91cCI6IkFkc0dvRmFzdERhdGFMYWtlQWNjZWwiLCJTdWJzY3JpcHRpb25JZCI6IjAzNWExMzY0LWYwMGQtNDhlMi1iNTgyLTRmZTEyNTkwNWVlMyIsIkFERlBpcGVsaW5lIjoiT25QLVNRTC1BWi1TdG9yYWdlLVBhcnF1ZXQtT25QLVNILUlSIn19");
+            //var s = System.Text.Encoding.UTF8.GetString(bytes);
 
-              
+
+
+            FunctionApp.Functions.GetSqlCreateStatementFromSchema c = new Functions.GetSqlCreateStatementFromSchema(_options, _authProvider);
+            var r1 = c.GetSqlCreateStatementFromSchemaCore(JObject.Parse(tests), _logging).Result;
+            //var r1 = c.GetSqlCreateStatementFromSchemaCore(JObject.Parse("{\"TaskObject\": \"eyJUYXNrSW5zdGFuY2VJZCI6ODY1LCJUYXNrTWFzdGVySWQiOjEwMiwiVGFza1N0YXR1cyI6IlVudHJpZWQiLCJUYXNrVHlwZSI6IlNRTCBEYXRhYmFzZSB0byBBenVyZSBTdG9yYWdlIiwiRW5hYmxlZCI6MSwiRXhlY3V0aW9uVWlkIjoiZDk1NGNmZWUtNDRjMS00MTlmLTgzZDUtNTFmNzVlYWY4MDljIiwiTnVtYmVyT2ZSZXRyaWVzIjowLCJEZWdyZWVPZkNvcHlQYXJhbGxlbGlzbSI6MSwiS2V5VmF1bHRCYXNlVXJsIjoiaHR0cHM6Ly9hZHNnb2Zhc3RrZXl2YXVsdC52YXVsdC5henVyZS5uZXQvIiwiU2NoZWR1bGVNYXN0ZXJJZCI6MiwiVGFza0dyb3VwQ29uY3VycmVuY3kiOjEwLCJUYXNrR3JvdXBQcmlvcml0eSI6MCwiU291cmNlIjp7IlR5cGUiOiJTUUwgU2VydmVyIiwiRGF0YWJhc2UiOnsiU3lzdGVtTmFtZSI6ImFkc2dvZmFzdC1vbnByZSIsIk5hbWUiOiJBZHZlbnR1cmVXb3JrczIwMTciLCJBdXRoZW50aWNhdGlvblR5cGUiOiJTUUxBdXRoIiwiVXNlcm5hbWUiOiJzcWxhZGZpciIsIlBhc3N3b3JkS2V5VmF1bHRTZWNyZXROYW1lIjoiYWRzZ29mYXN0LW9ucHJlLXNxbGFkZmlyLXBhc3N3b3JkIn0sIkV4dHJhY3Rpb24iOnsiVHlwZSI6IlRhYmxlIiwiRnVsbE9ySW5jcmVtZW50YWwiOiJGdWxsIiwiSW5jcmVtZW50YWxUeXBlIjpudWxsLCJUYWJsZVNjaGVtYSI6IlNhbGVzIiwiVGFibGVOYW1lIjoiU2FsZXNPcmRlckhlYWRlciJ9fSwiVGFyZ2V0Ijp7IlR5cGUiOiJBenVyZSBCbG9iIiwiU3RvcmFnZUFjY291bnROYW1lIjoiaHR0cHM6Ly9hZHNnb2Zhc3RkYXRhbGFrZWFjY2Vsc3QuYmxvYi5jb3JlLndpbmRvd3MubmV0IiwiU3RvcmFnZUFjY291bnRDb250YWluZXIiOiJkYXRhbGFrZXJhdyIsIlN0b3JhZ2VBY2NvdW50QWNjZXNzTWV0aG9kIjoiTVNJIiwiUmVsYXRpdmVQYXRoIjoiQWR2ZW50dXJlV29ya3MyMDE3L1NhbGVzL1NhbGVzT3JkZXJIZWFkZXIvMjAyMC83LzIzLzkvMC8iLCJEYXRhRmlsZU5hbWUiOiJTYWxlcy5TYWxlc09yZGVySGVhZGVyLnBhcnF1ZXQiLCJTY2hlbWFGaWxlTmFtZSI6IlNhbGVzLlNhbGVzT3JkZXJIZWFkZXIuanNvbiIsIkZpcnN0Um93QXNIZWFkZXIiOm51bGwsIlNoZWV0TmFtZSI6bnVsbCwiU2tpcExpbmVDb3VudCI6bnVsbCwiTWF4Q29uY29ycmVudENvbm5lY3Rpb25zIjpudWxsfSwiRGF0YUZhY3RvcnkiOnsiSWQiOjEsIk5hbWUiOiJhZHNnb2Zhc3RkYXRha2FrZWFjY2VsYWRmIiwiUmVzb3VyY2VHcm91cCI6IkFkc0dvRmFzdERhdGFMYWtlQWNjZWwiLCJTdWJzY3JpcHRpb25JZCI6IjAzNWExMzY0LWYwMGQtNDhlMi1iNTgyLTRmZTEyNTkwNWVlMyIsIkFERlBpcGVsaW5lIjoiT25QLVNRTC1BWi1TdG9yYWdlLVBhcnF1ZXQtT25QLVNILUlSIn19\",\"RunId\":d1c14fa6-abd9-4830-ab8f-56e27c1539ab}"), _logging).Result;
+
         }
 
         public void Test_TaskExecutionSchemaFile(Logging.Logging _logging)

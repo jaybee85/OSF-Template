@@ -1,6 +1,20 @@
-function(GenerateArm="true",GFPIR="IRA", SourceType="AzureBlobFS", SourceFormat="Parquet", TargetType="AzureSqlTable",TargetFormat="NA")
+function(GenerateArm="true",GFPIR="IRA", SourceType="AzureBlobFS", SourceFormat="Parquet", TargetType="AzureSqlTable",TargetFormat="Table")
 	local generateArmAsBool = GenerateArm == "true";
 	local Wrapper = import '../static/partials/wrapper.libsonnet';
+
+	local typeProperties = import './partials/MainCopyActivity/typeProperties/typeProperties.libsonnet';
+	local dataset_inputs = {
+		"DelimitedText" : import './partials/MainCopyActivity/datasetReferences/DelimitedText.libsonnet',
+		"Excel" : import './partials/MainCopyActivity/datasetReferences/Excel.libsonnet',
+		"Json" : import './partials/MainCopyActivity/datasetReferences/Json.libsonnet',
+		"Parquet" : import './partials/MainCopyActivity/datasetReferences/Parquet.libsonnet'
+	};
+
+	local dataset_outputs = {
+		"AzureSqlTable" : import './partials/MainCopyActivity/datasetReferences/AzureSqlTable.libsonnet',
+		"AzureSqlDWTable" : import './partials/MainCopyActivity/datasetReferences/AzureSqlDWTable.libsonnet'		
+	};
+
 	local Main_CopyActivity_TypeProperties = import './partials/Main_CopyActivity_TypeProperties.libsonnet';
 	local name =  if(!generateArmAsBool) 
 			then "GPL_"+SourceType+"_"+SourceFormat+"_"+TargetType+"_"+TargetFormat+"_" + "Primary_" + GFPIR 
@@ -123,9 +137,12 @@ function(GenerateArm="true",GFPIR="IRA", SourceType="AzureBlobFS", SourceFormat=
 						"secureOutput": false,
 						"secureInput": false
 					},
-					"userProperties": [],
-				}
-					+Main_CopyActivity_TypeProperties(GenerateArm, GFPIR, SourceType, SourceFormat, TargetType, TargetFormat),					
+					"typeProperties": typeProperties(generateArmAsBool, GFPIR, SourceType, SourceFormat, TargetType, TargetFormat),
+					"inputs": [dataset_inputs[SourceFormat](generateArmAsBool, SourceType, GFPIR, 'Source')],
+                	"outputs": [dataset_outputs[TargetType](generateArmAsBool, TargetType, GFPIR, 'Target')],
+					"userProperties": []
+				},
+					//+Main_CopyActivity_TypeProperties(GenerateArm, GFPIR, SourceType, SourceFormat, TargetType, TargetFormat),					
 				{
 					"name": "Pipeline AF Log - ADLS to Azure SQL Failed",
 					"type": "ExecutePipeline",

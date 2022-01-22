@@ -188,7 +188,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"functionName": "GetInformationSchemaSQL",
 									"method": "POST",
 									"body": {
-										"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.StagingTableName),'\"}'))",
+										"value": "@json(\n    concat('{\"TaskInstanceId\":\"', \n        string(pipeline().parameters.TaskObject.TaskInstanceId), \n        '\",\"ExecutionUid\":\"', \n        string(pipeline().parameters.TaskObject.ExecutionUid), \n        '\",\"RunId\":\"', \n        string(pipeline().RunId), \n        '\",\"TableSchema\":\"',\n        string(pipeline().parameters.TaskObject.Target.StagingTableSchema), \n        '\",\"TableName\":\"', \n        string(pipeline().parameters.TaskObject.Target.StagingTableName),\n        '\",\"TargetType\":\"', \n        string(pipeline().parameters.TaskObject.Target.System.Type),\n        '\"}'\n        )\n    )",
 										"type": "Expression"
 									}
 								},
@@ -293,7 +293,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"functionName": "GetInformationSchemaSQL",
 									"method": "POST",
 									"body": {
-										"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"TableSchema\":\"', string(pipeline().parameters.TaskObject.Target.TableSchema), '\",\"TableName\":\"', string(pipeline().parameters.TaskObject.Target.TableName),'\"}'))",
+										"value": "@json(\n    concat(\n        '{\"TaskInstanceId\":\"', \n        string(pipeline().parameters.TaskObject.TaskInstanceId), \n        '\",\"ExecutionUid\":\"', \n        string(pipeline().parameters.TaskObject.ExecutionUid), \n        '\",\"RunId\":\"', \n        string(pipeline().RunId), \n        '\",\"TableSchema\":\"', \n        string(pipeline().parameters.TaskObject.Target.TableSchema), \n        '\",\"TableName\":\"', \n        string(pipeline().parameters.TaskObject.Target.TableName),\n        '\",\"TargetType\":\"', \n        string(pipeline().parameters.TaskObject.Target.System.Type),\n        '\"}'\n        )\n    )",
 										"type": "Expression"
 									}
 								},
