@@ -1,12 +1,13 @@
 ﻿{
-    "TaskInstanceId": "1",
-    "ExecutionUid": "7fed3cb9-004f-48b5-8a81-d383a873e8e3",
-    "RunId": "c84e4132-f457-48f4-bc0a-6c58fd91df14",
-    "TableSchema": "dbo",
-    "TableName": "Customer0",
-    "StorageAccountName": "https://mstdevdlsadsinakadsl.dfs.core.windows.net",
-    "StorageAccountContainer": "datalakeraw",
-    "RelativePath": "samples/",
-    "SchemaFileName": "SalesLT.Customer.json"
-  }
-
+  "TaskInstanceId": "4",
+  "ExecutionUid": "18658abc-482c-4114-822f-3be06ab0ab47",
+  "RunId": "0fde7452-f9f7-48a9-8919-298c677457e7",
+  "TableSchema": "dbo",
+  "TableName": "Customer10",
+  "TargetType": "Azure Synapse",
+  "StorageAccountName": "https://mststgdlsadszsyeblob.blob.core.windows.net",
+  "StorageAccountContainer": "datalakeraw",
+  "RelativePath": "samples/",
+  "SchemaFileName": "SalesLT.Customer.json",
+  "DropIfExist": "True"
+}

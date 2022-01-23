@@ -312,6 +312,7 @@ namespace FunctionApp.Helpers
             string createStatement = string.Format(@"Create Table [{0}].[{1}] (" + Environment.NewLine, TargetTableSchema, TargetTableName);
             string createStatementPk = null;
             int lengthCounter = 0;
+            List<string> PkeyCols = new List<string>();
             foreach (JObject r in Array)
             {
                 lengthCounter = lengthCounter + 1;
@@ -325,6 +326,12 @@ namespace FunctionApp.Helpers
                 if (sqlType.Contains("varchar") || sqlType.Contains("varbinary"))
                 {
                     cml = (cml == "-1") ? "Max" : cml;
+                }
+
+                if (sqlType.ToLower().Contains("uniqueidentifier") && TargetType == "Azure Synapse")
+                {
+                    sqlType = "nvarchar";
+                    cml = "36";
                 }
 
                 if (sqlType.Contains("xml"))
@@ -352,7 +359,7 @@ namespace FunctionApp.Helpers
 
                 string kc = r["PKEY_COLUMN"].ToString();
 
-                if (kc.Equals("True") && TargetType == "Azure SQL")
+                if (kc.Equals("True") && (TargetType == "Azure SQL" || TargetType == "SQL Server"))
                 {
                     if (createStatementPk == null)
                     {
@@ -361,10 +368,25 @@ namespace FunctionApp.Helpers
 
                     createStatementPk += $"[{r["COLUMN_NAME"].ToString()}],";
                 }
+
+                if (kc.Equals("True") && (TargetType == "Azure Synapse"))
+                {
+                    if (createStatementPk == null)
+                    {
+                        createStatementPk = string.Format(@"CONSTRAINT [PK_{0}_{1}] PRIMARY KEY NONCLUSTERED (" + Environment.NewLine, TargetTableSchema, TargetTableName);
+                    }
+
+                    createStatementPk += $"[{r["COLUMN_NAME"].ToString()}]";
+                }
             }
             if (createStatementPk != null)
             {
-                createStatementPk = createStatementPk.TrimEnd(new char[] { ',' }) + ")" + Environment.NewLine;
+                createStatementPk = createStatementPk.TrimEnd(new char[] { ',' }) + ")";
+                if (TargetType == "Azure Synapse")
+                {
+                    createStatementPk = createStatementPk + " NOT ENFORCED ";
+                }
+                createStatementPk = createStatementPk + Environment.NewLine;
             }
 
             createStatement += Environment.NewLine + createStatementPk + ")";

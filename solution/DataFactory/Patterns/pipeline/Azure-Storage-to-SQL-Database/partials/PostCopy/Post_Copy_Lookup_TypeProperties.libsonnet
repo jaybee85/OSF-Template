@@ -1,11 +1,11 @@
-local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Staging=false)
+local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Staging=false, SourceSqlReaderValue="")
 {
     local TargetPrefixForActivityName = if (Staging==true) then "Staging" else "Target",
     local TargetPrefixForParameters = if (Staging==true) then "Staging" else "",    
     "source": {
       "type": DataFactorySourceType,
       "sqlReaderQuery": {
-          "value": "@activity('AF Get SQL Create Statement "+TargetPrefixForActivityName+"').output.CreateStatement",
+          "value": SourceSqlReaderValue,
           "type": "Expression"
       },
       "queryTimeout": "02:00:00",
@@ -33,17 +33,17 @@ local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Stag
             }
         }
     },
-     "firstRowOnly": false
+     "firstRowOnly": true
 };
 
-function(GenerateArm="false",GFPIR="Azure", TargetType="AzureSqlDWTable", Staging=true)
+function(GenerateArm="false",GFPIR="Azure", TargetType="AzureSqlDWTable", Staging=true, SourceSqlReaderValue="")
 local referenceName =   if (GenerateArm=="false") 
                         then "GDS_"+TargetType+"_NA_"+GFPIR
                         else "[concat('GDS_"+TargetType+"_NA_', parameters('integrationRuntimeShortName'))]";
 
 local TargetTypes = {
-    "AzureSqlTable": basetemplate(referenceName,"AzureSqlSource",Staging),
-    "AzureSqlDWTable":basetemplate(referenceName,"SqlDWSource",Staging)
+    "AzureSqlTable": basetemplate(referenceName,"AzureSqlSource",Staging, SourceSqlReaderValue),
+    "AzureSqlDWTable":basetemplate(referenceName,"SqlDWSource",Staging, SourceSqlReaderValue)
 };
 
 TargetTypes[TargetType]

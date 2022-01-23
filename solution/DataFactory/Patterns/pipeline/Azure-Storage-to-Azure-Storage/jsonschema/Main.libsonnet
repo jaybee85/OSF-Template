@@ -3,9 +3,10 @@ function(source = {}, target = {})
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "title": "TaskMasterJson",
-    "properties": {},
+    "properties": {
     "Source": source,
-    "Target": target,
+    "Target": target
+    },
     "required": [
         "Source",
         "Target"

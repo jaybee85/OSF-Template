@@ -1,0 +1,60 @@
+{{ ##
+Functions for creating column lists 
+## }}
+{{- ColsSql = [] 
+   for $i in model.Cols
+   $item = $i.COLUMN_NAME+" "+$i.DATA_TYPE 
+   if $i.IS_NULLABLE
+     $item = $item+" "+"NULLABLE"
+   else
+     $item = $item+" "+"NOT NULLABLE"
+   end
+   ColsSql = ColsSql | array.add $item
+   end 
+-}}
+
+{{- ColsPKSql = [] 
+   for $i in model.Cols   
+   if $i.PKEY_COLUMN
+    ColsPKSql = ColsPKSql | array.add $i.COLUMN_NAME
+   else     
+   end   
+   end 
+-}}
+
+{{ ## 
+Main Create Table Block
+## }}
+IF EXISTS(SELECT* FROM sys.objects WHERE object_id = OBJECT_ID(N'[{{model.Schema}}].[{{model.Table}}]') AND type in (N'U'))
+                    BEGIN
+                        DROP TABLE [{{model.Schema}}].[{{model.Table}}]
+                    END 
+Create Table [{{model.Schema}}].[{{model.Table}}] 
+(
+{{ColsSql | array.join ",
+"}}
+)
+
+{{ ## 
+Primary Key Block
+## }}
+{{
+    if (ColsPKSql | array.size) == 0}}
+      /*There are no primary keys*/
+    {{else if (model.TargetType == "Azure Synapse")}}    
+    /*Synapse Primary Key Statement*/
+    CONSTRAINT [PK_{{model.Schema}}_{{model.Table}}] PRIMARY KEY NONCLUSTERED 
+    (
+    {{ColsPKSql | array.join ",
+    "}}
+    ) NOT ENFORCED
+   {{else}}
+   /*Non-Synapse Primary Key Statement*/
+           CONSTRAINT [PK_{{model.Schema}}_{{model.Table}}] PRIMARY KEY CLUSTERED 
+    (
+    {{ColsPKSql | array.join ",
+    "}}
+    )
+{{end}}
+{{end}}
+

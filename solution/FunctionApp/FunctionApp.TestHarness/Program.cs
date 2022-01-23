@@ -57,21 +57,21 @@ namespace FunctionApp.TestHarness
         private readonly ISecurityAccessProvider _sap;
 
         public App(ILogger<App> logger,
-            //TaskTypeMappingProvider taskTypeMappingProvider,
-            //SourceAndTargetSystemJsonSchemasProvider schemasProvider,
+            TaskTypeMappingProvider taskTypeMappingProvider,
+            SourceAndTargetSystemJsonSchemasProvider schemasProvider,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
-            //TaskMetaDataDatabase taskMetaDataDatabase, 
+            TaskMetaDataDatabase taskMetaDataDatabase, 
             DataFactoryPipelineProvider dataFactoryPipelineProvider,
             DataFactoryClientFactory dataFactoryClientFactory,
             ISecurityAccessProvider sap)
         {
             _logger = logger;
-            //_taskTypeMappingProvider = taskTypeMappingProvider;
-            //_schemasProvider = schemasProvider;
+            _taskTypeMappingProvider = taskTypeMappingProvider;
+            _schemasProvider = schemasProvider;
             _options = options;
             _authProvider = authProvider;
-            //_taskMetaDataDatabase = taskMetaDataDatabase;
+            _taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _dataFactoryClientFactory = dataFactoryClientFactory;
             _sap = sap;

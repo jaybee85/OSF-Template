@@ -45,7 +45,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         0                          ,
         'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary0'                      ,
         1                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -108,7 +108,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -1                          ,
         'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary1'                      ,
         1                            ,
-        -2                           ,
+        -4                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -171,7 +171,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -2                          ,
         'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_IRA2'                      ,
         1                            ,
-        -1                           ,
+        -3                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -239,7 +239,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -3                          ,
         'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_IRA3'                      ,
         1                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -307,7 +307,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -4                          ,
         'GPL_AzureBlobFS_Excel_AzureSqlTable_NA_IRA4'                      ,
         1                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -443,7 +443,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -6                          ,
         'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_IRA6'                      ,
         1                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -511,7 +511,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -7                          ,
         'GPL_AzureBlobStorage_json_AzureSqlTable_NA_IRA7'                      ,
         1                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -579,7 +579,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -8                          ,
         'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_IRA8'                      ,
         1                            ,
-        -2                           ,
+        -4                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -647,7 +647,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -9                          ,
         'GPL_AzureBlobFS_json_AzureSqlTable_NA_IRA9'                      ,
         1                            ,
-        -2                           ,
+        -4                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -713,11 +713,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -10                          ,
-        'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA_IRA10'                      ,
+        'GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA_IRA10'                      ,
         1                            ,
-        -3                           ,
+        -1                           ,
         4                      ,
-        3                        ,
+        4                        ,
         10                        ,
         1               ,
         0          ,
@@ -736,8 +736,8 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Parquet"
     },
     "Target": {
-        "AutoCreateTable": "false",
-        "AutoGenerateMerge": "false",
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "true",
         "DataFileName": "SalesLT.Customer.parquet",
         "DynamicMapping": {
 
@@ -781,33 +781,44 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -11                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet11'                      ,
-        3                            ,
+        'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA_IRA11'                      ,
+        1                            ,
         -1                           ,
         4                      ,
-        1                        ,
-        4                        ,
+        3                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
-        "IncrementalType": "Full",
-        "IncrementalValue": "0",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "SalesLT.Customer.parquet",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "false",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "SheetName": "",
+        "SkipLineCount": "",
+        "Type": "Parquet"
     },
     "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "true",
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/11",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
         "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "StagingTableName": "stg_Customer11",
+        "StagingTableSchema": "dbo",
+        "TableName": "Customer11",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -838,33 +849,44 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -12                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet12'                      ,
-        3                            ,
-        -1                           ,
+        'GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA_IRA12'                      ,
+        1                            ,
+        -2                           ,
         4                      ,
-        1                        ,
         4                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
-        "IncrementalType": "Full",
-        "IncrementalValue": "0",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/12",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata12",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata12",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -895,33 +917,44 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -13                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet13'                      ,
-        3                            ,
-        -4                           ,
+        'GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA_IRA13'                      ,
+        1                            ,
+        -1                           ,
         4                      ,
-        1                        ,
-        4                        ,
+        3                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
-        "IncrementalType": "Full",
-        "IncrementalValue": "0",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/13",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata13",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata13",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -952,33 +985,44 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -14                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet14'                      ,
-        3                            ,
-        -1                           ,
+        'GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA_IRA14'                      ,
+        1                            ,
+        -4                           ,
         4                      ,
-        1                        ,
-        4                        ,
+        3                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "CustomerID",
-        "ChunkSize": 100,
-        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
-        "IncrementalType": "Full",
-        "IncrementalValue": "0",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "",
+        "SkipLineCount": 0,
+        "Type": "Csv"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/14",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata14",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata14",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -1009,33 +1053,44 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -15                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet15'                      ,
-        3                            ,
-        -1                           ,
+        'GPL_AzureBlobStorage_json_AzureSqlDWTable_NA_IRA15'                      ,
+        1                            ,
+        -2                           ,
         4                      ,
-        1                        ,
-        4                        ,
+        3                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "int",
-        "IncrementalField": "CustomerID",
-        "IncrementalType": "Watermark",
-        "IncrementalValue": "10",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "",
+        "SkipLineCount": 0,
+        "Type": "Json"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/15",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata15",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata15",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -1066,11 +1121,147 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -16                          ,
-        'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet16'                      ,
+        'GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA_IRA16'                      ,
+        1                            ,
+        -4                           ,
+        4                      ,
+        4                        ,
+        10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "",
+        "SkipLineCount": 0,
+        "Type": "Csv"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata16",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata16",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -17                          ,
+        'GPL_AzureBlobFS_json_AzureSqlDWTable_NA_IRA17'                      ,
+        1                            ,
+        -4                           ,
+        4                      ,
+        4                        ,
+        10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcorrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "",
+        "SkipLineCount": 0,
+        "Type": "Json"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DynamicMapping": {
+
+        },
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "SchemaFileName": "",
+        "StagingTableName": "stg_yellow_tripdata17",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata17",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -18                          ,
+        'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet18'                      ,
         3                            ,
         -3                           ,
         4                      ,
-        6                        ,
+        1                        ,
         4                        ,
         1               ,
         0          ,
@@ -1090,7 +1281,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/16",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/18",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
@@ -1122,10 +1313,238 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [DataFactoryId]                         
     )
     select 
-        -17                          ,
-        'GPL_SqlServerTable_NA_AzureBlobFS_Parquet17'                      ,
+        -19                          ,
+        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet19'                      ,
         3                            ,
         -3                           ,
+        4                      ,
+        1                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "",
+        "IncrementalColumnType": "",
+        "IncrementalField": "",
+        "IncrementalType": "Full",
+        "IncrementalValue": "0",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/19",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -20                          ,
+        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet20'                      ,
+        3                            ,
+        -3                           ,
+        4                      ,
+        1                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "IncrementalColumnType": "",
+        "IncrementalField": "",
+        "IncrementalType": "Full",
+        "IncrementalValue": "0",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/20",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -21                          ,
+        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet21'                      ,
+        3                            ,
+        -2                           ,
+        4                      ,
+        1                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "CustomerID",
+        "ChunkSize": 100,
+        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "IncrementalColumnType": "",
+        "IncrementalField": "",
+        "IncrementalType": "Full",
+        "IncrementalValue": "0",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/21",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -22                          ,
+        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet22'                      ,
+        3                            ,
+        -1                           ,
+        4                      ,
+        1                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "IncrementalColumnType": "int",
+        "IncrementalField": "CustomerID",
+        "IncrementalType": "Watermark",
+        "IncrementalValue": "10",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/22",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -23                          ,
+        'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet23'                      ,
+        3                            ,
+        -2                           ,
         4                      ,
         6                        ,
         4                        ,
@@ -1147,7 +1566,64 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/17",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/23",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -24                          ,
+        'GPL_SqlServerTable_NA_AzureBlobFS_Parquet24'                      ,
+        3                            ,
+        -4                           ,
+        4                      ,
+        6                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "",
+        "IncrementalColumnType": "",
+        "IncrementalField": "",
+        "IncrementalType": "Full",
+        "IncrementalValue": "0",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/24",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }

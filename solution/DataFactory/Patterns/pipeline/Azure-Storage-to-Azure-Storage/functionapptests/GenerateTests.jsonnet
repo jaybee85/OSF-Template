@@ -1,13 +1,16 @@
 function(seed=0)
 local tests =
 [
+    //****************************************************************/
+    //**                    Storage to Storage Tests                 */
+    //****************************************************************/
     //GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_FullLoad
     {        
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
         "SourceSystemAuthType": "MSI",
         
-        "SourceFormat":"Parquet",
+        "SourceFormat":"Binary",
         "SourceType":"ADLS",        
         "SourceDataFilename":"SalesLT.Customer*.parquet",
         "SourceSourceSystemAuthType": "MSI",
@@ -19,7 +22,7 @@ local tests =
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"Parquet",
+        "TargetFormat":"*",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer.parquet",
         "TargetSchemaFileName":"SalesLT.Customer.json",
@@ -40,7 +43,7 @@ local tests =
         "Pattern": "Azure Storage to SQL Database",         
         "SourceSystemAuthType": "MSI",
         
-        "SourceFormat":"Parquet",
+        "SourceFormat":"Binary",
         "SourceType":"ADLS",        
         "SourceDataFilename":"SalesLT.Customer*.parquet",
         "SourceSourceSystemAuthType": "MSI",
@@ -52,7 +55,7 @@ local tests =
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"Parquet",
+        "TargetFormat":"*",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer.parquet",
         "TargetSchemaFileName":"SalesLT.Customer.json",

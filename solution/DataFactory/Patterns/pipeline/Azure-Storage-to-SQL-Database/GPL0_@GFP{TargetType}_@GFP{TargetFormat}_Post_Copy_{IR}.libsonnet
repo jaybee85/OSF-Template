@@ -2,11 +2,12 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 	
 	local Wrapper = import '../static/partials/wrapper.libsonnet';
 
-	local Post_Copy_Lookup_PostCopySQL_TypeProperties = import './partials/Post_Copy_Lookup_PostCopySQL_TypeProperties.libsonnet';
-	local Post_Copy_Lookup_MergeSQL_TypeProperties = import './partials/Post_Copy_Lookup_MergeSQL_TypeProperties.libsonnet';
-	local Post_Copy_Lookup_AutoMergeSQL_TypeProperties = import './partials/Post_Copy_Lookup_AutoMergeSQL_TypeProperties.libsonnet';
-	local Post_Copy_Lookup_CreateStage_TypeProperties = import './partials/Post_Copy_Lookup_CreateStage_TypeProperties.libsonnet';
-	local Post_Copy_Lookup_CreateTarget_TypeProperties = import './partials/Post_Copy_Lookup_CreateTarget_TypeProperties.libsonnet';
+	local Post_Copy_Lookup_TypeProperties = import './partials/PostCopy/Post_Copy_Lookup_TypeProperties.libsonnet';
+	//local Post_Copy_Lookup_PostCopySQL_TypeProperties = import './partials/Post_Copy_Lookup_PostCopySQL_TypeProperties.libsonnet';
+	//local Post_Copy_Lookup_MergeSQL_TypeProperties = import './partials/Post_Copy_Lookup_MergeSQL_TypeProperties.libsonnet';
+	//local Post_Copy_Lookup_AutoMergeSQL_TypeProperties = import './partials/Post_Copy_Lookup_AutoMergeSQL_TypeProperties.libsonnet';
+	//local Post_Copy_Lookup_CreateStage_TypeProperties = import './partials/Post_Copy_Lookup_CreateStage_TypeProperties.libsonnet';
+	//local Post_Copy_Lookup_CreateTarget_TypeProperties = import './partials/Post_Copy_Lookup_CreateTarget_TypeProperties.libsonnet';
 	local pipeline = 
 	{
 		"name":if(GenerateArm=="false") 
@@ -37,7 +38,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_PostCopySQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.PostCopySQL")//Post_Copy_Lookup_PostCopySQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Log - Run PostCopySQL Failed",
@@ -100,7 +101,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_MergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.MergeSQL")//Post_Copy_Lookup_MergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Log - Run MergeSQL Failed",
@@ -170,7 +171,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_AutoMergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Merge Statement').output.MergeStatement")//Post_Copy_Lookup_AutoMergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Get Information Schema SQL Stage",
@@ -254,7 +255,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties":Post_Copy_Lookup_CreateStage_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, true, "@activity('AF Get Information Schema SQL Stage').output.InformationSchemaSQL")//Post_Copy_Lookup_CreateStage_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "Lookup Get Metadata Target",
@@ -275,7 +276,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties":Post_Copy_Lookup_CreateTarget_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Information Schema SQL Target').output.InformationSchemaSQL")//Post_Copy_Lookup_CreateTarget_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Get Information Schema SQL Target",
