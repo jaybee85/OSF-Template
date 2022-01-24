@@ -144,7 +144,7 @@ foreach ($pattern in $patterns)
 
         $content = Get-Content $schemafile -raw
         $sql += "("
-        $sql += "$TaskTypeId, N'ADF', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N''"
+        $sql += "$TaskTypeId, N'ADF', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
         $sql += "),"
     }
     if ($sql.endswith(","))

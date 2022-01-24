@@ -5,7 +5,7 @@
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to SQL Database",
     "Enabled": 1,
-    "ExecutionUid": "29a24932-b588-44ab-bf40-dbf62a84b6cb",
+    "ExecutionUid": "6a8cbcb8-8236-4852-9a5b-854be31f668c",
     "NumberOfRetries": 3,
     "DegreeOfCopyParallelism": 1,
     "KeyVaultBaseUrl": "https://mst-stg-kv-ads-zsye.vault.azure.net",
