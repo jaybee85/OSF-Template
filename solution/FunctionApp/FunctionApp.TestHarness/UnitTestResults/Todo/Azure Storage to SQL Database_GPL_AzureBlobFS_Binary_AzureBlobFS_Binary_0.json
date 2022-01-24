@@ -1,0 +1,73 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": 1,
+    "TaskMasterId": 0,
+    "TaskStatus": "Untried",
+    "TaskType": "Azure Storage to SQL Database",
+    "Enabled": 1,
+    "ExecutionUid": "29a24932-b588-44ab-bf40-dbf62a84b6cb",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://mst-stg-kv-ads-zsye.vault.azure.net",
+    "ScheduleMasterId": "2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "DataFactory": {
+      "Id": 1,
+      "Name": "mst-stg-adf-ads-zsye",
+      "ResourceGroup": "adsgftera1",
+      "SubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
+      "TaskDatafactoryIR": "Azure"
+    },
+    "Source": {
+      "System": {
+        "SystemId": 4,
+        "SystemServer": "https://mststgdlsadszsyeadsl.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/",
+        "TargetRelativePath": "samples/storage-to-storage-copy/"
+      },
+      "DataFileName": "SalesLT.Customer*.parquet",
+      "DeleteAfterCompletion": "false",
+      "FirstRowAsHeader": "false",
+      "MaxConcurrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "samples/",
+      "SchemaFileName": "SalesLT.Customer*.json",
+      "SheetName": "",
+      "SkipLineCount": "",
+      "Type": "Binary"
+    },
+    "Target": {
+      "System": {
+        "SystemId": 4,
+        "SystemServer": "https://mststgdlsadszsyeadsl.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/",
+        "TargetRelativePath": "samples/storage-to-storage-copy/"
+      },
+      "DataFileName": "SalesLT.Customer.parquet",
+      "DeleteAfterCompletion": "false",
+      "FirstRowAsHeader": "false",
+      "MaxConcurrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "samples/storage-to-storage-copy/",
+      "SchemaFileName": "SalesLT.Customer.json",
+      "SheetName": "",
+      "SkipLineCount": "",
+      "Type": "Binary"
+    }
+  }
+}

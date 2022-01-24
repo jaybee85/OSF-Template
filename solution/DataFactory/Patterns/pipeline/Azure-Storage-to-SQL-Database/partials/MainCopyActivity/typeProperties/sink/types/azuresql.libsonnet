@@ -1,3 +1,4 @@
+function (allowPolyBase=false)
 {
     "type": "AzureSqlSink",
     "preCopyScript": {

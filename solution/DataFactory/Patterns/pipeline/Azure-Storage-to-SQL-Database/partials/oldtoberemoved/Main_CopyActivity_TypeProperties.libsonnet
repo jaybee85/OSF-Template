@@ -51,7 +51,7 @@ else if(SourceType=="AzureBlobFS"&&SourceFormat=="DelimitedText"&&TargetType=="A
       "storeSettings": {
         "type": "AzureBlobFSReadSettings",
         "maxConcurrentConnections": {
-          "value": "@pipeline().parameters.TaskObject.Source.MaxConcorrentConnections",
+          "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections",
           "type": "Expression"
         },
         "recursive": true,
@@ -263,7 +263,7 @@ else if(SourceType=="AzureBlobStorage"&&SourceFormat=="DelimitedText"&&TargetTyp
       "storeSettings": {
         "type": "AzureBlobStorageReadSettings",
         "maxConcurrentConnections": {
-          "value": "@pipeline().parameters.TaskObject.Source.MaxConcorrentConnections",
+          "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections",
           "type": "Expression"
         },
         "recursive": true,
@@ -476,7 +476,7 @@ else if(SourceType=="AzureBlobFS"&&SourceFormat=="DelimitedText"&&TargetType=="A
       "storeSettings": {
         "type": "AzureBlobFSReadSettings",
         "maxConcurrentConnections": {
-          "value": "@pipeline().parameters.TaskObject.Source.MaxConcorrentConnections",
+          "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections",
           "type": "Expression"
         },
         "recursive": true,

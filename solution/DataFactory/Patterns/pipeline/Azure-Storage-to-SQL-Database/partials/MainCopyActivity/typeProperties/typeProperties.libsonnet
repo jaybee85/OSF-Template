@@ -1,10 +1,11 @@
-function(GenerateArm=false,GFPIR="{IRA}",SourceType="AzureBlobStorage",SourceFormat="Excel", TargetType="AzureSqlDWTable", TargetFormat="Excel")
+function(GenerateArm=false,GFPIR="{IRA}",SourceType="AzureBlobStorage",SourceFormat="Parquet", TargetType="AzureSqlDWTable", TargetFormat="Table")
 {
     local source = import './source/source.libsonnet',	
     local sink   = import './sink/sink.libsonnet',	
+    local allowPolyBase = if SourceFormat == 'Parquet' then true else false,
 
     "source": source(SourceType, SourceFormat),
-    "sink": sink(TargetType),
+    "sink": sink(TargetType, allowPolyBase),
     "enableStaging": false,
     "parallelCopies": {
         "value": "@pipeline().parameters.TaskObject.DegreeOfCopyParallelism",

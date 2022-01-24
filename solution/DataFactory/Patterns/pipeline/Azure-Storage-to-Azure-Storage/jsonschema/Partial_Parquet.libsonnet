@@ -37,12 +37,20 @@ function()
                 },
                 "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data."
             }
-        }
+        },      
+        "MaxConcurrentConnections": {
+            "type": "integer",
+            "default": 100,
+            "options": {                        
+                "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+            }
+        }    
     },
     "required": [
         "Type",
         "RelativePath",
         "DataFileName",
-        "SchemaFileName"
+        "SchemaFileName",
+        "MaxConcurrentConnections"
     ]
 }

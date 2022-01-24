@@ -85,12 +85,12 @@ namespace FunctionApp.TestHarness
                 LogSource = "AF",
                 ExecutionUid = executionId
             };
-            //_funcAppLogger.InitializeLog(_logger, activityLogItem);
+            _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
-            //GenerateUnitTestResults();
+            GenerateUnitTestResults();
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
-            Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
+            //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();       
 
         }

@@ -56,7 +56,7 @@ function()
                 "infoText": "Set to true if you want the first row of data to be used as column names."
             }
         }, 
-        "MaxConcorrentConnections": {
+        "MaxConcurrentConnections": {
             "type": "integer",
             "default": 100,
             "options": {                        
@@ -71,6 +71,6 @@ function()
         "SchemaFileName",
         "SkipLineCount",
         "FirstRowAsHeader",
-        "MaxConcorrentConnections"
+        "MaxConcurrentConnections"
     ]
 }

@@ -1,0 +1,1 @@
+$files = (Get-ChildItem -Path ./ -Filter "*.json"  -Verbose)

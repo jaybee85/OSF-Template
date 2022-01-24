@@ -52,14 +52,22 @@ function()
             "options": {
                 "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."
             }
-        }
+        },        
+        "MaxConcurrentConnections": {
+            "type": "integer",
+            "default": 100,
+            "options": {                        
+                "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+            }
+        }    
     },
     "required": [
         "Type",
         "RelativePath",
         "DataFileName",
         "Recursively",
-        "MaxConcorrentConnections",
-        "DeleteAfterCompletion"
+        "MaxConcurrentConnections",
+        "DeleteAfterCompletion",        
+        "MaxConcurrentConnections"
     ]
 }

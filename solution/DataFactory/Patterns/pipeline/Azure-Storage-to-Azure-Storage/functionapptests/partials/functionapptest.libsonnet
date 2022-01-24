@@ -12,7 +12,7 @@ function(
     SourceSkipLineCount = "",
     SourceFirstRowAsHeader ="FirstRowAsHeader",    
     SourceSheetName = "",
-    SourceMaxConcorrentConnections = 0,
+    SourceMaxConcurrentConnections = 0,
     SourceRecursively = "false",
     SourceDeleteAfterCompletion = "",
     TargetFormat = "Azure SQL",
@@ -23,7 +23,7 @@ function(
     TargetSkipLineCount = "",
     TargetFirstRowAsHeader ="FirstRowAsHeader",    
     TargetSheetName = "",
-    TargetMaxConcorrentConnections = 0,
+    TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
     )
@@ -38,7 +38,7 @@ function(
             "SkipLineCount": SourceSkipLineCount,
             "FirstRowAsHeader":SourceFirstRowAsHeader,
             "SheetName":SourceSheetName,
-            "MaxConcorrentConnections": SourceMaxConcorrentConnections,
+            "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
         },
@@ -50,7 +50,7 @@ function(
             "SkipLineCount": TargetSkipLineCount,
             "FirstRowAsHeader":TargetFirstRowAsHeader,
             "SheetName":TargetSheetName,
-            "MaxConcorrentConnections": TargetMaxConcorrentConnections,
+            "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
             "DeleteAfterCompletion": TargetDeleteAfterCompletion
         }

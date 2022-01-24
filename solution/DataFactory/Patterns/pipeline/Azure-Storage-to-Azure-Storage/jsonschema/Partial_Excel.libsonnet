@@ -57,7 +57,14 @@ function()
                 },
                 "infoText": "Name of the Excel Worksheet that you wish to import"
             }
-        }        
+        },       
+        "MaxConcurrentConnections": {
+            "type": "integer",
+            "default": 100,
+            "options": {                        
+                "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+            }
+        }            
     },
     "required": [
         "Type",
@@ -66,6 +73,7 @@ function()
         "SchemaFileName",
         "FirstRowAsHeader",
         "SheetName",
-        "SkipLineCount"
+        "SkipLineCount",
+        "MaxConcurrentConnections"
     ]
 }

@@ -27,7 +27,7 @@
       "FirstRowAsHeader": "true",
       "SheetName": "yellow_tripdata_2017-03",
       "SkipLineCount": 0,
-      "MaxConcorrentConnections": 10,
+      "MaxConcurrentConnections": 10,
       "Recursively": null,
       "DeleteAfterCompletion": null,
       "UserId": null,

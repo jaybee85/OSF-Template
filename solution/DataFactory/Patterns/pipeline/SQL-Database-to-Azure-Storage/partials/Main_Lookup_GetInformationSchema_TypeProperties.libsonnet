@@ -1,5 +1,5 @@
-function(GenerateArm="false",GFPIR="IRA", SourceType="AzureSqlTable", SourceFormat="NA")
-if (SourceType=="AzureSqlTable"&&SourceFormat=="NA") then
+function(GenerateArm="false",GFPIR="IRA", SourceType="AzureSqlTable")
+if (SourceType=="AzureSqlTable") then
 {
   local referenceName = "GDS_AzureSqlTable_NA_",
   "source": {
@@ -37,7 +37,7 @@ if (SourceType=="AzureSqlTable"&&SourceFormat=="NA") then
   },
   "firstRowOnly": false
 }
-else if (SourceType=="SqlServerTable" && SourceFormat == "NA") then
+else if (SourceType=="SqlServerTable") then
 {
   local referenceName = "GDS_SqlServerTable_NA_",
   "source": {
@@ -88,4 +88,4 @@ else if (SourceType=="SqlServerTable" && SourceFormat == "NA") then
   "firstRowOnly": false
 }
 else
-  error 'GetInformationSchema.libsonnet failed. No mapping for:' +GFPIR+","+SourceType+","+SourceFormat
+  error 'GetInformationSchema.libsonnet failed. No mapping for:' +GFPIR+","+SourceType

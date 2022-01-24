@@ -74,32 +74,38 @@ foreach ($ir in $tout.integration_runtimes)
     }
 }
 
-foreach ($folder in ($patterns.Folder | Get-Unique))
+foreach ($pattern in $patterns)
 {
-    $TaskTypeId = 0
-    $TaskTypeId = ($folder -eq "Azure-Storage-to-SQL-Database") ? 1:$TaskTypeId
-    $TaskTypeId = ($folder -eq "Azure-Storage-to-Azure-Storage") ? 2:$TaskTypeId
-    $TaskTypeId = ($folder -eq "SQL-Database-to-Azure-Storage") ? 3:$TaskTypeId
+
+    $SourceType = $pattern.SourceType
+    $SourceFormat = $pattern.SourceFormat
+    $TargetType = $pattern.TargetType
+    $TargetFormat = $pattern.TargetFormat
+
+    $TaskTypeId = $pattern.TaskTypeId
     
-    $folder = "./pipeline/" + $folder
+    $folder = "./pipeline/" + $pattern.Folder
     Write-Host "_____________________________"
-    Write-Host "Generating ADF Schema Files: " + $folder
+    Write-Host "Generating ADF Schema Files: " 
     Write-Host "_____________________________"
     
     $newfolder = ($folder + "/output")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = write-host "$newfolder Folder already exists")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
     $newfolder = ($newfolder + "/schemas")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = write-host "$newfolder Folder already exists")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
     $newfolder = ($newfolder + "/taskmasterjson/")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = write-host "$newfolder Folder already exists")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
     
-    $schemafiles = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "*.jsonnet"  -Verbose)
-    foreach ($schemafile in $schemafiles)
-    {   
-        $newname = ($schemafile.PSChildName).Replace(".jsonnet",".json")
+    $schemafile = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "Main.libsonnet"  -Verbose)
+    #foreach ($schemafile in $schemafiles)
+    #{  
+        $mappingName = $pattern.pipeline
+        write-host $mappingName
+        $newname = ($schemafile.PSChildName).Replace(".libsonnet",".json").Replace("Main", $MappingName);
         #(jsonnet $schemafile.FullName) | Set-Content('../../TaskTypeJson/' + $newname)
-        (jsonnet $schemafile.FullName) | Set-Content($newfolder + $newname)
-    }
+        (jsonnet --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $schemafile) | Set-Content($newfolder + $newname)
+        #(jsonnet $schemafile.FullName) | Set-Content($newfolder + $newname)
+    #}
     
     $sql = @"
     BEGIN 
@@ -114,14 +120,27 @@ foreach ($folder in ($patterns.Folder | Get-Unique))
         $SourceType = $psplit[1]
         $SourceType = ($SourceType -eq "AzureBlobStorage") ? "Azure Blob":$SourceType
         $SourceType = ($SourceType -eq "AzureBlobFS") ? "ADLS" : $SourceType
+        $SourceType = ($SourceType -eq "AzureSqlTable") ? "Azure SQL" : $SourceType
+        $SourceType = ($SourceType -eq "AzureSqlDWTable") ? "Azure Synapse" : $SourceType
+        $SourceType = ($SourceType -eq "SqlServerTable") ? "SQL Server" : $SourceType
 
         $SourceFormat = $psplit[2]
+        $SourceFormat = ($SourceFormat -eq "DelimitedText") ? "Csv":$SourceFormat
 
         $TargetType = $psplit[3]
         $TargetType = ($TargetType -eq "AzureBlobStorage") ? "Azure Blob":$TargetType
         $TargetType = ($TargetType -eq "AzureBlobFS") ? "ADLS" : $TargetType
+        $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
+        $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
+        $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
 
         $TargetFormat = $psplit[4]        
+        $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
+
+        if ($TaskTypeId -eq 1)
+        {
+           $TargetFormat = "Table"
+        }
 
         $content = Get-Content $schemafile -raw
         $sql += "("

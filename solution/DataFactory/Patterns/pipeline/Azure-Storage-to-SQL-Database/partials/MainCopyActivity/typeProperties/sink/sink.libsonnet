@@ -4,5 +4,5 @@ local Target = {
 };
 
 
-function(TargetType="AzureSqlDWTable")
-Target[TargetType]
+function(TargetType="AzureSqlDWTable", allowPolyBase=false)
+Target[TargetType](allowPolyBase)

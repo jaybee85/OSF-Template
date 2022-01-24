@@ -1,5 +1,5 @@
-function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable", SourceFormat="NA")
-if (SourceType=="AzureSqlTable" && SourceFormat == "NA") then
+function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable")
+if (SourceType=="AzureSqlTable" ) then
 {
   local referenceName = "GDS_AzureSqlTable_NA_",
   "source": {
@@ -38,7 +38,7 @@ if (SourceType=="AzureSqlTable" && SourceFormat == "NA") then
   "firstRowOnly": true
 }
 else
-if (SourceType=="SqlServerTable" && SourceFormat == "NA") then
+if (SourceType=="SqlServerTable") then
 {
   local referenceName = "GDS_SqlServerTable_NA_",
   "source": {
@@ -89,4 +89,4 @@ if (SourceType=="SqlServerTable" && SourceFormat == "NA") then
   "firstRowOnly": true
 }
 else 
-   error 'Main_Lookup_GetNextWaterMarkOrChunk.libsonnet failed. No mapping for:' +GFPIR+","+SourceType+","+SourceFormat
+   error 'Main_Lookup_GetNextWaterMarkOrChunk.libsonnet failed. No mapping for:' +GFPIR+","+SourceType
