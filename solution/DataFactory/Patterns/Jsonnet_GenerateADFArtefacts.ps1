@@ -155,13 +155,14 @@ foreach ($pattern in $patterns)
     
     Update [dbo].[TaskTypeMapping]
     Set 
-    TaskMasterJsonSchema = ttm2.TaskMasterJsonSchema
+    MappingName = ttm2.MappingName,
+    TaskMasterJsonSchema = ttm2.TaskMasterJsonSchema,
+    TaskInstanceJsonSchema = ttm2.TaskInstanceJsonSchema
     from 
     [dbo].[TaskTypeMapping] ttm  
     inner join #TempTTM ttm2 on 
         ttm2.TaskTypeId = ttm.TaskTypeId 
         and ttm2.MappingType = ttm.MappingType
-        and ttm2.MappingName = ttm.MappingName 
         and ttm2.SourceSystemType = ttm.SourceSystemType 
         and ttm2.SourceType = ttm.SourceType 
         and ttm2.TargetSystemType = ttm.TargetSystemType 
@@ -175,7 +176,6 @@ foreach ($pattern in $patterns)
     right join #TempTTM ttm2 on 
         ttm2.TaskTypeId = ttm.TaskTypeId 
         and ttm2.MappingType = ttm.MappingType
-        and ttm2.MappingName = ttm.MappingName 
         and ttm2.SourceSystemType = ttm.SourceSystemType 
         and ttm2.SourceType = ttm.SourceType 
         and ttm2.TargetSystemType = ttm.TargetSystemType 
