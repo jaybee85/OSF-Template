@@ -1,4 +1,4 @@
-local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Staging=false, SourceSqlReaderValue="")
+local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Staging=false, SourceSqlReaderValue="", firstRowOnly = true)
 {
     local TargetPrefixForActivityName = if (Staging==true) then "Staging" else "Target",
     local TargetPrefixForParameters = if (Staging==true) then "Staging" else "",    
@@ -33,17 +33,17 @@ local basetemplate = function(ReferenceName = "", DataFactorySourceType="", Stag
             }
         }
     },
-     "firstRowOnly": true
+     "firstRowOnly": firstRowOnly
 };
 
-function(GenerateArm="false",GFPIR="Azure", TargetType="AzureSqlDWTable", Staging=true, SourceSqlReaderValue="")
+function(GenerateArm="false",GFPIR="Azure", TargetType="AzureSqlDWTable", Staging=true, SourceSqlReaderValue="", firstRowOnly=false)
 local referenceName =   if (GenerateArm=="false") 
                         then "GDS_"+TargetType+"_NA_"+GFPIR
                         else "[concat('GDS_"+TargetType+"_NA_', parameters('integrationRuntimeShortName'))]";
 
 local TargetTypes = {
-    "AzureSqlTable": basetemplate(referenceName,"AzureSqlSource",Staging, SourceSqlReaderValue),
-    "AzureSqlDWTable":basetemplate(referenceName,"SqlDWSource",Staging, SourceSqlReaderValue)
+    "AzureSqlTable": basetemplate(referenceName,"AzureSqlSource",Staging, SourceSqlReaderValue, firstRowOnly),
+    "AzureSqlDWTable":basetemplate(referenceName,"SqlDWSource",Staging, SourceSqlReaderValue, firstRowOnly)
 };
 
 TargetTypes[TargetType]

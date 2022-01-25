@@ -7,8 +7,8 @@ function(GenerateArm="false", GFPIR="Azure", SourceType="AzureBlobFS", SourceFor
 	local pipeline = 
 	{
 		"name":	if(GenerateArm=="false") 
-				then "GPL_"+TargetType+"_"+TargetFormat+"_Create_Table_"+GFPIR 
-				else "[concat(parameters('dataFactoryName'), '/','GPL_"+TargetType+"_"+TargetFormat+"_Create_Table_" + "', parameters('integrationRuntimeShortName'))]",		
+				then "GPL_"+TargetType+"_"+"NA"+"_Create_Table_"+GFPIR 
+				else "[concat(parameters('dataFactoryName'), '/','GPL_"+TargetType+"_"+"NA"+"_Create_Table_" + "', parameters('integrationRuntimeShortName'))]",		
 		"properties": {
 			"activities": [
 				{

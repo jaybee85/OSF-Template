@@ -74,9 +74,9 @@ foreach ($ir in $tout.integration_runtimes)
     }
 }
 
-foreach ($pattern in $patterns)
-{
-
+#foreach ($pattern in $patterns)
+$patterns | ForEach-Object -Parallel {
+    $pattern = $_
     $SourceType = $pattern.SourceType
     $SourceFormat = $pattern.SourceFormat
     $TargetType = $pattern.TargetType

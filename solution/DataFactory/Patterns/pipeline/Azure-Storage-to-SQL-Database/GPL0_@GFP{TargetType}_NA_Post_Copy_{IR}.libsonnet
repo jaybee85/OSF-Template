@@ -11,8 +11,8 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 	local pipeline = 
 	{
 		"name":if(GenerateArm=="false") 
-				then "GPL_"+TargetType+"_"+TargetFormat+"_Post_Copy_"+GFPIR 
-				else "[concat(parameters('dataFactoryName'), '/','GPL_"+TargetType+"_"+TargetFormat+"_Post_Copy_" + "', parameters('integrationRuntimeShortName'))]",
+				then "GPL_"+TargetType+"_"+"NA"+"_Post_Copy_"+GFPIR 
+				else "[concat(parameters('dataFactoryName'), '/','GPL_"+TargetType+"_"+"NA"+"_Post_Copy_" + "', parameters('integrationRuntimeShortName'))]",
 		"properties": {
 			"activities": [
 				{
@@ -38,7 +38,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.PostCopySQL")//Post_Copy_Lookup_PostCopySQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.PostCopySQL", true)//Post_Copy_Lookup_PostCopySQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Log - Run PostCopySQL Failed",
@@ -101,7 +101,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.MergeSQL")//Post_Copy_Lookup_MergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@pipeline().parameters.TaskObject.Target.MergeSQL", true)//Post_Copy_Lookup_MergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Log - Run MergeSQL Failed",
@@ -171,7 +171,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Merge Statement').output.MergeStatement")//Post_Copy_Lookup_AutoMergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Merge Statement').output.MergeStatement", true)//Post_Copy_Lookup_AutoMergeSQL_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Get Information Schema SQL Stage",
@@ -255,7 +255,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, true, "@activity('AF Get Information Schema SQL Stage').output.InformationSchemaSQL")//Post_Copy_Lookup_CreateStage_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, true, "@activity('AF Get Information Schema SQL Stage').output.InformationSchemaSQL", false)//Post_Copy_Lookup_CreateStage_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "Lookup Get Metadata Target",
@@ -276,7 +276,7 @@ function(GenerateArm=false, GFPIR="{IRA}", SourceType="AzureBlobFS", SourceForma
 									"secureInput": false
 								},
 								"userProperties": [],
-								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Information Schema SQL Target').output.InformationSchemaSQL")//Post_Copy_Lookup_CreateTarget_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
+								"typeProperties": Post_Copy_Lookup_TypeProperties(GenerateArm,GFPIR, TargetType, false, "@activity('AF Get Information Schema SQL Target').output.InformationSchemaSQL", false)//Post_Copy_Lookup_CreateTarget_TypeProperties(GenerateArm,GFPIR, TargetType, TargetFormat)
 							},
 							{
 								"name": "AF Get Information Schema SQL Target",
