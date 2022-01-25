@@ -23,7 +23,7 @@
       "RelativePath": "/samples",
       "DataFileName": "yellow_tripdata_2017-03.xlsx",
       "FirstRowAsHeader": true,
-      "MaxConcorrentConnections": 1,
+      "MaxConcurrentConnections": 1,
       "SheetName": "yellow_tripdata_2017-03",
       "SkipLineCount": 0
     },
@@ -35,7 +35,7 @@
       "RelativePath": "/samples",
       "DataFileName": "yellow_tripdata_2017-03_csv_output.csv",
       "FirstRowAsHeader": true,
-      "MaxConcorrentConnections": 1,
+      "MaxConcurrentConnections": 1,
       "Recursively": false,
       "SkipLineCount": 0
     },

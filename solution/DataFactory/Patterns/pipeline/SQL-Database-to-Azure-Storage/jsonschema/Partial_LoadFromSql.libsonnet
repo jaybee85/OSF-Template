@@ -1,6 +1,6 @@
 function() 
 {
-  "Source": {
+  
             "type": "object",
             "properties": {
                 "Type": {
@@ -32,7 +32,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Select top 100 * from Customer"
                         },
-                        "infoText": "A custom SQL statement that you wish to be used to extract the data. **Note that this is ignored if the Source Type is 'Table'"
+                        "infoText": "A custom SQL statement that you wish to be used to extract the data. **Note that this is ignored if the Source Type is [Table]"
                     },
                     "default":""
                 },
@@ -42,7 +42,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. dbo"
                         }, 
-                        "infoText": "The schema of the table to extract. **Note that this is ignored if the Source Type is 'SQL'"
+                        "infoText": "The schema of the table to extract. **Note that this is ignored if the Source Type is [SQL]"
                     },
                     "default":""
 
@@ -53,7 +53,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Customer"
                         }, 
-                        "infoText": "The name of the table to extract. **Note that this is ignored if the Source Type is 'SQL'"
+                        "infoText": "The name of the table to extract. **Note that this is ignored if the Source Type is [SQL]"
                     },
                     "default":""
                 },
@@ -73,7 +73,7 @@ function()
                         "inputAttributes": {
                             "placeholder": 0                        
                         },                        
-                        "infoText": "Number of rows to use for each 'chunk' of data."
+                        "infoText": "Number of rows to use for each [chunk] of data."
                     },
                     "default": 0
                 }
@@ -82,5 +82,5 @@ function()
                 "Type",
                 "IncrementalType"
             ]
-        }
+ 
 }

@@ -1,7 +1,6 @@
 function()
 {
-   "Target":
-   {
+      
             "type": "object",
             "properties": {
                 "Type": {
@@ -48,5 +47,5 @@ function()
                 "DataFileName",
                 "SchemaFileName"
             ]
-    }
+ 
 }

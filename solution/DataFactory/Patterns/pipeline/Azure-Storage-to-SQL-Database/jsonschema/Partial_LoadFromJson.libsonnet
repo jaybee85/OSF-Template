@@ -1,6 +1,5 @@
 function() 
 {
-  "Source": {
             "type": "object",
             "properties": {
                 "Type": {
@@ -36,10 +35,10 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Customer_Schema.json"
                         },
-                        "infoText": "Name of the schema file to use when generating the target table. *Note that if you don't provide a schema file then the schema will be automatically inferred based on the source data."
+                        "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data."
                     }
                 },
-                "MaxConcorrentConnections": {
+                "MaxConcurrentConnections": {
                     "type": "integer",
                     "default": 10,                                       
                     "options": {                        
@@ -52,7 +51,7 @@ function()
                 "RelativePath",
                 "DataFileName",
                 "SchemaFileName",
-                "MaxConcorrentConnections"
+                "MaxConcurrentConnections"
             ]
-        }
+        
 }

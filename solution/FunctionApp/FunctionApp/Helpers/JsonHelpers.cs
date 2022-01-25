@@ -100,7 +100,10 @@ namespace FunctionApp.Helpers
 
         public static bool ValidateJsonUsingSchema(Logging.Logging logging, string SchemaAsString, string JsonObjectToValidate, string ErrorComment)
         {
-
+            if (String.IsNullOrEmpty(SchemaAsString))
+            {
+                SchemaAsString = "{}";
+            }
             bool ret = true;
             var schema = NJsonSchema.JsonSchema.FromJsonAsync(SchemaAsString).Result;
             var schemaData = schema.ToJson();

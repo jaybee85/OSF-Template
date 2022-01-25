@@ -90,6 +90,10 @@
               "formatSettings": {
                 "type": "BinaryReadSettings"
               },
+              "maxConcurrentConnections": {
+                "type": "Expression",
+                "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections"
+              },
               "recursive": {
                 "type": "Expression",
                 "value": "@pipeline().parameters.TaskObject.Source.Recursively"

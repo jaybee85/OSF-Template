@@ -496,7 +496,7 @@
           "Target": {
             "DataFileName": "SalesLT.SalesOrderHeader.parquet",
             "FirstRowAsHeader": null,
-            "MaxConcorrentConnections": null,
+            "MaxConcurrentConnections": null,
             "RelativePath": "/AwSample/SalesLT/SalesOrderHeader/2020/7/9/14/12/",
             "SchemaFileName": "SalesLT.SalesOrderHeader",
             "SheetName": null,

@@ -76,16 +76,16 @@ if($env:TF_VAR_resource_group_name -ne "") {
     $rg = az group create -n $env:TF_VAR_resource_group_name -l australiaeast
 
     if($env:TF_VAR_storage_account_name -ne "") {
-        $progress+=10
+        $progress+=5
         Write-Progress -Activity "Creating Storage Account" -Status "${progress}% Complete:" -PercentComplete $progress
         $storageId = az storage account create --resource-group $env:TF_VAR_resource_group_name --name $env:TF_VAR_storage_account_name --sku Standard_LRS --allow-blob-public-access false --https-only true --min-tls-version TLS1_2 --query id -o tsv
 
-        $progress+=10
+        $progress+=5
         $userObjectId = az ad signed-in-user show --query objectId -o tsv
         Write-Progress -Activity "Assigning Blob Contributor" -Status "${progress}% Complete:" -PercentComplete $progress
         $assignment = az role assignment create --role "Storage Blob Data Contributor" --assignee-object-id $userObjectId --assignee-principal-type User
 
-        $progress+=10
+        $progress+=5
         Write-Progress -Activity "Creating State Container" -Status "${progress}% Complete:" -PercentComplete $progress
         $container = az storage container create --name $CONTAINER_NAME --account-name $env:TF_VAR_storage_account_name --auth-mode login
 

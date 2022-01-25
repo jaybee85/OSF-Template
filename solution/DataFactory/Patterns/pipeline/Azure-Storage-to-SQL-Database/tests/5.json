@@ -26,7 +26,7 @@
       "SchemaFileName": "",
       "FirstRowAsHeader": "true",
       "SkipLineCount": 0,
-      "MaxConcorrentConnections": 10,
+      "MaxConcurrentConnections": 10,
       "Recursively": null,
       "DeleteAfterCompletion": null,
       "UserId": null,

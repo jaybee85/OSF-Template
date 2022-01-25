@@ -114,7 +114,7 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
@@ -178,9 +178,6 @@
             "type": "AzureSqlSink"
           },
           "source": {
-            "formatSettings": {
-              "type": "AzureBlobFSReadSettings"
-            },
             "storeSettings": {
               "enablePartitionDiscovery": false,
               "recursive": false,

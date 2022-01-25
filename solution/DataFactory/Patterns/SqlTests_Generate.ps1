@@ -46,7 +46,7 @@ foreach ($t in $tests)
     $AllowMultipleActiveInstances = 0
     $TaskDatafactoryIR = "'Azure'"
     $TaskMasterJSON = $t.TaskMasterJson
-    $ActiveYN = 1
+    $ActiveYN = 0
     $DependencyChainTag = ""
     $DataFactoryId = $t.DataFactoryId
     

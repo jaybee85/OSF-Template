@@ -23,7 +23,7 @@
       "RelativePath": "/samples",
       "DataFileName": "yellow_tripdata_2017-03.csv",
       "SkipLineCount": 0,
-      "MaxConcorrentConnections": 1,
+      "MaxConcurrentConnections": 1,
       "DeleteAfterCompletion": false,
       "Recursively": false
     },
@@ -35,7 +35,7 @@
       "RelativePath": "/samples",
       "DataFileName": "yellow_tripdata_2017-03_binary_output.csv",
       "SkipLineCount": 0,
-      "MaxConcorrentConnections": 1,
+      "MaxConcurrentConnections": 1,
       "DeleteAfterCompletion": false,
       "Recursively": false
     },

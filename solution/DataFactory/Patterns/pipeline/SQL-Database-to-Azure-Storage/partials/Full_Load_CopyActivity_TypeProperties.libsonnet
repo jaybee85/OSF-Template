@@ -1,11 +1,11 @@
-function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable", SourceFormat="NA", TargetType="AzureBlobFS",TargetFormat="Parquet") 
+function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable", TargetType="AzureBlobFS",TargetFormat="Parquet") 
 local AzureBlobFS_Parquet_CopyActivity_Output = import './Full_Load_CopyActivity_AzureBlobFS_Parquet_Outputs.libsonnet';
 local AzureBlobStorage_Parquet_CopyActivity_Output = import './Full_Load_CopyActivity_AzureBlobStorage_Parquet_Outputs.libsonnet';
 local AzureSqlTable_NA_CopyActivity_Inputs = import './/Full_Load_CopyActivity_AzureSqlTable_NA_Inputs.libsonnet';
 local SqlServerTable_NA_CopyActivity_Inputs = import './/Full_Load_CopyActivity_SqlServerTable_NA_Inputs.libsonnet';
 
 
-if(SourceType=="AzureSqlTable"&&SourceFormat=="NA"&&TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
+if(SourceType=="AzureSqlTable"&&TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
 {
   "typeProperties": {
     "source": {
@@ -34,7 +34,7 @@ if(SourceType=="AzureSqlTable"&&SourceFormat=="NA"&&TargetType=="AzureBlobFS"&&T
   },
 } + AzureBlobFS_Parquet_CopyActivity_Output(GenerateArm,GFPIR)
   + AzureSqlTable_NA_CopyActivity_Inputs(GenerateArm,GFPIR)
-else if(SourceType=="AzureSqlTable"&&SourceFormat=="NA"&&TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
+else if(SourceType=="AzureSqlTable"&&TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
 {
   "typeProperties": {
     "source": {
@@ -63,7 +63,7 @@ else if(SourceType=="AzureSqlTable"&&SourceFormat=="NA"&&TargetType=="AzureBlobS
   },
 } + AzureBlobStorage_Parquet_CopyActivity_Output(GenerateArm,GFPIR)
   + AzureSqlTable_NA_CopyActivity_Inputs(GenerateArm,GFPIR)
-  else if (SourceType=="SqlServerTable" && SourceFormat == "NA" && TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
+  else if (SourceType=="SqlServerTable" && TargetType=="AzureBlobFS"&&TargetFormat=="Parquet") then
 {
   "typeProperties": {
     "source": {
@@ -92,7 +92,7 @@ else if(SourceType=="AzureSqlTable"&&SourceFormat=="NA"&&TargetType=="AzureBlobS
   },
 } + AzureBlobFS_Parquet_CopyActivity_Output(GenerateArm,GFPIR)
   + SqlServerTable_NA_CopyActivity_Inputs(GenerateArm,GFPIR)
-else if (SourceType=="SqlServerTable" && SourceFormat == "NA" && TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
+else if (SourceType=="SqlServerTable" && TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
 {
    "typeProperties": {
     "source": {
@@ -122,4 +122,4 @@ else if (SourceType=="SqlServerTable" && SourceFormat == "NA" && TargetType=="Az
 } + AzureBlobStorage_Parquet_CopyActivity_Output(GenerateArm,GFPIR)
   + SqlServerTable_NA_CopyActivity_Inputs(GenerateArm,GFPIR)
 else 
-  error 'CopyActivity_TypeProperties.libsonnet Failed: ' + GFPIR+","+SourceType+","+SourceFormat+","+TargetType+","+TargetFormat
+  error 'CopyActivity_TypeProperties.libsonnet Failed: ' + GFPIR+","+SourceType+","+TargetType+","+TargetFormat

@@ -24,7 +24,7 @@
       "RelativePath": "/samples/",
       "DataFileName": "yellow_tripdata_2017-03.json",
       "SchemaFileName": "",
-      "MaxConcorrentConnections": 10,
+      "MaxConcurrentConnections": 10,
       "Recursively": null,
       "DeleteAfterCompletion": null,
       "UserId": null,

@@ -77,6 +77,7 @@ namespace FunctionApp.Functions
                 string storageAccountContainer = data["StorageAccountContainer"].ToString();
                 string relativePath = data["RelativePath"].ToString();
                 string schemaFileName = data["SchemaFileName"].ToString();
+                string targetType = "";//data["TargetType"].ToString();
 
                 if (relativePath.StartsWith("/")) { relativePath = relativePath.Remove(0, 1); }
 
@@ -93,7 +94,7 @@ namespace FunctionApp.Functions
 
             bool dropIfExist = data["DropIfExist"] == null ? false : (bool)data["DropIfExist"];
 
-            createStatement = GenerateSqlStatementTemplates.GetCreateTable(arr, data["TableSchema"].ToString(), data["TableName"].ToString(), dropIfExist);
+            createStatement = GenerateSqlStatementTemplates.GetCreateTable(arr, data["TableSchema"].ToString(), data["TableName"].ToString(), data["TargetType"].ToString(), dropIfExist);
             createStatement += Environment.NewLine + "Select 1";
 
             JObject root = new JObject

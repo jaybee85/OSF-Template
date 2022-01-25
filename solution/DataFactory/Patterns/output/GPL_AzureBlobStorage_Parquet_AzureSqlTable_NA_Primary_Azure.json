@@ -114,7 +114,7 @@
               },
               "RelativePath": {
                 "type": "Expression",
-                "value": "@pipeline().parameters.TaskObject.Source.Instance.SourceRelativePath"
+                "value": "@pipeline().parameters.TaskObject.Source.RelativePath"
               },
               "StorageAccountContainerName": {
                 "type": "Expression",
@@ -178,12 +178,9 @@
             "type": "AzureSqlSink"
           },
           "source": {
-            "formatSettings": {
-              "type": "AzureBlobStorageReadSettings"
-            },
             "storeSettings": {
               "enablePartitionDiscovery": false,
-              "recursive": true,
+              "recursive": false,
               "type": "AzureBlobStorageReadSettings",
               "wildcardFileName": {
                 "type": "Expression",

@@ -1,13 +1,16 @@
 function(seed=0)
 local tests =
 [
+    //****************************************************************/
+    //**                    Storage to Storage Tests                 */
+    //****************************************************************/
     //GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_FullLoad
     {        
         "Active": true,        
         "Pattern": "Azure Storage to SQL Database",         
         "SourceSystemAuthType": "MSI",
         
-        "SourceFormat":"Parquet",
+        "SourceFormat":"Binary",
         "SourceType":"ADLS",        
         "SourceDataFilename":"SalesLT.Customer*.parquet",
         "SourceSourceSystemAuthType": "MSI",
@@ -15,11 +18,11 @@ local tests =
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
-        "SourceMaxConcorrentConnections":0,
+        "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"Parquet",
+        "TargetFormat":"Binary",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer.parquet",
         "TargetSchemaFileName":"SalesLT.Customer.json",
@@ -27,7 +30,7 @@ local tests =
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
         "TargetSheetName":"",
-        "TargetMaxConcorrentConnections":0,
+        "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
@@ -40,7 +43,7 @@ local tests =
         "Pattern": "Azure Storage to SQL Database",         
         "SourceSystemAuthType": "MSI",
         
-        "SourceFormat":"Parquet",
+        "SourceFormat":"Binary",
         "SourceType":"ADLS",        
         "SourceDataFilename":"SalesLT.Customer*.parquet",
         "SourceSourceSystemAuthType": "MSI",
@@ -48,11 +51,11 @@ local tests =
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
-        "SourceMaxConcorrentConnections":0,
+        "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"Parquet",
+        "TargetFormat":"Binary",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer.parquet",
         "TargetSchemaFileName":"SalesLT.Customer.json",
@@ -60,7 +63,7 @@ local tests =
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
         "TargetSheetName":"",
-        "TargetMaxConcorrentConnections":0,
+        "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
@@ -86,7 +89,7 @@ template(
     t.SourceSkipLineCount,
     t.SourceFirstRowAsHeader,
     t.SourceSheetName,
-    t.SourceMaxConcorrentConnections,
+    t.SourceMaxConcurrentConnections,
     t.SourceRecursively,
     t.SourceDeleteAfterCompletion,
     t.TargetFormat,
@@ -97,7 +100,7 @@ template(
     t.TargetSkipLineCount,
     t.TargetFirstRowAsHeader,
     t.TargetSheetName,
-    t.TargetMaxConcorrentConnections,
+    t.TargetMaxConcurrentConnections,
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
 );

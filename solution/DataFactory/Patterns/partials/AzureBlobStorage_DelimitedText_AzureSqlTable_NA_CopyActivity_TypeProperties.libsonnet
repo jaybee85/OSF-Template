@@ -4,7 +4,7 @@ function(GFPIR="IRA") {
     "storeSettings": {
       "type": "AzureBlobFSReadSettings",
       "maxConcurrentConnections": {
-        "value": "@pipeline().parameters.TaskObject.Source.MaxConcorrentConnections",
+        "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections",
         "type": "Expression"
       },
       "recursive": true,

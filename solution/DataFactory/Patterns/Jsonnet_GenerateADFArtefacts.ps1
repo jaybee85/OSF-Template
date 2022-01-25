@@ -74,19 +74,118 @@ foreach ($ir in $tout.integration_runtimes)
     }
 }
 
-foreach ($folder in ($patterns.Folder | Get-Unique))
-{
-    $folder = "./pipeline/" + $folder
+#foreach ($pattern in $patterns)
+$patterns | ForEach-Object -Parallel {
+    $pattern = $_
+    $SourceType = $pattern.SourceType
+    $SourceFormat = $pattern.SourceFormat
+    $TargetType = $pattern.TargetType
+    $TargetFormat = $pattern.TargetFormat
+
+    $TaskTypeId = $pattern.TaskTypeId
+    
+    $folder = "./pipeline/" + $pattern.Folder
     Write-Host "_____________________________"
-    Write-Host "Generating ADF Schema Files: " + $folder
+    Write-Host "Generating ADF Schema Files: " 
     Write-Host "_____________________________"
     
-    $schemafiles = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "*.jsonnet"  -Verbose)
+    $newfolder = ($folder + "/output")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+    $newfolder = ($newfolder + "/schemas")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+    $newfolder = ($newfolder + "/taskmasterjson/")
+    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+    
+    $schemafile = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "Main.libsonnet"  -Verbose)
+    #foreach ($schemafile in $schemafiles)
+    #{  
+        $mappingName = $pattern.pipeline
+        write-host $mappingName
+        $newname = ($schemafile.PSChildName).Replace(".libsonnet",".json").Replace("Main", $MappingName);
+        #(jsonnet $schemafile.FullName) | Set-Content('../../TaskTypeJson/' + $newname)
+        (jsonnet --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $schemafile) | Set-Content($newfolder + $newname)
+        #(jsonnet $schemafile.FullName) | Set-Content($newfolder + $newname)
+    #}
+    
+    $sql = @"
+    BEGIN 
+    Select * into #TempTTM from ( VALUES
+"@
+    $schemafiles = (Get-ChildItem -Path ($newfolder) -Filter "*.json"  -Verbose)
     foreach ($schemafile in $schemafiles)
     {   
-        $newname = ($schemafile.PSChildName).Replace(".jsonnet",".json")
-        (jsonnet $schemafile.FullName) | Set-Content('../../TaskTypeJson/' + $newname)
+        $pipeline = $schemafile.Name.replace(".json","")
+        $psplit = $pipeline.split("_")
+
+        $SourceType = $psplit[1]
+        $SourceType = ($SourceType -eq "AzureBlobStorage") ? "Azure Blob":$SourceType
+        $SourceType = ($SourceType -eq "AzureBlobFS") ? "ADLS" : $SourceType
+        $SourceType = ($SourceType -eq "AzureSqlTable") ? "Azure SQL" : $SourceType
+        $SourceType = ($SourceType -eq "AzureSqlDWTable") ? "Azure Synapse" : $SourceType
+        $SourceType = ($SourceType -eq "SqlServerTable") ? "SQL Server" : $SourceType
+
+        $SourceFormat = $psplit[2]
+        $SourceFormat = ($SourceFormat -eq "DelimitedText") ? "Csv":$SourceFormat
+
+        $TargetType = $psplit[3]
+        $TargetType = ($TargetType -eq "AzureBlobStorage") ? "Azure Blob":$TargetType
+        $TargetType = ($TargetType -eq "AzureBlobFS") ? "ADLS" : $TargetType
+        $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
+        $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
+        $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
+
+        $TargetFormat = $psplit[4]        
+        $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
+
+        if ($TaskTypeId -eq 1)
+        {
+           $TargetFormat = "Table"
+        }
+
+        $content = Get-Content $schemafile -raw
+        $sql += "("
+        $sql += "$TaskTypeId, N'ADF', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
+        $sql += "),"
     }
+    if ($sql.endswith(","))
+    {   $sql = $sql.Substring(0,$sql.Length-1) }
+    $sql += @"
+    ) a([TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema])
+    
+    
+    Update [dbo].[TaskTypeMapping]
+    Set 
+    MappingName = ttm2.MappingName,
+    TaskMasterJsonSchema = ttm2.TaskMasterJsonSchema,
+    TaskInstanceJsonSchema = ttm2.TaskInstanceJsonSchema
+    from 
+    [dbo].[TaskTypeMapping] ttm  
+    inner join #TempTTM ttm2 on 
+        ttm2.TaskTypeId = ttm.TaskTypeId 
+        and ttm2.MappingType = ttm.MappingType
+        and ttm2.SourceSystemType = ttm.SourceSystemType 
+        and ttm2.SourceType = ttm.SourceType 
+        and ttm2.TargetSystemType = ttm.TargetSystemType 
+        and ttm2.TargetType = ttm.TargetType 
+
+    Insert into 
+    [dbo].[TaskTypeMapping]
+    ([TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema])
+    Select ttm2.* 
+    from [dbo].[TaskTypeMapping] ttm  
+    right join #TempTTM ttm2 on 
+        ttm2.TaskTypeId = ttm.TaskTypeId 
+        and ttm2.MappingType = ttm.MappingType
+        and ttm2.SourceSystemType = ttm.SourceSystemType 
+        and ttm2.SourceType = ttm.SourceType 
+        and ttm2.TargetSystemType = ttm.TargetSystemType 
+        and ttm2.TargetType = ttm.TargetType 
+    where ttm.TaskTypeMappingId is null
+
+    END
+"@
+
+    $sql | Set-Content ($newfolder+"TaskTypeMapping.sql")
 }
 
 # This will copy the output pipeline files into the locations required for the terraform deployment

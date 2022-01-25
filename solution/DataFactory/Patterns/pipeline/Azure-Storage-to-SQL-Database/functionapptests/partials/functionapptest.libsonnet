@@ -1,7 +1,7 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
 local vars = import '../../../static/partials/secrets.libsonnet';
 function(
-    ADFPipeline = "GPL_AzureBlobStorage_ParquetAzureSqlTable_NA_IRA",
+    ADFPipeline = "GPL_AzureBlobStorage_ParquetAzureSqlTable_NA",
     Pattern = "Azure Storage to SQL Database",
     TestNumber = "1",
     SourceFormat = "Azure SQL",
@@ -12,7 +12,7 @@ function(
     SkipLineCount = "",
     FirstRowAsHeader ="FirstRowAsHeader",    
     SheetName = "",
-    MaxConcorrentConnections = 0,
+    MaxConcurrentConnections = 0,
     Recursively = "false",
     DeleteAfterCompletion = "",
     TargetFormat = "Parquet",
@@ -38,7 +38,7 @@ function(
             "SkipLineCount": SkipLineCount,
             "FirstRowAsHeader":FirstRowAsHeader,
             "SheetName":SheetName,
-            "MaxConcorrentConnections": MaxConcorrentConnections,
+            "MaxConcurrentConnections": MaxConcurrentConnections,
             "Recursively": Recursively,
             "DeleteAfterCompletion": DeleteAfterCompletion,
         },
@@ -71,7 +71,7 @@ function(
 
     local TargetSystemJson = 
     {   
-        "Database": vars.stagingdb_name,
+        "Database": if(TargetType == "Azure Synapse") then vars.synapse_sql_pool_name else vars.stagingdb_name,
         "UsernameKeyVaultSecretName":"",
         "PasswordKeyVaultSecretName":""
     },
@@ -95,7 +95,7 @@ function(
     "TargetSystemId":if(TargetType == "Azure Synapse") then 10 else 2,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
-    "TargetSystemServer":vars.sqlserver_name + ".database.windows.net",
+    "TargetSystemServer":if(TargetType == "Azure Synapse") then vars.synapse_workspace_name + ".database.windows.net" else vars.sqlserver_name + ".database.windows.net",
     "TargetKeyVaultBaseUrl":"https://" + vars.keyvault_name +".vault.azure.net",
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",

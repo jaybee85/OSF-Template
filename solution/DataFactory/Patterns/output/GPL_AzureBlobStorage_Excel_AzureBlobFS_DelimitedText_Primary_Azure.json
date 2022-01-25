@@ -100,6 +100,10 @@
           },
           "source": {
             "storeSettings": {
+              "maxConcurrentConnections": {
+                "type": "Expression",
+                "value": "@pipeline().parameters.TaskObject.Source.MaxConcurrentConnections"
+              },
               "recursive": true,
               "type": "AzureBlobStorageReadSettings"
             },

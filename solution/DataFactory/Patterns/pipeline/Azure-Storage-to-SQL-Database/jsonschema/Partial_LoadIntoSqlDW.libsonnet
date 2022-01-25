@@ -1,6 +1,5 @@
 function() 
 {
-  "Target": {
       "type": "object",
       "properties": {
           "Type": {
@@ -92,7 +91,7 @@ function()
               "type": "string",
               "format": "sql",
               "options": {
-                  "infoText": "A custom merge statement to exectute. Note that this will be ignored if 'AutoGenerateMerge' is true. Click in the box below to view or edit ",
+                  "infoText": "A custom merge statement to exectute. Note that this will be ignored if [AutoGenerateMerge] is true. Click in the box below to view or edit ",
                   "ace": {
                       "tabSize": 2,
                       "useSoftTabs": true,
@@ -113,5 +112,5 @@ function()
           "AutoGenerateMerge",
           "MergeSQL"
       ]
-  }
+ 
 }

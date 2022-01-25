@@ -1,7 +1,7 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
 local vars = import '../../../static/partials/secrets.libsonnet';
 function(
-    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_IRA",
+    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
     Pattern = "SQL Database to Azure Storage",
     TestNumber = "1",
     SourceFormat = "Azure SQL",

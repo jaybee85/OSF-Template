@@ -165,7 +165,7 @@ namespace FunctionApp.Helpers
                 JObject source = new JObject();
                 JObject sink = new JObject();
 
-                if (metadataType == "SQL" && (sourceType == "Azure SQL" || sourceType == "SQL Server") && (targetType == "Azure Blob" || targetType == "ADLS"))
+                if (metadataType == "SQL" && (sourceType == "Azure SQL" || sourceType == "SQL Server" || sourceType == "Azure Synapse") && (targetType == "Azure Blob" || targetType == "ADLS"))
                 {
                     source["name"] = r["COLUMN_NAME"].ToString();
                     source["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString());
@@ -175,7 +175,7 @@ namespace FunctionApp.Helpers
                     sink["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());
                     sink["physicalType"] = r["DATA_TYPE"].ToString();
                 }
-                else if (metadataType == "Parquet" && (sourceType == "Azure Blob" || sourceType == "ADLS") && (targetType == "SQL Server" || targetType == "Azure SQL" || targetType == "Table"))
+                else if (metadataType == "Parquet" && (sourceType == "Azure Blob" || sourceType == "ADLS") && (targetType == "SQL Server" || targetType == "Azure SQL" || targetType == "Azure Synapse" || targetType == "Table"))
                 {
                     source["name"] = TransformParquetFileColName(r["COLUMN_NAME"].ToString());
                     source["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());

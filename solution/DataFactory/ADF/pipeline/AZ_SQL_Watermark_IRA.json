@@ -597,7 +597,7 @@
 						"FirstRowAsHeader": null,
 						"SheetName": null,
 						"SkipLineCount": null,
-						"MaxConcorrentConnections": null
+						"MaxConcurrentConnections": null
 					},
 					"DataFactory": {
 						"Id": 1,
