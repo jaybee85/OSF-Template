@@ -45,6 +45,13 @@ variable "fileserver_linkedservice_name" {
   description = "The name of the linked service for File Server"
   type        = string
 }
+
+variable "rest_linkedservice_name" {
+  description = "The name of the linked service for File Server"
+  type        = string
+}
+
+
 variable "name_suffix" {
   description = "Used to give resource group deployments unique names for an environment"
   type        = string

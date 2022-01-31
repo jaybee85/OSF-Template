@@ -578,7 +578,8 @@ template(
     t.PreCopySQL,
     t.PostCopySQL,
     t.AutoGenerateMerge,
-    t.MergeSQL
+    t.MergeSQL,
+    t.Description
 );
 
 

@@ -26,6 +26,7 @@ function(
     TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
+    TestDescription = "",
     )
 {
     local TaskMasterJson =     
@@ -96,6 +97,7 @@ function(
     "TargetSystemAuthType":TargetSystemAuthType,
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " + ADFPipeline + " -- " + TestDescription
 }+commons
 

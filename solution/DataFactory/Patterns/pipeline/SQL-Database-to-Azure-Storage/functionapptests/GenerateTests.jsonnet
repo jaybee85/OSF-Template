@@ -163,7 +163,8 @@ template(
     t.IncrementalType,
     t.IncrementalField,
     t.IncrementalColumnType,
-    t.IncrementalValue
+    t.IncrementalValue,
+    t.Description
 );
 
 

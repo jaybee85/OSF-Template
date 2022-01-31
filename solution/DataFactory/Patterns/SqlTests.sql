@@ -43,9 +43,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         0                          ,
-        'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary0'                      ,
+        '[0] GPL_AzureBlobFS_Binary_AzureBlobFS_Binary -- FullLoad'                      ,
         2                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -106,9 +106,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -1                          ,
-        'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary1'                      ,
+        '[1] GPL_AzureBlobFS_Binary_AzureBlobFS_Binary -- FullLoad'                      ,
         2                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -169,9 +169,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -2                          ,
-        'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA2'                      ,
+        '[2] GPL_AzureBlobFS_Parquet_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -237,9 +237,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -3                          ,
-        'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA3'                      ,
+        '[3] GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -305,9 +305,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -4                          ,
-        'GPL_AzureBlobFS_Excel_AzureSqlTable_NA4'                      ,
+        '[4] GPL_AzureBlobFS_Excel_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -1                           ,
+        -3                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -373,9 +373,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -5                          ,
-        'GPL_AzureBlobStorage_Excel_AzureSqlTable_NA5'                      ,
+        '[5] GPL_AzureBlobStorage_Excel_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -441,9 +441,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -6                          ,
-        'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA6'                      ,
+        '[6] GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -3                           ,
+        -4                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -509,7 +509,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -7                          ,
-        'GPL_AzureBlobStorage_json_AzureSqlTable_NA7'                      ,
+        '[7] GPL_AzureBlobStorage_json_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
         -1                           ,
         4                      ,
@@ -577,9 +577,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -8                          ,
-        'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA8'                      ,
+        '[8] GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
-        -4                           ,
+        -2                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -645,7 +645,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -9                          ,
-        'GPL_AzureBlobFS_json_AzureSqlTable_NA9'                      ,
+        '[9] GPL_AzureBlobFS_json_AzureSqlTable_NA -- FullLoad'                      ,
         1                            ,
         -1                           ,
         4                      ,
@@ -713,7 +713,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -10                          ,
-        'GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA10'                      ,
+        '[10] GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
         -2                           ,
         4                      ,
@@ -781,9 +781,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -11                          ,
-        'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA11'                      ,
+        '[11] GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         3                        ,
         10                        ,
@@ -849,9 +849,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -12                          ,
-        'GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA12'                      ,
+        '[12] GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         4                        ,
         10                        ,
@@ -917,9 +917,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -13                          ,
-        'GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA13'                      ,
+        '[13] GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         3                        ,
         10                        ,
@@ -985,9 +985,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -14                          ,
-        'GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA14'                      ,
+        '[14] GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
         3                        ,
         10                        ,
@@ -1053,7 +1053,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -15                          ,
-        'GPL_AzureBlobStorage_json_AzureSqlDWTable_NA15'                      ,
+        '[15] GPL_AzureBlobStorage_json_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
         -3                           ,
         4                      ,
@@ -1121,9 +1121,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -16                          ,
-        'GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA16'                      ,
+        '[16] GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -2                           ,
+        -3                           ,
         4                      ,
         4                        ,
         10                        ,
@@ -1189,9 +1189,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -17                          ,
-        'GPL_AzureBlobFS_json_AzureSqlDWTable_NA17'                      ,
+        '[17] GPL_AzureBlobFS_json_AzureSqlDWTable_NA -- FullLoad'                      ,
         1                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         4                        ,
         10                        ,
@@ -1257,7 +1257,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -18                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet18'                      ,
+        '[18] GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet -- FulLoad'                      ,
         3                            ,
         -2                           ,
         4                      ,
@@ -1314,9 +1314,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -19                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet19'                      ,
+        '[19] GPL_AzureSqlTable_NA_AzureBlobFS_Parquet -- FullLoad'                      ,
         3                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1371,9 +1371,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -20                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet20'                      ,
+        '[20] GPL_AzureSqlTable_NA_AzureBlobFS_Parquet -- FullLoadUsingExtractionSql'                      ,
         3                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1428,9 +1428,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -21                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet21'                      ,
+        '[21] GPL_AzureSqlTable_NA_AzureBlobFS_Parquet -- FullLoadWithChunk'                      ,
         3                            ,
-        -3                           ,
+        -4                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1485,9 +1485,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -22                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet22'                      ,
+        '[22] GPL_AzureSqlTable_NA_AzureBlobFS_Parquet -- IncrementalLoad'                      ,
         3                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1542,9 +1542,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -23                          ,
-        'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet23'                      ,
+        '[23] GPL_SqlServerTable_NA_AzureBlobStorage_Parquet -- FullLoad'                      ,
         3                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         6                        ,
         4                        ,
@@ -1599,9 +1599,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -24                          ,
-        'GPL_SqlServerTable_NA_AzureBlobFS_Parquet24'                      ,
+        '[24] GPL_SqlServerTable_NA_AzureBlobFS_Parquet -- FullLoad'                      ,
         3                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         6                        ,
         4                        ,

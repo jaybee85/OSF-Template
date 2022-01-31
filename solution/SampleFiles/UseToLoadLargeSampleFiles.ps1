@@ -16,8 +16,10 @@ rm -rf ./azcopy_linux_amd64_*/ #>
     Run in Cloud Shell to save on transfer time and fees
 #>
 
+#https://nytaxiblob.blob.core.windows.net/2013/Date
+
 $samples = "https://jrambosampledata.blob.core.windows.net/sampledata/"
-$filemask = "yellow_tripdata_2009-"
+$filemask = "yellow_tripdata_2010-"
 $i=@(
 "01",
 "02",
@@ -33,7 +35,7 @@ $i=@(
 "12"
 )
 
-$sassig = ""#####""
+$sassig = "###"
 
 #azcopy login
 
@@ -46,4 +48,3 @@ $i | foreach-object {
     $samplesdest = $samples + $target + $sassig
     azcopy copy $target $samplesdest
 }
-
