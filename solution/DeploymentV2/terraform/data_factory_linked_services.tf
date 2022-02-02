@@ -8,6 +8,7 @@ locals {
   linkedservice_generic_synapse_prefix  = "GLS_AzureSqlDW_"
   linkedservice_generic_mssql_prefix    = "GLS_SqlServerDatabase_"
   linkedservice_generic_file_prefix     = "GLS_FileServer_"
+  linkedservice_generic_rest_prefix     = "GLS_RestService_"
 }
 
 #Azure KeyVault - Non Generic
@@ -264,6 +265,37 @@ JSON
   parameters = {
     Server   = ""
     Database = ""
+  }
+  depends_on = [
+    azurerm_data_factory_linked_custom_service.generic_kv,
+    azurerm_data_factory_integration_runtime_azure.azure_ir,
+    azurerm_data_factory_integration_runtime_self_hosted.self_hosted_ir
+  ]
+}
+
+
+resource "azurerm_data_factory_linked_custom_service" "rest_anonymous" {
+  for_each = {
+    for ir in local.integration_runtimes :
+    ir.short_name => ir
+    if (ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true)
+  }
+  name            = "${local.linkedservice_generic_rest_prefix}${each.value.short_name}"
+  data_factory_id = azurerm_data_factory.data_factory.id
+  type            = "RestService"
+  description     = "Generic Rest Connection"
+  integration_runtime {
+    name = each.value.name
+  }
+type_properties_json = <<JSON
+    {			
+      "url": "@{linkedService().BaseUrl}",
+      "enableServerCertificateValidation": true,
+      "authenticationType": "Anonymous"
+		}
+JSON
+  parameters = {
+    BaseUrl   = ""    
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,

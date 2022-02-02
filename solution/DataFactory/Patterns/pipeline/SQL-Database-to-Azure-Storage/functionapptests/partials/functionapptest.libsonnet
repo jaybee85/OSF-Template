@@ -17,7 +17,8 @@ function(
     IncrementalType = "Full",
     IncrementalField = "",
     IncrementalColumnType = "",
-    IncrementalValue = "0"
+    IncrementalValue = "0",
+    TestDescription = "",
     )
 {
     local TaskMasterJson =     
@@ -83,6 +84,7 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " + ADFPipeline + " -- " + TestDescription
 }+commons
 

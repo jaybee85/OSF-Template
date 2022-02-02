@@ -25,7 +25,8 @@ function(
     PreCopySQL,
     PostCopySQL,
     AutoGenerateMerge,
-    MergeSQL
+    MergeSQL,
+    TestDescription = "",
     )
 {
     local TaskMasterJson =     
@@ -100,6 +101,7 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+   "TestDescription": "[" + TestNumber + "] " + ADFPipeline + " -- " + TestDescription
 }+commons
 

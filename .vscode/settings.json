@@ -1,0 +1,11 @@
+{
+    "synapseSparkpoolJobSubmission.synapseSparkPoolClusterConf": [
+        {
+            "name": "mststgsynwads mststgsynspads"
+        },
+        {
+            "name": "mststgsynwads mststgsynspads",
+            "filePath": "/workspaces/adsgf/solution/Python/Synapse.py"
+        }
+    ]
+}

@@ -9,8 +9,8 @@ local CalledPipelineName = if(GenerateArm=="false")
 			then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+ "_Primary_"+GFPIR 
 			else "[concat('GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Primary_" + "', parameters('integrationRuntimeShortName'))]";
 local Folder =  if(GenerateArm=="false") 
-					then "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/" + GFPIR
-					else "[concat('ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/', parameters('integrationRuntimeShortName'))]";
+					then "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/" + GFPIR + "/ErrorHandler/"
+					else "[concat('ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/', parameters('integrationRuntimeShortName'), '/ErrorHandler/')]";
 
 local pipeline = {} + ParentPipelineTemplate(Name, CalledPipelineName, Folder);
 	

@@ -103,6 +103,7 @@ template(
     t.TargetMaxConcurrentConnections,
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
+    t.Description
 );
 
 
