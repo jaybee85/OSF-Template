@@ -9,7 +9,7 @@ This will save you having to install any of the tooling dependencies and will en
 
 **:warning: NOTE:** For all scripts, be sure that your working directory is set to the DeploymentV2 folder.
 
-## :green_circle: PART 1. Prepare your Azure enviromnent using Prepare.ps1 script
+## :green_circle: PART 1. Prepare your Azure environment using Prepare.ps1 script
 ### :page_with_curl: Pre-requisites
 Before you run the **Deploy.ps1** script, make sure you have completed the pre-requisites:
  
@@ -28,12 +28,12 @@ Execute the following script file:
 ```./Prepare.ps1```
 When you execute the script it will ask you for two inputs:
  - **Resource Group Name**: The resource group name to be created. If you skip this, only the providers will be registered
- - **Storage Account Name** The storage account name for storing your terraform state. If you skip this, no storage account will be created
- 
+ - **Storage Account Name** The storage account name for storing your terraform state. If you skip this, no storage account will be created. The rest of this guide assumes that you have elected to skip this.
+
 At the end of the execution, you will be provided the details of what was performed as well as the resource & subscription details.
 These are pre-loaded into environment variables so that you can directly run the ./Deploy.ps1 without doing any manual entry.
 
-To save you having to do more work later, I recommend that you copy them down and updatethe values directly into the following file:
+To save you having to do more work later, I recommend that you copy them down and update the values directly into the following file:
 
  ```/azure-data-services-go-fast-codebase/solution/DeploymentV2/terraform/vars/local/terragrunt.hcl```
 
