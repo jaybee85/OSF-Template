@@ -1,16 +1,16 @@
 inputs = {
-  prefix                                = "mst"
-  domain                                = "microsoft.com"
-  tenant_id                             = "72f988bf-86f1-41af-91ab-2d7cd011db47"
-  subscription_id                       = "035a1364-f00d-48e2-b582-4fe125905ee3"
-  resource_location                     = "Australia East"
-  resource_group_name                   = "adsteratest3"
-  owner_tag                             = "microsoft"
-  environment_tag                       = "dev"  
-  ip_address                            = "144.138.148.220"
+  prefix                               = "ads"              # All azure resources will be prefixed with this
+  domain                                = "microsoft.com"              # Used when configuring AAD config for Azure functions 
+  tenant_id                             = "72f988bf-86f1-41af-91ab-2d7cd011db47"           # This is the Azure AD tenant ID
+  subscription_id                       = "035a1364-f00d-48e2-b582-4fe125905ee3"     # The azure subscription id to deploy to
+  resource_location                     = "Australia East"        # The location of the resources
+  resource_group_name                   = "adsgfbhp"          # The resource group all resources will be deployed to
+  owner_tag                             = "Contoso"               # Owner tag value for Azure resources
+  environment_tag                       = "dev"                   # This is used on Azure tags as well as all resource names
+  ip_address                            = "144.138.148.220"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_sentinel                       = false
   deploy_purview                        = false      
-  deploy_synapse                        = true 
+  deploy_synapse                        = false
   is_vnet_isolated                      = false
   publish_web_app                       = true
   publish_function_app                  = true
@@ -20,4 +20,3 @@ inputs = {
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
 }
-

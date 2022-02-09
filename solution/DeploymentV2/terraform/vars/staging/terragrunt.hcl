@@ -7,8 +7,8 @@ remote_state = {
   config = {
     # You need to update the resource group and storage account here. 
     # You should have created these with the Prepare.ps1 script.
-    resource_group_name  = "adsgftera2"
-    storage_account_name = "adsgftera2state"
+    resource_group_name  = "adsgftera"
+    storage_account_name = "adsgfterastate"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
@@ -20,7 +20,7 @@ inputs = {
   tenant_id                             = "72f988bf-86f1-41af-91ab-2d7cd011db47"
   subscription_id                       = "035a1364-f00d-48e2-b582-4fe125905ee3"
   resource_location                     = "Australia East"
-  resource_group_name                   = "adsgftera2"
+  resource_group_name                   = "adsgftera"
   owner_tag                             = "microsoft"
   environment_tag                       = "stg"  
   ip_address                            = "144.138.148.220"
