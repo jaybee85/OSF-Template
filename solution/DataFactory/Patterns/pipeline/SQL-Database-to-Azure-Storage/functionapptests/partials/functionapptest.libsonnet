@@ -15,9 +15,6 @@ function(
     ChunkField = "",
     ChunkSize = 0,
     IncrementalType = "Full",
-    IncrementalField = "",
-    IncrementalColumnType = "",
-    IncrementalValue = "0",
     TestDescription = "",
     )
 {
@@ -26,9 +23,6 @@ function(
         "Source":{
             "Type": SourceFormat,
             "IncrementalType": IncrementalType,
-            "IncrementalColumnType":IncrementalColumnType,
-            "IncrementalField":IncrementalField,
-            "IncrementalValue":IncrementalValue,
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
@@ -85,6 +79,6 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "ADFPipeline": ADFPipeline,
-    "TestDescription": "[" + TestNumber + "] " + ADFPipeline + " -- " + TestDescription
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + "SalesLT.Customer" + " (" + SourceFormat + ") from " + SourceType + " to " + DataFilename  + " in " + TargetType +  "(" + TargetFormat + ")"
 }+commons
 

@@ -34,7 +34,7 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
-        "Description": "FullLoad",  
+        "Description": "File copy between datalake zones",  
         "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
        
     },
@@ -67,7 +67,73 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
-        "Description": "FullLoad",  
+        "Description": "File copy between datalake zones",  
+        "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
+       
+    },
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to SQL Database",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Binary",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"*.*",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Binary",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "Folder copy between datalake zones",  
+        "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
+       
+    },
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to SQL Database",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Excel",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"yellow_tripdata_2017-03.xlsx",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Parquet",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"yellow_tripdata_2017-03.parquet",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones",  
         "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
        
     }

@@ -2,7 +2,7 @@ local commons = import '../../../static/partials/functionapptest_commons.libsonn
 local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     ADFPipeline = "GPL_AzureBlobStorage_ParquetAzureSqlTable_NA",
-    Pattern = "Azure Storage to SQL Database",
+    Pattern = "Storage to Storage",
     TestNumber = "1",
     SourceFormat = "Azure SQL",
     SourceType = "Azure SQL",
@@ -36,31 +36,39 @@ function(
             "RelativePath": "samples/",
             "DataFileName": SourceDataFilename,
             "SchemaFileName": SourceSchemaFileName,
-            "SkipLineCount": SourceSkipLineCount,
-            "FirstRowAsHeader":SourceFirstRowAsHeader,
-            "SheetName":SourceSheetName,
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
-        },
+            
+        }
+        + if (SourceFormat == "Excel") 
+            then {"SkipLineCount": SourceSkipLineCount, "FirstRowAsHeader":SourceFirstRowAsHeader,  "SheetName":SourceSheetName}
+            else {}
+            + if (SourceFormat == "Delimitedtext") 
+            then {"SkipLineCount": SourceSkipLineCount, "FirstRowAsHeader":SourceFirstRowAsHeader}
+            else {},
+
         "Target":{
             "Type":TargetFormat,
-            "RelativePath": "samples/storage-to-storage-copy/",
+            "RelativePath":"/Tests/"+Pattern+"/"+TestNumber,
             "DataFileName": TargetDataFilename,
-            "SchemaFileName": TargetSchemaFileName,
-            "SkipLineCount": TargetSkipLineCount,
-            "FirstRowAsHeader":TargetFirstRowAsHeader,
-            "SheetName":TargetSheetName,
+            "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
             "DeleteAfterCompletion": TargetDeleteAfterCompletion
         }
+        + if (TargetFormat == "Excel") 
+            then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader,  "SheetName":TargetSheetName}
+            else {}
+            + if (TargetFormat == "Delimitedtext") 
+            then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader}
+            else {},
     },
 
     local TaskInstanceJson =  
     {
         "SourceRelativePath": "samples/",
-        "TargetRelativePath": "samples/storage-to-storage-copy/"
+        "TargetRelativePath": "/Tests/"+Pattern+"/"+TestNumber+"/"
     },
 
     local SourceSystemJson = 
@@ -98,6 +106,6 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "ADFPipeline": ADFPipeline,
-    "TestDescription": "[" + TestNumber + "] " + ADFPipeline + " -- " + TestDescription
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + SourceDataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType + " " + TargetDataFilename + " (" + TargetFormat + ")" 
 }+commons
 
