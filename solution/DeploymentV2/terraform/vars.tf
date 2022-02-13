@@ -228,6 +228,12 @@ variable "deploy_synapse_sparkpool" {
   type        = bool
 }
 
+variable "deploy_selfhostedsql" {
+  description = "Feature toggle for deploying Self Hosted Sql VM"
+  default     = false
+  type        = bool
+}
+
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------

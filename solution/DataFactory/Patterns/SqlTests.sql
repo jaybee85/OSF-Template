@@ -102,7 +102,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -1                          ,
         '[1]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)'                      ,
         2                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -159,7 +159,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -2                          ,
         '[2]  Folder copy between datalake zones of *.* (Binary) from ADLS to ADLS  (Binary)'                      ,
         2                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -216,7 +216,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -3                          ,
         '[3]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.parquet (Parquet)'                      ,
         2                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         4                        ,
         4                        ,
@@ -232,7 +232,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "SheetName": "",
+        "SheetName": "yellow_tripdata_2017-03",
         "SkipLineCount": "",
         "Type": "Excel"
     },
@@ -274,36 +274,36 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -4                          ,
-        '[4]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure SQL'                      ,
-        1                            ,
-        -1                           ,
+        '[4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (DelimitedText)'                      ,
+        2                            ,
+        -4                           ,
         4                      ,
         4                        ,
-        2                        ,
+        4                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
     },
     "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "StagingTableName": "stg_Customer4",
-        "StagingTableSchema": "dbo",
-        "TableName": "Customer4",
-        "TableSchema": "dbo",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to SQL Database/4",
+        "SchemaFileName": "",
+        "Type": "DelimitedText"
     }
 }'                      ,
         0                              ,
@@ -334,36 +334,36 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -5                          ,
-        '[5]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure SQL'                      ,
-        1                            ,
+        '[5]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.json (Json)'                      ,
+        2                            ,
         -1                           ,
         4                      ,
-        3                        ,
-        2                        ,
+        4                        ,
+        4                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
     },
     "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "StagingTableName": "stg_Customer5",
-        "StagingTableSchema": "dbo",
-        "TableName": "Customer5",
-        "TableSchema": "dbo",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to SQL Database/5",
+        "SchemaFileName": "",
+        "Type": "Json"
     }
 }'                      ,
         0                              ,
@@ -394,9 +394,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -6                          ,
-        '[6]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure SQL'                      ,
+        '[6]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure SQL'                      ,
         1                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         4                        ,
         2                        ,
@@ -405,25 +405,23 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "Type": "Excel"
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
+        "AutoGenerateMerge": "true",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata6",
+        "StagingTableName": "stg_Customer6",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata6",
+        "TableName": "Customer6",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -456,7 +454,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -7                          ,
-        '[7]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure SQL'                      ,
+        '[7]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure SQL'                      ,
         1                            ,
         -3                           ,
         4                      ,
@@ -467,25 +465,23 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "Type": "Excel"
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
+        "AutoGenerateMerge": "true",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata7",
+        "StagingTableName": "stg_Customer7",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata7",
+        "TableName": "Customer7",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -518,24 +514,26 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -8                          ,
-        '[8]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure SQL'                      ,
+        '[8]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure SQL'                      ,
         1                            ,
-        -4                           ,
+        -2                           ,
         4                      ,
-        3                        ,
+        4                        ,
         2                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "Type": "Csv"
+        "SheetName": "yellow_tripdata_2017-03",
+        "Type": "Excel"
     },
     "Target": {
         "AutoCreateTable": "true",
@@ -578,9 +576,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -9                          ,
-        '[9]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure SQL'                      ,
+        '[9]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure SQL'                      ,
         1                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         3                        ,
         2                        ,
@@ -589,13 +587,15 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "Type": "Json"
+        "SheetName": "yellow_tripdata_2017-03",
+        "Type": "Excel"
     },
     "Target": {
         "AutoCreateTable": "true",
@@ -638,11 +638,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -10                          ,
-        '[10]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure SQL'                      ,
+        '[10]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure SQL'                      ,
         1                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
-        4                        ,
+        3                        ,
         2                        ,
         1               ,
         0          ,
@@ -698,11 +698,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -11                          ,
-        '[11]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure SQL'                      ,
+        '[11]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure SQL'                      ,
         1                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
-        4                        ,
+        3                        ,
         2                        ,
         1               ,
         0          ,
@@ -758,34 +758,34 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -12                          ,
-        '[12]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure Synapse'                      ,
+        '[12]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure SQL'                      ,
         1                            ,
-        -3                           ,
+        -1                           ,
         4                      ,
         4                        ,
-        10                        ,
+        2                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
+        "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "SchemaFileName": "",
+        "Type": "Csv"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
+        "AutoGenerateMerge": "false",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer12",
+        "StagingTableName": "stg_yellow_tripdata12",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer12",
+        "TableName": "yellow_tripdata12",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -818,34 +818,34 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -13                          ,
-        '[13]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure Synapse'                      ,
+        '[13]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure SQL'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
-        3                        ,
-        10                        ,
+        4                        ,
+        2                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
+        "DataFileName": "yellow_tripdata_2017-03.json",
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "SchemaFileName": "",
+        "Type": "Json"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
+        "AutoGenerateMerge": "false",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer13",
+        "StagingTableName": "stg_yellow_tripdata13",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer13",
+        "TableName": "yellow_tripdata13",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -878,9 +878,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -14                          ,
-        '[14]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure Synapse'                      ,
+        '[14]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure Synapse'                      ,
         1                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         4                        ,
         10                        ,
@@ -889,25 +889,23 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "Type": "Excel"
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
+        "AutoGenerateMerge": "true",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata14",
+        "StagingTableName": "stg_Customer14",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata14",
+        "TableName": "Customer14",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -940,7 +938,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -15                          ,
-        '[15]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure Synapse'                      ,
+        '[15]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure Synapse'                      ,
         1                            ,
         -3                           ,
         4                      ,
@@ -951,25 +949,23 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "Type": "Excel"
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
     },
     "Target": {
         "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
+        "AutoGenerateMerge": "true",
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata15",
+        "StagingTableName": "stg_Customer15",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata15",
+        "TableName": "Customer15",
         "TableSchema": "dbo",
         "Type": "Table"
     }
@@ -1002,24 +998,26 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -16                          ,
-        '[16]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure Synapse'                      ,
+        '[16]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure Synapse'                      ,
         1                            ,
-        -1                           ,
+        -4                           ,
         4                      ,
-        3                        ,
+        4                        ,
         10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "Type": "Csv"
+        "SheetName": "yellow_tripdata_2017-03",
+        "Type": "Excel"
     },
     "Target": {
         "AutoCreateTable": "true",
@@ -1062,9 +1060,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -17                          ,
-        '[17]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure Synapse'                      ,
+        '[17]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure Synapse'                      ,
         1                            ,
-        -4                           ,
+        -1                           ,
         4                      ,
         3                        ,
         10                        ,
@@ -1073,13 +1071,15 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "Type": "Json"
+        "SheetName": "yellow_tripdata_2017-03",
+        "Type": "Excel"
     },
     "Target": {
         "AutoCreateTable": "true",
@@ -1122,11 +1122,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -18                          ,
-        '[18]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure Synapse'                      ,
+        '[18]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure Synapse'                      ,
         1                            ,
-        -2                           ,
+        -1                           ,
         4                      ,
-        4                        ,
+        3                        ,
         10                        ,
         1               ,
         0          ,
@@ -1182,11 +1182,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -19                          ,
-        '[19]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure Synapse'                      ,
+        '[19]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure Synapse'                      ,
         1                            ,
-        -1                           ,
+        -2                           ,
         4                      ,
-        4                        ,
+        3                        ,
         10                        ,
         1               ,
         0          ,
@@ -1242,30 +1242,36 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -20                          ,
-        '[20]  FulLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
-        3                            ,
+        '[20]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure Synapse'                      ,
+        1                            ,
         -2                           ,
         4                      ,
-        1                        ,
         4                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "",
-        "IncrementalType": "Full",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Csv"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/20",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata20",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata20",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -1296,30 +1302,36 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -21                          ,
-        '[21]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
-        -3                           ,
+        '[21]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure Synapse'                      ,
+        1                            ,
+        -2                           ,
         4                      ,
-        1                        ,
         4                        ,
+        10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "",
-        "IncrementalType": "Full",
-        "TableName": "Customer",
-        "TableSchema": "SalesLT",
-        "Type": "Table"
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Json"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/21",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "Type": "Parquet"
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata21",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata21",
+        "TableSchema": "dbo",
+        "Type": "Table"
     }
 }'                      ,
         0                              ,
@@ -1350,7 +1362,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -22                          ,
-        '[22]  FullLoadUsingExtractionSql of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        '[22]  FulLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
         3                            ,
         -4                           ,
         4                      ,
@@ -1363,7 +1375,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "ChunkField": "",
         "ChunkSize": 0,
-        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "ExtractionSQL": "",
         "IncrementalType": "Full",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
@@ -1404,9 +1416,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -23                          ,
-        '[23]  FullLoadWithChunk of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        '[23]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
         3                            ,
-        -3                           ,
+        -2                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1415,9 +1427,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "CustomerID",
-        "ChunkSize": 100,
-        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "",
         "IncrementalType": "Full",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
@@ -1458,9 +1470,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -24                          ,
-        '[24]  IncrementalLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        '[24]  FullLoadUsingExtractionSql of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
         3                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
         1                        ,
         4                        ,
@@ -1472,7 +1484,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalType": "Watermark",
+        "IncrementalType": "Full",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
@@ -1512,20 +1524,20 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -25                          ,
-        '[25]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        '[25]  FullLoadWithChunk of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
         3                            ,
-        -4                           ,
+        -3                           ,
         4                      ,
-        6                        ,
+        1                        ,
         4                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "ChunkField": "",
-        "ChunkSize": 0,
-        "ExtractionSQL": "",
+        "ChunkField": "CustomerID",
+        "ChunkSize": 100,
+        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
         "IncrementalType": "Full",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
@@ -1566,9 +1578,63 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -26                          ,
-        '[26]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        '[26]  IncrementalLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
         3                            ,
-        -1                           ,
+        -2                           ,
+        4                      ,
+        1                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
+        "IncrementalType": "Watermark",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/26",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -27                          ,
+        '[27]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        3                            ,
+        -2                           ,
         4                      ,
         6                        ,
         4                        ,
@@ -1587,7 +1653,61 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/26",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/27",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [DataFactoryId]                         
+    )
+    select 
+        -28                          ,
+        '[28]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        3                            ,
+        -2                           ,
+        4                      ,
+        6                        ,
+        4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "",
+        "IncrementalType": "Full",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/28",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }

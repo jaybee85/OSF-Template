@@ -7,7 +7,7 @@ local tests =
     //GPL_AzureBlobFS_Binary_AzureBlobFS_Binary_FullLoad
     {        
         "Active": true,        
-        "Pattern": "Azure Storage to SQL Database",         
+        "Pattern": "Azure Storage to Azure Storage",         
         "SourceSystemAuthType": "MSI",
         
         "SourceFormat":"Binary",
@@ -40,7 +40,7 @@ local tests =
     },
     {        
         "Active": true,        
-        "Pattern": "Azure Storage to SQL Database",         
+        "Pattern": "Azure Storage to Azure Storage",            
         "SourceSystemAuthType": "MSI",
         
         "SourceFormat":"Binary",
@@ -73,7 +73,7 @@ local tests =
     },
     {        
         "Active": true,        
-        "Pattern": "Azure Storage to SQL Database",         
+        "Pattern": "Azure Storage to Azure Storage",         
         "SourceSystemAuthType": "MSI",
         
         "SourceFormat":"Binary",
@@ -115,8 +115,8 @@ local tests =
         "SourceSourceSystemAuthType": "MSI",
         "SourceSchemaFileName":"", 
         "SourceSkipLineCount":"",
-        "SourceFirstRowAsHeader": "false",
-        "SourceSheetName":"",
+        "SourceFirstRowAsHeader": "true",
+        "SourceSheetName":"yellow_tripdata_2017-03",
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
@@ -127,7 +127,73 @@ local tests =
         "TargetSchemaFileName":"",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
-        "TargetFirstRowAsHeader": "false",
+        "TargetFirstRowAsHeader": "true",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones",  
+        "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
+       
+    },
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",            
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Excel",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"yellow_tripdata_2017-03.xlsx",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "true",
+        "SourceSheetName":"yellow_tripdata_2017-03",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"DelimitedText",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"yellow_tripdata_2017-03.csv",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "true",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones",  
+        "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
+       
+    },
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",          
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Excel",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"yellow_tripdata_2017-03.xlsx",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "true",
+        "SourceSheetName":"yellow_tripdata_2017-03",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Json",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"yellow_tripdata_2017-03.json",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "true",
         "TargetSheetName":"",
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",

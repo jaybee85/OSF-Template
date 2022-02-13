@@ -12,6 +12,7 @@ remote_state {
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
+}
 
 # These inputs are provided to the terraform variables when deploying the environment
 # If you are deploying using pipelines, these can be overridden from environment variables

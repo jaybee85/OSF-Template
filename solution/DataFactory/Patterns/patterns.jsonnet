@@ -87,7 +87,7 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     
     #Blob to Blob 
     # Parquet to *        
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","Json"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","DelimitedText"),
         
@@ -99,20 +99,20 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobStorage","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobStorage","Json"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,
 
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobStorage","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobStorage","DelimitedText"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,
     
     #ADLS to ADLS
     # Parquet to *
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobFS","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobFS","Json"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobFS","DelimitedText"),
         
-    # Excel to *
+    # Excel to --0 *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Excel","AzureBlobFS","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Excel","AzureBlobFS","Json"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Excel","AzureBlobFS","DelimitedText"),
@@ -120,16 +120,16 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobFS","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobFS","Json"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobFS","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobFS","Excel") --Excel is not supported as a datafactory target!!!,
 
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobFS","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobFS","DelimitedText"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobFS","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
   
     #ADLS to Blob
     # Parquet to *
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobStorage","Excel") --Excel is not supported as a datafactory target!!!,
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobStorage","Json"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobStorage","DelimitedText"),
         
@@ -141,16 +141,16 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobStorage","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobStorage","Json"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","DelimitedText","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,
 
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobStorage","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobStorage","DelimitedText"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobStorage","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Json","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,
 
     #Blob to ADLS
     # Parquet to *
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobFS","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobFS","Json"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobFS","DelimitedText"),
         
@@ -162,10 +162,10 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobFS","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobFS","Json"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobFS","Excel"),
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","DelimitedText","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
 
     # DelimitedText to *
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","Parquet"),    
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","DelimitedText"),
-    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","Excel"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","DelimitedText")
+    #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
 ]

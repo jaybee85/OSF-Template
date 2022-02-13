@@ -65,7 +65,7 @@ if ($environmentName -eq "Quit")
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $true
+$skipTerraformDeployment = $false
 $deploymentFolderPath = (Get-Location).Path
 
 #----------------------------------------------------------------------------------------------------------------
