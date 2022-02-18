@@ -41,13 +41,11 @@ function(
             "DeleteAfterCompletion": DeleteAfterCompletion,
             } 
             + if (SourceFormat == "Excel") 
-            then {"FirstRowAsHeader":FirstRowAsHeader,  "SheetName":SheetName}
+            then {"FirstRowAsHeader":FirstRowAsHeader,"SkipLineCount": SkipLineCount,  "SheetName":SheetName}
             else {}
             + if (SourceFormat == "Delimitedtext") 
             then {"SkipLineCount": SkipLineCount, "FirstRowAsHeader":FirstRowAsHeader}
             else {},
-
-            
             "Target":{
             "Type":TargetFormat,            
             "TableSchema":TableSchema,

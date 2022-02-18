@@ -19,4 +19,6 @@ inputs = {
   configure_networking                  = {configure_networking}
   publish_datafactory_pipelines         = {publish_datafactory_pipelines}
   publish_web_app_addcurrentuserasadmin = {publish_web_app_addcurrentuserasadmin}
+  deploy_selfhostedsql                  = {deploy_selfhostedsql}
+  is_onprem_datafactory_ir_registered   = {is_onprem_datafactory_ir_registered}
 }

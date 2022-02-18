@@ -87,7 +87,7 @@ resource "azurerm_network_interface" "selfhostedsql_nic" {
 
 resource "azurerm_windows_virtual_machine" "selfhostedsqlvm" {
   count                              = var.deploy_selfhostedsql ? 1 : 0
-  name                               = "sqlvm${var.app_name}${element(split("-", module.naming.data_factory.name_unique),length(split("-", module.naming.data_factory.name_unique))-1)}"
+  name                               = local.selfhostedsqlvm_name
   location                           = var.resource_location
   resource_group_name                = var.resource_group_name
   size                               = "Standard_D4_v3"

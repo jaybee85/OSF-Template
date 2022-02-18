@@ -1,5 +1,5 @@
 {
-  "name": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_OnPrem",
+  "name": "GPL_SqlServerTable_NA_FileServer_Parquet_OnPrem",
   "properties": {
     "activities": [
       {
@@ -14,7 +14,7 @@
             }
           },
           "pipeline": {
-            "referenceName": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_Primary_OnPrem",
+            "referenceName": "GPL_SqlServerTable_NA_FileServer_Parquet_Primary_OnPrem",
             "type": "PipelineReference"
           },
           "waitOnCompletion": true

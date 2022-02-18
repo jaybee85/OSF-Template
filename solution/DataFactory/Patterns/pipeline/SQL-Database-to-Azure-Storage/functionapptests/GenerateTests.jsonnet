@@ -119,6 +119,23 @@ local tests =
         "ChunkField":"",
         "ChunkSize":0,
         "IncrementalType": "Full"
+    },
+    {
+        "Active": true,
+        "Pattern": "SQL Database to Azure Storage",         
+        "SourceFormat":"Table",
+        "SourceType":"SQL Server",
+        "ExtractionSQL":"",
+        "DataFilename":"dbo.all_objects.parquet",
+        "SchemaFileName":"dbo_all_objects.json",
+        "SourceSystemAuthType": "Windows",
+        "TargetFormat":"Parquet",
+        "TargetType": "ADLS",
+        "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
+        "Description": "FullLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full"
     }
 ];
 

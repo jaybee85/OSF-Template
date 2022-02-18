@@ -202,6 +202,39 @@ local tests =
         "Description": "File copy between datalake zones",  
         "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
        
+    },
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",          
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Binary",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"yellow_tripdata_2017-03.xlsx",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Binary",
+        "TargetType":"FileServer",        
+        "TargetDataFilename":"yellow_tripdata_2017-03.xlsx",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "true",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy from data lake to FileServer",  
+        "ADFPipeline": "GPL_AzureBlobFS_Binary_FileServer_Binary" 
+       
     }
 
 ];

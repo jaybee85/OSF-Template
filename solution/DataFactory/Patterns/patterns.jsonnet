@@ -46,8 +46,10 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Sql","AzureBlobFS","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Sql","AzureBlobFS","Parquet"),
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","AzureBlobFS","Parquet"),
-    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","AzureBlobFS","Parquet")
+    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","AzureBlobFS","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Table","AzureBlobFS","Parquet")   
+    Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet")
 ]
 +
 #Azure_Storage_to_SQL_Database
@@ -77,13 +79,17 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     Template_Azure_Storage_to_SQL_Database("AzureBlobFS","DelimitedText","AzureSqlDWTable","Table")
 ]
 + 
-#Azure_Storage_to_Azure_Storage
+#Azure_Storage_to_Azure_Storage 
 [   
     #Binary to Binary
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Binary","AzureBlobStorage","Binary"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Binary","AzureBlobFS","Binary"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Binary","AzureBlobStorage","Binary"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Binary","AzureBlobFS","Binary"),
+    Template_Azure_Storage_to_Azure_Storage("FileServer","Binary","AzureBlobStorage","Binary"),
+    Template_Azure_Storage_to_Azure_Storage("FileServer","Binary","AzureBlobFS","Binary"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Binary","FileServer","Binary"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Binary","FileServer","Binary"),
     
     #Blob to Blob 
     # Parquet to *        

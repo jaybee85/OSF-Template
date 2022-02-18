@@ -50,7 +50,7 @@ function(
 
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":"/Tests/"+Pattern+"/"+TestNumber,
+            "RelativePath":if TargetType == "FileServer" then "c:/Tests/"+Pattern+"/"+TestNumber else "/Tests/"+Pattern+"/"+TestNumber,
             "DataFileName": TargetDataFilename,
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
@@ -97,7 +97,7 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(TargetType == "Azure Blob") then 3 else 4,
+    "TargetSystemId":if(TargetType == "Azure Blob") then 3 else if TargetType == "FileServer" then 15 else 4,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
     "TargetSystemServer":if(SourceType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
