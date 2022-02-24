@@ -13,7 +13,7 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "Azure Blob", 
         "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet", 
-        "Description": "FulLoad",
+        "Description": "FullLoad",
         "ChunkField":"",
         "ChunkSize":0,
         "IncrementalType": "Full"
