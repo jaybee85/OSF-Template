@@ -55,26 +55,29 @@ namespace FunctionApp.TestHarness
         private readonly DataFactoryPipelineProvider _dataFactoryPipelineProvider;
         private readonly DataFactoryClientFactory _dataFactoryClientFactory;
         private readonly ISecurityAccessProvider _sap;
+        private readonly AzureSynapseService _azureSynapseService;
 
         public App(ILogger<App> logger,
-            TaskTypeMappingProvider taskTypeMappingProvider,
-            SourceAndTargetSystemJsonSchemasProvider schemasProvider,
+            //TaskTypeMappingProvider taskTypeMappingProvider,
+            //SourceAndTargetSystemJsonSchemasProvider schemasProvider,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
-            TaskMetaDataDatabase taskMetaDataDatabase, 
+            //TaskMetaDataDatabase taskMetaDataDatabase, 
             DataFactoryPipelineProvider dataFactoryPipelineProvider,
             DataFactoryClientFactory dataFactoryClientFactory,
-            ISecurityAccessProvider sap)
+            ISecurityAccessProvider sap,
+            AzureSynapseService azureSynapseService)
         {
             _logger = logger;
-            _taskTypeMappingProvider = taskTypeMappingProvider;
-            _schemasProvider = schemasProvider;
+            //_taskTypeMappingProvider = taskTypeMappingProvider;
+            //_schemasProvider = schemasProvider;
             _options = options;
             _authProvider = authProvider;
-            _taskMetaDataDatabase = taskMetaDataDatabase;
+            //_taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _dataFactoryClientFactory = dataFactoryClientFactory;
             _sap = sap;
+            _azureSynapseService = azureSynapseService;
     }
 
         public void Run()
@@ -87,7 +90,9 @@ namespace FunctionApp.TestHarness
             };
             _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
-            GenerateUnitTestResults();
+            //GenerateUnitTestResults();
+            _funcAppLogger.LogInformation("hello");
+            _azureSynapseService.StartSynapseSqlPool("035a1364-f00d-48e2-b582-4fe125905ee3", "adsgftera2", "mststgsynwads", "mststgsyndpads", "resume", _funcAppLogger).ConfigureAwait(true);
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);

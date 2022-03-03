@@ -36,7 +36,7 @@ foreach ($t in $tests)
     Write-Host "Writing test number: " $i.ToString()
     Write-Host "_____________________________"
     $TaskMasterId = ($t.TaskMasterId * -1)
-    $TaskMasterName = $t.AdfPipeline + $t.TaskMasterId.ToString()
+    $TaskMasterName = $t.TestDescription
     $TaskTypeId = $t.TaskTypeId
     $TaskGroupId = ( -1, -2, -3, -4 | Get-Random  )
     $ScheduleMasterId = 4

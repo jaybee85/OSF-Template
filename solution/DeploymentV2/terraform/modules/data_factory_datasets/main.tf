@@ -104,7 +104,7 @@ resource "azurerm_resource_group_template_deployment" "azuressynapse_dataset" {
 
 resource "azurerm_resource_group_template_deployment" "mssql_dataset" {
   for_each            = {
-    for ir in fileset(path.module, "arm/GDS_SqlServer*.json"):  
+    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA*.json"):  
     ir => ir 
     #if var.is_azure == false
   }
@@ -117,6 +117,32 @@ resource "azurerm_resource_group_template_deployment" "mssql_dataset" {
     }    
     "linkedServiceName" = {
       value = var.mssql_linkedservice_name
+    }
+    "dataFactoryName" = {
+      value = var.data_factory_name
+    }
+    "integrationRuntimeName" = {
+      value = var.integration_runtime_name
+    }
+  })
+  template_content = file("${path.module}/${each.value}")
+}
+
+resource "azurerm_resource_group_template_deployment" "mssql_dataset_sqlauth" {
+  for_each            = {
+    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA_SqlAuth*.json"):  
+    ir => ir 
+    #if var.is_azure == false
+  }
+  name                = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}_${var.name_suffix}"
+  resource_group_name = var.resource_group_name
+  deployment_mode     = "Incremental"
+  parameters_content = jsonencode({
+    "name" = {
+      value = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}"
+    }    
+    "linkedServiceName" = {
+      value = "${var.mssql_linkedservice_name}sqlauth_"
     }
     "dataFactoryName" = {
       value = var.data_factory_name
@@ -143,6 +169,33 @@ resource "azurerm_resource_group_template_deployment" "file_dataset" {
     }    
     "linkedServiceName" = {
       value = var.fileserver_linkedservice_name
+    }
+    "dataFactoryName" = {
+      value = var.data_factory_name
+    }
+    "integrationRuntimeName" = {
+      value = var.integration_runtime_name
+    }
+  })
+  template_content = file("${path.module}/${each.value}")
+}
+
+
+resource "azurerm_resource_group_template_deployment" "rest_dataset" {
+  for_each            = {
+    for ir in fileset(path.module, "arm/GDS_Rest*.json"):  
+    ir => ir 
+    #if var.is_azure == false
+  }
+  name                = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}_${var.name_suffix}"
+  resource_group_name = var.resource_group_name
+  deployment_mode     = "Incremental"
+  parameters_content = jsonencode({
+    "name" = {
+      value = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}"
+    }    
+    "linkedServiceName" = {
+      value = var.rest_linkedservice_name
     }
     "dataFactoryName" = {
       value = var.data_factory_name

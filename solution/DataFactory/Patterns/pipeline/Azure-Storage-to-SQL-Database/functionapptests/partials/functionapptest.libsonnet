@@ -25,7 +25,8 @@ function(
     PreCopySQL,
     PostCopySQL,
     AutoGenerateMerge,
-    MergeSQL
+    MergeSQL,
+    TestDescription = "",
     )
 {
     local TaskMasterJson =     
@@ -34,18 +35,19 @@ function(
             "Type": SourceFormat,                       
             "RelativePath": "samples/",
             "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName,
-            "SkipLineCount": SkipLineCount,
-            "FirstRowAsHeader":FirstRowAsHeader,
-            "SheetName":SheetName,
+            "SchemaFileName": SchemaFileName,                        
             "MaxConcurrentConnections": MaxConcurrentConnections,
             "Recursively": Recursively,
             "DeleteAfterCompletion": DeleteAfterCompletion,
-        },
-        "Target":{
-            "Type":TargetFormat,
-            "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName,
+            } 
+            + if (SourceFormat == "Excel") 
+            then {"FirstRowAsHeader":FirstRowAsHeader,"SkipLineCount": SkipLineCount,  "SheetName":SheetName}
+            else {}
+            + if (SourceFormat == "Delimitedtext") 
+            then {"SkipLineCount": SkipLineCount, "FirstRowAsHeader":FirstRowAsHeader}
+            else {},
+            "Target":{
+            "Type":TargetFormat,            
             "TableSchema":TableSchema,
             "TableName":TableName+TestNumber,
             "StagingTableSchema":StagingTableSchema,
@@ -54,8 +56,7 @@ function(
             "PreCopySQL":PreCopySQL,
             "PostCopySQL":PostCopySQL,
             "AutoGenerateMerge":AutoGenerateMerge,
-            "MergeSQL":MergeSQL,
-            "DynamicMapping":{}
+            "MergeSQL":MergeSQL
         }
     },
 
@@ -100,6 +101,7 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + DataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType
 }+commons
 

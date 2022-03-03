@@ -33,6 +33,9 @@
     <None Remove="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
     <None Remove="0-1-0-beta\A-Journaled\022-GetTaskGroups.sql" />
     <None Remove="0-1-0-beta\A-Journaled\023-AddSynapseSourceAndTarget.sql" />
+    <None Remove="0-1-0-beta\A-Journaled\024-UpdateSqlServer.sql" />
+
+    
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +64,9 @@
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\022-GetTaskGroups.sql" />
     <EmbeddedResource Include="0-1-0-beta\A-Journaled\023-AddSynapseSourceAndTarget.sql" />    
+    <EmbeddedResource Include="0-1-0-beta\A-Journaled\024-UpdateSqlServer.sql" />    
+
+    
   </ItemGroup>
 
   <ItemGroup>

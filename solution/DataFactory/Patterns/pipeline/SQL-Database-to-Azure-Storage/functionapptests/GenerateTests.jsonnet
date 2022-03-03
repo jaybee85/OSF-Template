@@ -13,13 +13,10 @@ local tests =
         "TargetFormat":"Parquet",
         "TargetType": "Azure Blob", 
         "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet", 
-        "Description": "FulLoad",
+        "Description": "FullLoad",
         "ChunkField":"",
         "ChunkSize":0,
-        "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+        "IncrementalType": "Full"
     },
     {
         "Active": true,
@@ -36,10 +33,7 @@ local tests =
         "Description": "FullLoad",
         "ChunkField":"",
         "ChunkSize":0,
-         "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+         "IncrementalType": "Full"
     },
     {
         "Active": true,
@@ -56,10 +50,7 @@ local tests =
         "Description": "FullLoadUsingExtractionSql",
         "ChunkField":"",
         "ChunkSize":0,
-        "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+        "IncrementalType": "Full"
     },    
     {
         "Active": true,
@@ -76,10 +67,7 @@ local tests =
         "Description": "FullLoadWithChunk",
         "ChunkField":"CustomerID",
         "ChunkSize":100,
-        "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+        "IncrementalType": "Full"
     },    
     {
         "Active": true,
@@ -96,10 +84,7 @@ local tests =
         "Description": "IncrementalLoad",
         "ChunkField":"",
         "ChunkSize":0,
-        "IncrementalType": "Watermark",
-        "IncrementalField":"CustomerID",
-        "IncrementalColumnType":"int",
-        "IncrementalValue":"10"
+        "IncrementalType": "Watermark"
     },    
     {
         "Active": true,
@@ -116,10 +101,7 @@ local tests =
         "Description": "FullLoad",
         "ChunkField":"",
         "ChunkSize":0,
-        "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+        "IncrementalType": "Full"
     },    
     {
         "Active": true,
@@ -136,10 +118,24 @@ local tests =
         "Description": "FullLoad",
         "ChunkField":"",
         "ChunkSize":0,
-        "IncrementalType": "Full",
-        "IncrementalField":"",
-        "IncrementalColumnType":"",
-        "IncrementalValue":"0"
+        "IncrementalType": "Full"
+    },
+    {
+        "Active": true,
+        "Pattern": "SQL Database to Azure Storage",         
+        "SourceFormat":"Table",
+        "SourceType":"SQL Server",
+        "ExtractionSQL":"",
+        "DataFilename":"dbo.all_objects.parquet",
+        "SchemaFileName":"dbo_all_objects.json",
+        "SourceSystemAuthType": "Windows",
+        "TargetFormat":"Parquet",
+        "TargetType": "ADLS",
+        "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
+        "Description": "FullLoad",
+        "ChunkField":"",
+        "ChunkSize":0,
+        "IncrementalType": "Full"
     }
 ];
 
@@ -161,9 +157,7 @@ template(
     t.ChunkField,
     t.ChunkSize,
     t.IncrementalType,
-    t.IncrementalField,
-    t.IncrementalColumnType,
-    t.IncrementalValue
+    t.Description
 );
 
 

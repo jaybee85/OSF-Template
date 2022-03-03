@@ -231,3 +231,14 @@ resource "azurerm_key_vault_secret" "azure_function_secret" {
   ]
 }
 
+resource "azurerm_key_vault_secret" "selfhostedsql_password" {
+  count        = var.deploy_selfhostedsql ? 1 : 0
+  name         = "selfhostedsqlpw"
+  value        = random_password.selfhostedsql[0].result
+  key_vault_id = azurerm_key_vault.app_vault.id
+  depends_on = [
+    time_sleep.cicd_access,
+  ]
+}
+
+

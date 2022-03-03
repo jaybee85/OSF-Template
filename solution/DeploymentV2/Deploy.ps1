@@ -21,7 +21,47 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-$environmentName = "staging" # currently supports (local, staging)
+function Get-SelectionFromUser {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string[]]$Options,
+        [Parameter(Mandatory=$true)]
+        [string]$Prompt        
+    )
+    
+    [int]$Response = 0;
+    [bool]$ValidResponse = $false    
+
+    while (!($ValidResponse)) {            
+        [int]$OptionNo = 0
+
+        Write-Host $Prompt -ForegroundColor DarkYellow
+        Write-Host "[0]: Quit"
+
+        foreach ($Option in $Options) {
+            $OptionNo += 1
+            Write-Host ("[$OptionNo]: {0}" -f $Option)
+        }
+
+        if ([Int]::TryParse((Read-Host), [ref]$Response)) {
+            if ($Response -eq 0) {
+                return ''
+            }
+            elseif($Response -le $OptionNo) {
+                $ValidResponse = $true
+            }
+        }
+    }
+
+    return $Options.Get($Response - 1)
+} 
+
+$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+if ($environmentName -eq "Quit")
+{
+    Exit
+}
+
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
@@ -83,30 +123,6 @@ $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
-
-if ($skipDataFactoryPipelines) {
-    Write-Host "Skipping DataFactory Pipelines"    
-}
-else {
-    Set-Location ../
-    #Add Ip to SQL Firewall
-    $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
-    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
-    #Allow Azure services and resources to access this server
-    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
-    
-    $SqlInstalled = Get-InstalledModule SqlServer
-    if($null -eq $SqlInstalled)
-    {
-        write-host "Installing SqlServer Module"
-        Install-Module -Name SqlServer -Scope CurrentUser -Force
-    }
-
-    Invoke-Expression ./GenerateAndUploadADFPipelines.ps1
-    Set-Location ./terraform
-
-    
-}
 
 if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    
@@ -221,13 +237,14 @@ if($skipDatabase) {
     Write-Host "Skipping Populating Metadata Database"    
 }
 else {
+    
     Write-Host "Populating Metadata Database"
 
     Set-Location $deploymentFolderPath
-    Set-Location "..\Database\AdsGoFastDbUp\AdsGoFastDbUp"
+    Set-Location "..\Database\ADSGoFastDbUp\AdsGoFastDbUp"
     dotnet restore
     dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\'
-
+    
     #Add Ip to SQL Firewall
     $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
     $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
@@ -335,6 +352,34 @@ else {
 
 
 }
+
+#----------------------------------------------------------------------------------------------------------------
+#   Deploy Data Factory Pipelines
+#----------------------------------------------------------------------------------------------------------------
+if ($skipDataFactoryPipelines) {
+    Write-Host "Skipping DataFactory Pipelines"    
+}
+else {
+    Set-Location $deploymentFolderPath    
+    #Add Ip to SQL Firewall
+    $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
+    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
+    #Allow Azure services and resources to access this server
+    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+    
+    $SqlInstalled = Get-InstalledModule SqlServer
+    if($null -eq $SqlInstalled)
+    {
+        write-host "Installing SqlServer Module"
+        Install-Module -Name SqlServer -Scope CurrentUser -Force
+    }
+
+    Invoke-Expression ./GenerateAndUploadADFPipelines.ps1
+    Set-Location ./terraform
+
+    
+}
+
 
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Sample Files

@@ -15,9 +15,7 @@ function(
     ChunkField = "",
     ChunkSize = 0,
     IncrementalType = "Full",
-    IncrementalField = "",
-    IncrementalColumnType = "",
-    IncrementalValue = "0"
+    TestDescription = "",
     )
 {
     local TaskMasterJson =     
@@ -25,9 +23,6 @@ function(
         "Source":{
             "Type": SourceFormat,
             "IncrementalType": IncrementalType,
-            "IncrementalColumnType":IncrementalColumnType,
-            "IncrementalField":IncrementalField,
-            "IncrementalValue":IncrementalValue,
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
@@ -75,7 +70,7 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(SourceType == "Azure Blob") then 3 else 4,
+    "TargetSystemId":if(SourceType == "Azure Blob") then 3 else if(SourceType == "FileServer") then 15 else 4,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
     "TargetSystemServer":if(TargetType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
@@ -83,6 +78,7 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + "SalesLT.Customer" + " (" + SourceFormat + ") from " + SourceType + " to " + DataFilename  + " in " + TargetType +  "(" + TargetFormat + ")"
 }+commons
 

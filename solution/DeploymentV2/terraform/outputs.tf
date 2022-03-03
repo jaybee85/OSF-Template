@@ -101,3 +101,6 @@ output "synapse_sql_pool_name" {
 output "synapse_spark_pool_name" {
   value = var.deploy_synapse && var.deploy_synapse_sparkpool ?   azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
 }
+output "selfhostedsqlvm_name" {
+  value = local.selfhostedsqlvm_name
+}

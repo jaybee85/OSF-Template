@@ -1,762 +1,702 @@
 [
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
-        "SourceFormat": "Sql",
-        "SourceType": "AzureSqlTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet",
-        "SourceFormat": "Sql",
-        "SourceType": "SqlServerTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
-        "SourceFormat": "Table",
-        "SourceType": "AzureSqlTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet",
-        "SourceFormat": "Table",
-        "SourceType": "SqlServerTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
-        "SourceFormat": "Sql",
-        "SourceType": "AzureSqlTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
-        "SourceFormat": "Sql",
-        "SourceType": "SqlServerTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
-        "SourceFormat": "Table",
-        "SourceType": "AzureSqlTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "SQL-Database-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
-        "SourceFormat": "Table",
-        "SourceType": "SqlServerTable",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 3
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureSqlTable_NA",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureSqlTable_NA",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureSqlDWTable_NA",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureSqlDWTable_NA",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-SQL-Database",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Table",
-        "TargetType": "AzureSqlDWTable",
-        "TaskTypeId": 1
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary",
-        "SourceFormat": "Binary",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Binary",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
-        "SourceFormat": "Binary",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Binary",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary",
-        "SourceFormat": "Binary",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Binary",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary",
-        "SourceFormat": "Binary",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Binary",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobStorage_Excel",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobStorage_Json",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_Parquet",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_Json",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Parquet",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Json",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Excel",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobStorage_Parquet",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobStorage_Excel",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobFS_Excel",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobFS_Json",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_Parquet",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_Json",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Json",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Excel",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobFS_Parquet",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobFS_Excel",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobStorage_Excel",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobStorage_Json",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_Parquet",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_Json",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Parquet",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Json",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Excel",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobStorage_Parquet",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobStorage_DelimitedText",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobStorage_Excel",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobFS",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobStorage",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobFS_Excel",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobFS_Json",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Parquet",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_Parquet",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_Json",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Excel",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Parquet",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Json",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Json",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Excel",
-        "SourceFormat": "DelimitedText",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobFS_Parquet",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Parquet",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobFS_DelimitedText",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "DelimitedText",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    },
-    {
-        "Folder": "Azure-Storage-to-Azure-Storage",
-        "GFPIR": "Azure",
-        "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobFS_Excel",
-        "SourceFormat": "Json",
-        "SourceType": "AzureBlobStorage",
-        "TargetFormat": "Excel",
-        "TargetType": "AzureBlobFS",
-        "TaskTypeId": 2
-    }
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
+      "SourceFormat": "Sql",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet",
+      "SourceFormat": "Sql",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
+      "SourceFormat": "Sql",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
+      "SourceFormat": "Sql",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_FileServer_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "FileServer",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_FileServer_Parquet",
+      "SourceFormat": "Table",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "FileServer",
+      "TaskTypeId": 3
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureSqlTable_NA",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureSqlTable_NA",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureSqlDWTable_NA",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureSqlDWTable_NA",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-SQL-Database",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Table",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": 1
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_FileServer_Binary_AzureBlobStorage_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "FileServer",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_FileServer_Binary_AzureBlobFS_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "FileServer",
+      "TargetFormat": "Binary",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Binary_FileServer_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Binary",
+      "TargetType": "FileServer",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Binary_FileServer_Binary",
+      "SourceFormat": "Binary",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Binary",
+      "TargetType": "FileServer",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobStorage_Json",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_Parquet",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_Json",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Parquet",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Json",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobStorage_Parquet",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobFS_Json",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_Parquet",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_Json",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Json",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobFS_Parquet",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobStorage_Json",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Parquet_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_Parquet",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_Json",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Excel_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Parquet",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Json",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobStorage_Parquet",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobFS_Json_AzureBlobStorage_DelimitedText",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobFS_Json",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_Parquet",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_Json",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Excel_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Excel",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Parquet",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Json",
+      "SourceFormat": "DelimitedText",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobFS_Parquet",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureBlobStorage_Json_AzureBlobFS_DelimitedText",
+      "SourceFormat": "Json",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "DelimitedText",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": 2
+   }
 ]
