@@ -109,13 +109,9 @@ INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VA
 GO
 SET IDENTITY_INSERT [dbo].[SubjectArea] ON 
 GO
-INSERT [dbo].[SubjectArea] ([SubjectAreaId], [SubjectAreaName], [ActiveYN], [SubjectAreaFormId], [DefaultTargetSchema], [UpdatedBy], [ValidFrom], [ValidTo]) VALUES (1, N'Sample Subject Area', 1, NULL, N'N/A', N'system@microsoft.com', CAST(N'2022-03-02T01:39:42.0000000' AS DateTime2), CAST(N'9999-12-31T23:59:59.0000000' AS DateTime2))
+INSERT [dbo].[SubjectArea] ([SubjectAreaId], [SubjectAreaName], [ActiveYN], [SubjectAreaFormId], [DefaultTargetSchema], [UpdatedBy]) VALUES (1, N'Sample Subject Area', 1, NULL, N'N/A', N'system@microsoft.com')
 GO
 SET IDENTITY_INSERT [dbo].[SubjectArea] OFF
-GO
-INSERT [dbo].[SubjectAreaHistory] ([SubjectAreaId], [SubjectAreaName], [ActiveYN], [SubjectAreaFormId], [DefaultTargetSchema], [UpdatedBy], [ValidFrom], [ValidTo]) VALUES (1, N'Default - Admin', 1, NULL, N'**ALL**', N'jorampon@microsoft.com', CAST(N'2022-03-02T01:39:38.0000000' AS DateTime2), CAST(N'2022-03-02T01:39:42.0000000' AS DateTime2))
-GO
-INSERT [dbo].[SubjectAreaHistory] ([SubjectAreaId], [SubjectAreaName], [ActiveYN], [SubjectAreaFormId], [DefaultTargetSchema], [UpdatedBy], [ValidFrom], [ValidTo]) VALUES (2, N'Secured - Test SubjectArea', 1, NULL, N'TestSubjectArea', N'jorampon@microsoft.com', CAST(N'2022-03-02T01:39:38.0000000' AS DateTime2), CAST(N'2022-03-02T01:39:42.0000000' AS DateTime2))
 GO
 SET IDENTITY_INSERT [dbo].[TaskGroup] ON 
 GO

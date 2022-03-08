@@ -1,22 +1,26 @@
 Update [dbo].[ExecutionEngine]
-            Set [Name] = '$DataFactoryName$', 
-            ResourceGroup = '$ResourceGroupName$',
+            Set 
+			[EngineName] = '$DataFactoryName$', 
+            [SystemType] = 'Datafactory',
+			ResourceGroup = '$ResourceGroupName$',
             SubscriptionUid = '$SubscriptionId$',
             DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
-            LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
-            JsonSchema = "{}"
-        where id = -1
+            LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$',
+            EngineJson = '{}'
+        where EngineId = -1
 
 Update [dbo].[ExecutionEngine]
-            Set [Name] = '$SynapseWorkspaceName$', 
+            Set 
+			[EngineName] = '$SynapseWorkspaceName$', 
+			[SystemType] = 'Datafactory',
             ResourceGroup = '$ResourceGroupName$',
             SubscriptionUid = '$SubscriptionId$',
             DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
-            LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
-            JsonSchema = "{
+            LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$',
+            EngineJson = '{
                 "endpoint": "placeholderendpoint"
-            }"
-        where id = -2
+            }'
+        where EngineId = -2
 
 
 Update 
@@ -104,16 +108,16 @@ Update
         [dbo].[SourceAndTargetSystems]
         Set 
             SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net',
-            SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
+            SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/',
             SystemJSON = '{  "Database" : "msdb"  , "Username" : "adminuser", "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
         Where 
             SystemId = '-14'
         GO
 
-                Update 
+        Update 
         [dbo].[SourceAndTargetSystems]
         Set 
-            SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net',
+            SystemServer = '(local)',
             SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
         Where 
             SystemId = '-15'

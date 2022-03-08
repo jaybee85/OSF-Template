@@ -22,7 +22,14 @@ function CoreReplacements ($string, $GFPIR, $SourceType, $SourceFormat, $TargetT
     return  $string
 }
 
-
+if (!(Test-Path "./output"))
+{
+    New-Item -itemType Directory -Name "output"
+}
+else
+{
+    Write-Information "Output Folder already exists"
+}
 
 #Remove Previous Outputs
 Get-ChildItem ./output | foreach {

@@ -3,6 +3,14 @@
 #  WARNING  use only for development purposes!!! If you are not sure what this does please use terragrunt destroy instead
 #----------------------------------------------------------------------------------------------------------------
 
+Import-Module .\pwshmodules\GetSelectionFromUser.psm1 -force
+$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+if ($environmentName -eq "Quit")
+{
+    Exit
+}
+[System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
+
 Set-Location ".\terraform"
 
 #------------------------------------------------------------------------------------------------------------

@@ -1,3 +1,10 @@
+/*-----------------------------------------------------------------------
+
+ Copyright (c) Microsoft Corporation.
+ Licensed under the MIT license.
+
+-----------------------------------------------------------------------*/
+
 /****** Object:  Table [dbo].[SubjectAreaHistory]    Script Date: 3/03/2022 1:09:17 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -367,22 +374,7 @@ CREATE TABLE [dbo].[AzureStorageListing](
 	[RowKey] ASC
 )WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
-/****** Object:  Table [dbo].[dbupschemaversions]    Script Date: 3/03/2022 1:09:17 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[dbupschemaversions](
-	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[ScriptName] [nvarchar](255) NOT NULL,
-	[Applied] [datetime] NOT NULL,
- CONSTRAINT [PK_dbupschemaversions_Id] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
+
 /****** Object:  Table [dbo].[Execution]    Script Date: 3/03/2022 1:09:17 PM ******/
 SET ANSI_NULLS ON
 GO
