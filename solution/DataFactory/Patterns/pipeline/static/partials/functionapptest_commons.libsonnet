@@ -1,10 +1,10 @@
 {    
-    "TaskInstanceId":1,
+    "TaskInstanceId":-1,
     "NumberOfRetries":3,
-    "ScheduleMasterId":"2",
+    "ScheduleMasterId":"-2",
     "TaskStatus":"Untried",
     "TaskExecutionType":"ADF",            
-    "DataFactoryId":1,    
+    "EngineId":-1,    
     "DegreeOfCopyParallelism":1,
     "TaskGroupConcurrency":"10",
     "TaskGroupPriority":0,

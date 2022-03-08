@@ -70,16 +70,16 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 ["TaskExecutionType"] = TaskExecutionType
             };
 
-            JObject dataFactory = new JObject
+            JObject executionEngine = new JObject
             {
-                ["Id"] = DataFactoryId,
-                ["Name"] = DataFactoryName,
-                ["ResourceGroup"] = DataFactoryResourceGroup,
-                ["SubscriptionId"] = DataFactorySubscriptionId,
+                ["EngineId"] = EngineId,
+                ["EngineName"] = EngineName,
+                ["ResourceGroup"] = EngineResourceGroup,
+                ["SubscriptionId"] = EngineSubscriptionId,
                 ["ADFPipeline"] = AdfPipeline,
                 ["TaskDatafactoryIR"] = TaskDatafactoryIr
             };
-            _jsonObjectForAdf["DataFactory"] = dataFactory;
+            _jsonObjectForAdf["ExecutionEngine"] = executionEngine;
             
 
         }

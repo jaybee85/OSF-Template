@@ -19,3 +19,4 @@ Select SystemType,JsonSchema  from
 (
 Select 'FileServer' as SystemType, '{}' as JsonSchema
 ) a
+

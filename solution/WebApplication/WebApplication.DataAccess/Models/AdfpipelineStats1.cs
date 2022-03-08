@@ -8,7 +8,7 @@ namespace WebApplication.Models
         public long TaskInstanceId { get; set; }
         public string PipelineRunStatus { get; set; }
         public Guid? PipelineRunUid { get; set; }
-        public long? DataFactoryId { get; set; }
+        public long? EngineId { get; set; }
         public long? Activities { get; set; }
         public float? TotalCost { get; set; }
         public float? CloudOrchestrationCost { get; set; }

@@ -37,13 +37,17 @@ namespace FunctionApp.Models
         [JsonProperty(Required = Required.Always)]
         public string TaskExecutionType { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public Int64 DataFactoryId { get; set; }
+        public Int64 EngineId { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public string DataFactoryName { get; set; }
+        public string EngineName { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public string DataFactoryResourceGroup { get; set; }
+        public string EngineSystemType { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public Guid DataFactorySubscriptionId { get; set; }
+        public string EngineResourceGroup { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public Guid EngineSubscriptionId { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public string EngineJson {get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TaskMasterJson { get; set; }
         [JsonProperty(Required = Required.Always)]

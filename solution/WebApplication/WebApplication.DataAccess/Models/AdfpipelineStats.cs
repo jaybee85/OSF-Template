@@ -6,7 +6,7 @@ namespace WebApplication.Models
     {
         public int TaskInstanceId { get; set; }
         public Guid ExecutionUid { get; set; }
-        public long DataFactoryId { get; set; }
+        public long EngineId { get; set; }
         public long? Activities { get; set; }
         public float? TotalCost { get; set; }
         public float? CloudOrchestrationCost { get; set; }

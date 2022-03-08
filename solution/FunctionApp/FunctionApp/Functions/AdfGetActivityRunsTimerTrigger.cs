@@ -65,32 +65,32 @@ namespace FunctionApp.Functions
             //Get Last Request Date
             var maxTimesGen = conRead.QueryWithRetry(@"
                                     Select a.*,  MaxActivityTimeGenerated from 
-                                        DataFactory a left join 
-                                        ( Select b.DataFactoryId, MaxActivityTimeGenerated = Max(MaxActivityTimeGenerated) 
+                                        ExecutionEngine a left join 
+                                        ( Select b.EngineId, MaxActivityTimeGenerated = Max(MaxActivityTimeGenerated) 
                                         from ADFActivityRun b
-                                        group by b.DatafactoryId) b on a.Id = b.DatafactoryId
+                                        group by b.EngineId) b on a.Id = b.EngineId
 
                              ");
 
             DateTimeOffset maxActivityTimeGenerated = DateTimeOffset.UtcNow.AddDays(-30);
 
 
-            foreach (var datafactory in maxTimesGen)
+            foreach (var executionengine in maxTimesGen)
             {
-                if (datafactory.MaxActivityTimeGenerated != null)
+                if (executionengine.MaxActivityTimeGenerated != null)
                 {
-                    maxActivityTimeGenerated = ((DateTimeOffset)datafactory.MaxActivityTimeGenerated).AddMinutes(-5);
+                    maxActivityTimeGenerated = ((DateTimeOffset)executionengine.MaxActivityTimeGenerated).AddMinutes(-5);
                 }
 
-                string workspaceId = datafactory.LogAnalyticsWorkspaceId.ToString();
+                string workspaceId = executionengine.LogAnalyticsWorkspaceId.ToString();
 
                 Dictionary<string, object> kqlParams = new Dictionary<string, object>
                 {
                     {"MaxActivityTimeGenerated", maxActivityTimeGenerated.ToString("yyyy-MM-dd HH:mm:ss.ff K") },
-                    {"SubscriptionId", ((string)datafactory.SubscriptionUid.ToString()).ToUpper()},
-                    {"ResourceGroupName", ((string)datafactory.ResourceGroup.ToString()).ToUpper() },
-                    {"DataFactoryName", ((string)datafactory.Name.ToString()).ToUpper() },
-                    {"DatafactoryId", datafactory.Id.ToString()  }
+                    {"SubscriptionId", ((string)executionengine.SubscriptionUid.ToString()).ToUpper()},
+                    {"ResourceGroupName", ((string)executionengine.ResourceGroup.ToString()).ToUpper() },
+                    {"EngineName", ((string)executionengine.EngineName.ToString()).ToUpper() },
+                    {"EngineId", executionengine.EngineId.ToString()  }
                 };
 
                 //Add in the rates from ADFServiceRates.json
@@ -153,7 +153,7 @@ namespace FunctionApp.Functions
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>
                             {
                                 { "TempTable", t.QuotedSchemaAndName() },
-                                { "DatafactoryId", datafactory.Id.ToString()}
+                                { "EngineId", executionengine.EngineId.ToString()}
                             };
 
                             string mergeSql = GenerateSqlStatementTemplates.GetSql(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoADFActivityRun", sqlParams);

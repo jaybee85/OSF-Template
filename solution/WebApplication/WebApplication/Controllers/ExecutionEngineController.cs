@@ -13,21 +13,21 @@ using Newtonsoft.Json.Linq;
 
 namespace WebApplication.Controllers
 {
-    public partial class DataFactoryController : BaseController
+    public partial class ExecutionEngineController : BaseController
     {
         protected readonly AdsGoFastContext _context;
         
 
-        public DataFactoryController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider) : base(securityAccessProvider, roleProvider)
+        public ExecutionEngineController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider) : base(securityAccessProvider, roleProvider)
         {
-            Name = "DataFactory";
+            Name = "ExecutionEngine";
             _context = context;
         }
 
         // GET: DataFactory
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DataFactory.ToListAsync());
+            return View(await _context.ExecutionEngine.ToListAsync());
         }
 
         // GET: DataFactory/Details/5
@@ -39,22 +39,22 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var dataFactory = await _context.DataFactory
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (dataFactory == null)
+            var executionEngine = await _context.ExecutionEngine
+                .FirstOrDefaultAsync(m => m.EngineId == id);
+            if (executionEngine == null)
                 return NotFound();
-            if (!await CanPerformCurrentActionOnRecord(dataFactory))
+            if (!await CanPerformCurrentActionOnRecord(executionEngine))
                 return new ForbidResult();
 
 
-            return View(dataFactory);
+            return View(executionEngine);
         }
 
         // GET: DataFactory/Create
         public IActionResult Create()
         {
-     DataFactory dataFactory = new DataFactory();
-            return View(dataFactory);
+     ExecutionEngine executionEngine = new ExecutionEngine();
+            return View(executionEngine);
         }
 
         // POST: DataFactory/Create
@@ -63,19 +63,19 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("Id,Name,ResourceGroup,SubscriptionUid,DefaultKeyVaultUrl,LogAnalyticsWorkspaceId")] DataFactory dataFactory)
+        public async Task<IActionResult> Create([Bind("Id,Name,ResourceGroup,SubscriptionUid,DefaultKeyVaultUrl,LogAnalyticsWorkspaceId")] ExecutionEngine executionEngine)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(dataFactory);
-                if (!await CanPerformCurrentActionOnRecord(dataFactory))
+                _context.Add(executionEngine);
+                if (!await CanPerformCurrentActionOnRecord(executionEngine))
                 {
                     return new ForbidResult();
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            return View(dataFactory);
+            return View(executionEngine);
         }
 
         // GET: DataFactory/Edit/5
@@ -87,13 +87,13 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var dataFactory = await _context.DataFactory.FindAsync(id);
-            if (dataFactory == null)
+            var executionEngine = await _context.ExecutionEngine.FindAsync(id);
+            if (executionEngine == null)
                 return NotFound();
 
-            if (!await CanPerformCurrentActionOnRecord(dataFactory))
+            if (!await CanPerformCurrentActionOnRecord(executionEngine))
                 return new ForbidResult();
-            return View(dataFactory);
+            return View(executionEngine);
         }
 
         // POST: DataFactory/Edit/5
@@ -102,9 +102,9 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,ResourceGroup,SubscriptionUid,DefaultKeyVaultUrl,LogAnalyticsWorkspaceId")] DataFactory dataFactory)
+        public async Task<IActionResult> Edit(long id, [Bind("Id,Name,ResourceGroup,SubscriptionUid,DefaultKeyVaultUrl, EngineJson, LogAnalyticsWorkspaceId")] ExecutionEngine executionEngine)
         {
-            if (id != dataFactory.Id)
+            if (id != executionEngine.EngineId)
             {
                 return NotFound();
             }
@@ -113,16 +113,16 @@ namespace WebApplication.Controllers
             {
                 try
                 {
-                    _context.Update(dataFactory);
+                    _context.Update(executionEngine);
 
-                    if (!await CanPerformCurrentActionOnRecord(dataFactory))
+                    if (!await CanPerformCurrentActionOnRecord(executionEngine))
                         return new ForbidResult();
 			
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!DataFactoryExists(dataFactory.Id))
+                    if (!ExecutionEngineExists(executionEngine.EngineId))
                     {
                         return NotFound();
                     }
@@ -133,7 +133,7 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            return View(dataFactory);
+            return View(executionEngine);
         }
 
         // GET: DataFactory/Delete/5
@@ -145,15 +145,15 @@ namespace WebApplication.Controllers
                 return NotFound();
             }
 
-            var dataFactory = await _context.DataFactory
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (dataFactory == null)
+            var executionEngine = await _context.ExecutionEngine
+                .FirstOrDefaultAsync(m => m.EngineId == id);
+            if (executionEngine == null)
                 return NotFound();
 		
-            if (!await CanPerformCurrentActionOnRecord(dataFactory))
+            if (!await CanPerformCurrentActionOnRecord(executionEngine))
                 return new ForbidResult();
 
-            return View(dataFactory);
+            return View(executionEngine);
         }
 
         // POST: DataFactory/Delete/5
@@ -162,19 +162,19 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var dataFactory = await _context.DataFactory.FindAsync(id);
+            var executionEngine = await _context.ExecutionEngine.FindAsync(id);
 
-            if (!await CanPerformCurrentActionOnRecord(dataFactory))
+            if (!await CanPerformCurrentActionOnRecord(executionEngine))
                 return new ForbidResult();
 		
-            _context.DataFactory.Remove(dataFactory);
+            _context.ExecutionEngine.Remove(executionEngine);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(IndexDataTable));
         }
 
-        private bool DataFactoryExists(long id)
+        private bool ExecutionEngineExists(long id)
         {
-            return _context.DataFactory.Any(e => e.Id == id);
+            return _context.ExecutionEngine.Any(e => e.EngineId == id);
         }
 
         public IActionResult IndexDataTable()
@@ -187,11 +187,13 @@ namespace WebApplication.Controllers
             JObject GridOptions = new JObject();
 
             JArray cols = new JArray();
-            cols.Add(JObject.Parse("{ 'data':'Id', 'name':'Id', 'autoWidth':true }"));
-            cols.Add(JObject.Parse("{ 'data':'Name', name:'Name', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'EngineId', 'name':'EngineId', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'EngineName', name:'EngineName', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'SystemType', name:'SystemType', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ResourceGroup', 'name':'Resource Group', 'autoWidth':true, 'width':'30%' }"));
             cols.Add(JObject.Parse("{ 'data':'SubscriptionUid', 'name':'Subscription', 'autoWidth':true }"));
-            cols.Add(JObject.Parse("{ 'data':'DefaultKeyVaultUrl', 'name':'Default KeyVault Url', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'DefaultKeyVaultURL', 'name':'Default KeyVault URL', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'EngineJson', name:'EngineJson', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'LogAnalyticsWorkspaceId', 'name':'LogAnalytics Workspace', 'autoWidth':true }"));
 
             HumanizeColumns(cols);
@@ -202,7 +204,7 @@ namespace WebApplication.Controllers
             JArray Navigations = new JArray();
 
             GridOptions["GridColumns"] = cols;
-            GridOptions["ModelName"] = "DataFactory";
+            GridOptions["ModelName"] = "ExecutionEngine";
             GridOptions["PrimaryKeyColumns"] = pkeycols;
             GridOptions["Navigations"] = Navigations;
             GridOptions["CrudButtons"] = GetSecurityFilteredActions("Create,Edit,Details,Delete");
@@ -234,7 +236,7 @@ namespace WebApplication.Controllers
                 int recordsTotal = 0;
 
                 // Getting all Customer data    
-                var modelDataAll = (from temptable in _context.DataFactory
+                var modelDataAll = (from temptable in _context.ExecutionEngine
                                     select temptable);
 
                 //Sorting    
@@ -245,7 +247,7 @@ namespace WebApplication.Controllers
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    modelDataAll = modelDataAll.Where(m => m.Name.Contains(searchValue)
+                    modelDataAll = modelDataAll.Where(m => m.EngineName.Contains(searchValue)
                     || m.ResourceGroup.Contains(searchValue)
                     || (m.SubscriptionUid != null && m.SubscriptionUid.ToString().Contains(searchValue))
                     || (m.LogAnalyticsWorkspaceId != null && m.LogAnalyticsWorkspaceId.ToString().Contains(searchValue)));

@@ -1,25 +1,25 @@
 @using Humanizer; 
-@model WebApplication.Models.DataFactory
+@model WebApplication.Models.ExecutionEngine
 
 @{
-    ViewData["Title"] = "Edit - " + "DataFactory".Humanize(LetterCasing.Title);
+    ViewData["Title"] = "Edit - " + "ExecutionEngine".Humanize(LetterCasing.Title);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
         <div class="alert alert-danger" role="alert">Caution. These records are critical to the application and changes may cause certain features to break.</div>    
 
 <h1>Edit</h1>
 
-<h4> @("DataFactory".Humanize(LetterCasing.Title))</h4>
+<h4> @("ExecutionEngine".Humanize(LetterCasing.Title))</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="EngineId" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="EngineName" class="control-label"></label>
+                <input asp-for="EngineName" class="form-control" />
+                <span asp-validation-for="EngineName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ResourceGroup" class="control-label"></label>
@@ -32,9 +32,9 @@
                 <span asp-validation-for="SubscriptionUid" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DefaultKeyVaultUrl" class="control-label"></label>
-                <input asp-for="DefaultKeyVaultUrl" class="form-control" />
-                <span asp-validation-for="DefaultKeyVaultUrl" class="text-danger"></span>
+                <label asp-for="DefaultKeyVaultURL" class="control-label"></label>
+                <input asp-for="DefaultKeyVaultURL" class="form-control" />
+                <span asp-validation-for="DefaultKeyVaultURL" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LogAnalyticsWorkspaceId" class="control-label"></label>

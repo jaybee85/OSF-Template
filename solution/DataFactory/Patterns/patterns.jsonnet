@@ -6,7 +6,7 @@ local Template_SQL_Database_to_Azure_Storage = function(SourceType, SourceFormat
         "SourceFormat": SourceFormat,
         "TargetType": TargetType,
         "TargetFormat": TargetFormat,
-        "TaskTypeId":3,
+        "TaskTypeId":-3,
         "Pipeline":"GPL_" + SourceType + "_" + "NA" + "_" + TargetType + "_" + TargetFormat  
 };
 local Template_Azure_Storage_to_SQL_Database = function(SourceType, SourceFormat, TargetType, TargetFormat)
@@ -17,7 +17,7 @@ local Template_Azure_Storage_to_SQL_Database = function(SourceType, SourceFormat
         "SourceFormat": SourceFormat,
         "TargetType": TargetType,
         "TargetFormat": TargetFormat,
-        "TaskTypeId":1,
+        "TaskTypeId":-1,
         "Pipeline":"GPL_" + SourceType + "_" + SourceFormat + "_" + TargetType + "_" + "NA"  
 };
 local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceFormat, TargetType, TargetFormat)
@@ -28,7 +28,7 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
         "SourceFormat": SourceFormat,
         "TargetType": TargetType,
         "TargetFormat": TargetFormat,
-        "TaskTypeId":2,
+        "TaskTypeId":-2,
         "Pipeline":"GPL_" + SourceType + "_" + SourceFormat + "_" + TargetType + "_" + TargetFormat  
 };
 

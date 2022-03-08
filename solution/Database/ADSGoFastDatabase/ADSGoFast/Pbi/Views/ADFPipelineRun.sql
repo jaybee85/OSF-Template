@@ -1,3 +1,4 @@
+﻿
 /*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
@@ -5,11 +6,11 @@
 
 -----------------------------------------------------------------------*/
 
-create view pbi.ADFPipelineRun as 
+CREATE view [Pbi].[ADFPipelineRun] as 
 select
 	b.TaskInstanceId, 
 	b.ExecutionUid, 
-	b.DatafactoryId, 
+	b.EngineId, 
 	b.PipelineRunUid, 
 	b.[Start], 
 	b.[End],

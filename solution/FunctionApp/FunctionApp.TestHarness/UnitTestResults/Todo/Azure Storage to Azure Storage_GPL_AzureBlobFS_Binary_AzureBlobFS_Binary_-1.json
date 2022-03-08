@@ -1,0 +1,67 @@
+{
+  "TaskObject": {
+    "TaskInstanceId": -1,
+    "TaskMasterId": -1,
+    "TaskStatus": "Untried",
+    "TaskType": "Azure Storage to Azure Storage",
+    "Enabled": 1,
+    "ExecutionUid": "85a007c3-3bc9-4879-a341-43d9f77b1656",
+    "NumberOfRetries": 3,
+    "DegreeOfCopyParallelism": 1,
+    "KeyVaultBaseUrl": "https://ark-stg-kv-ads-bcar.vault.azure.net",
+    "ScheduleMasterId": "-2",
+    "TaskGroupConcurrency": "10",
+    "TaskGroupPriority": 0,
+    "TaskExecutionType": "ADF",
+    "ExecutionEngine": {
+      "EngineId": -1,
+      "EngineName": "ark-stg-adf-ads-bcar",
+      "ResourceGroup": "dlzdev01",
+      "SubscriptionId": "14f299e1-be54-43e9-bf5e-696840f86fc4",
+      "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
+      "TaskDatafactoryIR": "Azure"
+    },
+    "Source": {
+      "System": {
+        "SystemId": -4,
+        "SystemServer": "https://arkstgdlsadsbcaradsl.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/",
+        "TargetRelativePath": "/Tests/Azure Storage to Azure Storage/1/"
+      },
+      "DataFileName": "SalesLT.Customer*.parquet",
+      "DeleteAfterCompletion": "false",
+      "MaxConcurrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "samples/",
+      "SchemaFileName": "SalesLT.Customer*.json",
+      "Type": "Binary"
+    },
+    "Target": {
+      "System": {
+        "SystemId": -4,
+        "SystemServer": "https://arkstgdlsadsbcaradsl.dfs.core.windows.net",
+        "AuthenticationType": "MSI",
+        "Type": "ADLS",
+        "Username": "",
+        "Container": "datalakeraw"
+      },
+      "Instance": {
+        "SourceRelativePath": "samples/",
+        "TargetRelativePath": "/Tests/Azure Storage to Azure Storage/1/"
+      },
+      "DataFileName": "SalesLT.Customer.parquet",
+      "DeleteAfterCompletion": "false",
+      "MaxConcurrentConnections": 0,
+      "Recursively": "false",
+      "RelativePath": "/Tests/Azure Storage to Azure Storage/1",
+      "SchemaFileName": "SalesLT.Customer.json",
+      "Type": "Binary"
+    }
+  }
+}

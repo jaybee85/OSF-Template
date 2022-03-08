@@ -1,12 +1,12 @@
 @using Humanizer; 
-@model IEnumerable<WebApplication.Models.DataFactory>
+@model IEnumerable<WebApplication.Models.ExecutionEngine>
 
 @{
-    ViewData["Title"] = "Index - " + "WebApplication.Models.DataFactory".Pluralize().Humanize(LetterCasing.Title);
+    ViewData["Title"] = "Index - " + "WebApplication.Models.ExecutionEngine".Pluralize().Humanize(LetterCasing.Title);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1> @("WebApplication.Models.DataFactory".Pluralize().Humanize(LetterCasing.Title))</h1>
+<h1> @("WebApplication.Models.ExecutionEngine".Pluralize().Humanize(LetterCasing.Title))</h1>
 
 <p>
     <a class="btn-sm btn-dark details" asp-action="Create">Create New</a>
@@ -16,10 +16,10 @@
         <tr>
             <th></th>
              <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.EngineId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.EngineName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ResourceGroup)
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.SubscriptionUid)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DefaultKeyVaultUrl)
+                @Html.DisplayNameFor(model => model.DefaultKeyVaultURL)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LogAnalyticsWorkspaceId)
@@ -39,15 +39,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-sm btn-warning details" title="Edit"><i class="fa fa-pencil-square-o"></i></a> |
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn-sm btn-info details" title="Details"><i class="fa fa-list-alt" aria-hidden="true"></i></a> |
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-sm btn-danger details" title="Delete"><i class="fa fa-trash"></i></a>
+                <a asp-action="Edit" asp-route-id="@item.EngineId" class="btn-sm btn-warning details" title="Edit"><i class="fa fa-pencil-square-o"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.EngineId" class="btn-sm btn-info details" title="Details"><i class="fa fa-list-alt" aria-hidden="true"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.EngineId" class="btn-sm btn-danger details" title="Delete"><i class="fa fa-trash"></i></a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.EngineId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.EngineName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ResourceGroup)
@@ -56,7 +56,7 @@
                 @Html.DisplayFor(modelItem => item.SubscriptionUid)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.DefaultKeyVaultUrl)
+                @Html.DisplayFor(modelItem => item.DefaultKeyVaultURL)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LogAnalyticsWorkspaceId)

@@ -22,5 +22,5 @@
             )
             ) Src on Src.short_name = tgt.IntegrationRuntimeName 
             when NOT matched by TARGET then insert
-            (IntegrationRuntimeName, DataFactoryId, ActiveYN)
+            (IntegrationRuntimeName, EngineId, ActiveYN)
             VALUES (Src.short_name,1,1);
