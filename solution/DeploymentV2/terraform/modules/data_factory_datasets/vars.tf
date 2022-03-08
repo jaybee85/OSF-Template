@@ -41,6 +41,11 @@ variable "mssql_linkedservice_name" {
   type        = string
 }
 
+variable "mssql_sqlauth_linkedservice_name" {
+  description = "The name of the linked service for SQL server"
+  type        = string
+}
+
 variable "fileserver_linkedservice_name" {
   description = "The name of the linked service for File Server"
   type        = string

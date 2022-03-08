@@ -15,6 +15,7 @@ module "data_factory_datasets" {
   data_lake_linkedservice_name   = "${local.linkedservice_generic_adls_prefix}${each.value.short_name}"
   blob_linkedservice_name        = "${local.linkedservice_generic_blob_prefix}${each.value.short_name}"
   mssql_linkedservice_name       = "${local.linkedservice_generic_mssql_prefix}${each.value.short_name}"
+  mssql_sqlauth_linkedservice_name = "${local.linkedservice_generic_mssql_prefix}sqlauth_${each.value.short_name}"
   fileserver_linkedservice_name  = "${local.linkedservice_generic_file_prefix}${each.value.short_name}"
   rest_linkedservice_name        = "${local.linkedservice_generic_rest_prefix}${each.value.short_name}"
   name_suffix                    = random_id.rg_deployment_unique.id
@@ -25,7 +26,7 @@ module "data_factory_datasets" {
     azurerm_data_factory_linked_custom_service.mssqldatabase,
     azurerm_data_factory_linked_custom_service.database,
     azurerm_data_factory_linked_custom_service.file,
-    azurerm_data_factory_linked_custom_service.mssqldatabase,
+    azurerm_data_factory_linked_custom_service.mssqldatabase_sqlauth,
     azurerm_data_factory_linked_custom_service.rest_anonymous
   ]
 }

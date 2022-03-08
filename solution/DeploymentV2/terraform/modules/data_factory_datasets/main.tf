@@ -104,7 +104,7 @@ resource "azurerm_resource_group_template_deployment" "azuressynapse_dataset" {
 
 resource "azurerm_resource_group_template_deployment" "mssql_dataset" {
   for_each            = {
-    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA*.json"):  
+    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA.json"):  
     ir => ir 
     #if var.is_azure == false
   }
@@ -130,7 +130,7 @@ resource "azurerm_resource_group_template_deployment" "mssql_dataset" {
 
 resource "azurerm_resource_group_template_deployment" "mssql_dataset_sqlauth" {
   for_each            = {
-    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA_SqlAuth*.json"):  
+    for ir in fileset(path.module, "arm/GDS_SqlServerTable_NA_SqlAuth.json"):  
     ir => ir 
     #if var.is_azure == false
   }
@@ -142,7 +142,7 @@ resource "azurerm_resource_group_template_deployment" "mssql_dataset_sqlauth" {
       value = "${replace(replace(each.value, ".json", ""), "arm/", "")}_${var.integration_runtime_short_name}"
     }    
     "linkedServiceName" = {
-      value = "${var.mssql_linkedservice_name}sqlauth_"
+      value = var.mssql_sqlauth_linkedservice_name
     }
     "dataFactoryName" = {
       value = var.data_factory_name

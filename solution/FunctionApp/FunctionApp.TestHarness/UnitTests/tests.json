@@ -909,7 +909,7 @@
     "TaskStatus": "Untried",
     "TaskType": "SQL Database to Azure Storage",
     "TaskTypeId": 3,
-    "TestDescription": "[23]  FulLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)"
+    "TestDescription": "[23]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)"
   },
   {
     "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",

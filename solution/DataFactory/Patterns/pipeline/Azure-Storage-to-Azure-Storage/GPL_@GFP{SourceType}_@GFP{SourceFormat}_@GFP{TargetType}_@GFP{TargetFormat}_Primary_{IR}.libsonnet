@@ -1,4 +1,4 @@
-function(GenerateArm="true",GFPIR="{IRA}",SourceType="AzureBlobFS",SourceFormat="Binary", TargetType="AzureBlobFS", TargetFormat="Binary")
+function(GenerateArm="false",GFPIR="{IRA}",SourceType="AzureBlobFS",SourceFormat="Binary", TargetType="AzureBlobFS", TargetFormat="Binary")
 
 local generateArmAsBool = GenerateArm == "true";
 local Wrapper = import '../static/partials/wrapper.libsonnet';

@@ -281,3 +281,6 @@ deploy/
 
 
 secrets.libsonnet
+solution/DataFactory/Patterns/output/
+solution/DataFactory/Patterns/SqlTests.sql
+solution/FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json
