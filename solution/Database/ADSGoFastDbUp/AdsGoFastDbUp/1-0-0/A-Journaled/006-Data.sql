@@ -1,12 +1,12 @@
 SET IDENTITY_INSERT [dbo].[ExecutionEngine] ON 
 GO
-INSERT [dbo].[ExecutionEngine] ([EngineId], [EngineName], [ResourceGroup], [SubscriptionUid], [DefaultKeyVaultURL], [EngineJson], [LogAnalyticsWorkspaceId]) VALUES (-2, N'Synapse', N'placeholdeResourceGroup', N'00000000-0000-0000-0000-000000000000', N'https://$KeyVaultName$.vault.azure.net/', N'
+INSERT [dbo].[ExecutionEngine] ([EngineId], [EngineName], [SystemType], [ResourceGroup], [SubscriptionUid], [DefaultKeyVaultURL], [EngineJson], [LogAnalyticsWorkspaceId]) VALUES (-2, N'Synapse', 'Synapse', N'placeholdeResourceGroup', N'00000000-0000-0000-0000-000000000000', N'https://$KeyVaultName$.vault.azure.net/', N'
 {
     "endpoint": "placeholderendpoint"
 }
 ', N'00000000-0000-0000-0000-000000000000')
 GO
-INSERT [dbo].[ExecutionEngine] ([EngineId], [EngineName], [ResourceGroup], [SubscriptionUid], [DefaultKeyVaultURL], [EngineJson], [LogAnalyticsWorkspaceId]) VALUES (-1, N'Datafactory', N'placeholdeResourceGroup', N'00000000-0000-0000-0000-000000000000', N'https://$KeyVaultName$.vault.azure.net/', N'
+INSERT [dbo].[ExecutionEngine] ([EngineId], [EngineName], [SystemType], [ResourceGroup], [SubscriptionUid], [DefaultKeyVaultURL], [EngineJson], [LogAnalyticsWorkspaceId]) VALUES (-1, N'Datafactory', 'Datafactory', N'placeholdeResourceGroup', N'00000000-0000-0000-0000-000000000000', N'https://$KeyVaultName$.vault.azure.net/', N'
 {}
 ', N'00000000-0000-0000-0000-000000000000')
 GO
@@ -69,7 +69,9 @@ SET IDENTITY_INSERT [dbo].[ScheduleMaster] OFF
 GO
 SET IDENTITY_INSERT [dbo].[SourceAndTargetSystems] ON 
 GO
-INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-14, N'Sample - External SQL Server ', N'Azure SQL', N'Sample Azure SQL Server Source', N'(local)', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'         "Database" : "msdb"  , "Username" : "adminuser", "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }', 1, 1, NULL)
+INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-15, N'Sample - File Server ', N'FileServer', N'Sample File Server Source', N'(local)', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'', 1, 0, NULL)
+GO
+INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-14, N'Sample - External SQL Server ', N'Azure SQL', N'Sample Azure SQL Server Source', N'(local)', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'{         "Database" : "msdb"  , "Username" : "adminuser", "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }', 1, 1, NULL)
 GO
 INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-10, N'Sample - Azure Synapse ', N'Azure Synapse', N'Sample Azure Synapse Source', N'arkstgsynwadsbcar.database.windows.net', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'{ "Database" : "Dummy" }', 1, 0, NULL)
 GO
@@ -102,6 +104,8 @@ GO
 INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'SendGrid', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "SenderEmail": {      "type": "string"    },    "SenderDescription": {      "type": "string"    }  },  "required": [    "SenderEmail",    "SenderDescription"  ]}')
 GO
 INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'SQL Server', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Database": {      "type": "string"    }  },  "required": [    "Database"  ]}')
+GO
+INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'FileServer', N'{  "{}')
 GO
 SET IDENTITY_INSERT [dbo].[SubjectArea] ON 
 GO
@@ -221,7 +225,9 @@ SET IDENTITY_INSERT [dbo].[TaskType] OFF
 GO
 SET IDENTITY_INSERT [dbo].[TaskTypeMapping] ON 
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (1, 1, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureSqlTable_NA', N'Azure Blob', N'Excel', N'Azure SQL', N'Table', NULL, 1, N'{
+SET IDENTITY_INSERT [dbo].[TaskTypeMapping] ON 
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (1, -1, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureSqlTable_NA', N'Azure Blob', N'Excel', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -417,7 +423,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (2, 1, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA', N'Azure Blob', N'Csv', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (2, -1, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA', N'Azure Blob', N'Csv', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -619,7 +625,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (3, 1, N'ADF', N'GPL_AzureBlobStorage_Json_AzureSqlTable_NA', N'Azure Blob', N'Json', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (3, -1, N'ADF', N'GPL_AzureBlobStorage_Json_AzureSqlTable_NA', N'Azure Blob', N'Json', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -801,7 +807,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (4, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Excel', N'Azure Blob', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (4, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Excel', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -974,7 +980,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (5, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText', N'ADLS', N'Excel', N'ADLS', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (5, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_DelimitedText', N'ADLS', N'Excel', N'ADLS', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1147,7 +1153,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (6, 3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet', N'Azure SQL', N'Table', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (6, -3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet', N'Azure SQL', N'Table', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1290,7 +1296,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (7, 3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet', N'Azure SQL', N'Table', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (7, -3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet', N'Azure SQL', N'Table', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1433,7 +1439,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (8, 1, N'ADF', N'GPL_AzureBlobFS_Json_AzureSqlTable_NA', N'ADLS', N'Json', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (8, -1, N'ADF', N'GPL_AzureBlobFS_Json_AzureSqlTable_NA', N'ADLS', N'Json', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1615,7 +1621,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (9, 1, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA', N'ADLS', N'Parquet', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (9, -1, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA', N'ADLS', N'Parquet', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1789,7 +1795,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (10, 1, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA', N'Azure Blob', N'Parquet', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (10, -1, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA', N'Azure Blob', N'Parquet', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1963,11 +1969,11 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (11, 2, N'ADF', N'TBD', N'File', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                         "hidden":true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. *.parquet"                         },                         "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "Recursively": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to copy files from subfolders."                     }                 },                 "DeleteAfterCompletion": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "Recursively",                 "DeleteAfterCompletion"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. Customer.parquet"                         },                         "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (11, -2, N'ADF', N'TBD', N'File', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                         "hidden":true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. *.parquet"                         },                         "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "Recursively": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to copy files from subfolders."                     }                 },                 "DeleteAfterCompletion": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "Recursively",                 "DeleteAfterCompletion"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. Customer.parquet"                         },                         "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (12, 2, N'ADF', N'TBD', N'File', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                         "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. *.parquet"                         },                         "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "Recursively": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to copy files from subfolders."                     }                 },                 "DeleteAfterCompletion": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "Recursively",                 "DeleteAfterCompletion"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. Customer.parquet"                         },                         "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (12, -2, N'ADF', N'TBD', N'File', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                         "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. *.parquet"                         },                         "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "Recursively": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to copy files from subfolders."                     }                 },                 "DeleteAfterCompletion": {                     "type": "string",                     "enum": [                         "true",                         "false"                     ],                     "default": "true",                     "options": {                         "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "Recursively",                 "DeleteAfterCompletion"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Binary"                     ],                     "default": "Binary",                     "options": {                         "infoText": "Only Binary is supported this time. ",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "eg. Customer.parquet"                         },                         "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (13, 3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet', N'SQL Server', N'Table', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (13, -3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet', N'SQL Server', N'Table', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -2110,7 +2116,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (14, 3, N'ADF', N'TBD', N'SQL Server', N'Table', N'File', N'Parquet', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Table",                         "SQL"                     ],                     "options": {                         "infoText": "Select TABLE if you want to select all columns in a table. Select SQL if you want to define a custom SQL statement to be used to extract data.",                          "hidden": true                     }                 },                 "IncrementalType": {                     "type": "string",                     "description": "Full Extraction or Incremental based on a Watermark Column",                     "enum": [                         "Full",                         "Watermark"                     ],                     "options": {                         "infoText": "Select Full for Full Table Extraction & Watermark for Incremental based on a Watermark column"                     }                 },                 "ExtractionSQL": {                     "type": "string",                     "options": {                                             }                 },                 "TableSchema": {                     "type": "string",                     "options": {                                                 "inputAttributes": {                             "placeholder": "eg. dbo"                         }                     }                 },                 "TableName": {                     "type": "string",                     "options": {                                                 "inputAttributes": {                             "placeholder": "eg. Customer"                         }                     }                 },                 "ChunkField": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "Column to use for chunking. Only use for very large tables. Otherwise leave blank."                         },                         "infoText": "If you want to break an extraction down into multiple files fill out the chunk fields. Otherwise leave blank."                     }                 },                 "ChunkSize": {                     "type": "integer",                     "options": {                         "inputAttributes": {                             "placeholder": ""                         },                         "infoText": "Number of rows to use for each ''chunk'' of data"                     }                 }             },             "required": [                 "Type",                 "IncrementalType"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Parquet"                     ],                     "options": {                         "infoText": "Presently only Parquet is supported",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "The path of the directory into which you want your extracted data to be written."                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "dbo.Customer.parquet"                         },                         "infoText": "Name of the file that will hold the extracted data"                     }                 },                 "SchemaFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "dbo.Customer.json"                         },                         "infoText": "Name of the file that will hold the schema associated with the extracted data."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "SchemaFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (14, -3, N'ADF', N'TBD', N'SQL Server', N'Table', N'File', N'Parquet', NULL, 1, N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "Source": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Table",                         "SQL"                     ],                     "options": {                         "infoText": "Select TABLE if you want to select all columns in a table. Select SQL if you want to define a custom SQL statement to be used to extract data.",                          "hidden": true                     }                 },                 "IncrementalType": {                     "type": "string",                     "description": "Full Extraction or Incremental based on a Watermark Column",                     "enum": [                         "Full",                         "Watermark"                     ],                     "options": {                         "infoText": "Select Full for Full Table Extraction & Watermark for Incremental based on a Watermark column"                     }                 },                 "ExtractionSQL": {                     "type": "string",                     "options": {                                             }                 },                 "TableSchema": {                     "type": "string",                     "options": {                                                 "inputAttributes": {                             "placeholder": "eg. dbo"                         }                     }                 },                 "TableName": {                     "type": "string",                     "options": {                                                 "inputAttributes": {                             "placeholder": "eg. Customer"                         }                     }                 },                 "ChunkField": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "Column to use for chunking. Only use for very large tables. Otherwise leave blank."                         },                         "infoText": "If you want to break an extraction down into multiple files fill out the chunk fields. Otherwise leave blank."                     }                 },                 "ChunkSize": {                     "type": "integer",                     "options": {                         "inputAttributes": {                             "placeholder": ""                         },                         "infoText": "Number of rows to use for each ''chunk'' of data"                     }                 }             },             "required": [                 "Type",                 "IncrementalType"             ]         },         "Target": {             "type": "object",             "properties": {                 "Type": {                     "type": "string",                     "enum": [                         "Parquet"                     ],                     "options": {                         "infoText": "Presently only Parquet is supported",                          "hidden": true                     }                 },                 "RelativePath": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"                         },                         "infoText": "The path of the directory into which you want your extracted data to be written."                     }                 },                 "DataFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "dbo.Customer.parquet"                         },                         "infoText": "Name of the file that will hold the extracted data"                     }                 },                 "SchemaFileName": {                     "type": "string",                     "options": {                         "inputAttributes": {                             "placeholder": "dbo.Customer.json"                         },                         "infoText": "Name of the file that will hold the schema associated with the extracted data."                     }                 }             },             "required": [                 "Type",                 "RelativePath",                 "DataFileName",                 "SchemaFileName"             ]         }     },     "required": [         "Source",         "Target"     ] }', N'{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
@@ -2135,15 +2141,15 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
   ]
 }')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (21, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'Parquet', N'Azure Blob', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (21, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'Parquet', N'Azure Blob', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (22, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary', N'Azure Blob', N'Parquet', N'ADLS', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (22, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary', N'Azure Blob', N'Parquet', N'ADLS', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (23, 2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary', N'ADLS', N'Parquet', N'Azure Blob', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (23, -2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary', N'ADLS', N'Parquet', N'Azure Blob', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (24, 2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary', N'ADLS', N'Parquet', N'ADLS', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (24, -2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary', N'ADLS', N'Parquet', N'ADLS', N'Parquet', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', NULL)
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (29, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'*', N'Azure Blob', N'*', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (29, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'*', N'Azure Blob', N'*', NULL, 1, N'{   "$schema": "http://json-schema.org/draft-04/schema#",   "type": "object",   "title": "TaskMasterJson",   "properties": {     "Source": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",             "hidden": true           }         },         "RelativePath": {           "type": "string",           "description": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "description": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type",           "options": {             "inputAttributes": {               "placeholder": "eg. *.parquet"             },             "infoText": "Name of the file to be copied. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "Recursively": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to copy files from subfolders."           }         },         "DeleteAfterCompletion": {           "type": "string",           "enum": [             "true",             "false"           ],           "default": "true",           "options": {             "infoText": "Set to true if you want the framework to remove the source file after a successsful copy."           }         },         "TriggerUsingAzureStorageCache": {           "type": "boolean",           "format": "checkbox",           "enum": [             true,             false           ],           "default": true,           "options": {             "infoText": "Set to true if you want the framework to use the storage cache rather than poll the storage account every time."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName",         "Recursively",         "DeleteAfterCompletion"       ]     },     "Target": {       "type": "object",       "properties": {         "Type": {           "type": "string",           "enum": [             "*"           ],           "default": "*",           "options": {             "infoText": "Only * is supported this time. ",              "hidden": true           }         },         "RelativePath": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"             },             "infoText": "Path of the target directory. You can use pattern match characters eg. *. See https://docs.microsoft.com/en-us/azure/data-factory/connector-azure-blob-storage?tabs=data-factory#blob-storage-as-a-source-type"           }         },         "DataFileName": {           "type": "string",           "options": {             "inputAttributes": {               "placeholder": "eg. Customer.parquet"             },             "infoText": "Name of the target file. Leave this blank if your are using pattern matching to copy multiple files from source."           }         }       },       "required": [         "Type",         "RelativePath",         "DataFileName"       ]     }   },   "required": [     "Source",     "Target"   ] }', N'{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
@@ -2160,7 +2166,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
   ]
 }')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (31, 3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet', N'Azure SQL', N'SQL', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (31, -3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet', N'Azure SQL', N'SQL', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -2303,7 +2309,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (33, 1, N'ADF', N'GPL_AzureBlobFS_Excel_AzureSqlTable_NA', N'ADLS', N'Excel', N'Azure SQL', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (33, -1, N'ADF', N'GPL_AzureBlobFS_Excel_AzureSqlTable_NA', N'ADLS', N'Excel', N'Azure SQL', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -2499,7 +2505,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (34, 1, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA', N'ADLS', N'Csv', N'Azure SQL', N'Table', N'{}', 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (34, -1, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA', N'ADLS', N'Csv', N'Azure SQL', N'Table', N'{}', 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -2701,7 +2707,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (35, 1, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA', N'ADLS', N'Parquet', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (35, -1, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA', N'ADLS', N'Parquet', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -2875,7 +2881,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (36, 1, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA', N'Azure Blob', N'Parquet', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (36, -1, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA', N'Azure Blob', N'Parquet', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -3049,7 +3055,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (37, 1, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA', N'Azure Blob', N'Excel', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (37, -1, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA', N'Azure Blob', N'Excel', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -3245,7 +3251,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (38, 1, N'ADF', N'GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA', N'ADLS', N'Excel', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (38, -1, N'ADF', N'GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA', N'ADLS', N'Excel', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -3441,7 +3447,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (39, 1, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA', N'Azure Blob', N'Csv', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (39, -1, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA', N'Azure Blob', N'Csv', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -3643,7 +3649,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (40, 1, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA', N'ADLS', N'Csv', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (40, -1, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA', N'ADLS', N'Csv', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -3845,7 +3851,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (41, 1, N'ADF', N'GPL_AzureBlobStorage_Json_AzureSqlDWTable_NA', N'Azure Blob', N'Json', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (41, -1, N'ADF', N'GPL_AzureBlobStorage_Json_AzureSqlDWTable_NA', N'Azure Blob', N'Json', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4027,7 +4033,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (42, 1, N'ADF', N'GPL_AzureBlobFS_Json_AzureSqlDWTable_NA', N'ADLS', N'Json', N'Azure Synapse', N'Table', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (42, -1, N'ADF', N'GPL_AzureBlobFS_Json_AzureSqlDWTable_NA', N'ADLS', N'Json', N'Azure Synapse', N'Table', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4209,7 +4215,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (43, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (43, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobStorage_Binary', N'Azure Blob', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4364,7 +4370,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (44, 2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary', N'ADLS', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (44, -2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary', N'ADLS', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4519,7 +4525,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (45, 2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary', N'ADLS', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (45, -2, N'ADF', N'GPL_AzureBlobFS_Binary_AzureBlobStorage_Binary', N'ADLS', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4674,7 +4680,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (46, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary', N'Azure Blob', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (46, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_AzureBlobFS_Binary', N'Azure Blob', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4829,7 +4835,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (47, 2, N'ADF', N'GPL_FileServer_Binary_AzureBlobStorage_Binary', N'FileServer', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (47, -2, N'ADF', N'GPL_FileServer_Binary_AzureBlobStorage_Binary', N'FileServer', N'Binary', N'Azure Blob', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -4984,7 +4990,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (48, 2, N'ADF', N'GPL_FileServer_Binary_AzureBlobFS_Binary', N'FileServer', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (48, -2, N'ADF', N'GPL_FileServer_Binary_AzureBlobFS_Binary', N'FileServer', N'Binary', N'ADLS', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5139,7 +5145,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (49, 2, N'ADF', N'GPL_AzureBlobStorage_Binary_FileServer_Binary', N'Azure Blob', N'Binary', N'FileServer', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (49, -2, N'ADF', N'GPL_AzureBlobStorage_Binary_FileServer_Binary', N'Azure Blob', N'Binary', N'FileServer', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5294,7 +5300,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (50, 2, N'ADF', N'GPL_AzureBlobFS_Binary_FileServer_Binary', N'ADLS', N'Binary', N'FileServer', N'Binary', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (50, -2, N'ADF', N'GPL_AzureBlobFS_Binary_FileServer_Binary', N'ADLS', N'Binary', N'FileServer', N'Binary', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5449,7 +5455,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (51, 2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobStorage_Json', N'Azure Blob', N'Parquet', N'Azure Blob', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (51, -2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobStorage_Json', N'Azure Blob', N'Parquet', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5572,7 +5578,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (52, 2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Parquet', N'Azure Blob', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (52, -2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Parquet', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5715,7 +5721,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (53, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_Parquet', N'Azure Blob', N'Excel', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (53, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_Parquet', N'Azure Blob', N'Excel', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -5868,7 +5874,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (54, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_Json', N'Azure Blob', N'Excel', N'Azure Blob', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (54, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobStorage_Json', N'Azure Blob', N'Excel', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6021,7 +6027,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (55, 2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Parquet', N'Azure Blob', N'Csv', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (55, -2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Parquet', N'Azure Blob', N'Csv', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6164,7 +6170,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (56, 2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Json', N'Azure Blob', N'Csv', N'Azure Blob', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (56, -2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobStorage_Json', N'Azure Blob', N'Csv', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6307,7 +6313,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (57, 2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobStorage_Parquet', N'Azure Blob', N'Json', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (57, -2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobStorage_Parquet', N'Azure Blob', N'Json', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6430,7 +6436,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (58, 2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Json', N'Azure Blob', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (58, -2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobStorage_DelimitedText', N'Azure Blob', N'Json', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6573,7 +6579,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (59, 2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobFS_Json', N'ADLS', N'Parquet', N'ADLS', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (59, -2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobFS_Json', N'ADLS', N'Parquet', N'ADLS', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6696,7 +6702,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (60, 2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobFS_DelimitedText', N'ADLS', N'Parquet', N'ADLS', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (60, -2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobFS_DelimitedText', N'ADLS', N'Parquet', N'ADLS', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6839,7 +6845,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (61, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_Parquet', N'ADLS', N'Excel', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (61, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_Parquet', N'ADLS', N'Excel', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -6992,7 +6998,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (62, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_Json', N'ADLS', N'Excel', N'ADLS', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (62, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobFS_Json', N'ADLS', N'Excel', N'ADLS', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7145,7 +7151,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (63, 2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet', N'ADLS', N'Csv', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (63, -2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Parquet', N'ADLS', N'Csv', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7288,7 +7294,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (64, 2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Json', N'ADLS', N'Csv', N'ADLS', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (64, -2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobFS_Json', N'ADLS', N'Csv', N'ADLS', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7431,7 +7437,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (65, 2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobFS_Parquet', N'ADLS', N'Json', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (65, -2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobFS_Parquet', N'ADLS', N'Json', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7554,7 +7560,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (66, 2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobFS_DelimitedText', N'ADLS', N'Json', N'ADLS', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (66, -2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobFS_DelimitedText', N'ADLS', N'Json', N'ADLS', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7697,7 +7703,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (67, 2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobStorage_Json', N'ADLS', N'Parquet', N'Azure Blob', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (67, -2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobStorage_Json', N'ADLS', N'Parquet', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7820,7 +7826,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (68, 2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobStorage_DelimitedText', N'ADLS', N'Parquet', N'Azure Blob', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (68, -2, N'ADF', N'GPL_AzureBlobFS_Parquet_AzureBlobStorage_DelimitedText', N'ADLS', N'Parquet', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -7963,7 +7969,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (69, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_Parquet', N'ADLS', N'Excel', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (69, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_Parquet', N'ADLS', N'Excel', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -8116,7 +8122,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (70, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_Json', N'ADLS', N'Excel', N'Azure Blob', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (70, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_Json', N'ADLS', N'Excel', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -8269,1304 +8275,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (71, 2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_DelimitedText', N'ADLS', N'Excel', N'Azure Blob', N'Csv', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SheetName": {
-               "options": {
-                  "infoText": "Name of the Excel Worksheet that you wish to import",
-                  "inputAttributes": {
-                     "placeholder": "eg. Sheet1"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "The number of rows to skip or ignore in the incoming file."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Excel"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "FirstRowAsHeader",
-            "SheetName",
-            "SkipLineCount",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "Number of lines to skip."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Csv"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "SkipLineCount",
-            "FirstRowAsHeader",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (72, 2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Parquet', N'ADLS', N'Csv', N'Azure Blob', N'Parquet', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "Number of lines to skip."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Csv"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "SkipLineCount",
-            "FirstRowAsHeader",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Parquet"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (73, 2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Json', N'ADLS', N'Csv', N'Azure Blob', N'Json', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "Number of lines to skip."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Csv"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "SkipLineCount",
-            "FirstRowAsHeader",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Json"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (74, 2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobStorage_Parquet', N'ADLS', N'Json', N'Azure Blob', N'Parquet', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Json"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Parquet"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (75, 2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobStorage_DelimitedText', N'ADLS', N'Json', N'Azure Blob', N'Csv', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Json"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "Number of lines to skip."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Csv"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "SkipLineCount",
-            "FirstRowAsHeader",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (76, 2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobFS_Json', N'Azure Blob', N'Parquet', N'ADLS', N'Json', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Parquet"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Json"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (77, 2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobFS_DelimitedText', N'Azure Blob', N'Parquet', N'ADLS', N'Csv', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Parquet"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "Number of lines to skip."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Csv"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "SkipLineCount",
-            "FirstRowAsHeader",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (78, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_Parquet', N'Azure Blob', N'Excel', N'ADLS', N'Parquet', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SheetName": {
-               "options": {
-                  "infoText": "Name of the Excel Worksheet that you wish to import",
-                  "inputAttributes": {
-                     "placeholder": "eg. Sheet1"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "The number of rows to skip or ignore in the incoming file."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Excel"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "FirstRowAsHeader",
-            "SheetName",
-            "SkipLineCount",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Parquet"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (79, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_Json', N'Azure Blob', N'Excel', N'ADLS', N'Json', NULL, 1, N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "FirstRowAsHeader": {
-               "default": "true",
-               "enum": [
-                  "true",
-                  "false"
-               ],
-               "options": {
-                  "infoText": "Set to true if you want the first row of data to be used as column names."
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "SheetName": {
-               "options": {
-                  "infoText": "Name of the Excel Worksheet that you wish to import",
-                  "inputAttributes": {
-                     "placeholder": "eg. Sheet1"
-                  }
-               },
-               "type": "string"
-            },
-            "SkipLineCount": {
-               "default": 0,
-               "options": {
-                  "infoText": "The number of rows to skip or ignore in the incoming file."
-               },
-               "type": "integer"
-            },
-            "Type": {
-               "enum": [
-                  "Excel"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "FirstRowAsHeader",
-            "SheetName",
-            "SkipLineCount",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      },
-      "Target": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
-                  }
-               },
-               "type": "string"
-            },
-            "SchemaFileName": {
-               "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
-                  }
-               },
-               "type": "string"
-            },
-            "Type": {
-               "enum": [
-                  "Json"
-               ],
-               "options": {
-                  "hidden": true
-               },
-               "type": "string"
-            }
-         },
-         "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections"
-         ],
-         "type": "object"
-      }
-   },
-   "required": [
-      "Source",
-      "Target"
-   ],
-   "title": "TaskMasterJson",
-   "type": "object"
-}
-', N'{}')
-GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (80, 2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_DelimitedText', N'Azure Blob', N'Excel', N'ADLS', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (71, -2, N'ADF', N'GPL_AzureBlobFS_Excel_AzureBlobStorage_DelimitedText', N'ADLS', N'Excel', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -9739,7 +8448,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (81, 2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Parquet', N'Azure Blob', N'Csv', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (72, -2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Parquet', N'ADLS', N'Csv', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -9882,7 +8591,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (82, 2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Json', N'Azure Blob', N'Csv', N'ADLS', N'Json', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (73, -2, N'ADF', N'GPL_AzureBlobFS_DelimitedText_AzureBlobStorage_Json', N'ADLS', N'Csv', N'Azure Blob', N'Json', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10025,7 +8734,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (83, 2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobFS_Parquet', N'Azure Blob', N'Json', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (74, -2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobStorage_Parquet', N'ADLS', N'Json', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10148,7 +8857,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (84, 2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobFS_DelimitedText', N'Azure Blob', N'Json', N'ADLS', N'Csv', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (75, -2, N'ADF', N'GPL_AzureBlobFS_Json_AzureBlobStorage_DelimitedText', N'ADLS', N'Json', N'Azure Blob', N'Csv', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10291,7 +9000,1304 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (85, 3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet', N'SQL Server', N'Sql', N'Azure Blob', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (76, -2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobFS_Json', N'Azure Blob', N'Parquet', N'ADLS', N'Json', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Parquet"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Json"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (77, -2, N'ADF', N'GPL_AzureBlobStorage_Parquet_AzureBlobFS_DelimitedText', N'Azure Blob', N'Parquet', N'ADLS', N'Csv', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Parquet"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "Number of lines to skip."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Csv"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "SkipLineCount",
+            "FirstRowAsHeader",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (78, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_Parquet', N'Azure Blob', N'Excel', N'ADLS', N'Parquet', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SheetName": {
+               "options": {
+                  "infoText": "Name of the Excel Worksheet that you wish to import",
+                  "inputAttributes": {
+                     "placeholder": "eg. Sheet1"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "The number of rows to skip or ignore in the incoming file."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Excel"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "FirstRowAsHeader",
+            "SheetName",
+            "SkipLineCount",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Parquet"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (79, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_Json', N'Azure Blob', N'Excel', N'ADLS', N'Json', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SheetName": {
+               "options": {
+                  "infoText": "Name of the Excel Worksheet that you wish to import",
+                  "inputAttributes": {
+                     "placeholder": "eg. Sheet1"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "The number of rows to skip or ignore in the incoming file."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Excel"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "FirstRowAsHeader",
+            "SheetName",
+            "SkipLineCount",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Json"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (80, -2, N'ADF', N'GPL_AzureBlobStorage_Excel_AzureBlobFS_DelimitedText', N'Azure Blob', N'Excel', N'ADLS', N'Csv', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SheetName": {
+               "options": {
+                  "infoText": "Name of the Excel Worksheet that you wish to import",
+                  "inputAttributes": {
+                     "placeholder": "eg. Sheet1"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "The number of rows to skip or ignore in the incoming file."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Excel"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "FirstRowAsHeader",
+            "SheetName",
+            "SkipLineCount",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "Number of lines to skip."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Csv"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "SkipLineCount",
+            "FirstRowAsHeader",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (81, -2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Parquet', N'Azure Blob', N'Csv', N'ADLS', N'Parquet', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "Number of lines to skip."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Csv"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "SkipLineCount",
+            "FirstRowAsHeader",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Parquet"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (82, -2, N'ADF', N'GPL_AzureBlobStorage_DelimitedText_AzureBlobFS_Json', N'Azure Blob', N'Csv', N'ADLS', N'Json', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "Number of lines to skip."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Csv"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "SkipLineCount",
+            "FirstRowAsHeader",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Json"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (83, -2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobFS_Parquet', N'Azure Blob', N'Json', N'ADLS', N'Parquet', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Json"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Parquet"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (84, -2, N'ADF', N'GPL_AzureBlobStorage_Json_AzureBlobFS_DelimitedText', N'Azure Blob', N'Json', N'ADLS', N'Csv', NULL, 1, N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "Type": {
+               "enum": [
+                  "Json"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      },
+      "Target": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "FirstRowAsHeader": {
+               "default": "true",
+               "enum": [
+                  "true",
+                  "false"
+               ],
+               "options": {
+                  "infoText": "Set to true if you want the first row of data to be used as column names."
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                  }
+               },
+               "type": "string"
+            },
+            "SchemaFileName": {
+               "options": {
+                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer_Schema.json"
+                  }
+               },
+               "type": "string"
+            },
+            "SkipLineCount": {
+               "default": 0,
+               "options": {
+                  "infoText": "Number of lines to skip."
+               },
+               "type": "integer"
+            },
+            "Type": {
+               "enum": [
+                  "Csv"
+               ],
+               "options": {
+                  "hidden": true
+               },
+               "type": "string"
+            }
+         },
+         "required": [
+            "Type",
+            "RelativePath",
+            "DataFileName",
+            "SchemaFileName",
+            "SkipLineCount",
+            "FirstRowAsHeader",
+            "MaxConcurrentConnections"
+         ],
+         "type": "object"
+      }
+   },
+   "required": [
+      "Source",
+      "Target"
+   ],
+   "title": "TaskMasterJson",
+   "type": "object"
+}
+', N'{}')
+GO
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (85, -3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet', N'SQL Server', N'Sql', N'Azure Blob', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10434,7 +10440,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (86, 3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet', N'Azure SQL', N'Sql', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (86, -3, N'ADF', N'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet', N'Azure SQL', N'Sql', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10577,7 +10583,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (87, 3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobFS_Parquet', N'SQL Server', N'Sql', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (87, -3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobFS_Parquet', N'SQL Server', N'Sql', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10720,7 +10726,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (88, 3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobFS_Parquet', N'SQL Server', N'Table', N'ADLS', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (88, -3, N'ADF', N'GPL_SqlServerTable_NA_AzureBlobFS_Parquet', N'SQL Server', N'Table', N'ADLS', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -10863,7 +10869,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (89, 3, N'ADF', N'GPL_AzureSqlTable_NA_FileServer_Parquet', N'Azure SQL', N'Table', N'FileServer', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (89, -3, N'ADF', N'GPL_AzureSqlTable_NA_FileServer_Parquet', N'Azure SQL', N'Table', N'FileServer', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -11006,7 +11012,7 @@ INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType]
 }
 ', N'{}')
 GO
-INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (90, 3, N'ADF', N'GPL_SqlServerTable_NA_FileServer_Parquet', N'SQL Server', N'Table', N'FileServer', N'Parquet', NULL, 1, N'{
+INSERT [dbo].[TaskTypeMapping] ([TaskTypeMappingId], [TaskTypeId], [MappingType], [MappingName], [SourceSystemType], [SourceType], [TargetSystemType], [TargetType], [TaskTypeJson], [ActiveYN], [TaskMasterJsonSchema], [TaskInstanceJsonSchema]) VALUES (90, -3, N'ADF', N'GPL_SqlServerTable_NA_FileServer_Parquet', N'SQL Server', N'Table', N'FileServer', N'Parquet', NULL, 1, N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {

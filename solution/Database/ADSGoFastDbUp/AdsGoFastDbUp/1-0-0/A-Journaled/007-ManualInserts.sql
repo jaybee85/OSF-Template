@@ -4,7 +4,19 @@ Update [dbo].[ExecutionEngine]
             SubscriptionUid = '$SubscriptionId$',
             DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
             LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
+            JsonSchema = "{}"
         where id = -1
+
+Update [dbo].[ExecutionEngine]
+            Set [Name] = '$SynapseWorkspaceName$', 
+            ResourceGroup = '$ResourceGroupName$',
+            SubscriptionUid = '$SubscriptionId$',
+            DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
+            LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
+            JsonSchema = "{
+                "endpoint": "placeholderendpoint"
+            }"
+        where id = -2
 
 
 Update 
@@ -87,3 +99,23 @@ Update
         Where 
             SystemId = '-8'
         GO
+
+        Update 
+        [dbo].[SourceAndTargetSystems]
+        Set 
+            SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net',
+            SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
+            SystemJSON = '{  "Database" : "msdb"  , "Username" : "adminuser", "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
+        Where 
+            SystemId = '-14'
+        GO
+
+                Update 
+        [dbo].[SourceAndTargetSystems]
+        Set 
+            SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net',
+            SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
+        Where 
+            SystemId = '-15'
+        GO
+

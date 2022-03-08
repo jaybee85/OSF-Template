@@ -39,16 +39,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         0                          ,
         '[0]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)'                      ,
-        2                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        -2                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -74,7 +74,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -96,16 +96,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -1                          ,
         '[1]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)'                      ,
-        2                            ,
-        -3                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        -2                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -131,7 +131,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -153,16 +153,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -2                          ,
         '[2]  Folder copy between datalake zones of *.* (Binary) from ADLS to ADLS  (Binary)'                      ,
-        2                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        -2                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -188,7 +188,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -210,16 +210,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -3                          ,
         '[3]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.parquet (Parquet)'                      ,
-        2                            ,
-        -1                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        -2                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -248,7 +248,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -270,16 +270,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -4                          ,
-        '[4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (DelimitedText)'                      ,
-        2                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        '[4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (Csv)'                      ,
+        -2                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -299,16 +299,18 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Target": {
         "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "/Tests/Azure Storage to Azure Storage/4",
         "SchemaFileName": "",
-        "Type": "DelimitedText"
+        "SkipLineCount": 0,
+        "Type": "Csv"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -330,16 +332,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -5                          ,
         '[5]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.json (Json)'                      ,
-        2                            ,
+        -2                            ,
         -3                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -368,7 +370,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -390,16 +392,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -6                          ,
         '[6]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from ADLS to FileServer yellow_tripdata_2017-03.xlsx (Binary)'                      ,
-        2                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        15                        ,
+        -2                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -15                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -425,7 +427,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -447,16 +449,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -7                          ,
-        '[7]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure SQL'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        '[-7]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -476,16 +478,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer7",
+        "StagingTableName": "stg_Customer-7",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer7",
+        "TableName": "Customer-7",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -507,16 +509,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -8                          ,
-        '[8]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure SQL'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        '[-6]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -536,16 +538,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer8",
+        "StagingTableName": "stg_Customer-6",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer8",
+        "TableName": "Customer-6",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -567,16 +569,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -9                          ,
-        '[9]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure SQL'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        '[-5]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -599,16 +601,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata9",
+        "StagingTableName": "stg_yellow_tripdata-5",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata9",
+        "TableName": "yellow_tripdata-5",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -630,16 +632,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -10                          ,
-        '[10]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure SQL'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        '[-4]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -3                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -662,16 +664,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata10",
+        "StagingTableName": "stg_yellow_tripdata-4",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata10",
+        "TableName": "yellow_tripdata-4",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -693,16 +695,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -11                          ,
-        '[11]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure SQL'                      ,
-        1                            ,
+        '[-3]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
         -3                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -710,10 +712,12 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
+        "SkipLineCount": 0,
         "Type": "Csv"
     },
     "Target": {
@@ -722,16 +726,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata11",
+        "StagingTableName": "stg_yellow_tripdata-3",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata11",
+        "TableName": "yellow_tripdata-3",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -753,16 +757,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -12                          ,
-        '[12]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure SQL'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        '[-2]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -782,16 +786,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata12",
+        "StagingTableName": "stg_yellow_tripdata-2",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata12",
+        "TableName": "yellow_tripdata-2",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -813,16 +817,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -13                          ,
-        '[13]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure SQL'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        '[-1]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -830,10 +834,12 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
+        "SkipLineCount": 0,
         "Type": "Csv"
     },
     "Target": {
@@ -842,16 +848,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata13",
+        "StagingTableName": "stg_yellow_tripdata-1",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata13",
+        "TableName": "yellow_tripdata-1",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -873,16 +879,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -14                          ,
-        '[14]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure SQL'                      ,
-        1                            ,
+        '[0]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure SQL'                      ,
+        -1                            ,
         -1                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -902,16 +908,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata14",
+        "StagingTableName": "stg_yellow_tripdata0",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata14",
+        "TableName": "yellow_tripdata0",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -933,16 +939,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -15                          ,
-        '[15]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure Synapse'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        10                        ,
+        '[1]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -962,16 +968,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer15",
+        "StagingTableName": "stg_Customer1",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer15",
+        "TableName": "Customer1",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -993,16 +999,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -16                          ,
-        '[16]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure Synapse'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        10                        ,
+        '[2]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1022,16 +1028,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_Customer16",
+        "StagingTableName": "stg_Customer2",
         "StagingTableSchema": "dbo",
-        "TableName": "Customer16",
+        "TableName": "Customer2",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1053,16 +1059,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -17                          ,
-        '[17]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure Synapse'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        4                        ,
-        10                        ,
+        '[3]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1085,16 +1091,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata17",
+        "StagingTableName": "stg_yellow_tripdata3",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata17",
+        "TableName": "yellow_tripdata3",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1116,16 +1122,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -18                          ,
-        '[18]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure Synapse'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        10                        ,
+        '[4]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1148,16 +1154,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata18",
+        "StagingTableName": "stg_yellow_tripdata4",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata18",
+        "TableName": "yellow_tripdata4",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1179,16 +1185,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -19                          ,
-        '[19]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure Synapse'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        3                        ,
-        10                        ,
+        '[5]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -3                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1196,10 +1202,12 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
+        "SkipLineCount": 0,
         "Type": "Csv"
     },
     "Target": {
@@ -1208,16 +1216,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata19",
+        "StagingTableName": "stg_yellow_tripdata5",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata19",
+        "TableName": "yellow_tripdata5",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1239,16 +1247,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -20                          ,
-        '[20]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure Synapse'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        10                        ,
+        '[6]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1268,16 +1276,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata20",
+        "StagingTableName": "stg_yellow_tripdata6",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata20",
+        "TableName": "yellow_tripdata6",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1299,16 +1307,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -21                          ,
-        '[21]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure Synapse'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        10                        ,
+        '[7]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1316,10 +1324,12 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
+        "SkipLineCount": 0,
         "Type": "Csv"
     },
     "Target": {
@@ -1328,16 +1338,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata21",
+        "StagingTableName": "stg_yellow_tripdata7",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata21",
+        "TableName": "yellow_tripdata7",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1359,16 +1369,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -22                          ,
-        '[22]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure Synapse'                      ,
-        1                            ,
+        '[8]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure Synapse'                      ,
+        -1                            ,
         -3                           ,
-        4                      ,
-        4                        ,
-        10                        ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1388,16 +1398,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "StagingTableName": "stg_yellow_tripdata22",
+        "StagingTableName": "stg_yellow_tripdata8",
         "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata22",
+        "TableName": "yellow_tripdata8",
         "TableSchema": "dbo",
         "Type": "Table"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1419,16 +1429,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -23                          ,
-        '[23]  FulLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
-        3                            ,
-        -1                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        '[-23]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        -3                            ,
+        -2                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1444,14 +1454,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/23",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-23",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1473,16 +1483,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -24                          ,
-        '[24]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
-        -4                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        '[-22]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -3                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1498,14 +1508,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/24",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-22",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1527,16 +1537,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -25                          ,
-        '[25]  FullLoadUsingExtractionSql of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
-        -1                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        '[-21]  FullLoadUsingExtractionSql of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -3                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1552,14 +1562,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/25",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-21",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1581,16 +1591,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -26                          ,
-        '[26]  FullLoadWithChunk of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
+        '[-20]  FullLoadWithChunk of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
         -1                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1606,14 +1616,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/26",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-20",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1635,16 +1645,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -27                          ,
-        '[27]  IncrementalLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
-        -4                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        '[-19]  IncrementalLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -3                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1660,14 +1670,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/27",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-19",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1689,16 +1699,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -28                          ,
-        '[28]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
-        3                            ,
-        -3                           ,
-        4                      ,
-        6                        ,
-        4                        ,
+        '[-18]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        -3                            ,
+        -4                           ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1714,14 +1724,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/28",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-18",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1743,16 +1753,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -29                          ,
-        '[29]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
-        3                            ,
+        '[-17]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
         -2                           ,
-        4                      ,
-        6                        ,
-        4                        ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1768,14 +1778,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/29",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-17",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1797,16 +1807,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -30                          ,
-        '[30]  FullLoad of SalesLT.Customer (Table) from SQL Server to dbo.all_objects.parquet in ADLS(Parquet)'                      ,
-        3                            ,
-        -2                           ,
-        4                      ,
-        6                        ,
-        4                        ,
+        '[-16]  FullLoad of SalesLT.Customer (Table) from SQL Server to dbo.all_objects.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -1                           ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1822,14 +1832,14 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     },
     "Target": {
         "DataFileName": "dbo.all_objects.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/30",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-16",
         "SchemaFileName": "dbo_all_objects.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     

@@ -74,7 +74,7 @@ namespace WebApplication.Controllers
                 ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName");
             }
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName");
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
             
             ViewBag.returnUrl = Request.Headers["Referer"].ToString();
@@ -92,7 +92,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
+        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
         {
             if (ModelState.IsValid)
             {
@@ -109,7 +109,7 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
             return View(taskMaster);
         }
@@ -134,7 +134,7 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
             return View(taskMaster);
         }
@@ -145,7 +145,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
+        public async Task<IActionResult> Edit(long id, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
         {
             if (id != taskMaster.TaskMasterId)
             {
@@ -181,7 +181,7 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(x => x.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x => x.TaskGroupName), "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType.OrderBy(x => x.TaskTypeName), "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "DataFactoryName");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
             return View(taskMaster);
         }
@@ -453,7 +453,7 @@ namespace WebApplication.Controllers
             ViewData["SourceSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(t => t.SystemName), "SystemId", "SystemName", taskMaster.SourceSystemId);
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems.OrderBy(t => t.SystemName), "SystemId", "SystemName", taskMaster.TargetSystemId);
             ViewData["ScheduleMasterId"] = new SelectList(_context.ScheduleMaster.OrderBy(t => t.ScheduleDesciption), "ScheduleMasterId", "ScheduleDesciption", taskMaster.ScheduleMasterId);
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
             ViewBag.returnUrl = Request.Headers["Referer"].ToString();
             return View(taskMaster);
@@ -462,7 +462,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> EditPlus(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,DataFactoryId")] TaskMaster taskMaster)
+        public async Task<IActionResult> EditPlus(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
         {
             if (id != taskMaster.TaskMasterId)
                 return NotFound();
@@ -496,7 +496,7 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(_context.SourceAndTargetSystems, "SystemId", "SystemAuthType", taskMaster.TargetSystemId);
             ViewData["TaskGroupId"] = new SelectList(_context.TaskGroup, "TaskGroupId", "TaskGroupName", taskMaster.TaskGroupId);
             ViewData["TaskTypeId"] = new SelectList(_context.TaskType, "TaskTypeId", "TaskTypeName", taskMaster.TaskTypeId);
-            ViewData["DataFactoryId"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["EngineId"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             ViewData["IntegrationRuntimes"] = new SelectList(_context.IntegrationRuntime.OrderBy(x => x.IntegrationRuntimeName), "IntegrationRuntimeName", "IntegrationRuntimeName");
 
             return View(taskMaster);

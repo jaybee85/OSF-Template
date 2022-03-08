@@ -57,7 +57,7 @@ GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
-GO
+GO 
 CREATE TABLE [dbo].[SubjectAreaForm](
 	[SubjectAreaFormId] [int] IDENTITY(1,1) NOT NULL,
 	[FormJson] [varchar](max) NULL,
@@ -406,6 +406,7 @@ GO
 CREATE TABLE [dbo].[ExecutionEngine](
 	[EngineId] [bigint] IDENTITY(1,1) NOT NULL,
 	[EngineName] [varchar](255) NULL,
+	[SystemType] [varchar](255) NULL,
 	[ResourceGroup] [varchar](255) NULL,
 	[SubscriptionUid] [uniqueidentifier] NULL,
 	[DefaultKeyVaultURL] [varchar](255) NULL,

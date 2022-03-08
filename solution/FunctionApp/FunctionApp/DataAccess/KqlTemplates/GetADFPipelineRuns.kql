@@ -8,7 +8,7 @@
 ADFPipelineRun
 | where Status in ("Succeeded", "Failed", "Cancelled")
         and TimeGenerated > datetime({MaxPipelineTimeGenerated})
-        and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/{DataFactoryName}"
+        and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/{EngineName}"
 | extend        TaskInstanceId =    coalesce(toint(parse_json(tostring(parse_json(Parameters).Body)).TaskInstanceId),
                                         coalesce(toint(parse_json(tostring(parse_json(Parameters).TaskObject)).TaskInstanceId),
                                              toint( parse_json(tostring(parse_json(Parameters))).TaskInstanceId)

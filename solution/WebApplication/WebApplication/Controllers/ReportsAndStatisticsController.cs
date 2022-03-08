@@ -326,7 +326,7 @@ namespace WebApplication.Controllers
 	            left join ScheduleMaster sm on sm.ScheduleMasterId = tm.ScheduleMasterId
 	            left join TaskInstanceExecution tei on tei.TaskInstanceId = ti.TaskInstanceId 
 	            left join ADFPipelineRun adfpr on adfpr.TaskInstanceId =  tei.TaskInstanceId and adfpr.ExecutionUid = tei.ExecutionUid
-                left join ADFActivityRun aps on adfpr.DatafactoryId = aps.DataFactoryId and adfpr.PipelineRunUid = aps.PipelineRunUid 
+                left join ADFActivityRun aps on adfpr.EngineId = aps.EngineId and adfpr.PipelineRunUid = aps.PipelineRunUid 
                 ";
             };
 
@@ -339,7 +339,7 @@ namespace WebApplication.Controllers
 	            left join ScheduleMaster sm on sm.ScheduleMasterId = tm.ScheduleMasterId
 	            left join TaskInstanceExecution tei on tei.TaskInstanceId = ti.TaskInstanceId 
 	            left join ADFPipelineRun adfpr on adfpr.TaskInstanceId =  tei.TaskInstanceId and adfpr.ExecutionUid = tei.ExecutionUid
-                left join ADFActivityRun aps on adfpr.DatafactoryId = aps.DataFactoryId and adfpr.PipelineRunUid = aps.PipelineRunUid 
+                left join ADFActivityRun aps on adfpr.EngineId = aps.EngineId and adfpr.PipelineRunUid = aps.PipelineRunUid 
                 ";
             };
 
@@ -356,7 +356,7 @@ namespace WebApplication.Controllers
 	            left join ScheduleInstance si on si.ScheduleInstanceId = ti.ScheduleInstanceId	            
 	            left join TaskInstanceExecution tei on tei.TaskInstanceId = ti.TaskInstanceId 
 	            left join ADFPipelineRun adfpr on adfpr.TaskInstanceId =  tei.TaskInstanceId and adfpr.ExecutionUid = tei.ExecutionUid
-                left join ADFActivityRun aps on adfpr.DatafactoryId = aps.DataFactoryId and adfpr.PipelineRunUid = aps.PipelineRunUid 
+                left join ADFActivityRun aps on adfpr.EngineId = aps.EngineId and adfpr.PipelineRunUid = aps.PipelineRunUid 
                 ";
             };
 
@@ -371,7 +371,7 @@ namespace WebApplication.Controllers
 	            join ScheduleInstance si on si.ScheduleInstanceId = ti.ScheduleInstanceId	            
 	            left join TaskInstanceExecution tei on tei.TaskInstanceId = ti.TaskInstanceId 
 	            left join ADFPipelineRun adfpr on adfpr.TaskInstanceId =  tei.TaskInstanceId and adfpr.ExecutionUid = tei.ExecutionUid
-                left join ADFActivityRun aps on adfpr.DatafactoryId = aps.DataFactoryId and adfpr.PipelineRunUid = aps.PipelineRunUid
+                left join ADFActivityRun aps on adfpr.EngineId = aps.EngineId and adfpr.PipelineRunUid = aps.PipelineRunUid
                 ";
             };
 
@@ -385,7 +385,7 @@ namespace WebApplication.Controllers
 	            join ScheduleInstance si on si.ScheduleInstanceId = ti.ScheduleInstanceId	            
 	            join TaskInstanceExecution tei on tei.TaskInstanceId = ti.TaskInstanceId 
 	            left join ADFPipelineRun adfpr on adfpr.TaskInstanceId =  tei.TaskInstanceId and adfpr.ExecutionUid = tei.ExecutionUid
-                left join ADFActivityRun aps on adfpr.DatafactoryId = aps.DataFactoryId and adfpr.PipelineRunUid = aps.PipelineRunUid 
+                left join ADFActivityRun aps on adfpr.EngineId = aps.EngineId and adfpr.PipelineRunUid = aps.PipelineRunUid 
 ";
             };
             

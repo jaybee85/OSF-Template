@@ -7,7 +7,7 @@
       "SourceType": "AzureSqlTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -17,7 +17,7 @@
       "SourceType": "SqlServerTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -27,7 +27,7 @@
       "SourceType": "AzureSqlTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -37,7 +37,7 @@
       "SourceType": "SqlServerTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -47,7 +47,7 @@
       "SourceType": "AzureSqlTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -57,7 +57,7 @@
       "SourceType": "SqlServerTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -67,7 +67,7 @@
       "SourceType": "AzureSqlTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -77,7 +77,7 @@
       "SourceType": "SqlServerTable",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -87,7 +87,7 @@
       "SourceType": "AzureSqlTable",
       "TargetFormat": "Parquet",
       "TargetType": "FileServer",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "SQL-Database-to-Azure-Storage",
@@ -97,7 +97,7 @@
       "SourceType": "SqlServerTable",
       "TargetFormat": "Parquet",
       "TargetType": "FileServer",
-      "TaskTypeId": 3
+      "TaskTypeId": -3
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -107,7 +107,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -117,7 +117,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -127,7 +127,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -137,7 +137,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -147,7 +147,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -157,7 +157,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -167,7 +167,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -177,7 +177,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -187,7 +187,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -197,7 +197,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -207,7 +207,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -217,7 +217,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -227,7 +227,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -237,7 +237,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -247,7 +247,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-SQL-Database",
@@ -257,7 +257,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Table",
       "TargetType": "AzureSqlDWTable",
-      "TaskTypeId": 1
+      "TaskTypeId": -1
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -267,7 +267,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -277,7 +277,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -287,7 +287,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -297,7 +297,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -307,7 +307,7 @@
       "SourceType": "FileServer",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -317,7 +317,7 @@
       "SourceType": "FileServer",
       "TargetFormat": "Binary",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -327,7 +327,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Binary",
       "TargetType": "FileServer",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -337,7 +337,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Binary",
       "TargetType": "FileServer",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -347,7 +347,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -357,7 +357,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -367,7 +367,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -377,7 +377,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -387,7 +387,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -397,7 +397,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -407,7 +407,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -417,7 +417,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -427,7 +427,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -437,7 +437,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -447,7 +447,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -457,7 +457,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -467,7 +467,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -477,7 +477,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -487,7 +487,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -497,7 +497,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -507,7 +507,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -517,7 +517,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -527,7 +527,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -537,7 +537,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -547,7 +547,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -557,7 +557,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -567,7 +567,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -577,7 +577,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -587,7 +587,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -597,7 +597,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -607,7 +607,7 @@
       "SourceType": "AzureBlobFS",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobStorage",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -617,7 +617,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -627,7 +627,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -637,7 +637,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -647,7 +647,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -657,7 +657,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -667,7 +667,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -677,7 +677,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Json",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -687,7 +687,7 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    },
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
@@ -697,6 +697,6 @@
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
-      "TaskTypeId": 2
+      "TaskTypeId": -2
    }
 ]

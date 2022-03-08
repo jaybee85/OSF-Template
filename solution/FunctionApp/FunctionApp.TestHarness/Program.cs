@@ -58,22 +58,22 @@ namespace FunctionApp.TestHarness
         private readonly AzureSynapseService _azureSynapseService;
 
         public App(ILogger<App> logger,
-            //TaskTypeMappingProvider taskTypeMappingProvider,
-            //SourceAndTargetSystemJsonSchemasProvider schemasProvider,
+            TaskTypeMappingProvider taskTypeMappingProvider,
+            SourceAndTargetSystemJsonSchemasProvider schemasProvider,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
-            //TaskMetaDataDatabase taskMetaDataDatabase, 
+            TaskMetaDataDatabase taskMetaDataDatabase, 
             DataFactoryPipelineProvider dataFactoryPipelineProvider,
             DataFactoryClientFactory dataFactoryClientFactory,
             ISecurityAccessProvider sap,
             AzureSynapseService azureSynapseService)
         {
             _logger = logger;
-            //_taskTypeMappingProvider = taskTypeMappingProvider;
-            //_schemasProvider = schemasProvider;
+            _taskTypeMappingProvider = taskTypeMappingProvider;
+            _schemasProvider = schemasProvider;
             _options = options;
             _authProvider = authProvider;
-            //_taskMetaDataDatabase = taskMetaDataDatabase;
+            _taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _dataFactoryClientFactory = dataFactoryClientFactory;
             _sap = sap;
@@ -91,12 +91,13 @@ namespace FunctionApp.TestHarness
             _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
-            _funcAppLogger.LogInformation("hello");
-            _azureSynapseService.StartSynapseSqlPool("035a1364-f00d-48e2-b582-4fe125905ee3", "adsgftera2", "mststgsynwads", "mststgsyndpads", "resume", _funcAppLogger).ConfigureAwait(true);
+            
+            //_azureSynapseService.StartSynapseSqlPool("035a1364-f00d-48e2-b582-4fe125905ee3", "adsgftera2", "mststgsynwads", "mststgsyndpads", "resume", _funcAppLogger).ConfigureAwait(true);
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
-            //DebugPrepareFrameworkTasks();       
+            //DebugPrepareFrameworkTasks();
+            DebugRunFrameworkTasks();
 
         }
 
@@ -181,7 +182,7 @@ namespace FunctionApp.TestHarness
                             TaskMasterJSON = T.TaskMasterJson,
                             ActiveYN = 1,
                             DependencyChainTag = "",
-                            DataFactoryId = T.DataFactoryId
+                            EngineId = T.EngineId
                         };
                         sql = @"
                                         
@@ -201,7 +202,7 @@ namespace FunctionApp.TestHarness
                         [TaskMasterJSON]                        ,
                         [ActiveYN]                              ,
                         [DependencyChainTag]                    ,
-                        [DataFactoryId]                         
+                        [EngineId]                         
                     )
                     select 
                         @TaskMasterId                          ,
@@ -217,7 +218,7 @@ namespace FunctionApp.TestHarness
                         @TaskMasterJSON                        ,
                         @ActiveYN                              ,
                         @DependencyChainTag                    ,
-                        @DataFactoryId;  
+                        @EngineId;  
                     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;";
 
                         result = con.Query(sql, parameters);
@@ -318,7 +319,7 @@ namespace FunctionApp.TestHarness
                             TaskMasterJSON = T.TaskMasterJson,
                             ActiveYN = 1,
                             DependencyChainTag = "",
-                            DataFactoryId = T.DataFactoryId
+                            EngineId = T.EngineId
                         };
                         sql = @"
                                         
@@ -338,7 +339,7 @@ namespace FunctionApp.TestHarness
                         [TaskMasterJSON]                        ,
                         [ActiveYN]                              ,
                         [DependencyChainTag]                    ,
-                        [DataFactoryId]                         
+                        [EngineId]                         
                     )
                     select 
                         @TaskMasterId                          ,
@@ -354,7 +355,7 @@ namespace FunctionApp.TestHarness
                         @TaskMasterJSON                        ,
                         @ActiveYN                              ,
                         @DependencyChainTag                    ,
-                        @DataFactoryId;  
+                        @EngineId;  
                     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;";
 
                         result = con.Query(sql, parameters);
@@ -403,6 +404,16 @@ namespace FunctionApp.TestHarness
         {
             FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger(_sap,_taskMetaDataDatabase, _options, _authProvider, _dataFactoryClientFactory);
             c.RunFrameworkTasksCore(1, _funcAppLogger);
+
+            _funcAppLogger.DefaultActivityLogItem.ExecutionUid = Guid.NewGuid();
+            c.RunFrameworkTasksCore(2, _funcAppLogger);
+
+            _funcAppLogger.DefaultActivityLogItem.ExecutionUid = Guid.NewGuid();
+            c.RunFrameworkTasksCore(3, _funcAppLogger);
+
+            _funcAppLogger.DefaultActivityLogItem.ExecutionUid = Guid.NewGuid();
+            c.RunFrameworkTasksCore(4, _funcAppLogger);
+
         }
 
         

@@ -56,28 +56,28 @@ namespace FunctionApp.Functions
             //ToDo Add DataFactoryId field to ADFActivityErrors
             var maxTimesGen = conRead.QueryWithRetry(@"                                  
                                                        Select a.*, MaxTimeGenerated MaxTimeGenerated from 
-                                                        DataFactory a left join 
-                                                        ( Select DataFactoryId, MaxTimeGenerated = Max(TimeGenerated) 
+                                                        ExecutionEngine a left join 
+                                                        ( Select EngineId, MaxTimeGenerated = Max(TimeGenerated) 
                                                         from ADFActivityErrors b
-                                                        group by DataFactoryId
-                                                        ) b on a.Id = b.DataFactoryId
+                                                        group by EngineId
+                                                        ) b on a.EngineId = b.EngineId
                                                         ");
 
             DateTimeOffset maxTimeGenerated = DateTimeOffset.UtcNow.AddDays(-30);
 
-            foreach (var datafactory in maxTimesGen)
+            foreach (var executionengine in maxTimesGen)
             {
-                if (datafactory.MaxTimeGenerated != null)
+                if (executionengine.MaxTimeGenerated != null)
                 {
-                    maxTimeGenerated = ((DateTimeOffset)datafactory.MaxTimeGenerated).AddMinutes(-5);
+                    maxTimeGenerated = ((DateTimeOffset)executionengine.MaxTimeGenerated).AddMinutes(-5);
                 }
 
-                string workspaceId = datafactory.LogAnalyticsWorkspaceId.ToString();
+                string workspaceId = executionengine.LogAnalyticsWorkspaceId.ToString();
 
-                logging.LogInformation(String.Format("Fetching Error Records for Subscription {0} ", datafactory.SubscriptionUid.ToString()));
-                logging.LogInformation(String.Format("Fetching Error Records for ResourceGroup {0} ", datafactory.ResourceGroup.ToString()));
-                logging.LogInformation(String.Format("Fetching Error Records for DataFactory {0} ", datafactory.Name.ToString()));
-                logging.LogInformation(String.Format("Fetching Error Records for DataFactoryId {0} ", datafactory.Id.ToString()));
+                logging.LogInformation(String.Format("Fetching Error Records for Subscription {0} ", executionengine.SubscriptionUid.ToString()));
+                logging.LogInformation(String.Format("Fetching Error Records for ResourceGroup {0} ", executionengine.ResourceGroup.ToString()));
+                logging.LogInformation(String.Format("Fetching Error Records for ExecutionEngine {0} ", executionengine.EngineName.ToString()));
+                logging.LogInformation(String.Format("Fetching Error Records for EngineId {0} ", executionengine.EngineId.ToString()));
                 logging.LogInformation($"Fetching Error Records for Workspace {workspaceId} ");
                 logging.LogInformation(
                     $"Fetching Error Records from {maxTimeGenerated.ToString("yyyy-MM-dd HH:mm:ss.ff K")} onwards");
@@ -85,10 +85,10 @@ namespace FunctionApp.Functions
                 Dictionary<string, object> kqlParams = new Dictionary<string, object>
                 {
                     {"MaxActivityTimeGenerated", maxTimeGenerated.ToString("yyyy-MM-dd HH:mm:ss.ff K") },
-                    {"SubscriptionId", ((string)datafactory.SubscriptionUid.ToString()).ToUpper()},
-                    {"ResourceGroupName", ((string)datafactory.ResourceGroup.ToString()).ToUpper() },
-                    {"DataFactoryName", ((string)datafactory.Name.ToString()).ToUpper() },
-                    {"DatafactoryId", datafactory.Id.ToString()  }
+                    {"SubscriptionId", ((string)executionengine.SubscriptionUid.ToString()).ToUpper()},
+                    {"ResourceGroupName", ((string)executionengine.ResourceGroup.ToString()).ToUpper() },
+                    {"EngineName", ((string)executionengine.EngineName.ToString()).ToUpper() },
+                    {"EngineId", executionengine.EngineId.ToString()  }
                 };
 
                 string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFActivityErrors.kql"));
@@ -149,7 +149,7 @@ namespace FunctionApp.Functions
                         Dictionary<string, string> sqlParams = new Dictionary<string, string>
                         {
                             { "TempTable", t.QuotedSchemaAndName() },
-                            { "DatafactoryId", datafactory.Id.ToString()}
+                            { "EngineId", executionengine.EngineId.ToString()}
                         };
 
                         string mergeSql = GenerateSqlStatementTemplates.GetSql(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoADFActivityErrors", sqlParams);

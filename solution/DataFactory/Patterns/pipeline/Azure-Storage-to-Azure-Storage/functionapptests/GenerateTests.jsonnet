@@ -154,7 +154,7 @@ local tests =
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"DelimitedText",
+        "TargetFormat":"Csv",
         "TargetType":"ADLS",        
         "TargetDataFilename":"yellow_tripdata_2017-03.csv",
         "TargetSchemaFileName":"",

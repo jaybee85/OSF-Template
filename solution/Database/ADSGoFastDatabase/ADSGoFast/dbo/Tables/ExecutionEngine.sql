@@ -7,6 +7,7 @@
 CREATE TABLE [dbo].[ExecutionEngine] (
     [EngineId]                BIGINT           IDENTITY (1, 1) NOT NULL,
     [EngineName]              VARCHAR (255)    NULL,
+    [SystemType]              VARCHAR (255)    NULL,    
     [ResourceGroup]           VARCHAR (255)    NULL,
     [SubscriptionUid]         UNIQUEIDENTIFIER NULL,
     [DefaultKeyVaultURL]      VARCHAR (255)    NULL,

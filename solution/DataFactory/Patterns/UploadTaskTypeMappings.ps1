@@ -7,6 +7,14 @@ $metadatadb_name=$tout.metadatadb_name
 
 $patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
 
+# Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
+$SqlInstalled = Get-InstalledModule SqlServer
+if($null -eq $SqlInstalled)
+{
+    write-host "Installing SqlServer Module"
+    Install-Module -Name SqlServer -Scope CurrentUser -Force
+}
+
 #----------------------------------------------------------------------------------------------------------------
 #   TaskTypeMappings
 #----------------------------------------------------------------------------------------------------------------

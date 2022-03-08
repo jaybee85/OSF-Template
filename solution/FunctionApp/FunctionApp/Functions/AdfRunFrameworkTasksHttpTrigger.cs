@@ -41,9 +41,9 @@ namespace FunctionApp.Functions
                                             INSERT INTO TaskInstanceExecution (
 	                                                        [ExecutionUid]
 	                                                        ,[TaskInstanceId]
-	                                                        ,[DatafactorySubscriptionUid]
-	                                                        ,[DatafactoryResourceGroup]
-	                                                        ,[DatafactoryName]
+	                                                        ,[EngineSubscriptionUid]
+	                                                        ,[EngineResourceGroup]
+	                                                        ,[EngineName]
 	                                                        ,[PipelineName]
 	                                                        ,[AdfRunUid]
 	                                                        ,[StartDateTime]
@@ -53,9 +53,9 @@ namespace FunctionApp.Functions
                                                         VALUES (
 	                                                            @ExecutionUid
 	                                                        ,@TaskInstanceId
-	                                                        ,@DatafactorySubscriptionUid
-	                                                        ,@DatafactoryResourceGroup
-	                                                        ,@DatafactoryName
+	                                                        ,@EngineSubscriptionUid
+	                                                        ,@EngineResourceGroup
+	                                                        ,@EngineName
 	                                                        ,@PipelineName
 	                                                        ,@AdfRunUid
 	                                                        ,@StartDateTime
@@ -136,7 +136,7 @@ namespace FunctionApp.Functions
                     logging.DefaultActivityLogItem.TaskInstanceId = taskInstanceId;
 
                     //TO DO: Update TaskInstance yto UnTried if failed
-                    string pipelineName = task["DataFactory"]["ADFPipeline"].ToString();
+                    string pipelineName = task["ExecutionEngine"]["ADFPipeline"].ToString();
                     var pipelineParams =  new Dictionary<string, object>();
 
                     logging.LogInformation($"Executing ADF Pipeline for TaskInstanceId {taskInstanceId} ");
@@ -217,9 +217,9 @@ namespace FunctionApp.Functions
 
             if (!string.IsNullOrEmpty(pipelineName))
             {
-                var subscriptionId = task["DataFactory"]["SubscriptionId"].ToString();
-                var resourceGroup = task["DataFactory"]["ResourceGroup"].ToString();
-                var factoryName = task["DataFactory"]["Name"].ToString();
+                var subscriptionId = task["ExecutionEngine"]["SubscriptionId"].ToString();
+                var resourceGroup = task["ExecutionEngine"]["ResourceGroup"].ToString();
+                var factoryName = task["ExecutionEngine"]["EngineName"].ToString();
                
                 //Create a data factory management client
                 logging.LogInformation("Creating ADF connectivity client.");
@@ -254,9 +254,9 @@ namespace FunctionApp.Functions
                 {
                     ExecutionUid = logging.DefaultActivityLogItem.ExecutionUid.ToString(),
                     TaskInstanceId = Convert.ToInt64(task["TaskInstanceId"]),
-                    DatafactorySubscriptionUid = task["DataFactory"]["SubscriptionId"].ToString(),
-                    DatafactoryResourceGroup = task["DataFactory"]["ResourceGroup"].ToString(),
-                    DatafactoryName = task["DataFactory"]["Name"].ToString(),
+                    //DatafactorySubscriptionUid = task["ExecutionEngine"]["SubscriptionId"].ToString(),
+                    //DatafactoryResourceGroup = task["ExecutionEngine"]["ResourceGroup"].ToString(),
+                    EngineID = task["ExecutionEngine"]["EngineId"].ToString(),
                     PipelineName = pipelineName,
                     AdfRunUid = Guid.Parse(runResponse.RunId),
                     StartDateTime = DateTimeOffset.UtcNow,

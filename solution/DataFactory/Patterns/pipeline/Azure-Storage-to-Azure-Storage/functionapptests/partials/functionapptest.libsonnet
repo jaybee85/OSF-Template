@@ -3,7 +3,7 @@ local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     ADFPipeline = "GPL_AzureBlobStorage_ParquetAzureSqlTable_NA",
     Pattern = "Storage to Storage",
-    TestNumber = "1",
+    TestNumber = "-1",
     SourceFormat = "Azure SQL",
     SourceType = "Azure SQL",
     SourceDataFilename = "SalesLT.Customer.parquet",
@@ -44,7 +44,7 @@ function(
         + if (SourceFormat == "Excel") 
             then {"SkipLineCount": SourceSkipLineCount, "FirstRowAsHeader":SourceFirstRowAsHeader,  "SheetName":SourceSheetName}
             else {}
-            + if (SourceFormat == "Delimitedtext") 
+            + if (SourceFormat == "Csv" || SourceFormat == "DelimitedText") 
             then {"SkipLineCount": SourceSkipLineCount, "FirstRowAsHeader":SourceFirstRowAsHeader}
             else {},
 
@@ -60,7 +60,7 @@ function(
         + if (TargetFormat == "Excel") 
             then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader,  "SheetName":TargetSheetName}
             else {}
-            + if (TargetFormat == "Delimitedtext") 
+            + if (TargetFormat == "Csv" || TargetFormat == "DelimitedText") 
             then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader}
             else {},
     },
@@ -82,14 +82,15 @@ function(
     },
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
-    "TaskTypeId":2,
+    "TaskTypeId":-2,
     "TaskType":Pattern,
-    "DataFactoryName":vars.datafactory_name,
-    "DataFactoryResourceGroup":vars.resource_group_name,
-    "DataFactorySubscriptionId":vars.subscription_id,
+    "EngineName":vars.datafactory_name,
+    "EngineResourceGroup":vars.resource_group_name,
+    "EngineSubscriptionId":vars.subscription_id,
+    "EngineJson":  "{}",
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
-    "SourceSystemId":if(SourceType == "Azure Blob") then 3 else 4,
+    "SourceSystemId":if(SourceType == "Azure Blob") then -3 else -4,
     "SourceSystemJSON":std.manifestJson(SourceSystemJson),
     "SourceSystemType":SourceType,
     "SourceSystemServer":if(SourceType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
@@ -97,7 +98,7 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(TargetType == "Azure Blob") then 3 else if TargetType == "FileServer" then 15 else 4,
+    "TargetSystemId":if(TargetType == "Azure Blob") then -3 else if TargetType == "FileServer" then -15 else -4,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
     "TargetSystemServer":if(SourceType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",

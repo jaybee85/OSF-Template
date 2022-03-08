@@ -4,7 +4,7 @@ namespace WebApplication.Models
 {
     public partial class AdfactivityErrors
     {
-        public long? DatafactoryId { get; set; }
+        public long? EngineId { get; set; }
         public string TenantId { get; set; }
         public string SourceSystem { get; set; }
         public DateTime? TimeGenerated { get; set; }

@@ -54,7 +54,7 @@ $irsql = @"
             )
             ) Src on Src.short_name = tgt.IntegrationRuntimeName 
             when NOT matched by TARGET then insert
-            (IntegrationRuntimeName, DataFactoryId, ActiveYN)
+            (IntegrationRuntimeName, EngineId, ActiveYN)
             VALUES (Src.short_name,1,1);
 "@            
 
@@ -179,7 +179,7 @@ foreach ($patternFolder in $patternFolders)
         #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 
-        if ($TaskTypeId -eq 1)
+        if ($TaskTypeId -eq -1)
         {
         $TargetFormat = "Table"
         }
