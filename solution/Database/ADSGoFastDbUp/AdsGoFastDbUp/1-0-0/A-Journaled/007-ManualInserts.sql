@@ -1,27 +1,30 @@
-Update [dbo].[ExecutionEngine]
-            Set 
-			[EngineName] = '$DataFactoryName$', 
-            [SystemType] = 'Datafactory',
+Update 
+	[dbo].[ExecutionEngine]
+        Set 
+			EngineName = '$DataFactoryName$', 
+            SystemType = 'Datafactory',
 			ResourceGroup = '$ResourceGroupName$',
             SubscriptionUid = '$SubscriptionId$',
             DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
             LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$',
             EngineJson = '{}'
-        where EngineId = -1
+        where EngineId = '-1'
+        GO
 
-Update [dbo].[ExecutionEngine]
-            Set 
-			[EngineName] = '$SynapseWorkspaceName$', 
-			[SystemType] = 'Datafactory',
+Update 
+	[dbo].[ExecutionEngine]
+        Set 
+			EngineName = '$SynapseWorkspaceName$', 
+			SystemType = 'Synapse',
             ResourceGroup = '$ResourceGroupName$',
             SubscriptionUid = '$SubscriptionId$',
             DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/', 
             LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$',
             EngineJson = '{
-                "endpoint": "placeholderendpoint"
+                "endpoint": "https://$SynapseWorkspaceName$.dev.azuresynapse.net"
             }'
-        where EngineId = -2
-
+        where EngineId = '-2'
+        GO
 
 Update 
         [dbo].[SourceAndTargetSystems]
