@@ -91,17 +91,18 @@ namespace FunctionApp.TestHarness
             _funcAppLogger.InitializeLog(_logger, activityLogItem);
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
-            
+
             //_azureSynapseService.StartSynapseSqlPool("035a1364-f00d-48e2-b582-4fe125905ee3", "adsgftera2", "mststgsynwads", "mststgsyndpads", "resume", _funcAppLogger).ConfigureAwait(true);
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
-            DebugRunFrameworkTasks();
+            //DebugRunFrameworkTasks();
+            DebugSynapsePipeline();
 
         }
 
-
+        
 
         public IEnumerable<GetTaskInstanceJsonResult> GetTests()
         {
@@ -399,10 +400,17 @@ namespace FunctionApp.TestHarness
             c.PrepareFrameworkTasksCore(_funcAppLogger);
         }
 
+        public void DebugSynapsePipeline()
+        {
+            JObject json = JObject.Parse("{ 'TaskInstanceId':20,'TaskMasterId':-2,'TaskStatus':'InProgress','TaskType':'Azure Storage to SQL Database','Enabled':1,'ExecutionUid':'b829721c-f297-49eb-8436-c33e27005971','NumberOfRetries':0,'DegreeOfCopyParallelism':1,'KeyVaultBaseUrl':'https://mst-stg-kv-ads-pnu0.vault.azure.net/','ScheduleMasterId':'4','TaskGroupConcurrency':'10','TaskGroupPriority':0,'TaskExecutionType':'ADF','DataFactory':{ 'Id':1,'Name':'mst-stg-adf-ads-pnu0','ResourceGroup':'adsgftera2','SubscriptionId':'035a1364-f00d-48e2-b582-4fe125905ee3','ADFPipeline':'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA_Azure','TaskDatafactoryIR':'Azure'},'Source':{ 'System':{ 'SystemId':4,'SystemServer':'https://arkstgdlsadsbcaradsl.dfs.core.windows.net','AuthenticationType':'MSI','Type':'ADLS','Username':null,'Container':'datalakeraw'},'Instance':{ 'SourceRelativePath':'samples/'},'DataFileName':'SalesLT.Customer.chunk_1.parquet','SchemaFileName':'SalesLT.Customer.json','DeleteAfterCompletion':'false','MaxConcurrentConnections':0,'Recursively':'false','RelativePath':'samples/','Type':'Parquet'},'Target':{ 'System':{ 'SystemId':4,'SystemServer':'https://arkstgdlsadsbcaradsl.dfs.core.windows.net','AuthenticationType':'MSI','Type':'ADLS','Username':null,'Container':'datalakelanding'},'Instance':{ 'SourceRelativePath':'samples/'},'DataFileName':'SalesLT-Customer-Delta','DeleteAfterCompletion':'false','MaxConcurrentConnections':0,'Recursively':'false','RelativePath':'samples/','Type':'Delta'} }");
+            Dictionary<string, object> testDict = new Dictionary<string, object> ();
+            testDict.Add("TaskObject", json);
+            _azureSynapseService.RunSynapsePipeline(new Uri("https://arkstgsynwadsbcar.dev.azuresynapse.net"), "Pipeline 1", testDict, _funcAppLogger);
+        }
 
         public void DebugRunFrameworkTasks()
         {
-            FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger(_sap,_taskMetaDataDatabase, _options, _authProvider, _dataFactoryClientFactory);
+            FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger(_sap,_taskMetaDataDatabase, _options, _authProvider, _dataFactoryClientFactory, _azureSynapseService);
             c.RunFrameworkTasksCore(1, _funcAppLogger);
 
             _funcAppLogger.DefaultActivityLogItem.ExecutionUid = Guid.NewGuid();

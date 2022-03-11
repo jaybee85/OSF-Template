@@ -6,6 +6,13 @@ using FunctionApp.Authentication;
 using FunctionApp.Models.Options;
 using Microsoft.Extensions.Options;
 using Microsoft.Rest;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using Azure.Analytics.Synapse.Artifacts;
+using Azure.Core;
+using Microsoft.Azure.Management.DataFactory.Models;
 
 namespace FunctionApp.Services
 {
@@ -47,7 +54,36 @@ namespace FunctionApp.Services
                 throw;
 
             }
+        } 
+
+        public async Task<HttpContent> RunSynapsePipeline(Uri endpoint, string pipelineName, Dictionary<string, object> pipelineParams, Logging.Logging logging)
+        {
+            
+            try
+            {
+                string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net").ConfigureAwait(false); 
+                HttpClient c = new HttpClient();
+                c.DefaultRequestHeaders.Accept.Clear();
+                c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                JObject jsonContent = new JObject();
+                jsonContent["pipeline"] = JsonConvert.SerializeObject(pipelineParams);
+                var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
+                var response = c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent).Result;
+                HttpContent responseContent = response.Content;
+                return responseContent;
+
+            }
+            catch (Exception e)
+            {
+                logging.LogErrors(e);
+                logging.LogErrors(new Exception("Initiation of pipeline Failed:"));
+                throw;
+            }
+
         }
+
+
 
     }
 }

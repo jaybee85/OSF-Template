@@ -31,7 +31,11 @@ INSERT [dbo].[ExecutionEngine_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N
         "endpoint": 
         {      
             "type": "string"    
-        }  
+        },
+        "DeltaProcessingNotebook":
+        {
+           "type": "string"
+        }
     },  
     "required": [    "endpoint"  ]}
 }
