@@ -91,6 +91,12 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Binary","FileServer","Binary"),
     Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Binary","FileServer","Binary"),
     
+    #Parquet to Delta
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","Delta"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobFS","Delta"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobFS","Parquet","AzureBlobStorage","Delta"),
+    Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobFS","Delta"),
+
     #Blob to Blob 
     # Parquet to *        
     #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Parquet","AzureBlobStorage","Excel") -- Excel is not supported as a datafactory target!!!,

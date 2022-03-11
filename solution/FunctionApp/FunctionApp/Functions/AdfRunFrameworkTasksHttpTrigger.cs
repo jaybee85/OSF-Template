@@ -262,7 +262,7 @@ namespace FunctionApp.Functions
                     StartDateTime = DateTimeOffset.UtcNow,
                     Status = "InProgress",
                     Comment = ""
-                }).ConfigureAwait(false);
+                }).ConfigureAwait(true);
             }
             //To Do // Batch to make less "chatty"
             //To Do // Upgrade to stored procedure call
