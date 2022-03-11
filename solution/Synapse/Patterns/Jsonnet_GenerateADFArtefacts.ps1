@@ -7,21 +7,6 @@ $tout = GatherOutputsFromTerraform
 
 $GenerateArm="false"
 
-function CoreReplacements ($string, $GFPIR, $SourceType, $SourceFormat, $TargetType, $TargetFormat) {
-    $string = $string.Replace("@GFP{SourceType}", $SourceType).Replace("@GFP{SourceFormat}", $SourceFormat).Replace("@GFP{TargetType}", $TargetType).Replace("@GFP{TargetFormat}", $TargetFormat)
-
-    if($GenerateArm -eq "false")
-    {
-        $string = $string.Replace("@GF{IR}", $GFPIR).Replace("{IR}", $GFPIR)
-    }
-    else 
-    {
-        $string = $string.Replace("_@GF{IR}", "").Replace("_{IR}", "")
-    }
-
-    return  $string
-}
-
 if (!(Test-Path "./output"))
 {
     New-Item -itemType Directory -Name "output"
@@ -46,36 +31,17 @@ foreach ($file in $templates)
     $content | Set-Content -Path $outfile 
 }
 
-$irsjson = ($tout.integration_runtimes | ConvertTo-Json)
-
-
-$irsql = @"
-            Merge dbo.IntegrationRuntime Tgt
-            using (
-            Select * from OPENJSON('$irsjson') WITH 
-            (
-                name varchar(200), 
-                short_name varchar(20), 
-                is_azure bit, 
-                is_managed_vnet bit     
-            )
-            ) Src on Src.short_name = tgt.IntegrationRuntimeName 
-            when NOT matched by TARGET then insert
-            (IntegrationRuntimeName, EngineId, ActiveYN)
-            VALUES (Src.short_name,1,1);
-"@            
-
-$irsql | Set-Content "MergeIRs.sql"
+$irs = @("Auto")
 
 #Copy IR Specific Pipelines
 $patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
-foreach ($ir in $tout.integration_runtimes)
+foreach ($ir in $irs)
 {    
 
-    $GFPIR = $ir.short_name
-    if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+    $GFPIR = $ir
+    if (($tout.synapse_spark_pool_name -eq ""))
     {
-        Write-Host "Skipping Self Hosted Runtime as it is not yet registered"
+        Write-Host "Skipping Synpase pipeline generation as there is no Synapse Spark Pool"
     }
     else
     {        
@@ -96,7 +62,7 @@ foreach ($ir in $tout.integration_runtimes)
                 $TargetFormat = $pattern.TargetFormat
                 $SparkPoolName = $tout.synapse_spark_pool_name
 
-                $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
+                $newname = ($t.PSChildName).Replace(".libsonnet",".json")        
                 Write-Host $newname        
                 (jsonnet --tla-str GenerateArm=$GenerateArm  --tla-str SparkPoolName="$SparkPoolName" $t.FullName) | Set-Content('./output/' + $newname)
 

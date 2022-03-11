@@ -29,14 +29,3 @@ foreach ($pattern in ($patterns.Folder | Sort-Object | Get-Unique))
     Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   
 
 }
-
-#----------------------------------------------------------------------------------------------------------------
-#   Merge IRs
-#----------------------------------------------------------------------------------------------------------------
-$file = "./MergeIRs.sql"
-Write-Host "_____________________________"
-Write-Host "Updating IRs: " $file
-Write-Host "_____________________________"
-$sqlcommand = (Get-Content $file -raw)
-$token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
-Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   

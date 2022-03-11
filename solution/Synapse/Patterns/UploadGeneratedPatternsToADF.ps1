@@ -28,8 +28,8 @@ function UploadADFItem ($items) {
             $fileName = $_.FullName
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
 
-            $uri = "https://management.azure.com/" + $_tout.resource_group_id + "/providers/Microsoft.Synapse/workspaces/" + $_tout.synapse_workspace_name + "/"
-
+            $uri = "https://" + $_tout.synapse_workspace_name + ".dev.azuresynapse.net/" + "pipelines/"
+            
             if ($jsonobject.type -eq "Microsoft.Synapse/workspaces/linkedservices") {
                 #Swap out Key Vault Url for Function App Linked Service
                 if ($lsName -eq "AdsGoFastKeyVault") {
@@ -42,10 +42,8 @@ function UploadADFItem ($items) {
                 }
             
                 $uri = $uri + "linkedservices/"
-            }
-            if ($jsonobject.type -eq "Microsoft.DataFactory/factories/datasets") {            
-                $uri = $uri + "datasets/"
-            }
+            }    
+
             if ($jsonobject.type -eq "Microsoft.Synapse/workspaces/pipelines") {            
                 $uri = $uri + "pipelines/"
             }
@@ -62,7 +60,7 @@ function UploadADFItem ($items) {
             write-host ($lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             write-host $uri
-            $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@ffu$guid.json" --uri-parameters 'api-version=2018-06-01'
+            $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@ffu$guid.json" --uri-parameters 'api-version=2020-12-01'
         }
         Get-ChildItem -path "ffu*.json" | Remove-Item
     }
