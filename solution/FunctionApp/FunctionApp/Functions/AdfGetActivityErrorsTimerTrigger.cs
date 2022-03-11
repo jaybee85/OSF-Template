@@ -91,7 +91,18 @@ namespace FunctionApp.Functions
                     {"EngineId", executionengine.EngineId.ToString()  }
                 };
 
-                string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFActivityErrors.kql"));
+
+                string kql = "";
+                switch (executionengine.SystemType.ToString())
+                {
+                    case "Datafactory":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFActivityErrors.kql"));
+                        break;
+                    case "Synapse":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetSynapseActivityErrors.kql"));
+                        break;
+                }
+
                 kql = kql.FormatWith(kqlParams, MissingKeyBehaviour.ThrowException, null, '{', '}');
 
                 JObject jsonContent = new JObject();

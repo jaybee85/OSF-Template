@@ -1,0 +1,6 @@
+function ()
+{ 
+    "TaskObject": {
+        "type": "object",
+    }
+}

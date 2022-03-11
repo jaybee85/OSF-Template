@@ -77,6 +77,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 ["ResourceGroup"] = EngineResourceGroup,
                 ["SubscriptionId"] = EngineSubscriptionId,
                 ["ADFPipeline"] = AdfPipeline,
+                ["EngineJson"] = EngineJson,
                 ["TaskDatafactoryIR"] = TaskDatafactoryIr
             };
             _jsonObjectForAdf["ExecutionEngine"] = executionEngine;
@@ -217,5 +218,32 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 MergeArrayHandling = MergeArrayHandling.Union
             });
         }
+
+        public void ProcessEngineJson(EngineJsonSchemasProvider schemaProvider)
+        {
+            JObject Engine = ((JObject)_jsonObjectForAdf["ExecutionEngine"]) == null
+            ? new JObject()
+            : (JObject)_jsonObjectForAdf["ExecutionEngine"]; //Validate SourceSystemJson based on JSON Schema
+            string engineSystemSchema = schemaProvider.GetBySystemType(this.EngineSystemType).JsonSchema;
+            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, engineSystemSchema, EngineJson,
+            "Failed to validate EngineJson JSON for System Type: " + this.EngineSystemType + ". ");
+            ProcessEngineJson_Default(ref Engine);
+            Source["System"] = System;
+            _jsonObjectForAdf["Source"] = Source;
+        }
+        public void ProcessEngineJson_Default(ref JObject Source)
+        {
+            Engine.Merge(_engineSystemJson, new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+        }
+
+
+
     }
+
+
 }
+

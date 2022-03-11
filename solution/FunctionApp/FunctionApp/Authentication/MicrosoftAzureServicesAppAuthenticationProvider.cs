@@ -37,8 +37,9 @@ namespace FunctionApp.Authentication
                     return result.AccessToken;
                 }
             }
-            catch
+            catch (System.Exception e)
             {
+                throw e;
                 return "";
             }
         }

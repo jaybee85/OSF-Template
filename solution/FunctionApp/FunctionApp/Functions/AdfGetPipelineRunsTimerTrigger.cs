@@ -80,8 +80,17 @@ namespace FunctionApp.Functions
                     {"EngineName", ((string)executionengine.EngineName.ToString()).ToUpper() },
                     {"EngineId", executionengine.EngineId.ToString()  }
                 };
+                string kql = "";
+                switch (executionengine.SystemType.ToString())
+                {
+                    case "Datafactory":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
+                        break;
+                    case "Synapse":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetSynapsePipelineRuns.kql"));
+                        break;
+                }
 
-                string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
                 kql = kql.FormatWith(kqlParams, MissingKeyBehaviour.ThrowException, null, '{', '}');
 
                 JObject jsonContent = new JObject();

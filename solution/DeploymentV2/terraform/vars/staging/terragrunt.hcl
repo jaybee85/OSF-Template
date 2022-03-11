@@ -7,8 +7,8 @@ remote_state {
   config = {
     # You need to update the resource group and storage account here. 
     # You should have created these with the Prepare.ps1 script.
-    resource_group_name  = "AdsGoFastDemo"
-    storage_account_name = "TerraformStateAccount"
+    resource_group_name  = "dlzdev01"
+    storage_account_name = "dlzdev01state"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
@@ -18,26 +18,27 @@ remote_state {
 # If you are deploying using pipelines, these can be overridden from environment variables
 # using TF_VAR_variablename
 inputs = {
-  prefix                                = "ads"              # All azure resources will be prefixed with this
-  domain                                = "contoso.com"              # Used when configuring AAD config for Azure functions 
-  tenant_id                             = "63a6ed72-a904-4f18-95dd-3b4c9ffdd1d1"           # This is the Azure AD tenant ID
-  subscription_id                       = "c5743ec2-31b2-4596-baaf-779cd189bb94"     # The azure subscription id to deploy to
+  prefix                                = "ark"              # All azure resources will be prefixed with this
+  domain                                = "arkahna.io"              # Used when configuring AAD config for Azure functions 
+  tenant_id                             = "0fee3d31-b963-4a1c-8f4a-ca367205aa65"           # This is the Azure AD tenant ID
+  subscription_id                       = "14f299e1-be54-43e9-bf5e-696840f86fc4"     # The azure subscription id to deploy to
   resource_location                     = "Australia East"        # The location of the resources
-  resource_group_name                   = "AdsGoFastDemo"          # The resource group all resources will be deployed to
-  owner_tag                             = "Contoso"               # Owner tag value for Azure resources
+  resource_group_name                   = "dlzdev01"          # The resource group all resources will be deployed to
+  owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "stg"                   # This is used on Azure tags as well as all resource names
-  ip_address                            = "192.168.0.1"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
-  deploy_sentinel                       = true
-  deploy_purview                        = true      
+  ip_address                            = "60.227.47.61"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  deploy_sentinel                       = false
+  deploy_purview                        = false  
   deploy_synapse                        = true
-  is_vnet_isolated                      = true
+  is_vnet_isolated                      = false
   publish_web_app                       = true
   publish_function_app                  = true
-  publish_sample_files                  = true
+  publish_sample_files                  = false
   publish_database                      = true
-  configure_networking                  = true
+  configure_networking                  = false
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
+  deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = false
   is_onprem_datafactory_ir_registered   = false
 } 

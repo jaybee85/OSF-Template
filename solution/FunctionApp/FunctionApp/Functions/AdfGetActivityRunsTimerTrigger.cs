@@ -101,7 +101,18 @@ namespace FunctionApp.Functions
                     kqlParams.Add(p.Name, p.Value.ToString());
                 }
 
-                string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFActivityRuns.kql"));
+
+                string kql = "";
+                switch (executionengine.SystemType.ToString())
+                {
+                    case "Datafactory":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFActivityRuns.kql"));
+                        break;
+                    case "Synapse":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetSynapseActivityRuns.kql"));
+                        break;
+                }
+
                 kql = kql.FormatWith(kqlParams, MissingKeyBehaviour.ThrowException, null, '{', '}');
 
 

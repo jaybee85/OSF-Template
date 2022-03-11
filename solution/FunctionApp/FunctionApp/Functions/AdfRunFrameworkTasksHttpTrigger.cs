@@ -41,9 +41,7 @@ namespace FunctionApp.Functions
                                             INSERT INTO TaskInstanceExecution (
 	                                                        [ExecutionUid]
 	                                                        ,[TaskInstanceId]
-	                                                        ,[EngineSubscriptionUid]
-	                                                        ,[EngineResourceGroup]
-	                                                        ,[EngineName]
+	                                                        ,[EngineId]
 	                                                        ,[PipelineName]
 	                                                        ,[AdfRunUid]
 	                                                        ,[StartDateTime]
@@ -53,9 +51,7 @@ namespace FunctionApp.Functions
                                                         VALUES (
 	                                                            @ExecutionUid
 	                                                        ,@TaskInstanceId
-	                                                        ,@EngineSubscriptionUid
-	                                                        ,@EngineResourceGroup
-	                                                        ,@EngineName
+	                                                        ,@EngineId
 	                                                        ,@PipelineName
 	                                                        ,@AdfRunUid
 	                                                        ,@StartDateTime
@@ -67,18 +63,22 @@ namespace FunctionApp.Functions
         private readonly IOptions<ApplicationOptions> _options;
         private readonly IAzureAuthenticationProvider _authProvider;
         private readonly DataFactoryClientFactory _dataFactoryClientFactory;
+        private readonly AzureSynapseService _azureSynapseService;
+
 
         public AdfRunFrameworkTasksHttpTrigger(ISecurityAccessProvider sap, 
             TaskMetaDataDatabase taskMetaDataDatabase,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
-            DataFactoryClientFactory dataFactoryClientFactory)
+            DataFactoryClientFactory dataFactoryClientFactory,
+            AzureSynapseService azureSynapseService)
         {
             _sap = sap;
             _taskMetaDataDatabase = taskMetaDataDatabase;
             _options = options;
             _authProvider = authProvider;
             _dataFactoryClientFactory = dataFactoryClientFactory;
+            _azureSynapseService = azureSynapseService;
         }
 
         [FunctionName("RunFrameworkTasksHttpTrigger")]
@@ -151,7 +151,16 @@ namespace FunctionApp.Functions
                         {
                             if (task["TaskExecutionType"].ToString() == "ADF")
                             {
-                                await RunAzureDataFactoryPipeline(logging, pipelineName, pipelineParams, task);
+                                //The "SystemType" is used for calling the appropriate execution engine to manage the pipeline as required. This is to future proof any future execution engines that microsoft may add. Allows for expansion and contraction as required.
+                                switch(task["ExecutionEngine"]["SystemType"].ToString())
+                                {
+                                    case "Datafactory":
+                                        await RunAzureDataFactoryPipeline(logging, pipelineName, pipelineParams, task);
+                                        break;
+                                    case "Synapse":
+                                        await RunSynapsePipeline(logging, pipelineName, pipelineParams, task);
+                                        break;
+                                }
                             }
                             else if (task["TaskExecutionType"].ToString() == "AF")
                             {
@@ -267,6 +276,65 @@ namespace FunctionApp.Functions
             //To Do // Batch to make less "chatty"
             //To Do // Upgrade to stored procedure call
         }
+
+
+        private async Task RunSynapsePipeline(Logging.Logging logging, string pipelineName, Dictionary<string, object> pipelineParams, JObject task)
+        {
+            //change to a string object
+            pipelineParams.Add("TaskObject", task);
+
+            if (!string.IsNullOrEmpty(pipelineName))
+            {
+                //var subscriptionId = task["ExecutionEngine"]["SubscriptionId"].ToString();
+                //var resourceGroup = task["ExecutionEngine"]["ResourceGroup"].ToString();
+                //var factoryName = task["ExecutionEngine"]["EngineName"].ToString();
+                var engineJson = task["ExecutionEngine"]["EngineJson"].ToString();
+                JObject json = JObject.Parse(engineJson);
+                string data = json["endpoint"].ToString();
+                Uri endpoint = new Uri(data); 
+
+                logging.LogInformation("Setting up Synapse Pipeline Object.");
+                string runId;
+
+                if (pipelineParams?.Count == 0)
+                {
+                    logging.LogInformation("Called pipeline without parameters.");
+
+                    var content = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
+                    runId = JObject.Parse(content.ToString())["runId"].ToString();
+                }
+                else
+                {
+                    logging.LogInformation("Called pipeline with parameters.");
+                    logging.LogInformation("Number of parameters provided: " + pipelineParams.Count);
+
+                    System.Threading.Thread.Sleep(1000);
+
+                    var content = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
+                    runId = JObject.Parse(content.ToString())["runId"].ToString();
+
+
+                }
+
+                logging.LogInformation("Pipeline run ID: " + runId);
+
+                logging.DefaultActivityLogItem.AdfRunUid = Guid.Parse(runId);
+                await using var con = _taskMetaDataDatabase.GetSqlConnection();
+                await con.ExecuteAsync(SqlInsertTaskInstanceExecution, new
+                {
+                    ExecutionUid = logging.DefaultActivityLogItem.ExecutionUid.ToString(),
+                    TaskInstanceId = Convert.ToInt64(task["TaskInstanceId"]),
+                    EngineID = task["ExecutionEngine"]["EngineId"].ToString(),
+                    PipelineName = pipelineName,
+                    AdfRunUid = Guid.Parse(runId),
+                    StartDateTime = DateTimeOffset.UtcNow,
+                    Status = "InProgress",
+                    Comment = ""
+                }).ConfigureAwait(false);
+            }
+            //To Do // Batch to make less "chatty"
+            //To Do // Upgrade to stored procedure call
+        } 
 
         private void GenerateTaskObjectTestFiles(Logging.Logging logging, JObject task, string pipelineName, long taskInstanceId)
         {
