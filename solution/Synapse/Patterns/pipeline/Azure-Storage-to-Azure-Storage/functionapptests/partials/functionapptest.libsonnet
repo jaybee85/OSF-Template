@@ -87,7 +87,7 @@ function(
     "EngineName":vars.datafactory_name,
     "EngineResourceGroup":vars.resource_group_name,
     "EngineSubscriptionId":vars.subscription_id,
-    "EngineJson":  "{}",
+    "EngineJson":  '{"endpoint": "https://' + vars.synapse_workspace_name + '.dev.azuresynapse.net", "DeltaProcessingNotebook": "DeltaProcessingNotebook"}',
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
     "SourceSystemId":if(SourceType == "Azure Blob") then -3 else -4,

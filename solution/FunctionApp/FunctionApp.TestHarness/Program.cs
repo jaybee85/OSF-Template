@@ -97,8 +97,9 @@ namespace FunctionApp.TestHarness
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
-            //DebugRunFrameworkTasks();
-            DebugSynapsePipeline();
+            DebugRunFrameworkTasks();
+            //DebugSynapsePipeline();
+
 
         }
 
@@ -439,6 +440,7 @@ namespace FunctionApp.TestHarness
             InvalidTIs.Columns.Add("ExecutionUid", typeof(Guid));
             InvalidTIs.Columns.Add("TaskInstanceId", typeof(long));
             InvalidTIs.Columns.Add("LastExecutionComment", typeof(string));
+            EngineJsonSchemasProvider engineSchemas = new EngineJsonSchemasProvider(_taskMetaDataDatabase);
 
             foreach (var testTaskInstance in testTaskInstances)
             {
@@ -447,7 +449,7 @@ namespace FunctionApp.TestHarness
                 {
                     var T = new AdfJsonBaseTask(testTaskInstance, _funcAppLogger);
                     T.CreateJsonObjectForAdf((Guid)_funcAppLogger.DefaultActivityLogItem.ExecutionUid);
-                    processedTaskObject = T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider);
+                    processedTaskObject = T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider, engineSchemas);
                 }
                 catch (Exception e)
                 {

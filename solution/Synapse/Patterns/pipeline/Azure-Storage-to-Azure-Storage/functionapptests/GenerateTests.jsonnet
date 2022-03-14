@@ -35,7 +35,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         
         "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary" 
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
        
     }
 

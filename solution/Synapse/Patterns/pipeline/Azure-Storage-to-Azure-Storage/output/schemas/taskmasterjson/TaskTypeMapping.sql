@@ -1,5 +1,5 @@
     BEGIN 
-    Select * into #TempTTM from ( VALUES(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary_Auto', N'Azure Blob', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+    Select * into #TempTTM from ( VALUES(-2, N'Synapse', N'GPL_SparkNotebookExecution_Primary_Auto', N'Azure Blob', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -120,7 +120,7 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary_Auto', N'ADLS', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'Synapse', N'GPL_SparkNotebookExecution_Primary_Auto', N'ADLS', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -241,7 +241,7 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary_Auto', N'ADLS', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'Synapse', N'GPL_SparkNotebookExecution_Primary_Auto', N'ADLS', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -362,7 +362,7 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary_Auto', N'Azure Blob', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'Synapse', N'GPL_SparkNotebookExecution_Primary_Auto', N'Azure Blob', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {

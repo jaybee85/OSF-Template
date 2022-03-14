@@ -17,7 +17,7 @@ local pipeline = {
 	"properties": {
 		"activities": [
             {
-                "name": "DeltaProcessingNotebook",
+                "name": "ExecuteNotebook",
                 "type": "SynapseNotebook",
                 "dependsOn": [],
                 "policy": {

@@ -13,31 +13,25 @@ GO
 SET IDENTITY_INSERT [dbo].[ExecutionEngine] OFF
 GO
 INSERT [dbo].[ExecutionEngine_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Datafactory', N'
-	{
-    "$schema": "http://json-schema.org/draft-04/schema#",  
-    "type": "object", 
-    "properties": 
-    {    
-    },  
-    "required": [      ]}
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {},
+    "required": []
 }')
 GO
 INSERT [dbo].[ExecutionEngine_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Synapse', N'
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",  
-    "type": "object", 
-    "properties": 
-    {    
-        "endpoint": 
-        {      
-            "type": "string"    
-        },
-        "DeltaProcessingNotebook":
-        {
-           "type": "string"
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "endpoint": {
+            "type": "string"
         }
-    },  
-    "required": [    "endpoint"  ]}
+    },
+    "required": [
+        "endpoint"
+    ]
 }
 ')
 GO

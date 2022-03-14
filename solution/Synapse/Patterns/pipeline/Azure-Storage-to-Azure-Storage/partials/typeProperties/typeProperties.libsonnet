@@ -3,7 +3,7 @@ function(GenerateArm=false,SparkPoolName = "")
 
 
     "notebook": {
-        "referenceName": "@pipeline().parameters.TaskObject.NotebookName",
+        "referenceName": "@string(json(string(pipeline().parameters.TaskObject)).ExecutionEngine.JsonProperties.Properties.DeltaProcessingNotebook)",
         "type": "NotebookReference"
     },
     "parameters": {

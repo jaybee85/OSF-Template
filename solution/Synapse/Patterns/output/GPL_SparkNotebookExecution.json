@@ -1,48 +1,48 @@
 {
-   "name": "GPL_SparkNotebookExecution_Primary_Auto",
-   "properties": {
-      "activities": [
-         {
-            "dependsOn": [ ],
-            "name": "DeltaProcessingNotebook",
-            "policy": {
-               "retry": 0,
-               "retryIntervalInSeconds": 30,
-               "secureInput": false,
-               "secureOutput": false,
-               "timeout": "7.00:00:00"
-            },
-            "type": "SynapseNotebook",
-            "typeProperties": {
-               "notebook": {
-                  "referenceName": "@pipeline().parameters.TaskObject.NotebookName",
-                  "type": "NotebookReference"
-               },
-               "parameters": {
-                  "TaskObject": {
-                     "type": "string",
-                     "value": {
-                        "type": "Expression",
-                        "value": "@string(pipeline().parameters.TaskObject)"
-                     }
-                  }
-               },
-               "snapshot": true,
-               "sparkPool": {
-                  "referenceName": "johns",
-                  "type": "BigDataPoolReference"
-               }
-            },
-            "userProperties": [ ]
-         }
-      ],
-      "annotations": [ ],
-      "lastPublishTime": "2020-08-05T04:14:00Z",
-      "parameters": {
-         "TaskObject": {
-            "type": "object"
-         }
+  "name": "GPL_SparkNotebookExecution_Primary_Auto",
+  "properties": {
+    "activities": [
+      {
+        "dependsOn": [],
+        "name": "ExecuteNotebook",
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false,
+          "timeout": "7.00:00:00"
+        },
+        "type": "SynapseNotebook",
+        "typeProperties": {
+          "notebook": {
+            "referenceName": "@string(pipeline().parameters.TaskObject.ExecutionEngine.DeltaProcessingNotebook)",
+            "type": "NotebookReference"
+          },
+          "parameters": {
+            "TaskObject": {
+              "type": "string",
+              "value": {
+                "type": "Expression",
+                "value": "@string(pipeline().parameters.TaskObject)"
+              }
+            }
+          },
+          "snapshot": true,
+          "sparkPool": {
+            "referenceName": "arkstgsynspads",
+            "type": "BigDataPoolReference"
+          }
+        },
+        "userProperties": []
       }
-   },
-   "type": "Microsoft.Synapse/workspaces/pipelines"
+    ],
+    "annotations": [],
+    "lastPublishTime": "2020-08-05T04:14:00Z",
+    "parameters": {
+      "TaskObject": {
+        "type": "object"
+      }
+    }
+  },
+  "type": "Microsoft.Synapse/workspaces/pipelines"
 }

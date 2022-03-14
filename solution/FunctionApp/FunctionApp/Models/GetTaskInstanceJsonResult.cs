@@ -100,7 +100,9 @@ namespace FunctionApp.Models
         public string TargetSystemUserName { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TargetSystemJson { get; set; }
-        
+
+
+
     } // End of class
 
    

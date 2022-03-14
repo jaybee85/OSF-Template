@@ -7,7 +7,7 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
         "TargetType": TargetType,
         "TargetFormat": TargetFormat,
         "TaskTypeId":-2,
-        "Pipeline":"GPL_SparkNotebookExecution_Primary_Auto"
+        "Pipeline":"GPL_SparkNotebookExecution_Primary"
 };
 
 

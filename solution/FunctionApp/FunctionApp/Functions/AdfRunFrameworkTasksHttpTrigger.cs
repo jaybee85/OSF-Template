@@ -296,25 +296,14 @@ namespace FunctionApp.Functions
                 logging.LogInformation("Setting up Synapse Pipeline Object.");
                 string runId;
 
-                if (pipelineParams?.Count == 0)
-                {
-                    logging.LogInformation("Called pipeline without parameters.");
+                logging.LogInformation("Called pipeline with parameters.");
+                logging.LogInformation("Number of parameters provided: " + pipelineParams.Count);
 
-                    var content = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
-                    runId = JObject.Parse(content.ToString())["runId"].ToString();
-                }
-                else
-                {
-                    logging.LogInformation("Called pipeline with parameters.");
-                    logging.LogInformation("Number of parameters provided: " + pipelineParams.Count);
+                System.Threading.Thread.Sleep(1000);
 
-                    System.Threading.Thread.Sleep(1000);
-
-                    var content = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
-                    runId = JObject.Parse(content.ToString())["runId"].ToString();
-
-
-                }
+                var response = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
+                var content = response.ReadAsStringAsync().Result;
+                runId = JObject.Parse(content.ToString())["runId"].ToString();
 
                 logging.LogInformation("Pipeline run ID: " + runId);
 
@@ -404,6 +393,9 @@ namespace FunctionApp.Functions
             var ttMappingProvider = new TaskTypeMappingProvider(_taskMetaDataDatabase);
             SourceAndTargetSystemJsonSchemasProvider systemSchemas = new SourceAndTargetSystemJsonSchemasProvider(_taskMetaDataDatabase);
 
+            EngineJsonSchemasProvider engineSchemas = new EngineJsonSchemasProvider(_taskMetaDataDatabase);
+
+
             //Set up table to Store Invalid Task Instance Objects
             using DataTable invalidTIs = new DataTable();
             invalidTIs.Columns.Add("ExecutionUid", typeof(Guid));
@@ -421,7 +413,7 @@ namespace FunctionApp.Functions
                     AdfJsonBaseTask T =  new AdfJsonBaseTask(taskInstanceJson, logging);
                     //Set the base properties using data stored in non-json columns of the database
                     T.CreateJsonObjectForAdf(ExecutionUid);
-                    var root = T.ProcessRoot(ttMappingProvider, systemSchemas);
+                    var root = T.ProcessRoot(ttMappingProvider, systemSchemas, engineSchemas);
 
                     if (T.TaskIsValid)
                     {

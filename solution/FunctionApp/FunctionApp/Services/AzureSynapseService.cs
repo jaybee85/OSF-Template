@@ -67,7 +67,7 @@ namespace FunctionApp.Services
                 c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                 JObject jsonContent = new JObject();
-                jsonContent["pipeline"] = JsonConvert.SerializeObject(pipelineParams);
+                jsonContent["TaskObject"] = JsonConvert.SerializeObject(pipelineParams["TaskObject"]);
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
                 var response = c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent).Result;
                 HttpContent responseContent = response.Content;
