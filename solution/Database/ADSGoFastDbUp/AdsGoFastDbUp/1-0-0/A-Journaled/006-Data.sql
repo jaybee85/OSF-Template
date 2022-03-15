@@ -67,6 +67,8 @@ SET IDENTITY_INSERT [dbo].[ScheduleMaster] OFF
 GO
 SET IDENTITY_INSERT [dbo].[SourceAndTargetSystems] ON 
 GO
+INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-16, 'N/A', 'N/A', 'N/A', 'N/A', N'MSI', NULL, NULL, 'N/A', N'', 1, 0, NULL)
+GO
 INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-15, N'Sample - File Server ', N'FileServer', N'Sample File Server Source', N'(local)', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'', 1, 0, NULL)
 GO
 INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-14, N'Sample - External SQL Server ', N'Azure SQL', N'Sample Azure SQL Server Source', N'(local)', N'MSI', NULL, NULL, N'https://ark-stg-kv-ads-bcar.vault.azure.net/', N'{         "Database" : "msdb"  , "Username" : "adminuser", "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }', 1, 1, NULL)
@@ -206,6 +208,8 @@ GO
 INSERT [dbo].[TaskMasterWaterMark] ([TaskMasterId], [TaskMasterWaterMarkColumn], [TaskMasterWaterMarkColumnType], [TaskMasterWaterMark_DateTime], [TaskMasterWaterMark_BigInt], [TaskWaterMarkJSON], [ActiveYN], [UpdatedOn]) VALUES (10, N'ModifiedDate', N'DateTime', CAST(N'2009-05-16T16:33:33.123' AS DateTime), NULL, NULL, 1, CAST(N'2020-08-07T04:03:23.2200000+00:00' AS DateTimeOffset))
 GO
 SET IDENTITY_INSERT [dbo].[TaskType] ON 
+GO
+INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-5, N'Execute Synapse Notebook', N'ADF', NULL, 1)
 GO
 INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-4, N'Execute ADF Pipeline', N'ADF', NULL, 1)
 GO

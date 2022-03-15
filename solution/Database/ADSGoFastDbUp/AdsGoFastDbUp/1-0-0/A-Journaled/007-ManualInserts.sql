@@ -26,6 +26,7 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '$SqlServerName$.database.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Database" : "$SampleDatabaseName$" }'
+	,SystemName = '$SqlServerName$\Samples'
 WHERE SystemId = '-1'
 GO
 
@@ -33,6 +34,8 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '$SqlServerName$.database.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Database" : "$StagingDatabaseName$" }'
+	,SystemName = '$SqlServerName$\Staging'
+
 WHERE SystemId = '-2'
 GO
 
@@ -40,6 +43,8 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '$SqlServerName$.database.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Database" : "$MetadataDatabaseName$" }'
+	,SystemName = '$SqlServerName$\Metadata'
+
 WHERE SystemId = '-11'
 GO
 
@@ -47,6 +52,8 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$BlobStorageName$.blob.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "datalakeraw" }'
+	,SystemName = '$BlobStorageName$\datalakeraw'
+
 WHERE SystemId = '-3'
 GO
 
@@ -54,6 +61,8 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$BlobStorageName$.blob.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "datalakelanding" }'
+	,SystemName = '$BlobStorageName$\datalakelanding'
+
 WHERE SystemId = '-7'
 GO
 
@@ -61,6 +70,8 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$BlobStorageName$.blob.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "transientin" }'
+	,SystemName = '$BlobStorageName$\transientin'
+
 WHERE SystemId = '-9'
 GO
 
@@ -68,6 +79,7 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "datalakeraw" }'
+	,SystemName = '$AdlsStorageName$\datalakeraw'
 WHERE SystemId = '-4'
 GO
 
@@ -75,6 +87,7 @@ UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$AdlsStorageName$.dfs.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "datalakelanding" }'
+	,SystemName = '$AdlsStorageName$\datalakelanding'
 WHERE SystemId = '-8'
 GO
 
@@ -90,3 +103,4 @@ SET SystemServer = '(local)'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 WHERE SystemId = '-15'
 GO
+

@@ -2,7 +2,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary_Auto",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
@@ -12,7 +12,17 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary_Auto",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Parquet",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Delta",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -22,7 +32,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary_Auto",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -32,11 +42,91 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary_Auto",
-      "SourceFormat": "Parquet",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Delta",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
       "TargetType": "AzureBlobFS",
       "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Delta",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Delta",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Azure-Storage-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Delta",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -2
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
    }
 ]

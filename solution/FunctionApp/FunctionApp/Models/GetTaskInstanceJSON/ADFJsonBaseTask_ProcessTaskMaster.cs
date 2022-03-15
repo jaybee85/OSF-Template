@@ -41,6 +41,13 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                     ProcessTaskMaster_Default();
                     goto ProcessTaskMasterEnd;
                 }
+
+                if (TaskType == "Execute Synapse Notebook")
+                {
+                    ProcessTaskMaster_SynapseNotebookExecution();
+                    ProcessTaskMaster_Default();
+                    goto ProcessTaskMasterEnd;
+                }
                 
                 //Default Processing Branch              
                 {
@@ -303,7 +310,15 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
         /// <summary>
         /// Default Method which merges Source & Target attributes on TaskMasterJson with existing Source and Target Attributes on TaskObject payload.
         /// </summary>
-
+        public void ProcessTaskMaster_SynapseNotebookExecution()
+        {
+            {
+                var customDefinitions = _taskMasterJson["CustomDefinitions"];
+                var executeNotebook = _taskMasterJson["ExecuteNotebook"];
+                _jsonObjectForAdf["CustomDefinitions"] = customDefinitions;
+                _jsonObjectForAdf["ExecuteNotebook"] = executeNotebook;
+            }
+        }
         public void ProcessTaskMaster_Default()
         {            
             var source = (JObject)_jsonObjectForAdf["Source"] ?? new JObject();

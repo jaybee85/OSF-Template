@@ -56,9 +56,11 @@ namespace FunctionApp.Models
         public string AdfPipeline { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TaskDatafactoryIr { get; set; }
+        public string CustomDefinitions { get; set; }
+        public string ExecuteNotebook { get; set; }
 
 
-        
+
 
         //Task Instance
         public string TaskInstanceJson { get; set; }

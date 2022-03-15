@@ -37,6 +37,75 @@ local tests =
         "Description": "File copy between datalake zones",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
        
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Delta",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer-Delta",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer-Delta",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
+       
+    },
+
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Delta",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer-Delta",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Parquet",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer*.parquet",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
+       
     }
 
 ];

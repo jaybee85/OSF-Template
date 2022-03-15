@@ -160,7 +160,7 @@ foreach ($patternFolder in $patternFolders)
 
         $content = Get-Content $schemafile -raw
         $sql += "("
-        $sql += "$TaskTypeId, N'Synapse', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
+        $sql += "$TaskTypeId, N'ADF', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
         $sql += "),"
     }
     if ($sql.endswith(","))

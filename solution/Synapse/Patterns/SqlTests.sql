@@ -45,7 +45,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         0                          ,
         '[0]  File copy between datalake zones of SalesLT.Customer*.parquet (Parquet) from ADLS to ADLS SalesLT.Customer (Delta)'                      ,
         -2                            ,
-        -1                           ,
+        -2                           ,
         -4                      ,
         -4                        ,
         -4                        ,
@@ -70,6 +70,179 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "RelativePath": "/Tests/Azure Storage to Azure Storage/0",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Delta"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -2;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -1                          ,
+        '[1]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer-Delta (Delta)'                      ,
+        -2                            ,
+        -3                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "SalesLT.Customer-Delta",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "SalesLT.Customer*.json",
+        "Type": "Delta"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer-Delta",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/1",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Delta"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -2;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -2                          ,
+        '[2]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer*.parquet (Parquet)'                      ,
+        -2                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "SalesLT.Customer-Delta",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "SalesLT.Customer*.json",
+        "Type": "Delta"
+    },
+    "Target": {
+        "DataFileName": "SalesLT.Customer*.parquet",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/2",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -2;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -3                          ,
+        '[-3]  File copy between datalake zones of  (Notebook-Optional) from N/A to N/A  (Notebook-Optional)'                      ,
+        -5                            ,
+        -2                           ,
+        -4                      ,
+        -16                        ,
+        -16                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "CustomDefinitions": "",
+    "ExecuteNotebook": "Notebook 1",
+    "Source": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Notebook-Optional"
+    },
+    "Target": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Notebook-Optional"
     }
 }'                      ,
         0                              ,
