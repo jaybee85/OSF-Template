@@ -157,7 +157,7 @@ namespace FunctionApp.Functions
                 logging.DefaultActivityLogItem.TaskMasterId = row.TaskMasterId;
                 var instanceGenerationErrorMessage = "";
                 try
-                {
+               {
                     dynamic taskMasterJson = JsonConvert.DeserializeObject(row.TaskMasterJSON);
                     string sourceSystem = row.SourceSystemType.ToString();
                     string targetSystem = row.TargetSystemType.ToString();

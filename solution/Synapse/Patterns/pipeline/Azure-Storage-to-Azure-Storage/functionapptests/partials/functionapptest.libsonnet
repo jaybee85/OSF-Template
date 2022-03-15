@@ -50,7 +50,7 @@ function(
 
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":if TargetType == "FileServer" then "c:/Tests/"+Pattern+"/"+TestNumber else "/Tests/"+Pattern+"/"+TestNumber,
+            "RelativePath":"/Tests/Azure Storage to Azure Storage/",
             "DataFileName": TargetDataFilename,
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
@@ -68,7 +68,7 @@ function(
     local TaskInstanceJson =  
     {
         "SourceRelativePath": "samples/",
-        "TargetRelativePath": "/Tests/"+Pattern+"/"+TestNumber+"/"
+        "TargetRelativePath": "/Tests/Azure Storage to Azure Storage/"
     },
 
     local SourceSystemJson = 

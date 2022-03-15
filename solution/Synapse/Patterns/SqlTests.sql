@@ -67,7 +67,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
-        "RelativePath": "/Tests/Azure Storage to Azure Storage/0",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Delta"
     }
@@ -100,7 +100,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -1                          ,
-        '[1]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer-Delta (Delta)'                      ,
+        '[1]  File copy between datalake zones of SalesLT-Customer-Delta/SalesLT.Customer/ (Delta) from ADLS to ADLS DeltaTable/SalesLT.Customer (Delta)'                      ,
         -2                            ,
         -3                           ,
         -4                      ,
@@ -111,7 +111,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer-Delta",
+        "DataFileName": "SalesLT-Customer-Delta/SalesLT.Customer/",
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
@@ -120,11 +120,11 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "Type": "Delta"
     },
     "Target": {
-        "DataFileName": "SalesLT.Customer-Delta",
+        "DataFileName": "DeltaTable/SalesLT.Customer",
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
-        "RelativePath": "/Tests/Azure Storage to Azure Storage/1",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Delta"
     }
@@ -157,9 +157,9 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -2                          ,
-        '[2]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer*.parquet (Parquet)'                      ,
+        '[2]  File copy between datalake zones of SalesLT-Customer-Delta/SalesLT.Customer/ (Delta) from ADLS to ADLS SalesLT.Customer*.parquet (Parquet)'                      ,
         -2                            ,
-        -4                           ,
+        -1                           ,
         -4                      ,
         -4                        ,
         -4                        ,
@@ -168,7 +168,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "SalesLT.Customer-Delta",
+        "DataFileName": "SalesLT-Customer-Delta/SalesLT.Customer/",
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
@@ -181,7 +181,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "DeleteAfterCompletion": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
-        "RelativePath": "/Tests/Azure Storage to Azure Storage/2",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
@@ -214,7 +214,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     )
     select 
         -3                          ,
-        '[-3]  File copy between datalake zones of  (Notebook-Optional) from N/A to N/A  (Notebook-Optional)'                      ,
+        '[-3]  Notebook execution test.'                      ,
         -5                            ,
         -2                           ,
         -4                      ,

@@ -46,7 +46,7 @@ local tests =
         
         "SourceFormat":"Delta",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer-Delta",
+        "SourceDataFilename":"SalesLT-Customer-Delta/SalesLT.Customer/",
         "SourceSourceSystemAuthType": "MSI",
         "SourceSchemaFileName":"SalesLT.Customer*.json", 
         "SourceSkipLineCount":"",
@@ -58,7 +58,7 @@ local tests =
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
-        "TargetDataFilename":"SalesLT.Customer-Delta",
+        "TargetDataFilename":"DeltaTable/SalesLT.Customer",
         "TargetSchemaFileName":"SalesLT.Customer.json",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
@@ -81,7 +81,7 @@ local tests =
         
         "SourceFormat":"Delta",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer-Delta",
+        "SourceDataFilename":"SalesLT-Customer-Delta/SalesLT.Customer/",
         "SourceSourceSystemAuthType": "MSI",
         "SourceSchemaFileName":"SalesLT.Customer*.json", 
         "SourceSkipLineCount":"",

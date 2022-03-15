@@ -30,9 +30,9 @@
     "TaskGroupConcurrency": "10",
     "TaskGroupPriority": 0,
     "TaskInstanceId": -1,
-    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/0/\"\n}",
+    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/\"\n}",
     "TaskMasterId": 0,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/0\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Delta\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Parquet\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Delta\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to Azure Storage",
     "TaskTypeId": -2,
@@ -69,13 +69,13 @@
     "TaskGroupConcurrency": "10",
     "TaskGroupPriority": 0,
     "TaskInstanceId": -1,
-    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/1/\"\n}",
+    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/\"\n}",
     "TaskMasterId": -1,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer-Delta\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Delta\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer-Delta\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/1\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Delta\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT-Customer-Delta/SalesLT.Customer/\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Delta\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"DeltaTable/SalesLT.Customer\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Delta\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to Azure Storage",
     "TaskTypeId": -2,
-    "TestDescription": "[1]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer-Delta (Delta)"
+    "TestDescription": "[1]  File copy between datalake zones of SalesLT-Customer-Delta/SalesLT.Customer/ (Delta) from ADLS to ADLS DeltaTable/SalesLT.Customer (Delta)"
   },
   {
     "DegreeOfCopyParallelism": 1,
@@ -108,13 +108,13 @@
     "TaskGroupConcurrency": "10",
     "TaskGroupPriority": 0,
     "TaskInstanceId": -1,
-    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/2/\"\n}",
+    "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/\"\n}",
     "TaskMasterId": -2,
-    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer-Delta\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Delta\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/2\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
+    "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT-Customer-Delta/SalesLT.Customer/\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Delta\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
     "TaskStatus": "Untried",
     "TaskType": "Azure Storage to Azure Storage",
     "TaskTypeId": -2,
-    "TestDescription": "[2]  File copy between datalake zones of SalesLT.Customer-Delta (Delta) from ADLS to ADLS SalesLT.Customer*.parquet (Parquet)"
+    "TestDescription": "[2]  File copy between datalake zones of SalesLT-Customer-Delta/SalesLT.Customer/ (Delta) from ADLS to ADLS SalesLT.Customer*.parquet (Parquet)"
   },
   {
     "DegreeOfCopyParallelism": 1,
@@ -153,6 +153,6 @@
     "TaskStatus": "Untried",
     "TaskType": "Execute-Notebook",
     "TaskTypeId": -5,
-    "TestDescription": "[-3]  File copy between datalake zones of  (Notebook-Optional) from N/A to N/A  (Notebook-Optional)"
+    "TestDescription": "[-3]  Notebook execution test."
   }
 ]
