@@ -601,7 +601,7 @@ GO
 CREATE TABLE [dbo].[TaskInstanceExecution](
 	[ExecutionUid] [uniqueidentifier] NOT NULL,
 	[TaskInstanceId] [bigint] NOT NULL,
-	[EngineId] [uniqueidentifier] NULL,
+	[EngineId] [bigint] NULL,
 	[PipelineName] [varchar](200) NULL,
 	[AdfRunUid] [uniqueidentifier] NULL,
 	[StartDateTime] [datetimeoffset](7) NULL,

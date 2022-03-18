@@ -1,5 +1,30 @@
     BEGIN 
-    Select * into #TempTTM from ( VALUES(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+    Select * into #TempTTM from ( VALUES(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -120,7 +145,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -241,7 +291,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -362,7 +437,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -483,7 +583,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -604,7 +729,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -725,7 +875,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -846,7 +1021,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -967,7 +1167,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1088,7 +1313,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'Azure Blob', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1209,7 +1459,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {
@@ -1330,7 +1605,32 @@
    "title": "TaskMasterJson",
    "type": "object"
 }
-',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution_Primary', N'ADLS', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
+',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
+   "$schema": "http://json-schema.org/draft-04/schema#",
+   "properties": {
+      "Source": {
+         "properties": {
+            "DataFileName": {
+               "options": {
+                  "infoText": "Name of the file to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. Customer.xlsx"
+                  }
+               },
+               "type": "string"
+            },
+            "MaxConcurrentConnections": {
+               "default": 100,
+               "options": {
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
+               },
+               "type": "integer"
+            },
+            "RelativePath": {
+               "options": {
+                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "inputAttributes": {
+                     "placeholder": "eg. AwSamp{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "Source": {

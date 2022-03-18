@@ -31,17 +31,16 @@ foreach ($file in $templates)
     $content | Set-Content -Path $outfile 
 }
 
-$irs = @("Auto")
 
 #Copy IR Specific Pipelines
 $patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
-foreach ($ir in $irs)
+foreach ($ir in $tout.integration_runtimes)
 {    
 
     $GFPIR = $ir
     if (($tout.synapse_spark_pool_name -eq ""))
     {
-        Write-Host "Skipping Synpase pipeline generation as there is no Synapse Spark Pool"
+        Write-Host "Skipping Synapse pipeline generation as there is no Synapse Spark Pool"
     }
     else
     {        
@@ -55,7 +54,7 @@ foreach ($ir in $irs)
             Write-Host "_____________________________"
 
             foreach ($t in $templates) {        
-                #$GFPIR = $pattern.GFPIR
+                $GFPIR = $pattern.GFPIR
                 $SourceType = $pattern.SourceType
                 $SourceFormat = $pattern.SourceFormat
                 $TargetType = $pattern.TargetType
@@ -64,7 +63,7 @@ foreach ($ir in $irs)
 
                 $newname = ($t.PSChildName).Replace(".libsonnet",".json")        
                 Write-Host $newname        
-                (jsonnet --tla-str GenerateArm=$GenerateArm  --tla-str SparkPoolName="$SparkPoolName" $t.FullName) | Set-Content('./output/' + $newname)
+                (jsonnet --tla-str GenerateArm=$GenerateArm  --tla-str SparkPoolName="$SparkPoolName"  --tla-str GFPIR="$GFPIR" $t.FullName) | Set-Content('./output/' + $newname)
 
             }
 
@@ -158,9 +157,18 @@ foreach ($patternFolder in $patternFolders)
         $TargetFormat = "Table"
         }
 
+        if ($TaskTypeId -eq -6) 
+        {
+            $MappingType = 'DLL'
+        }
+        else 
+        {
+            $MappingType = 'ADF'
+        }
+
         $content = Get-Content $schemafile -raw
         $sql += "("
-        $sql += "$TaskTypeId, N'ADF', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
+        $sql += "$TaskTypeId, N'$MappingType', N'$pipeline', N'$SourceType', N'$SourceFormat', N'$TargetType', N'$TargetFormat', NULL, 1,N'$content',N'{}'"
         $sql += "),"
     }
     if ($sql.endswith(","))

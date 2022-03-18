@@ -92,14 +92,13 @@ namespace FunctionApp.TestHarness
             //Test_TaskExecutionSchemaFile(_funcAppLogger);
             //GenerateUnitTestResults();
 
-            //_azureSynapseService.StartSynapseSqlPool("035a1364-f00d-48e2-b582-4fe125905ee3", "adsgftera2", "mststgsynwads", "mststgsyndpads", "resume", _funcAppLogger).ConfigureAwait(true);
+            //_azureSynapseService.StartStopSynapseSqlPool("14f299e1-be54-43e9-bf5e-696840f86fc4", "dlzdev01", "arkstgsynwadsbcar", "TestPool", "Stop", _funcAppLogger).ConfigureAwait(true);
             //InsertTestTasksIntoDb();
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
             DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
-
 
         }
 

@@ -54,6 +54,9 @@ namespace AdsGoFastDbUp
         public string SynapseWorkspaceName { get; set; }
         [Option("SynapseDatabaseName", Required = true, HelpText = "Parameter for the scripts.")]
         public string SynapseDatabaseName { get; set; }
+        [Option("SynapseSQLPoolName", Required = true, HelpText = "Parameter for the scripts.")]
+        public string SynapseSQLPoolName { get; set; }
+
     }
 
     class Program
@@ -178,6 +181,8 @@ namespace AdsGoFastDbUp
             builder.WithVariable("SqlServerName", o.SqlServerName);
             builder.WithVariable("SynapseWorkspaceName", o.SynapseWorkspaceName);
             builder.WithVariable("SynapseDatabaseName", o.SynapseDatabaseName);
+            builder.WithVariable("SynapseSQLPoolName", o.SynapseSQLPoolName);
+
 
             return builder.Build();
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Data;
 using System.Linq;
 using System.Net.Http;
@@ -188,6 +189,33 @@ namespace FunctionApp.Functions
                                 //To Do // Batch to make less "chatty"
                                 //To Do // Upgrade to stored procedure call
                             }
+                            else if (task["TaskExecutionType"].ToString() == "DLL")
+                            {
+                                var completeCheck = true;
+                                switch (true)
+                                {
+                                    //We want to check whether the pipelineName matches, however it can include several different IR's as subsequent value on the pipeline name. Regex allows to ignore the end of the string for the checking.
+                                    case bool _ when Regex.IsMatch(pipelineName, @"Synapse_SQLPool_Start_Stop.*"):
+                                        var subscriptionId = task["ExecutionEngine"]["SubscriptionId"].ToString();
+                                        var resourceGroup = task["ExecutionEngine"]["ResourceGroup"].ToString();
+                                        var synapseWorkspaceName = task["Target"]["System"]["Workspace"].ToString();
+                                        var synapseSQLPoolName = task["TMOptionals"]["SQLPoolName"].ToString();
+                                        var poolOperation = task["TMOptionals"]["SQLPoolOperation"].ToString();
+                                        await _azureSynapseService.StartStopSynapseSqlPool(subscriptionId, resourceGroup, synapseWorkspaceName, synapseSQLPoolName, poolOperation, logging);
+                                        break;
+                                    default:
+                                        var msg = $"Could not find execution path for Task Type of {pipelineName} and Execution Type of {task["TaskExecutionType"]}";
+                                        logging.LogErrors(new Exception(msg));
+                                        _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, msg);
+                                        completeCheck = false;
+                                        break;
+                                }
+                                if (completeCheck)
+                                {
+                                    var completemsg = $"Sucessfully completed {pipelineName} and Execution Type of {task["TaskExecutionType"]}";
+                                    _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.Complete, System.Guid.Empty, completemsg);
+                                }
+                            }
                         }
                         catch (Exception taskException)
                         {
@@ -265,7 +293,7 @@ namespace FunctionApp.Functions
                     TaskInstanceId = Convert.ToInt64(task["TaskInstanceId"]),
                     //DatafactorySubscriptionUid = task["ExecutionEngine"]["SubscriptionId"].ToString(),
                     //DatafactoryResourceGroup = task["ExecutionEngine"]["ResourceGroup"].ToString(),
-                    EngineID = task["ExecutionEngine"]["EngineId"].ToString(),
+                    EngineID = Convert.ToInt64(task["ExecutionEngine"]["EngineId"]),
                     PipelineName = pipelineName,
                     AdfRunUid = Guid.Parse(runResponse.RunId),
                     StartDateTime = DateTimeOffset.UtcNow,
@@ -306,20 +334,23 @@ namespace FunctionApp.Functions
                 runId = JObject.Parse(content.ToString())["runId"].ToString();
 
                 logging.LogInformation("Pipeline run ID: " + runId);
+                logging.LogInformation("Execution UID: " + logging.DefaultActivityLogItem.ExecutionUid.ToString());
 
                 logging.DefaultActivityLogItem.AdfRunUid = Guid.Parse(runId);
+
                 await using var con = _taskMetaDataDatabase.GetSqlConnection();
                 await con.ExecuteAsync(SqlInsertTaskInstanceExecution, new
                 {
-                    ExecutionUid = logging.DefaultActivityLogItem.ExecutionUid.ToString(),
+                    ExecutionUid = Guid.Parse(logging.DefaultActivityLogItem.ExecutionUid.ToString()),
                     TaskInstanceId = Convert.ToInt64(task["TaskInstanceId"]),
-                    EngineID = task["ExecutionEngine"]["EngineId"].ToString(),
+                    EngineID = Convert.ToInt64(task["ExecutionEngine"]["EngineId"]),
                     PipelineName = pipelineName,
                     AdfRunUid = Guid.Parse(runId),
                     StartDateTime = DateTimeOffset.UtcNow,
                     Status = "InProgress",
                     Comment = ""
                 }).ConfigureAwait(false);
+                logging.LogInformation("Test");
             }
             //To Do // Batch to make less "chatty"
             //To Do // Upgrade to stored procedure call

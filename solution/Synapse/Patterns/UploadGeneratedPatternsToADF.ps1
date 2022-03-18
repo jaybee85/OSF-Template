@@ -28,7 +28,7 @@ function UploadADFItem ($items) {
             $fileName = $_.FullName
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
 
-            $uri = "https://" + $_tout.synapse_workspace_name + ".dev.azuresynapse.net/" # + "pipelines/"
+            $uri = "https://" + $_tout.synapse_workspace_name + ".dev.azuresynapse.net/"  #+ "pipelines/"
             
             if ($jsonobject.type -eq "Microsoft.Synapse/workspaces/linkedservices") {
                 #Swap out Key Vault Url for Function App Linked Service

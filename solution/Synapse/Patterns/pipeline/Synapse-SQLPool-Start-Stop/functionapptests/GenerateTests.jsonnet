@@ -2,14 +2,14 @@ function(seed=0)
 local tests =
 [
     //****************************************************************//
-    //*                    Execute Notebook Tests                    *//
+    //*                    Synapse Dedicated Pool Tests              *//
     //****************************************************************//
     {        
         "Active": true,        
-        "Pattern": "Execute-Notebook",         
+        "Pattern": "Synapse-SQLPool-Start-Stop",         
         "SourceSystemAuthType": "MSI",
         
-        "SourceFormat":"Notebook-Optional",
+        "SourceFormat":"Not-Applicable",
         "SourceType":"N/A",        
         "SourceDataFilename":"",
         "SourceSourceSystemAuthType": "MSI",
@@ -21,7 +21,7 @@ local tests =
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
         
-        "TargetFormat":"Notebook-Optional",
+        "TargetFormat":"Not-Applicable",
         "TargetType":"N/A",        
         "TargetDataFilename":"",
         "TargetSchemaFileName":"",
@@ -32,13 +32,44 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
+        "SynapsePipeline": "Not-Applicable",
+        "Description": "Testing Starting of SQL Dedicated Pool",  
+        "SQLPoolOperation": "start",
+        "SQLPoolName": "TestPool"
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Synapse-SQLPool-Start-Stop",         
+        "SourceSystemAuthType": "MSI",
         
-        "ExecuteNotebook": "Notebook 1",
-        "CustomDefinitions": "",
-        "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure"
-         
-       
+        "SourceFormat":"Not-Applicable",
+        "SourceType":"N/A",        
+        "SourceDataFilename":"",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Not-Applicable",
+        "TargetType":"N/A",        
+        "TargetDataFilename":"",
+        "TargetSchemaFileName":"",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        "SynapsePipeline": "Not-Applicable",
+        "Description": "Testing Pausing of SQL Dedicated Pool",  
+        "SQLPoolOperation": "pause",
+        "SQLPoolName": "TestPool"
     }
 
 ];
@@ -52,7 +83,7 @@ template(
     seed+index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
-    t.SourceDataFilename,
+    t.SourceDataFilename,   
     t.SourceSchemaFileName,
     t.SourceSourceSystemAuthType,
     t.SourceSkipLineCount,
@@ -73,8 +104,10 @@ template(
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
     t.Description,
-    t.ExecuteNotebook,
-    t.CustomDefinitions
+    t.SQLPoolName,
+    t.SQLPoolOperation
+
+
 );
 
 

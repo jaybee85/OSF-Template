@@ -67,6 +67,15 @@ WHERE SystemId = '-7'
 GO
 
 UPDATE [dbo].[SourceAndTargetSystems]
+SET SystemServer = 'https://$SynapseWorkspaceName$.dev.azuresynapse.net'
+	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
+	,SystemJSON = '{ "Workspace" : "$SynapseWorkspaceName$" }'
+	,SystemName = '$SynapseWorkspaceName$'
+
+WHERE SystemId = '-10'
+GO
+
+UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = 'https://$BlobStorageName$.blob.core.windows.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
 	,SystemJSON = '{ "Container" : "transientin" }'
@@ -101,6 +110,7 @@ GO
 UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '(local)'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
+	,SystemJSON = '{}'
 WHERE SystemId = '-15'
 GO
 

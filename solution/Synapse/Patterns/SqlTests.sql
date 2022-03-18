@@ -45,7 +45,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         0                          ,
         '[0]  File copy between datalake zones of SalesLT.Customer*.parquet (Parquet) from ADLS to ADLS SalesLT.Customer (Delta)'                      ,
         -2                            ,
-        -2                           ,
+        -4                           ,
         -4                      ,
         -4                        ,
         -4                        ,
@@ -102,7 +102,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -1                          ,
         '[1]  File copy between datalake zones of SalesLT-Customer-Delta/SalesLT.Customer/ (Delta) from ADLS to ADLS DeltaTable/SalesLT.Customer (Delta)'                      ,
         -2                            ,
-        -3                           ,
+        -2                           ,
         -4                      ,
         -4                        ,
         -4                        ,
@@ -216,7 +216,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         -3                          ,
         '[-3]  Notebook execution test.'                      ,
         -5                            ,
-        -2                           ,
+        -3                           ,
         -4                      ,
         -16                        ,
         -16                        ,
@@ -243,6 +243,124 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "RelativePath": "",
         "SchemaFileName": "",
         "Type": "Notebook-Optional"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -2;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -4                          ,
+        '[-4]  SQL Dedicated Pool start execution test.'                      ,
+        -6                            ,
+        -3                           ,
+        -4                      ,
+        -16                        ,
+        -10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "SQLPoolName": "TestPool",
+    "SQLPoolOperation": "start",
+    "Source": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Not-Applicable"
+    },
+    "Target": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Not-Applicable"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -2;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -5                          ,
+        '[-3]  SQL Dedicated Pool pause execution test.'                      ,
+        -6                            ,
+        -1                           ,
+        -4                      ,
+        -16                        ,
+        -10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "SQLPoolName": "TestPool",
+    "SQLPoolOperation": "pause",
+    "Source": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Not-Applicable"
+    },
+    "Target": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "",
+        "SchemaFileName": "",
+        "Type": "Not-Applicable"
     }
 }'                      ,
         0                              ,

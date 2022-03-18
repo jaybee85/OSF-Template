@@ -26,9 +26,9 @@ namespace FunctionApp.Services
             _authProvider = authProvider;
             _options = options;
         }
-        public async Task StartSynapseSqlPool(string SubscriptionId, string ResourceGroupName, string SynapseWorkspaceName, string SynapsePoolName, string Action, Logging.Logging logging)
+        public async Task StartStopSynapseSqlPool(string SubscriptionId, string ResourceGroupName, string SynapseWorkspaceName, string SynapsePoolName, string Action, Logging.Logging logging)
         {
-            try
+                        try
             {
                 string token = await _authProvider.GetAzureRestApiToken("https://management.azure.com/").ConfigureAwait(false);
                 ServiceClientCredentials cred = new TokenCredentials(token);
@@ -38,10 +38,37 @@ namespace FunctionApp.Services
                 SynapseManagementClient synapseManagementClient = new SynapseManagementClient(cred);
                 synapseManagementClient.SubscriptionId = SubscriptionId;
                 var sqlPool = synapseManagementClient.SqlPools.Get(ResourceGroupName, SynapseWorkspaceName, SynapsePoolName);
-                logging.LogInformation($"Synapse pool is: {sqlPool.Status}");
-                if (sqlPool.Status == "Paused" && Action.ToLower() == "resume")
+                logging.LogInformation($"Synapse SQL pool ({SynapsePoolName}) is currently: {sqlPool.Status}");
+                if (sqlPool.Status == "Paused" || sqlPool.Status == "Pausing")
                 {
-                    //synapseManagementClient.SqlPools.Resume("adsgftera2", "mststgsynwads", "mststgsyndpads");    
+                    if (Action.ToLower() == "start")
+                    {
+                        logging.LogInformation($"Attempting to {Action} ({SynapsePoolName})");
+                        synapseManagementClient.SqlPools.Resume(ResourceGroupName, SynapseWorkspaceName, SynapsePoolName);
+                        logging.LogInformation($"{SynapsePoolName} now has the status: {sqlPool.Status}");
+                    }
+                    else
+                    {
+                        Exception error = new Exception("Cannot execute a " + Action + " action on the dedicated pool " + SynapsePoolName + ". Current status of pool: " + sqlPool.Status);
+                        logging.LogErrors(error);
+                        throw error;
+                    }
+
+                }
+                else if (sqlPool.Status == "Online" || sqlPool.Status == "Resuming")
+                {
+                    if (Action.ToLower() == "pause")
+                    {
+                        logging.LogInformation($"Attempting to {Action} ({SynapsePoolName})");
+                        synapseManagementClient.SqlPools.Pause(ResourceGroupName, SynapseWorkspaceName, SynapsePoolName);
+                        logging.LogInformation($"{SynapsePoolName} now has the status: {sqlPool.Status}");
+                    }
+                    else
+                    {
+                        Exception error = new Exception("Cannot execute a " + Action + " action on the dedicated pool " + SynapsePoolName + ". Current status of pool: " + sqlPool.Status);
+                        logging.LogErrors(error);
+                        throw error;
+                    }
                 }
 
 
@@ -50,7 +77,7 @@ namespace FunctionApp.Services
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                logging.LogErrors(new Exception("Initiation of Delete Failed:"));
+                logging.LogErrors(new Exception("Initiation of SQLPool command failed:"));
                 throw;
 
             }

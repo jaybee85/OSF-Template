@@ -2,7 +2,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
@@ -12,7 +12,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
@@ -22,7 +22,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -32,7 +32,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Parquet",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -42,7 +42,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
@@ -52,7 +52,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Delta",
@@ -62,7 +62,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -72,7 +72,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Delta",
@@ -82,7 +82,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
@@ -92,7 +92,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobStorage",
       "TargetFormat": "Parquet",
@@ -102,7 +102,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
@@ -112,7 +112,7 @@
    {
       "Folder": "Azure-Storage-to-Azure-Storage",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Delta",
       "SourceType": "AzureBlobFS",
       "TargetFormat": "Parquet",
@@ -122,11 +122,371 @@
    {
       "Folder": "Execute-Notebook",
       "GFPIR": "Azure",
-      "Pipeline": "GPL_SparkNotebookExecution_Primary",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "N/A",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
       "SourceFormat": "Notebook-Optional",
       "SourceType": "N/A",
       "TargetFormat": "Notebook-Optional",
       "TargetType": "N/A",
       "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobStorage",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureBlobFS",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Execute-Notebook",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Notebook-Optional",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Notebook-Optional",
+      "TargetType": "N/A",
+      "TaskTypeId": -5
+   },
+   {
+      "Folder": "Synapse-SQLPool-Start-Stop",
+      "GFPIR": "Azure",
+      "Pipeline": "Synapse_SQLPool_Start_Stop",
+      "SourceFormat": "Not-Applicable",
+      "SourceType": "N/A",
+      "TargetFormat": "Not-Applicable",
+      "TargetType": "Azure Synapse",
+      "TaskTypeId": -6
    }
 ]
