@@ -10,7 +10,7 @@ foreach ($test in $tests)
 {
     ($test | Get-Content) | Set-Content('FileForUpload.json')
         az synapse notebook import --workspace-name $tout.synapse_workspace_name --name $test.BaseName --file '@FileForUpload.json' --folder-path 'FrameworkNotebooks'
-
+        Remove-Item FileForUpload.json
 }
 
 
