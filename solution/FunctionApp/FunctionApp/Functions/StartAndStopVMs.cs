@@ -30,7 +30,6 @@ namespace FunctionApp.Functions
     public class StartAndStopVMs
     {
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
-#pragma warning disable CS0618
         // We need to update this us use the new provider at some point.
         private readonly MicrosoftAzureManagementAuthenticationProvider _legacyAuthProvider;
         private readonly ApplicationOptions _options;
@@ -140,8 +139,6 @@ namespace FunctionApp.Functions
 
             }
         }
-#pragma warning restore CS0618
-
 
     }
 }

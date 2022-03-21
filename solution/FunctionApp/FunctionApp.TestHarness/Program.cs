@@ -56,6 +56,7 @@ namespace FunctionApp.TestHarness
         private readonly DataFactoryClientFactory _dataFactoryClientFactory;
         private readonly ISecurityAccessProvider _sap;
         private readonly AzureSynapseService _azureSynapseService;
+        private readonly PurviewService _purviewService;
 
         public App(ILogger<App> logger,
             TaskTypeMappingProvider taskTypeMappingProvider,
@@ -66,7 +67,8 @@ namespace FunctionApp.TestHarness
             DataFactoryPipelineProvider dataFactoryPipelineProvider,
             DataFactoryClientFactory dataFactoryClientFactory,
             ISecurityAccessProvider sap,
-            AzureSynapseService azureSynapseService)
+            AzureSynapseService azureSynapseService, 
+            PurviewService purviewService)
         {
             _logger = logger;
             _taskTypeMappingProvider = taskTypeMappingProvider;
@@ -78,7 +80,8 @@ namespace FunctionApp.TestHarness
             _dataFactoryClientFactory = dataFactoryClientFactory;
             _sap = sap;
             _azureSynapseService = azureSynapseService;
-    }
+            _purviewService = purviewService;
+        }
 
         public void Run()
         {
@@ -97,7 +100,8 @@ namespace FunctionApp.TestHarness
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
-            DebugRunFrameworkTasks();
+            _purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
+            //DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
 
         }
