@@ -100,7 +100,8 @@ namespace FunctionApp.TestHarness
             //Test_GetSourceTargetMapping(_funcAppLogger);
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
-            _purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
+            //_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
+            PurviewCreateEntitiesTest();
             //DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
 
@@ -428,7 +429,12 @@ namespace FunctionApp.TestHarness
 
         }
 
-        
+        public void PurviewCreateEntitiesTest() {
+            var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
+            JObject res = JObject.Parse(_purviewService.TestPurview("adsgfpv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
+            body = JObject.Parse(File.ReadAllText("PurviewSample_Lineage.json").Replace("{input}", res["guidAssignments"].First.Last.ToString()).Replace("{output}", res["guidAssignments"].Last.Last.ToString()));
+            res = JObject.Parse(_purviewService.TestPurview("adsgfpv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
+        }
 
         /// <summary>
         /// 

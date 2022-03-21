@@ -26,17 +26,13 @@ namespace FunctionApp.Services
             _options = options;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<string> TestPurview(string PurviewAccountName, string Method,  string APIURIDomain, string APIURIPath, string APIVersion, Logging.Logging logging)
+        public async Task<string> TestPurview(string PurviewAccountName, string Method,  string APIURIDomain, string APIURIPath, string APIVersion, JObject PostBody, Logging.Logging logging)
         {
             
             try
             {
-                using var c = _httpClientFactory.CreateClient(HttpClients.PurviewHttpClientName);             
-                JObject jsonContent = new JObject();
-                jsonContent["limit"] = 10;
-                jsonContent["offset"] = null;
-                jsonContent["path"] = "%s";
-                var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
+                using var c = _httpClientFactory.CreateClient(HttpClients.PurviewHttpClientName);                                   
+                var postContent = new StringContent(PostBody.ToString(), System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response;
                 if (Method.ToLower() == "get")
