@@ -431,9 +431,9 @@ namespace FunctionApp.TestHarness
 
         public void PurviewCreateEntitiesTest() {
             var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
-            JObject res = JObject.Parse(_purviewService.TestPurview("adsgfpv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
-            body = JObject.Parse(File.ReadAllText("PurviewSample_Lineage.json").Replace("{input}", res["guidAssignments"].First.Last.ToString()).Replace("{output}", res["guidAssignments"].Last.Last.ToString()));
-            res = JObject.Parse(_purviewService.TestPurview("adsgfpv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
+            JObject res = JObject.Parse(_purviewService.TestPurview("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
+            //body = JObject.Parse(File.ReadAllText("PurviewSample_Lineage.json").Replace("{input}", res["guidAssignments"].First.Last.ToString()).Replace("{output}", res["guidAssignments"].Last.Last.ToString()));
+            //res = JObject.Parse(_purviewService.TestPurview("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
         }
 
         /// <summary>
