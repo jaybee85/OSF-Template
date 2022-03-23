@@ -662,6 +662,7 @@ TaskMaster.*
 ,WaterMark.[TaskMasterWaterMarkColumnType]
 ,WaterMark.[TaskMasterWaterMark_DateTime]
 ,WaterMark.[TaskMasterWaterMark_BigInt]
+,WaterMark.[TaskMasterWaterMark_String]
 from #AllTasksTobeCreated AS TaskMaster
 Left Join [dbo].[TaskMasterWaterMark] as WaterMark
 On WaterMark.[TaskMasterId] = TaskMaster.[TaskMasterId]

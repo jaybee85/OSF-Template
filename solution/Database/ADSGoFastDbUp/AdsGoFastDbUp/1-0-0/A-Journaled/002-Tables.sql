@@ -667,6 +667,7 @@ CREATE TABLE [dbo].[TaskMasterWaterMark](
 	[TaskMasterWaterMarkColumnType] [nvarchar](50) NOT NULL,
 	[TaskMasterWaterMark_DateTime] [datetime] NULL,
 	[TaskMasterWaterMark_BigInt] [bigint] NULL,
+	[TaskMasterWaterMark_String] [nvarchar](200) NULL,
 	[TaskWaterMarkJSON] [nvarchar](4000) NULL,
 	[ActiveYN] [bit] NOT NULL,
 	[UpdatedOn] [datetimeoffset](7) NOT NULL,

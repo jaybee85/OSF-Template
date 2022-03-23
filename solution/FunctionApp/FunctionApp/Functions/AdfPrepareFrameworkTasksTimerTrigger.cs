@@ -213,12 +213,18 @@ namespace FunctionApp.Functions
                         {
                             root["IncrementalValue"] = row.TaskMasterWaterMark_BigInt ?? -1;
                         }
+                        else if (row.TaskMasterWaterMarkColumnType == "lsn")
+                        {
+                            root["IncrementalValue"] = row.TaskMasterWaterMark_String ?? "NO_WATERMARK_STRING";
+                        }
                         if ((root["IncrementalField"] == null) || (string.IsNullOrEmpty(root["IncrementalField"].ToString())))
                         {
                             instanceGenerationErrorMessage +=
                                 $"TaskMasterId '{logging.DefaultActivityLogItem.TaskInstanceId}' has an IncrementalType of Watermark but does not have any entry in the TaskWatermark table. ";
                         }
                     }
+
+                   //here 
 
                     if (root == null)
                     {

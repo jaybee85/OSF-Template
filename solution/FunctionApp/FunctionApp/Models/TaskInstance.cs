@@ -102,6 +102,11 @@ namespace FunctionApp.Models
                                 $"SELECT * FROM {tableSchema}.{tableName} WHERE {incrementalField} > Cast('{incrementalValueBigInt}' as bigint) AND {incrementalField} <= cast('<newWatermark>' as bigint)";
                         }
                     }
+                    else
+                    if (incrementalType.ToString() == "CDC")
+                    {
+                        sqlStatement = $"";
+                    }
                 }
 
             }
