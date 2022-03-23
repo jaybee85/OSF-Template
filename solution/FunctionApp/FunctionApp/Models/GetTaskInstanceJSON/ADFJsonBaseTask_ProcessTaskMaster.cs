@@ -91,8 +91,8 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 source["SQLStatement"] = @$"
                     DECLARE @from_lsn binary(10), @to_lsn binary(10);
                     SET @from_lsn = sys.fn_cdc_get_min_lsn('{source["TableSchema"]}_{source["TableName"]}');
-                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',
-                    GETDATE()); SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal', GETDATE()); 
+                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
                     ";
             }
             else if (source["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
@@ -100,8 +100,8 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 source["SQLStatement"] = @$"
                     DECLARE @from_lsn binary(10), @to_lsn binary(10);
                     SET @from_lsn = {source["IncrementalValue"]};
-                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',
-                    GETDATE()); SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',GETDATE()); 
+                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
                     ";
             }
 

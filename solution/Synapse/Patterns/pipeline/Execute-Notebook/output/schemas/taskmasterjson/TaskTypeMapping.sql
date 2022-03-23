@@ -27,34 +27,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -141,34 +113,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -309,34 +253,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -423,34 +339,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -591,34 +479,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -705,34 +565,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -873,34 +705,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -987,34 +791,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1155,34 +931,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -1269,34 +1017,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1437,34 +1157,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -1551,34 +1243,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1719,34 +1383,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -1833,34 +1469,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2001,34 +1609,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -2115,34 +1695,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2283,34 +1835,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -2397,34 +1921,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2565,34 +2061,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -2679,34 +2147,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2847,34 +2287,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -2961,34 +2373,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3129,34 +2513,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -3243,34 +2599,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3411,34 +2739,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -3525,34 +2825,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3693,34 +2965,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -3807,34 +3051,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3975,34 +3191,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -4089,34 +3277,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4257,34 +3417,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -4371,34 +3503,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4539,34 +3643,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -4653,34 +3729,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4821,34 +3869,6 @@
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
@@ -4935,34 +3955,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
-                  }{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {

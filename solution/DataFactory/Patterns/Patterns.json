@@ -100,6 +100,46 @@
       "TaskTypeId": -3
    },
    {
+      "Folder": "SQL-Database-to-Azure-Storage-CDC",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_CDC",
+      "SourceFormat": "Table",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -4
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage-CDC",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_CDC",
+      "SourceFormat": "Table",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -4
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage-CDC",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_CDC",
+      "SourceFormat": "Table",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -4
+   },
+   {
+      "Folder": "SQL-Database-to-Azure-Storage-CDC",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_CDC",
+      "SourceFormat": "Table",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "Parquet",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -4
+   },
+   {
       "Folder": "Azure-Storage-to-SQL-Database",
       "GFPIR": "Azure",
       "Pipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",

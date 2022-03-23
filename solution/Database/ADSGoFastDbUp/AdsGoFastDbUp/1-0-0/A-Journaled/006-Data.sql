@@ -211,11 +211,13 @@ INSERT [dbo].[TaskMasterWaterMark] ([TaskMasterId], [TaskMasterWaterMarkColumn],
 GO
 SET IDENTITY_INSERT [dbo].[TaskType] ON 
 GO
+INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-7, N'Execute ADF Pipeline', N'ADF', NULL, 1)
+GO
 INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-6, N'Start/Pause Dedicated Synapse SQL Pool', N'DLL', NULL, 1)
 GO
 INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-5, N'Execute Synapse Notebook', N'ADF', NULL, 1)
 GO
-INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-4, N'Execute ADF Pipeline', N'ADF', NULL, 1)
+INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-4, N'SQL Database CDC to Azure Storage', N'ADF', NULL, 1)
 GO
 INSERT [dbo].[TaskType] ([TaskTypeId], [TaskTypeName], [TaskExecutionType], [TaskTypeJson], [ActiveYN]) VALUES (-3, N'SQL Database to Azure Storage', N'ADF', NULL, 1)
 GO

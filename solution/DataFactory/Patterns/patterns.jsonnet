@@ -9,6 +9,17 @@ local Template_SQL_Database_to_Azure_Storage = function(SourceType, SourceFormat
         "TaskTypeId":-3,
         "Pipeline":"GPL_" + SourceType + "_" + "NA" + "_" + TargetType + "_" + TargetFormat  
 };
+local Template_SQL_Database_to_Azure_Storage_CDC = function(SourceType, SourceFormat, TargetType, TargetFormat)
+{
+        "Folder": "SQL-Database-to-Azure-Storage-CDC",
+        "GFPIR": "Azure",
+        "SourceType": SourceType,
+        "SourceFormat": SourceFormat,
+        "TargetType": TargetType,
+        "TargetFormat": TargetFormat,
+        "TaskTypeId":-4,
+        "Pipeline":"GPL_" + SourceType + "_" + "NA" + "_" + TargetType + "_" + TargetFormat + "_CDC"  
+};
 local Template_Azure_Storage_to_SQL_Database = function(SourceType, SourceFormat, TargetType, TargetFormat)
 {
         "Folder": "Azure-Storage-to-SQL-Database",
@@ -32,6 +43,8 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
         "Pipeline":"GPL_" + SourceType + "_" + SourceFormat + "_" + TargetType + "_" + TargetFormat  
 };
 
+
+
 #SQL_Database_to_Azure_Storage
 [   
     #Blob
@@ -50,6 +63,19 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Table","AzureBlobFS","Parquet")   
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet")
+]
++
+#SQL_Database_CDC_to_Azure_Storage
+[   
+    #Blob
+    Template_SQL_Database_to_Azure_Storage_CDC("AzureSqlTable","Table","AzureBlobStorage","Parquet"),
+    Template_SQL_Database_to_Azure_Storage_CDC("SqlServerTable","Table","AzureBlobStorage","Parquet"),
+    #ADLS
+    Template_SQL_Database_to_Azure_Storage_CDC("AzureSqlTable","Table","AzureBlobFS","Parquet"),
+    Template_SQL_Database_to_Azure_Storage_CDC("SqlServerTable","Table","AzureBlobFS","Parquet")
+    #FileServer
+    #Template_SQL_Database_CDC_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
+    #Template_SQL_Database_CDC_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet")
 ]
 +
 #Azure_Storage_to_SQL_Database
