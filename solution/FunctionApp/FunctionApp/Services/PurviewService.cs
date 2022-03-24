@@ -26,7 +26,7 @@ namespace FunctionApp.Services
             _options = options;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<string> TestPurview(string PurviewAccountName, string Method,  string APIURIDomain, string APIURIPath, string APIVersion, JObject PostBody, Logging.Logging logging)
+        public async Task<string> ExecuteRequest(string PurviewAccountName, string Method,  string APIURIDomain, string APIURIPath, string APIVersion, JObject PostBody, Logging.Logging logging)
         {
             
             try
@@ -52,7 +52,7 @@ namespace FunctionApp.Services
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                logging.LogErrors(new Exception("Purview Test Failed"));
+                logging.LogErrors(new Exception("Purview ExecuteRequest Failed"));
                 throw;
             }
 

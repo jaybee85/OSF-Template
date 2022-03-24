@@ -50,7 +50,7 @@ namespace FunctionApp.Functions
             };
             _funcAppLogger.InitializeLog(log, activityLogItem);
             JObject j = new JObject();
-            return new OkObjectResult(_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview",j, _funcAppLogger).Result);
+            return new OkObjectResult(_purviewService.ExecuteRequest("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview",j, _funcAppLogger).Result);
 
 
         }
