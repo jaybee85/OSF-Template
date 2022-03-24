@@ -42,6 +42,12 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                     goto ProcessTaskMasterEnd;
                 }
 
+                if (TaskType == "SQL Database CDC to Azure Storage")
+                {
+                    ProcessTaskMaster_Mapping_SQL_CDC_AZ_Storage_Parquet();
+                    goto ProcessTaskMasterEnd;
+                }
+
                 /*if (TaskType == "Execute Synapse Notebook")
                 {
                     ProcessTaskMaster_SynapseNotebookExecution();
@@ -60,6 +66,48 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 _logging.LogInformation("ProcessTaskMasterJson Finished");
 
             }
+        }
+
+        public void ProcessTaskMaster_Mapping_SQL_CDC_AZ_Storage_Parquet()
+        {
+            JObject source = ((JObject)_jsonObjectForAdf["Source"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["Source"];
+            JObject target = ((JObject)_jsonObjectForAdf["Target"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["Target"];
+
+            source.Merge(_taskMasterJson["Source"], new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+
+            target.Merge(_taskMasterJson["Target"], new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+
+            source["IncrementalType"] = "CDC";
+            if (source["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            {
+                source["SQLStatement"] = @$"
+                    DECLARE @from_lsn binary(10), @to_lsn binary(10);
+                    SET @from_lsn = sys.fn_cdc_get_min_lsn('{source["TableSchema"]}_{source["TableName"]}');
+                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal', GETDATE()); 
+                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                    ";
+            }
+            else if (source["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            {
+                source["SQLStatement"] = @$"
+                    DECLARE @from_lsn binary(10), @to_lsn binary(10);
+                    SET @from_lsn = {source["IncrementalValue"]};
+                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',GETDATE()); 
+                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                    ";
+            }
+
+            _jsonObjectForAdf["Source"] = source;
+            _jsonObjectForAdf["Target"] = target;
+
         }
 
         public void ProcessTaskMaster_Mapping_XX_SQL_AZ_Storage_Parquet()
@@ -198,6 +246,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
 	                    WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
                     ";
                 }
+
 
             }
 

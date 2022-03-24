@@ -28,18 +28,18 @@ using Newtonsoft.Json.Linq;
 
 namespace FunctionApp.Functions
 {
-    public class PurviewTest
+    public class PurviewGetMetaData
     {
         private readonly PurviewService _purviewService;
         private readonly ApplicationOptions _options;
         private Logging.Logging _funcAppLogger = new Logging.Logging();
 
-        public PurviewTest(IOptions<ApplicationOptions> options, PurviewService purviewService)
+        public PurviewGetMetaData(IOptions<ApplicationOptions> options, PurviewService purviewService)
         {
             _purviewService = purviewService;
             _options = options?.Value;
         }
-        [FunctionName("PurviewTest")]
+        [FunctionName("PurviewGetMetaData")]
         public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log, ExecutionContext context)
         {
             var executionId = System.Guid.NewGuid();
@@ -50,7 +50,7 @@ namespace FunctionApp.Functions
             };
             _funcAppLogger.InitializeLog(log, activityLogItem);
             JObject j = new JObject();
-            return new OkObjectResult(_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview",j, _funcAppLogger).Result);
+            return new OkObjectResult(_purviewService.ExecuteRequest("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview",j, _funcAppLogger).Result);
 
 
         }
