@@ -78,6 +78,9 @@
     <None Update="DataAccess\SqlTemplates\UpdateTaskInstancesWithTaskRunner.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="PurviewSample_Browse.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="PurviewSample_Lineage.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
