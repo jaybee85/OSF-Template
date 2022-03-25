@@ -24,31 +24,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -102,7 +77,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -120,7 +95,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -170,31 +145,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -248,7 +198,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -266,7 +216,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -316,31 +266,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -394,7 +319,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -412,7 +337,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -462,31 +387,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -540,7 +440,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -558,7 +458,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -608,31 +508,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -686,7 +561,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -704,7 +579,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -754,31 +629,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -832,7 +682,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -850,7 +700,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -900,31 +750,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -978,7 +803,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -996,7 +821,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -1046,31 +871,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -1124,7 +924,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1142,7 +942,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -1192,31 +992,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -1270,7 +1045,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1288,7 +1063,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -1338,31 +1113,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -1416,7 +1166,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1434,7 +1184,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -1484,31 +1234,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -1562,7 +1287,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1580,7 +1305,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true
@@ -1630,31 +1355,6 @@
                "options": {
                   "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "Source": {
-         "properties": {
-            "DataFileName": {
-               "options": {
-                  "infoText": "Name of the file to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
-                  }
-               },
-               "type": "string"
-            },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
                },
@@ -1708,7 +1408,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the delta table to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1726,7 +1426,7 @@
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Delta"
                ],
                "options": {
                   "hidden": true

@@ -32,9 +32,95 @@
           },
           "snapshot": true,
           "sparkPool": {
-            "referenceName": "arkstgsynspads",
+            "referenceName": "adsdevsynspads",
             "type": "BigDataPoolReference"
           }
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "ExecuteNotebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "name": "PrepareMetaData",
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false,
+          "timeout": "7.00:00:00"
+        },
+        "type": "SynapseNotebook",
+        "typeProperties": {
+          "notebook": {
+            "referenceName": "PrepareMetaData",
+            "type": "NotebookReference"
+          },
+          "parameters": {
+            "TaskObject": {
+              "type": "string",
+              "value": "@string(pipeline().parameters.TaskObject)"
+            }
+          },
+          "snapshot": true,
+          "sparkPool": {
+            "referenceName": "adsdevsynspads",
+            "type": "BigDataPoolReference"
+          }
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "PrepareMetaData",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "name": "Set Purview Metadata",
+        "type": "SetVariable",
+        "typeProperties": {
+          "value": {
+            "type": "Expression",
+            "value": "@activity('PrepareMetaData').output.status.Output.result.exitValue"
+          },
+          "variableName": "OutputMetaData"
+        },
+        "userProperties": []
+      },
+      {
+        "dependsOn": [
+          {
+            "activity": "Set Purview Metadata",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "linkedServiceName": {
+          "referenceName": "SLS_AzureFunctionApp",
+          "type": "LinkedServiceReference"
+        },
+        "name": "PassMetaDataToPurview",
+        "policy": {
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false,
+          "timeout": "7.00:00:00"
+        },
+        "type": "AzureFunctionActivity",
+        "typeProperties": {
+          "body": "bla",
+          "functionName": "PurviewGetMetaData",
+          "method": "POST"
         },
         "userProperties": []
       }
@@ -47,6 +133,11 @@
     "parameters": {
       "TaskObject": {
         "type": "object"
+      }
+    },
+    "variables": {
+      "OutputMetaData": {
+        "type": "String"
       }
     }
   },

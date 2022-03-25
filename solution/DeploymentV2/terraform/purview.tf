@@ -105,6 +105,7 @@ resource "azuread_application" "purview_ir" {
 resource "azuread_service_principal" "purview_ir" {
   count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   application_id = azuread_application.purview_ir[0].application_id
+  owners         = [data.azurerm_client_config.current.object_id]
 }
 
 
