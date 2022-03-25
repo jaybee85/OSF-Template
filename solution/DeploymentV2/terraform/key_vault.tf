@@ -122,6 +122,7 @@ resource "azurerm_key_vault_access_policy" "function_app" {
 
 // Allows the synapse workspace to retrieve the azure function host key
 resource "azurerm_key_vault_access_policy" "synapse_access" {
+  count        = var.deploy_synapse ? 1 : 0
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
   object_id    = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
@@ -257,6 +258,11 @@ resource "azurerm_key_vault_secret" "selfhostedsql_password" {
   depends_on = [
     time_sleep.cicd_access,
   ]
+  lifecycle {
+    ignore_changes = [
+      value
+    ]
+  }
 }
 
 
