@@ -2,6 +2,15 @@
     Select * into #TempTTM from ( VALUES(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -16,17 +25,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -71,6 +81,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -78,7 +97,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -126,6 +146,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -133,14 +162,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -148,6 +179,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -162,17 +202,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -217,6 +258,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -224,7 +274,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -272,6 +323,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -279,14 +339,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -294,6 +356,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Parquet', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -308,17 +379,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -363,6 +435,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -370,7 +451,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -418,6 +500,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -425,14 +516,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -440,6 +533,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Parquet', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -454,17 +556,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -509,6 +612,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -516,7 +628,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -564,6 +677,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -571,14 +693,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -586,6 +710,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -600,17 +733,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -655,6 +789,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -662,7 +805,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -710,6 +854,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -717,14 +870,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -732,6 +887,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -746,17 +910,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -801,6 +966,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -808,7 +982,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -856,6 +1031,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -863,14 +1047,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -878,6 +1064,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'ADLS', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -892,17 +1087,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -947,6 +1143,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -954,7 +1159,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1002,6 +1208,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1009,14 +1224,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -1024,6 +1241,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'Azure Blob', N'Delta', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1038,17 +1264,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1093,6 +1320,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1100,7 +1336,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1148,6 +1385,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1155,14 +1401,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -1170,6 +1418,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1184,17 +1441,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1239,6 +1497,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1246,7 +1513,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1294,6 +1562,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1301,14 +1578,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -1316,6 +1595,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1330,17 +1618,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1385,6 +1674,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1392,7 +1690,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1440,6 +1739,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1447,14 +1755,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -1462,6 +1772,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'ADLS', N'Parquet', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1476,17 +1795,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1531,6 +1851,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1538,7 +1867,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1586,6 +1916,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1593,14 +1932,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
@@ -1608,6 +1949,15 @@
 ',N'{}'),(-2, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Delta', N'Azure Blob', N'Parquet', NULL, 1,N'{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1622,17 +1972,18 @@
             "MaxConcurrentConnections": {
                "default": 100,
                "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
-            "RelativePath": {
-               "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
-                  "inputAttributes": {
-                     "placeholder": "eg. AwSamp{
+                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you wan{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1677,6 +2028,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1684,7 +2044,8 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       },
@@ -1732,6 +2093,15 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
          "required": [
@@ -1739,14 +2109,16 @@
             "RelativePath",
             "DataFileName",
             "SchemaFileName",
-            "MaxConcurrentConnections"
+            "MaxConcurrentConnections",
+            "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
       "Source",
-      "Target"
+      "Target",
+      "Purview"
    ],
    "title": "TaskMasterJson",
    "type": "object"
