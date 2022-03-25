@@ -1,0 +1,4 @@
+﻿{
+  "path": "https://adsdevdlsadsbn6dadsl.dfs.core.windows.net/datalakeraw/samples/SalesLT.Customer.chunk_{N}.parquet",
+  "limit": 10
+}

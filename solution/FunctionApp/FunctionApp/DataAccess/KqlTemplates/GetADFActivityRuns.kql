@@ -14,7 +14,7 @@ let SelfHostedPipelineActivityCostRate = toreal({SelfHostedPipelineActivityCostR
 let CloudPipelineActivityCostRate = toreal({CloudPipelineActivityCostRate});
 ADFActivityRun 
         | where TimeGenerated >  datetime({MaxActivityTimeGenerated}) and Status in ("Succeeded", "Failed", "Cancelled")  
-            and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/{DataFactoryName}"
+            and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.DATAFACTORY/FACTORIES/{EngineName}"
         | extend        MeterType = tostring(parse_json(Output).billingReference.billableDuration[0].meterType),  
                         MeterDuration = toreal(parse_json(Output).billingReference.billableDuration[0].duration)*60,  
                         MeterUnit = parse_json(Output).billingReference.billableDuration[0].unit,

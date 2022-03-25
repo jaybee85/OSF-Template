@@ -59,6 +59,7 @@ namespace FunctionApp.Functions
                 dt.Columns.Add(new DataColumn("TaskMasterWaterMarkColumnType", typeof(string)));
                 dt.Columns.Add(new DataColumn("TaskMasterWaterMark_DateTime", typeof(DateTime)));
                 dt.Columns.Add(new DataColumn("TaskMasterWaterMark_BigInt", typeof(long)));
+                dt.Columns.Add(new DataColumn("TaskMasterWaterMark_String", typeof(string)));
                 dt.Columns.Add(new DataColumn("ActiveYN", typeof(bool)));
                 dt.Columns.Add(new DataColumn("UpdatedOn", typeof(DateTime)));
 
@@ -69,11 +70,22 @@ namespace FunctionApp.Functions
                 {
                     dr["TaskMasterWaterMark_DateTime"] = waterMarkValue;
                     dr["TaskMasterWaterMark_BigInt"] = DBNull.Value;
+                    dr["TaskMasterWaterMark_String"] = DBNull.Value;
+
                 }
                 else if (taskMasterWaterMarkColumnType == "BigInt")
                 {
                     dr["TaskMasterWaterMark_DateTime"] = DBNull.Value;
                     dr["TaskMasterWaterMark_BigInt"] = waterMarkValue;
+                    dr["TaskMasterWaterMark_String"] = DBNull.Value;
+
+                }
+                else if (taskMasterWaterMarkColumnType == "lsn" || taskMasterWaterMarkColumnType == "string")
+                {
+                    dr["TaskMasterWaterMark_DateTime"] = DBNull.Value;
+                    dr["TaskMasterWaterMark_BigInt"] = DBNull.Value;
+                    dr["TaskMasterWaterMark_String"] = waterMarkValue;
+
                 }
                 else
                 {

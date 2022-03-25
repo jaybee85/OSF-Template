@@ -60,13 +60,13 @@ where tei.[Status] = 'InProgress' and apr.PipelineRunStatus in ('Failed','Succee
 --Main Merge
 MERGE dbo.ADFPipelineRun AS a  
     USING (SELECT * from {TempTable}) AS b   
-    ON (b.[taskinstanceid] = a.[taskinstanceid] and b.[executionuid] = a.[executionuid] and a.DataFactoryId = {DatafactoryId} and a.PipelineRunUid = b.PipelineRunUid)  
+    ON (b.[taskinstanceid] = a.[taskinstanceid] and b.[executionuid] = a.[executionuid] and a.EngineId = {EngineId} and a.PipelineRunUid = b.PipelineRunUid)  
     WHEN MATCHED THEN
         UPDATE SET 
             [PipelineName] = b.[PipelineName], [Start] = b.[Start], [End] = b.[End], [PipelineRunStatus] = b.[PipelineRunStatus], [MaxPipelineTimeGenerated] = b.[MaxPipelineTimeGenerated]
     WHEN NOT MATCHED THEN  
-        INSERT ([TaskInstanceId], [ExecutionUid], [DataFactoryId], [PipelineName], [PipelineRunUid],[Start], [End], [PipelineRunStatus], [MaxPipelineTimeGenerated])  
-        VALUES (b.[TaskInstanceId], b.[ExecutionUid], {DatafactoryId},b.[PipelineName],  b.[PipelineRunUid],b.[Start], b.[End], b.[PipelineRunStatus], b.[MaxPipelineTimeGenerated]);  
+        INSERT ([TaskInstanceId], [ExecutionUid], [EngineId], [PipelineName], [PipelineRunUid],[Start], [End], [PipelineRunStatus], [MaxPipelineTimeGenerated])  
+        VALUES (b.[TaskInstanceId], b.[ExecutionUid], {EngineId},b.[PipelineName],  b.[PipelineRunUid],b.[Start], b.[End], b.[PipelineRunStatus], b.[MaxPipelineTimeGenerated]);  
     
 
 END TRY

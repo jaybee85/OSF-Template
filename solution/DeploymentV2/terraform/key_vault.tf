@@ -120,6 +120,25 @@ resource "azurerm_key_vault_access_policy" "function_app" {
   ]
 }
 
+// Allows the synapse workspace to retrieve the azure function host key
+resource "azurerm_key_vault_access_policy" "synapse_access" {
+  count        = var.deploy_synapse ? 1 : 0
+  key_vault_id = azurerm_key_vault.app_vault.id
+  tenant_id    = var.tenant_id
+  object_id    = azurerm_synapse_workspace.synapse[0].identity[0].principal_id
+
+  key_permissions = [
+    "Get", "List"
+  ]
+
+  secret_permissions = [
+    "list", "get"
+  ]
+  depends_on = [
+    azurerm_key_vault.app_vault,
+  ]
+}
+
 
 // private endpoints --------------------------
 resource "azurerm_private_endpoint" "app_vault_private_endpoint_with_dns" {
@@ -213,7 +232,7 @@ resource "azurerm_key_vault_secret" "function_app_key" {
 }
 
 resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
-  count        = var.deploy_purview ? 1 : 0
+  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   name         = "AzurePurviewIr"
   value        = azuread_application_password.purview_ir[0].value
   key_vault_id = azurerm_key_vault.app_vault.id
@@ -230,4 +249,20 @@ resource "azurerm_key_vault_secret" "azure_function_secret" {
     time_sleep.cicd_access,
   ]
 }
+
+resource "azurerm_key_vault_secret" "selfhostedsql_password" {
+  count        = var.deploy_selfhostedsql ? 1 : 0
+  name         = "selfhostedsqlpw"
+  value        = random_password.selfhostedsql[0].result
+  key_vault_id = azurerm_key_vault.app_vault.id
+  depends_on = [
+    time_sleep.cicd_access,
+  ]
+  lifecycle {
+    ignore_changes = [
+      value
+    ]
+  }
+}
+
 

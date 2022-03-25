@@ -15,8 +15,8 @@ MERGE dbo.ADFActivityRun AS a
         UPDATE SET 
             [activities] = b.[activities],[totalcost] = b.[totalcost],[cloudorchestrationcost] = b.[cloudorchestrationcost],[selfhostedorchestrationcost] = b.[selfhostedorchestrationcost],[selfhosteddatamovementcost] = b.[selfhosteddatamovementcost],[selfhostedpipelineactivitycost] = b.[selfhostedpipelineactivitycost],[cloudpipelineactivitycost] = b.[cloudpipelineactivitycost],[rowscopied] = b.[rowscopied],[dataread] = b.[dataread],[datawritten] = b.[datawritten],[failedactivities] = b.[failedactivities], [MaxActivityTimeGenerated] = b.[MaxActivityTimeGenerated]
     WHEN NOT MATCHED THEN  
-        INSERT ([PipelineRunUid],[DatafactoryId], [activities],[totalcost],[cloudorchestrationcost],[selfhostedorchestrationcost],[selfhosteddatamovementcost],[selfhostedpipelineactivitycost],[cloudpipelineactivitycost],[rowscopied],[dataread],[datawritten],[failedactivities], [MaxActivityTimeGenerated])  
-        VALUES (b.[PipelineRunUid],{DatafactoryId}, b.[activities],b.[totalcost],b.[cloudorchestrationcost],b.[selfhostedorchestrationcost],b.[selfhosteddatamovementcost],b.[selfhostedpipelineactivitycost],b.[cloudpipelineactivitycost],b.[rowscopied],b.[dataread],b.[datawritten],b.[failedactivities], b.[MaxActivityTimeGenerated]);  
+        INSERT ([PipelineRunUid],[EngineId], [activities],[totalcost],[cloudorchestrationcost],[selfhostedorchestrationcost],[selfhosteddatamovementcost],[selfhostedpipelineactivitycost],[cloudpipelineactivitycost],[rowscopied],[dataread],[datawritten],[failedactivities], [MaxActivityTimeGenerated])  
+        VALUES (b.[PipelineRunUid],{EngineId}, b.[activities],b.[totalcost],b.[cloudorchestrationcost],b.[selfhostedorchestrationcost],b.[selfhosteddatamovementcost],b.[selfhostedpipelineactivitycost],b.[cloudpipelineactivitycost],b.[rowscopied],b.[dataread],b.[datawritten],b.[failedactivities], b.[MaxActivityTimeGenerated]);  
     
 
 END TRY

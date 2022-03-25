@@ -1,5 +1,5 @@
 {
-  "name": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_Azure",
+  "name": "GPL_SqlServerTable_NA_FileServer_Parquet_OnPrem",
   "properties": {
     "activities": [
       {
@@ -14,7 +14,7 @@
             }
           },
           "pipeline": {
-            "referenceName": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_Primary_Azure",
+            "referenceName": "GPL_SqlServerTable_NA_FileServer_Parquet_Primary_OnPrem",
             "type": "PipelineReference"
           },
           "waitOnCompletion": true
@@ -80,7 +80,7 @@
     ],
     "annotations": [],
     "folder": {
-      "name": "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/Azure"
+      "name": "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage/OnPrem/ErrorHandler/"
     },
     "lastPublishTime": "2020-08-06T06:27:14Z",
     "parameters": {

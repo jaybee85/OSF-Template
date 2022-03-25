@@ -21,22 +21,24 @@ if($tout.functionapp_name -eq "") {
 
 function UploadADFItem ($items) {
     if ($items.count -gt 0) {
-        $items | Foreach-Object {
+        $items | Foreach-Object -Parallel {
+            $_tout = $using:tout
+            $guid = [guid]::NewGuid()
             $lsName = $_.BaseName 
             $fileName = $_.FullName
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
 
-            $uri = "https://management.azure.com/" + $tout.resource_group_id + "/providers/Microsoft.DataFactory/factories/" + $tout.datafactory_name + "/"
+            $uri = "https://management.azure.com/" + $_tout.resource_group_id + "/providers/Microsoft.DataFactory/factories/" + $_tout.datafactory_name + "/"
 
             if ($jsonobject.type -eq "Microsoft.DataFactory/factories/linkedservices") {
                 #Swap out Key Vault Url for Function App Linked Service
                 if ($lsName -eq "AdsGoFastKeyVault") {
-                    $jsonobject.properties.typeProperties.baseUrl = "https://"+$tout.keyvault_name+".vault.azure.net/"
+                    $jsonobject.properties.typeProperties.baseUrl = "https://"+$_tout.keyvault_name+".vault.azure.net/"
                 }
 
                 #Swap out Function App Url
                 if ($lsName -eq "SLS_AzureFunctionApp") {
-                    $jsonobject.properties.typeProperties.functionAppUrl = "https://"+$tout.functionapp_name+".azurewebsites.net"
+                    $jsonobject.properties.typeProperties.functionAppUrl = "https://"+$_tout.functionapp_name+".azurewebsites.net"
                 }
             
                 $uri = $uri + "linkedservices/"
@@ -55,15 +57,14 @@ function UploadADFItem ($items) {
             $jsonobject | ConvertTo-Json  -Depth 100 | set-content $_
 
             #Make a copy of the file for upload 
-            Copy-Item  -Path $fileName -Destination "FileForUpload.json"
+            Copy-Item  -Path $fileName -Destination "ffu$guid.json"
 
             write-host ($lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             write-host $uri
-            $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@FileForUpload.json" --uri-parameters 'api-version=2018-06-01'
-
-
+            $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@ffu$guid.json" --uri-parameters 'api-version=2018-06-01'
         }
+        Get-ChildItem -path "ffu*.json" | Remove-Item
     }
 }
 

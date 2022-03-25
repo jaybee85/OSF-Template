@@ -9,58 +9,27 @@
 	    <DefineConstants>TRACE</DefineConstants>
     </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="0-1-0-beta\A-Journaled\008-SampleTasks_SourceAndTargetSystems.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\009-SampleTasks_TaskMasterWaterMark.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\010-TaskTypeMapping_Update.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\011-SampleTasks_SourceAndTargetSystems_Updated.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\012-ConfigureDependenciesFromParams.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\013-CreateMSILogins.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\014-SourceAndTargetSystems_JsonSchema.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\015-TaskTypeMapping_Update_NewNaming.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\016-NewTaskTypeMapping_NoIR_Updated.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems.sql" />
-    <None Remove="0-1-0-beta\B-Always\001-Schemas.sql" />
-    <None Remove="0-1-0-beta\B-Always\002-Tables.sql" />
-    <None Remove="0-1-0-beta\B-Always\003-StoredProcsEtc.sql" />
-    <None Remove="0-1-0-beta\B-Always\004-PostDeploy.sql" />
-    <None Remove="0-1-0-beta\B-Always\005-SampleTasks_Base.sql" />
-    <None Remove="0-1-0-beta\B-Always\006-SampleTasks_TaskMaster.sql" />
-    <None Remove="0-1-0-beta\B-Always\007-SampleTasks_TaskMasterWaterMark.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\022-GetTaskGroups.sql" />
-    <None Remove="0-1-0-beta\A-Journaled\023-AddSynapseSourceAndTarget.sql" />
+  <ItemGroup>       
+    <None Remove="1-0-0\A-Journaled\001-Schemas.sql" />       
+    <None Remove="1-0-0\A-Journaled\002-Tables.sql" />       
+    <None Remove="1-0-0\A-Journaled\003-Views.sql" />       
+    <None Remove="1-0-0\A-Journaled\004-StoredProcsAndUserDefinedFuncs.sql" />       
+    <None Remove="1-0-0\A-Journaled\005-Users.sql" />       
+    <None Remove="1-0-0\A-Journaled\006-Data.sql" />       
+    <None Remove="1-0-0\A-Journaled\007-ManualInserts.sql" />
+    <None Remove="1-0-0\A-Journaled\008-CreateMSILogins.sql" />
+    
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\001-Schemas.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\002-Tables.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\003-StoredProcsEtc.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\004-PostDeploy.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\005-SampleTasks_Base.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\006-SampleTasks_TaskMaster.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\007-SampleTasks_TaskMasterWaterMark.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\008-SampleTasks_SourceAndTargetSystems.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\009-SampleTasks_TaskMasterWaterMark.sql">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\010-TaskTypeMapping_Update.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\011-SampleTasks_SourceAndTargetSystems_Updated.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\013-CreateMSILogins.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\012-ConfigureDependenciesFromParams.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\014-SourceAndTargetSystems_JsonSchema.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\015-TaskTypeMapping_Update_NewNaming.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\016-NewTaskTypeMapping_NoIR_Updated.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\019-CleanSamples.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\020-UpdateSourceAndTargetSystems.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\018-AddIntegrationRuntimeData.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\017-AddIntegrationRuntime.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\021-CorrectMappingForCsvToSql.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\022-GetTaskGroups.sql" />
-    <EmbeddedResource Include="0-1-0-beta\A-Journaled\023-AddSynapseSourceAndTarget.sql" />    
+    <EmbeddedResource Include="1-0-0\A-Journaled\001-Schemas.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\002-Tables.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\003-Views.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\004-StoredProcsAndUserDefinedFuncs.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\005-Users.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\006-Data.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\007-ManualInserts.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\008-CreateMSILogins.sql" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -70,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="0-1-0-beta\B-Always\" />
-    <Folder Include="0-1-1-beta\" />
+    <Folder Include="1-0-0\B-Always\" />
+    <Folder Include="1-0-0\" />
   </ItemGroup>
 
   <ItemGroup>

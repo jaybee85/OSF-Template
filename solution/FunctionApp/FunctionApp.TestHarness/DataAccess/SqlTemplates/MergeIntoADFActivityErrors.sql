@@ -16,7 +16,7 @@ inner join
 
 insert into dbo.AdfActivityErrors
 (
-     [DatafactoryId]
+     [EngineId]
     ,[TenantId]
     ,[SourceSystem]
     ,[TimeGenerated]
@@ -50,7 +50,7 @@ insert into dbo.AdfActivityErrors
     ,[Type]
 )
 Select 
-    {DatafactoryId}
+    {EngineId}
     ,[TenantId]
     ,[SourceSystem]
     ,[TimeGenerated]

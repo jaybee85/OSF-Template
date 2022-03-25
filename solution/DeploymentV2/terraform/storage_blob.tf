@@ -40,7 +40,7 @@ resource "azurerm_role_assignment" "blob_data_factory" {
 }
 
 resource "azurerm_role_assignment" "blob_purview_sp" {
-  count                = var.deploy_purview ? 1 : 0
+  count                = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   scope                = azurerm_storage_account.blob[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azuread_service_principal.purview_ir[0].object_id

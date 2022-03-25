@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "../../../../../.."
+		}
+	],
+	"settings": {
+		"synapseSparkpoolJobSubmission.synapseSparkPoolClusterConf": [
+			{
+				"name": "mststgsynwads mststgsynspads",
+				"filePath": "/home/jrambo/gitms/adsgf/solution/PySpark/Synapse.ipynb"
+			},
+			{
+				"name": "mststgsynwads mststgsynspads",
+				"filePath": "Untitled-1"
+			},
+			{
+				"name": "mststgsynwads mststgsynspads",
+				"filePath": "/home/jrambo/gitms/adsgf/solution/PySpark/import random.py"
+			}
+		],
+		"python.pythonPath": "/root/.msvscode.hdinsight/hdinsightJupyter/bin/python",
+		"python.defaultInterpreterPath": "/root/.msvscode.hdinsight/hdinsightJupyter/bin/python",
+		"jupyter.jupyterLaunchTimeout": 240000
+	}	
+}
