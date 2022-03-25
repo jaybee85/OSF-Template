@@ -63,7 +63,7 @@ output "aad_funcreg_id" {
   value = azuread_application.function_app_reg[0].application_id
 }
 output "purview_sp_id" {
-  value = var.deploy_purview ?   azuread_application.purview_ir[0].application_id : "0"
+  value = var.deploy_purview && var.is_vnet_isolated ?   azuread_application.purview_ir[0].application_id : "0"
 }
 output "integration_runtimes" {
   value = local.integration_runtimes

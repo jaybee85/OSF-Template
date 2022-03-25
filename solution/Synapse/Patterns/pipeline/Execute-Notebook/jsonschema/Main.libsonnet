@@ -9,6 +9,15 @@ function(SourceType = "", SourceFormat = "Notebook-Optional",TargetType = "", Ta
     "type": "object",
     "title": "TaskMasterJson",
     "properties": {
+        "Purview": {
+            "type": "string",
+            "default": "Disabled",
+            "enum": [
+                "Enabled",
+                "Disabled"
+            ],
+            "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine."
+        },
         "ExecuteNotebook": {
             "type": "string",
             "options": {
@@ -32,6 +41,7 @@ function(SourceType = "", SourceFormat = "Notebook-Optional",TargetType = "", Ta
     },
     "required": [
         "ExecuteNotebook",
+        "Purview",
         "CustomDefinitions"
     ]
 }

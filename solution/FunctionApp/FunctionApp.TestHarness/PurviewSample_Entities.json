@@ -1,43 +1,21 @@
 ﻿{
-  "entities": [
-    {
-      "meanings": [
-      ],
-      "status": "ACTIVE",
-      "version": 0,
-      "typeName": "DataSet",
-      "attributes": {
-        "qualifiedName": "system://input_01",
-        "name": "input_table01",
-        "description": "Input table",
-        "objectType": null
-      }
-    },
-    {
-      "meanings": [
-      ],
-      "status": "ACTIVE",
-      "version": 0,
-      "typeName": "DataSet",
-      "attributes": {
-        "qualifiedName": "system://input_02",
-        "name": "input_table02",
-        "description": "Input table",
-        "objectType": null
-      }
-    },
-    {
-      "meanings": [
-      ],
-      "status": "ACTIVE",
-      "version": 0,
-      "typeName": "DataSet",
-      "attributes": {
-        "qualifiedName": "system://output_01",
-        "name": "output_table01",
-        "description": "Output table",
-        "objectType": null
-      }
+    "entity": {
+        "typeName": "Process",
+        "status": "ACTIVE",
+        "attributes": {
+            "inputs": [
+                {
+                    "guid": "aa220695-c547-4fd3-8331-16a874454661"
+                }
+            ],
+            "outputs": [
+                {
+                    "guid": "f135f8f6-0ad8-4142-b24f-4e9c3a1ab51d"
+                }
+            ],
+            "qualifiedName": "customProcess://whynotwork",
+            "name":  "cool process"
+
+        }
     }
-  ]
 }

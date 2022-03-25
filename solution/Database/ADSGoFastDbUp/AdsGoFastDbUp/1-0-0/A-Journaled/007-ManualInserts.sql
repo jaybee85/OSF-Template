@@ -17,7 +17,7 @@ SET EngineName = '$SynapseWorkspaceName$'
 	,DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/'
 	,LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
 	,EngineJson = '{
-            "endpoint": "https://$SynapseWorkspaceName$.dev.azuresynapse.net", "DeltaProcessingNotebook": "DeltaProcessingNotebook"
+            "endpoint": "https://$SynapseWorkspaceName$.dev.azuresynapse.net", "DeltaProcessingNotebook": "DeltaProcessingNotebook, "Purview": "$PurviewAccountName$"
         }'
 WHERE EngineId = '-2'
 GO

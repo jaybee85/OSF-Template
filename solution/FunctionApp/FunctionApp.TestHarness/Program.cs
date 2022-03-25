@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Dapper;
 using FunctionApp.Authentication;
 using FunctionApp.DataAccess;
@@ -101,13 +102,19 @@ namespace FunctionApp.TestHarness
             //Test_GetSQLCreateStatementFromSchema(_funcAppLogger);
             //DebugPrepareFrameworkTasks();
             //_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
+            //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
+            //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
             PurviewCreateEntitiesTest();
             //DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
+            //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
+            //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
+
+ 
 
         }
 
-        
+
 
         public IEnumerable<GetTaskInstanceJsonResult> GetTests()
         {
@@ -430,37 +437,203 @@ namespace FunctionApp.TestHarness
         }
 
         public void PurviewCreateEntitiesTest() {
-            //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
-            //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
-            var testData = "{\"SourceColumns\": \"Invalid\", \"TargetColumns\": {\"CustomerID\": \"int\", \"NameStyle\": \"boolean\", \"Title\": \"string\", \"FirstName\": \"string\", \"MiddleName\": \"string\", \"LastName\": \"string\", \"Suffix\": \"string\", \"CompanyName\": \"string\", \"SalesPerson\": \"string\", \"EmailAddress\": \"string\", \"Phone\": \"string\", \"PasswordHash\": \"string\", \"PasswordSalt\": \"string\", \"rowguid\": \"string\", \"ModifiedDate\": \"timestamp\"}, \"TaskObject\": {\"TaskInstanceId\": 1, \"TaskMasterId\": 2, \"TaskStatus\": \"InProgress\", \"TaskType\": \"TestTask Type Name\", \"Enabled\": 1, \"ExecutionUid\": \"8448eabb-9ba4-4779-865b-29e973431273\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -1, \"EngineName\": \"ark-stg-adf-ads-irud\", \"SystemType\": \"Datafactory\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure\", \"EngineJson\": \"{}\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {}}, \"Source\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\", \"Type\": \"Parquet\"}}}";
+            var testData = "{\"SourceHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"SourceColumns\": \"Invalid\", \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 1, \"TaskMasterId\": 2, \"TaskStatus\": \"InProgress\", \"TaskType\": \"TestTask Type Name\", \"Enabled\": 1, \"ExecutionUid\": \"8448eabb-9ba4-4779-865b-29e973431273\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -1, \"EngineName\": \"ark-stg-adf-ads-irud\", \"SystemType\": \"Datafactory\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure\", \"EngineJson\": \"{}\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {}}, \"Source\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"\"}, \"DataFileName\": \"Input.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\", \"Type\": \"Parquet\"}}}";
             JObject metadata = JsonConvert.DeserializeObject<JObject>(testData);
-            //string testproperty = metadata["TargetColumns"]["CustomerID"].ToString();
+
+
+            List<String> datasets = new List<String>();
             string[] toIterate = { "SourceColumns", "TargetColumns" };
+
             for (int i = 0; i < toIterate.Length; i++)
             {
-                if (metadata[toIterate[i]].HasValues)
+                string choice = Regex.Match(toIterate[i], @"^.*?(?=Columns)").ToString();
+                string containerPartial = Regex.Match(metadata["TaskObject"][choice]["System"]["SystemServer"].ToString(), @"(?<=https://)(\w+)").ToString();
+
+                // Setting up Input/Output Entities
+                //Note - This will be expanded on as we expand more types to be read into purview. At the moment it assumes the items are read from a restricted set of sources
+                string datasetType = "azure_datalake_gen2_resource_set";
+                string datasetPath = "/azure_storage_account#" + containerPartial + ".core.windows.net/azure_datalake_gen2_service#" + metadata["TaskObject"][choice]["System"]["SystemServer"].ToString() + "/" + "azure_datalake_gen2_filesystem#" + metadata["TaskObject"][choice]["System"]["Container"].ToString() + "/azure_datalake_gen2_path#" + metadata["TaskObject"][choice]["RelativePath"].ToString() + "azure_datalake_gen2_resource_set#" + metadata["TaskObject"][choice]["DataFileName"].ToString();
+                //string datasetName = "";
+                string datasetQualifiedName = "";
+                string modifiedRelativePath = "";
+                //At the moment it only support resource sets -> This is for datalake gen2.
+                switch (metadata["TaskObject"][choice]["System"]["Type"].ToString())
                 {
-                    foreach (var column in metadata[toIterate[i]])
+                    case "Delta":
+                        modifiedRelativePath = Regex.Replace(metadata["TaskObject"][choice]["Instance"][choice + "RelativePath"].ToString(), "[0-9]{2,}", "{N}");
+                        datasetQualifiedName = metadata["TaskObject"][choice]["System"]["SystemServer"] + "/" + metadata["TaskObject"][choice]["System"]["Container"] + "/" + modifiedRelativePath + "/" + metadata["TaskObject"][choice]["DataFileName"] + "/{SparkPartitions}";
+                        break;
+                    default:
+                        //datasetName = metadata["TaskObject"][choice]["DataFileName"].ToString().Split(new Char[] { ',', '.' })[0];
+                        modifiedRelativePath =  Regex.Replace(metadata["TaskObject"][choice]["Instance"][choice+"RelativePath"].ToString(), "[0-9]{2,}", "{N}");
+                        datasetQualifiedName = metadata["TaskObject"][choice]["System"]["SystemServer"] + "/" + metadata["TaskObject"][choice]["System"]["Container"] + "/" + modifiedRelativePath + "/" + metadata["TaskObject"][choice]["DataFileName"];
+                        break;
+                }
+                JObject dataset = JObject.FromObject(new
+                {
+                    typeName = datasetType,
+                    attributes = new
                     {
+                        qualifiedName = datasetQualifiedName,
+                        name = metadata["TaskObject"][choice]["DataFileName"],
+                        path = datasetPath,
+                        description = (String)null,
+                        objectType = (String)null
+                    },
+                    status = "ACTIVE"
+                });
+                
+                JObject datasetJson = new JObject(new JProperty("entity", dataset));
+                var datasetConv = datasetJson.ToString();
+                var datasetBody = JObject.Parse(datasetConv);
+                JObject datasetGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", datasetBody, _funcAppLogger).Result);
+                //This is for the process at the end
+                datasets.Add(datasetGuid["guidAssignments"].First.Last.ToString());
+
+                //If the dataset has columns at all, we need to create a schema, a dataset-schema relationship, columns and a schema-column relationship.
+                if (metadata["TaskObject"][choice]["WriteSchemaToPurview"].ToString() == "Enabled")
+                {
+                    if (metadata[toIterate[i]].HasValues)
+                    {
+
+                        // Setting up Schema entity
+                        JObject schema = JObject.FromObject(new
+                        {
+                            typeName = "tabular_schema",
+                            attributes = new
+                            {
+                                owner = (String)null,
+                                replicatedTo = (String)null,
+                                replicatedFrom = (String)null,
+                                qualifiedName = metadata[choice + "HttpPath"] + "#__tabular_schema",
+                                name = metadata[choice + "HttpPath"] + "#__tabular_schema",
+                                description = (String)null,
+                            },
+                            status = "ACTIVE"
+                        });
+
+                        JObject schemaJson = new JObject(new JProperty("entity", schema));
+                        var schemaConv = schemaJson.ToString();
+                        var schemaBody = JObject.Parse(schemaConv);
+                        var schemaGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", schemaBody, _funcAppLogger).Result);
+
+
+                        //Relationship for Dataset and schema
+                        JObject dsRelationship = JObject.FromObject(new
+                        {
+                            typeName = "tabular_schema_datasets",
+                            end1 = new
+                            {
+                                guid = datasetGuid["guidAssignments"].First.Last.ToString()
+                            },
+                            end2 = new
+                            {
+                                guid = schemaGuid["guidAssignments"].First.Last.ToString()
+                            },
+                            label = "r:" + datasetGuid["guidAssignments"].First.Last.ToString() + "_" + schemaGuid["guidAssignments"].First.Last.ToString(),
+                            status = "ACTIVE"
+                        });
+                        //JObject dsRelJson = new JObject(new JProperty("relationship", dsRelationship));
+                        var dsRelConv = dsRelationship.ToString();
+                        var dsRelBody = JObject.Parse(dsRelConv);
+                        JObject dsRelGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/relationship", "2021-07-01", dsRelBody, _funcAppLogger).Result);
+
+
+
+
+
+                        JArray entities = new JArray();
+                        //Setting up Column entities
+                        foreach (var column in metadata[toIterate[i]])
+                        {
+                            //Convert our dataframe datatype to atlas API compatible
+                            string conversion;
+                            switch (column["type"].ToString())
+                            {
+                                case "int":
+                                    conversion = "INT32";
+                                    break;
+                                case "boolean":
+                                    conversion = "BOOLEAN";
+                                    break;
+                                case "timestamp":
+                                    conversion = "INT96";
+                                    break;
+                                default:
+                                    conversion = "UTF8";
+                                    break;
+                            }
+                            JObject entity = JObject.FromObject(new
+                            {
+                                typeName = "column",
+                                attributes = new
+                                {
+                                    owner = (String)null,
+                                    replicatedTo = (String)null,
+                                    replicatedFrom = (String)null,
+                                    qualifiedName = metadata[choice + "HttpPath"] + "#__tabular_schema//" + column["name"].ToString(),
+                                    name = column["name"].ToString(),
+                                    description = (String)null,
+                                    type = conversion,
+                                },
+                                status = "ACTIVE"
+                            });
+                            entities.Add(entity);
+                        }
+                        JObject colJson = new JObject(new JProperty("entities", entities));
+                        string colConv = colJson.ToString();
+                        JObject colBody = JObject.Parse(colConv);
+                        JObject colGuids = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", colBody, _funcAppLogger).Result);
+                        var cols = colGuids["guidAssignments"];
+                        //Setting up Schema/Column Relationship
+                        foreach (var col in cols)
+                        {
+                            JObject scRelationship = JObject.FromObject(new
+                            {
+                                typeName = "tabular_schema_columns",
+                                end1 = new
+                                {
+                                    guid = schemaGuid["guidAssignments"].First.Last.ToString()
+                                },
+                                end2 = new
+                                {
+                                    guid = col.First.ToString()
+                                },
+                                label = "r:" + schemaGuid["guidAssignments"].First.Last.ToString() + "_" + col.First.ToString(),
+                                status = "ACTIVE"
+                            });
+                            //JObject scRelJson = new JObject(new JProperty("relationship", scRelationship));
+                            var scRelConv = scRelationship.ToString();
+                            var scRelBody = JObject.Parse(scRelConv);
+                            JObject scRelGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/relationship", "2021-07-01", scRelBody, _funcAppLogger).Result);
+
+                        }
 
                     }
                 }
-            }
 
-            string[] Entities = { "Source", "Target" };
-            for (int i = 0; i < Entities.Length; i++)
+            }
+            //Finally we want to link up the dataset objects to the process
+            // Setting up the final process entity 
+            JObject process = JObject.FromObject(new
             {
-                if (metadata["TaskObject"][toIterate[i]].HasValues)
+                typeName = "azure_synapse_pipeline",
+                status = "ACTIVE",
+                attributes = new
                 {
-                    foreach (var column in metadata[toIterate[i]])
-                    {
+                    inputs = new JArray(JObject.FromObject(new { guid = datasets[0] })),
+                    outputs = new JArray(JObject.FromObject(new { guid = datasets[1] })),
+                    qualifiedName = "Synapse_Pipeline_Execution_UID_" + metadata["TaskObject"]["ExecutionUid"],
+                    name =  metadata["TaskObject"]["ExecutionEngine"]["ADFPipeline"] + "_" + DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+                },
+            });
 
-                    }
-                }
-            }
+            JObject processJson = new JObject(new JProperty("entity", process));
+            var processConv = processJson.ToString();
+            var processBody = JObject.Parse(processConv);
+            var processGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", processBody, _funcAppLogger).Result);
 
-            //body = JObject.Parse(File.ReadAllText("PurviewSample_Lineage.json").Replace("{input}", res["guidAssignments"].First.Last.ToString()).Replace("{output}", res["guidAssignments"].Last.Last.ToString()));
-            //res = JObject.Parse(_purviewService.TestPurview("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
+            //
         }
 
         /// <summary>

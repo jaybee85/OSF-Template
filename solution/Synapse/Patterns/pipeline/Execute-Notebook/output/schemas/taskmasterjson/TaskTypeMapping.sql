@@ -20,6 +20,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -57,9 +66,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -99,14 +119,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -133,6 +165,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -170,9 +211,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -212,14 +264,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -246,6 +310,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -283,9 +356,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -325,14 +409,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -359,6 +455,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -396,9 +501,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -438,14 +554,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -472,6 +600,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -509,9 +646,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -551,14 +699,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -585,6 +745,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -622,9 +791,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -664,14 +844,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -698,6 +890,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -735,9 +936,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -777,14 +989,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -811,6 +1035,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -848,9 +1081,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -890,14 +1134,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -924,6 +1180,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -961,9 +1226,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1003,14 +1279,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1037,6 +1325,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1074,9 +1371,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1116,14 +1424,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1150,6 +1470,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1187,9 +1516,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1229,14 +1569,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1263,6 +1615,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1300,9 +1661,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1342,14 +1714,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1376,6 +1760,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1413,9 +1806,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1455,14 +1859,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1489,6 +1905,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1526,9 +1951,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1568,14 +2004,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1602,6 +2050,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1639,9 +2096,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1681,14 +2149,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1715,6 +2195,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1752,9 +2241,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1794,14 +2294,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1828,6 +2340,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1865,9 +2386,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -1907,14 +2439,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -1941,6 +2485,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1978,9 +2531,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2020,14 +2584,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2054,6 +2630,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2091,9 +2676,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2133,14 +2729,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2167,6 +2775,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2204,9 +2821,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2246,14 +2874,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2280,6 +2920,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2317,9 +2966,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2359,14 +3019,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2393,6 +3065,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2430,9 +3111,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2472,14 +3164,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2506,6 +3210,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2543,9 +3256,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2585,14 +3309,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2619,6 +3355,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2656,9 +3401,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2698,14 +3454,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2732,6 +3500,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2769,9 +3546,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2811,14 +3599,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2845,6 +3645,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2882,9 +3691,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -2924,14 +3744,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -2958,6 +3790,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -2995,9 +3836,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3037,14 +3889,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3071,6 +3935,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3108,9 +3981,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3150,14 +4034,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3184,6 +4080,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3221,9 +4126,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3263,14 +4179,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3297,6 +4225,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3334,9 +4271,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3376,14 +4324,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3410,6 +4370,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3447,9 +4416,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3489,14 +4469,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3523,6 +4515,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3560,9 +4561,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3602,14 +4614,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3636,6 +4660,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3673,9 +4706,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3715,14 +4759,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3749,6 +4805,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3786,9 +4851,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3828,14 +4904,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3862,6 +4950,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -3899,9 +4996,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -3941,14 +5049,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
@@ -3975,6 +5095,15 @@
          },
          "type": "string"
       },
+      "Purview": {
+         "default": "Disabled",
+         "enum": [
+            "Enabled",
+            "Disabled"
+         ],
+         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -4012,9 +5141,20 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       },
       "Target": {
@@ -4054,14 +5194,26 @@
                   "hidden": true
                },
                "type": "string"
+            },
+            "WriteSchemaToPurview": {
+               "default": "Disabled",
+               "enum": [
+                  "Enabled",
+                  "Disabled"
+               ],
+               "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned.",
+               "type": "string"
             }
          },
-         "required": [ ],
+         "required": [
+            "WriteSchemaToPurview"
+         ],
          "type": "object"
       }
    },
    "required": [
       "ExecuteNotebook",
+      "Purview",
       "CustomDefinitions"
    ],
    "title": "TaskMasterJson",

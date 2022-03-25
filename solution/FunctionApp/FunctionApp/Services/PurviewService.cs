@@ -48,6 +48,7 @@ namespace FunctionApp.Services
                 var res = response.Content.ReadAsStringAsync().Result;
                 return res;
 
+
             }
             catch (Exception e)
             {
