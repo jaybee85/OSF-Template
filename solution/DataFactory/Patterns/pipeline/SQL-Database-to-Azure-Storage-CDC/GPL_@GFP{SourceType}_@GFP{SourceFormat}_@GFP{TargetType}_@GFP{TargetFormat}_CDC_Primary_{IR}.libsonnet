@@ -415,6 +415,11 @@ local pipeline = {
                 "type": "String"
             }
         },
+        "folder": {
+			"name": if(GenerateArm=="false") 
+					then "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC/" + GFPIR
+					else "[concat('ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC/', parameters('integrationRuntimeShortName'))]",
+		},
         "annotations": [],
         "lastPublishTime": "2022-03-22T03:55:20Z"
     },

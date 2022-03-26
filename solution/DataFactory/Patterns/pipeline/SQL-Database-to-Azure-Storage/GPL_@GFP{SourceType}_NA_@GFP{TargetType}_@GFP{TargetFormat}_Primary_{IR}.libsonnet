@@ -186,8 +186,8 @@ local pipeline = {
 									"typeProperties": {
 										"pipeline": {										
 											"referenceName": if(GenerateArm=="false") 
-																then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_"+GFPIR 
-																else "[concat('GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_" + "', parameters('integrationRuntimeShortName'))]",
+																then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_Chunk_"+GFPIR 
+																else "[concat('GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_Chunk_" + "', parameters('integrationRuntimeShortName'))]",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
