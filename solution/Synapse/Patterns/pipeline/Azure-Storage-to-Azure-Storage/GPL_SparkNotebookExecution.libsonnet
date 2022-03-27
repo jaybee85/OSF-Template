@@ -70,7 +70,7 @@ local pipeline =
                 "userProperties": [],
                 "typeProperties": {
                     "expression": {
-                        "value": "@not(or(equals(string(json(string(pipeline().parameters.TaskObject)).ExecutionEngine.JsonProperties.PurviewAccount), ''), equals(string(json(string(pipeline().parameters.TaskObject)).TMOptionals.Purview), 'Disabled')))\n",
+                        "value": "@not(or(equals(string(json(string(pipeline().parameters.TaskObject)).ExecutionEngine.JsonProperties.PurviewAccountName), ''), equals(string(json(string(pipeline().parameters.TaskObject)).TMOptionals.Purview), 'Disabled')))\n",
                         "type": "Expression"
                     },
                     "ifTrueActivities": [

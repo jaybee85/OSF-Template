@@ -55,7 +55,7 @@ namespace FunctionApp.Functions
 
             string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
             JObject metadata = JsonConvert.DeserializeObject<JObject>(requestBody);
-            string purviewAccount = metadata["TaskObject"]["TMOptionals"]["Purview"].ToString();
+            string purviewAccount = metadata["TaskObject"]["ExecutionEngine"]["JsonProperties"]["PurviewAccountName"].ToString();
 
             List<String> datasets = new List<String>();
             string[] toIterate = { "SourceColumns", "TargetColumns" };
@@ -68,7 +68,7 @@ namespace FunctionApp.Functions
                 // Setting up Input/Output Entities
                 //Note - This will be expanded on as we expand more types to be read into purview. At the moment it assumes the items are read from a restricted set of sources
                 string datasetType = "azure_datalake_gen2_resource_set";
-                string datasetPath = "/azure_storage_account#" + containerPartial + ".core.windows.net/azure_datalake_gen2_service#" + metadata["TaskObject"][choice]["System"]["SystemServer"].ToString() + "/" + "azure_datalake_gen2_filesystem#" + metadata["TaskObject"][choice]["System"]["Container"].ToString() + "/azure_datalake_gen2_path#" + metadata["TaskObject"][choice]["RelativePath"].ToString() + "azure_datalake_gen2_resource_set#" + metadata["TaskObject"][choice]["DataFileName"].ToString();
+                string datasetPath = "/azure_storage_account#" + containerPartial + ".core.windows.net/azure_datalake_gen2_service#" + metadata["TaskObject"][choice]["System"]["SystemServer"].ToString() + "/" + "azure_datalake_gen2_filesystem#" + metadata["TaskObject"][choice]["System"]["Container"].ToString() + "/azure_datalake_gen2_path#" + metadata["TaskObject"][choice]["Instance"][choice + "RelativePath"].ToString() + "azure_datalake_gen2_resource_set#" + metadata["TaskObject"][choice]["DataFileName"].ToString();
                 //string datasetName = "";
                 string datasetQualifiedName = "";
                 string modifiedRelativePath = "";
