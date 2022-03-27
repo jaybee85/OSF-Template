@@ -96,7 +96,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -114,7 +114,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -247,7 +247,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -265,7 +265,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -398,7 +398,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -416,7 +416,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -549,7 +549,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -567,7 +567,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -700,7 +700,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -718,7 +718,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -851,7 +851,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -869,7 +869,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1002,7 +1002,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1020,7 +1020,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1153,7 +1153,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1171,7 +1171,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1304,7 +1304,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1322,7 +1322,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1455,7 +1455,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1473,7 +1473,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1606,7 +1606,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1624,7 +1624,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true
@@ -1757,7 +1757,7 @@
             },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the file to be imported.",
                   "inputAttributes": {
                      "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                   }
@@ -1775,7 +1775,7 @@
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Parquet"
                ],
                "options": {
                   "hidden": true

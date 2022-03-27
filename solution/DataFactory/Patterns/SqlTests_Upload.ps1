@@ -15,3 +15,12 @@ if($null -eq $SqlInstalled)
 $sqlcommand = (Get-Content ./SqlTests.sql -raw)
 $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
 Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   
+
+#Insert any missing watermarks"
+$sqlcommand = @"
+insert into [dbo].[TaskMasterWaterMark]
+Select a.TaskMasterId, 'lsn', 'lsn',null, null, '',null,1, getdate() 
+from [dbo].[TaskMaster] a left outer join [dbo].[TaskMasterWaterMark] b on a.TaskMasterID=  b.TaskMasterId
+where a.[TaskTypeId] = -4 and b.TaskMasterId is null
+"@
+Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   

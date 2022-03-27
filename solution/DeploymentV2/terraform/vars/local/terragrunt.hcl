@@ -9,7 +9,7 @@ inputs = {
   environment_tag                       = "dev"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "144.138.148.220"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_sentinel                       = false
-  deploy_purview                        = false      
+  deploy_purview                        = true      
   deploy_synapse                        = true
   is_vnet_isolated                      = false
   publish_web_app                       = true
@@ -20,5 +20,6 @@ inputs = {
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
   deploy_selfhostedsql                  = true
-  is_onprem_datafactory_ir_registered   = false
+  is_onprem_datafactory_ir_registered   = true
+  purview_resource_location             = "Southeast Asia"
 }
