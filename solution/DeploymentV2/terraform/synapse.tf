@@ -136,14 +136,14 @@ resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
   ]
   type_properties_json = <<JSON
 {
-  "functionAppUrl": "${azurerm_key_vault.app_vault.vault_uri}",
+  "functionAppUrl": "${local.functionapp_url}",
   "functionKey": {
     "type": "AzureKeyVaultSecret",
     "store": {
       "referenceName": "${azurerm_synapse_linked_service.synapse_keyvault_linkedservice[count.index].name}",
       "type": "LinkedServiceReference"
     },
-    "secretName": "AzureFunctionClientSecret"
+    "secretName": "AdsGfCoreFunctionAppKey"
   },
   "authentication": "Anonymous"
 }
