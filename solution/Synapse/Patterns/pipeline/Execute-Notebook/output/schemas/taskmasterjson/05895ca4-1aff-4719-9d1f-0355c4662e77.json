@@ -1,6 +1,24 @@
 {
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
+      "CustomDefinitions": {
+         "options": {
+            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
+            "inputAttributes": {
+               "placeholder": ""
+            }
+         },
+         "type": "string"
+      },
+      "ExecuteNotebook": {
+         "options": {
+            "infoText": "Use this field to define the name of the notebook to execute.",
+            "inputAttributes": {
+               "placeholder": "DeltaProcessingNotebook"
+            }
+         },
+         "type": "string"
+      },
       "Purview": {
          "default": "Disabled",
          "enum": [
@@ -16,39 +34,32 @@
                "options": {
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the folder holding the delta table to be imported.",
+                  "infoText": "Path of the folder holding the file to be imported/exported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
             "SchemaFileName": {
                "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "infoText": "Name of the schema file to use when generating the target table.",
                   "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
             "Type": {
                "enum": [
-                  "Delta"
+                  "Notebook-Optional"
                ],
                "options": {
                   "hidden": true
@@ -66,11 +77,6 @@
             }
          },
          "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections",
             "WriteSchemaToPurview"
          ],
          "type": "object"
@@ -81,39 +87,32 @@
                "options": {
                   "infoText": "Name of the file to be imported.",
                   "inputAttributes": {
-                     "placeholder": "eg. Customer.xlsx"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
-            "MaxConcurrentConnections": {
-               "default": 100,
-               "options": {
-                  "infoText": "The upper limit of concurrent connections established to the data store during the activity run. Specify a value only when you want to limit concurrent connections"
-               },
-               "type": "integer"
-            },
             "RelativePath": {
                "options": {
-                  "infoText": "Path of the file to be imported.",
+                  "infoText": "Path of the folder holding the file to be imported/exported.",
                   "inputAttributes": {
-                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
             "SchemaFileName": {
                "options": {
-                  "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data.",
+                  "infoText": "Name of the schema file to use when generating the target table.",
                   "inputAttributes": {
-                     "placeholder": "eg. Customer_Schema.json"
+                     "placeholder": "Note: This field is completely optional to use for values to place into the TaskObject passed into the Notebook."
                   }
                },
                "type": "string"
             },
             "Type": {
                "enum": [
-                  "Parquet"
+                  "Notebook-Optional"
                ],
                "options": {
                   "hidden": true
@@ -131,20 +130,15 @@
             }
          },
          "required": [
-            "Type",
-            "RelativePath",
-            "DataFileName",
-            "SchemaFileName",
-            "MaxConcurrentConnections",
             "WriteSchemaToPurview"
          ],
          "type": "object"
       }
    },
    "required": [
-      "Source",
-      "Target",
-      "Purview"
+      "ExecuteNotebook",
+      "Purview",
+      "CustomDefinitions"
    ],
    "title": "TaskMasterJson",
    "type": "object"

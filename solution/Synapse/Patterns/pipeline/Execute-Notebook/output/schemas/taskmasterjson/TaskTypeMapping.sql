@@ -30,37 +30,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -176,37 +145,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -382,37 +320,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -528,37 +435,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -734,37 +610,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -880,37 +725,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'N/A', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1086,37 +900,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -1232,37 +1015,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1438,37 +1190,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -1584,37 +1305,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -1790,37 +1480,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -1936,37 +1595,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Blob', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2142,37 +1770,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -2288,37 +1885,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2494,37 +2060,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -2640,37 +2175,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -2846,37 +2350,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -2992,37 +2465,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'ADLS', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3198,37 +2640,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -3344,37 +2755,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3550,37 +2930,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -3696,37 +3045,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -3902,37 +3220,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -4048,37 +3335,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure SQL', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4254,37 +3510,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -4400,37 +3625,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4606,37 +3800,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -4752,37 +3915,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -4958,37 +4090,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -5104,37 +4205,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'Azure Synapse', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -5310,37 +4380,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -5456,37 +4495,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'Azure Blob', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -5662,37 +4670,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -5808,37 +4785,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'Azure Synapse', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {
@@ -6014,37 +4960,6 @@
          "type": "string"
       },
       "Source": {
-         "properties"{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
          "properties": {
             "DataFileName": {
                "options": {
@@ -6160,37 +5075,6 @@
    "type": "object"
 }
 ',N'{}'),(-5, N'ADF', N'GPL_SparkNotebookExecution', N'SQL Server', N'Notebook-Optional', N'N/A', N'Notebook-Optional', NULL, 1,N'{
-   "$schema": "http://json-schema.org/draft-04/schema#",
-   "properties": {
-      "CustomDefinitions": {
-         "options": {
-            "infoText": "Use this field to create fields to use in your notebook from the TaskObject.",
-            "inputAttributes": {
-               "placeholder": ""
-            }
-         },
-         "type": "string"
-      },
-      "ExecuteNotebook": {
-         "options": {
-            "infoText": "Use this field to define the name of the notebook to execute.",
-            "inputAttributes": {
-               "placeholder": "DeltaProcessingNotebook"
-            }
-         },
-         "type": "string"
-      },
-      "Purview": {
-         "default": "Disabled",
-         "enum": [
-            "Enabled",
-            "Disabled"
-         ],
-         "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
-         "type": "string"
-      },
-      "Source": {
-         "properties"{
    "$schema": "http://json-schema.org/draft-04/schema#",
    "properties": {
       "CustomDefinitions": {

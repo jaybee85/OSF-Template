@@ -4,7 +4,7 @@ local partials = {
 };
 
 
-function(SourceType = "", SourceFormat = "Parquet",TargetType = "AzureSqlTable", TargetFormat = "Delta")
+function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTable", TargetFormat = "Delta")
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
