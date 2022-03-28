@@ -34,13 +34,13 @@ namespace FunctionApp.Functions
             _authProvider = authProvider;
         }
         [FunctionName("GetSourceTargetMapping")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
             FrameworkRunnerWorkerWithHttpRequest worker = GetSourceTargetMappingCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "GetSourceTargetMapping", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "GetSourceTargetMapping", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -53,7 +53,7 @@ namespace FunctionApp.Functions
         Logging.Logging logging)
         {
             using var reader = new StreamReader(req.Body);
-            var requestBody = reader.ReadToEndAsync().Result;
+            var requestBody = await reader.ReadToEndAsync();
             JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
             return await GetSourceTargetMappingCore(data, logging);
         }
@@ -73,7 +73,7 @@ namespace FunctionApp.Functions
             storageAccountName = storageAccountName.Replace(".dfs.core.windows.net", "").Replace("https://", "").Replace(".blob.core.windows.net", "");
             var storageToken = new TokenCredential(await _authProvider.GetAzureRestApiToken($"https://{storageAccountName}.blob.core.windows.net").ConfigureAwait(false));
 
-            string schemaStructure = AzureBlobStorageService.ReadFile(storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken);
+            string schemaStructure = await AzureBlobStorageService.ReadFile(storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken);
 
             JArray arr = (JArray)JsonConvert.DeserializeObject(schemaStructure);
             JObject root = SqlDataTypeHelper.CreateMappingBetweenSourceAndTarget(arr, sourceType, targetType, metadataType);

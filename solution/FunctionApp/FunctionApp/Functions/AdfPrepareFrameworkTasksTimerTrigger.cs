@@ -54,9 +54,9 @@ namespace FunctionApp.Functions
             }
         }
 
-        public dynamic PrepareFrameworkTasksCore(Logging.Logging logging)
+        public async Task<dynamic> PrepareFrameworkTasksCore(Logging.Logging logging)
         {
-            _taskMetaDataDatabase.ExecuteSql(
+            await _taskMetaDataDatabase.ExecuteSql(
                 $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
 
             short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
@@ -64,25 +64,25 @@ namespace FunctionApp.Functions
             //Generate new task instances based on task master and schedules
             CreateScheduleAndTaskInstances(logging);
 
-            _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
+            await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
 
             return new { };
         }
        
-        private void CreateScheduleAndTaskInstances(Logging.Logging logging)
+        private async Task CreateScheduleAndTaskInstances(Logging.Logging logging)
         {
             logging.LogInformation("Create ScheduleInstance called.");
             DateTimeOffset date = DateTimeOffset.Now;
 
             // Generate the upcoming Schedule Instance for each of the schedule master records
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             using var dtScheduleInstance = new DataTable();
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduleMasterId", typeof(long)));
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduledDateUtc", typeof(DateTime)));
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduledDateTimeOffset", typeof(DateTimeOffset)));
             dtScheduleInstance.Columns.Add(new DataColumn("ActiveYN", typeof(bool)));
 
-            dynamic resScheduleInstance = con.QueryWithRetry(@"
+            dynamic resScheduleInstance = await con.QueryWithRetry(@"
                 Select 
 	                SM.ScheduleMasterId, 
 	                SM.ScheduleCronExpression, 
@@ -148,7 +148,7 @@ namespace FunctionApp.Functions
             // Get a list of task masters that need Task Instance records created
             dynamic taskMasters = con.QueryWithRetry(@"Exec dbo.GetTaskMaster");
             // Get a list of Active task type mappings
-            var taskTypeMappings = _taskTypeMappingProvider.GetAllActive();
+            var taskTypeMappings = await _taskTypeMappingProvider.GetAllActive();
 
             foreach (dynamic row in taskMasters)
             {
@@ -271,16 +271,16 @@ namespace FunctionApp.Functions
         }
 
         //TODO: Move this to a data access layer
-        public List<TaskGroup> GetActiveTaskGroups()
+        public async Task<List<TaskGroup>> GetActiveTaskGroups()
         {
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             List<TaskGroup> res = con.QueryWithRetry<TaskGroup>("Exec dbo.GetTaskGroups").ToList();
             return res;
         }
 
-        public short CountRunnningPipelines(Logging.Logging logging)
+        public async Task<short> CountRunnningPipelines(Logging.Logging logging)
         {
-            return _dataFactoryPipelineProvider.CountActivePipelines(logging);
+            return await _dataFactoryPipelineProvider.CountActivePipelines(logging);
         }
 
 
@@ -291,7 +291,7 @@ namespace FunctionApp.Functions
         /// <returns></returns>
         public async Task<short> CheckLongRunningPipelines(Logging.Logging logging)
         {
-            dynamic activePipelines = _dataFactoryPipelineProvider.GetLongRunningPipelines(logging);
+            dynamic activePipelines = await _dataFactoryPipelineProvider.GetLongRunningPipelines(logging);
 
             short runningPipelines = 0;
             using var dt = new DataTable();
@@ -333,7 +333,7 @@ namespace FunctionApp.Functions
 
             string tempTableName = $"#Temp{Guid.NewGuid()}";
             //Todo: Update both the TaskInstanceExecution and the TaskInstance;
-            _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskInstanceExecution");
+            await _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskInstanceExecution");
 
             return runningPipelines;
         }

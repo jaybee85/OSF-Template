@@ -31,6 +31,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.Data.SqlClient;
 
 namespace FunctionApp.Functions
 {
@@ -83,18 +84,18 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("RunFrameworkTasksHttpTrigger")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log,
             ExecutionContext context, System.Security.Claims.ClaimsPrincipal principal)
         {
-            bool isAuthorised = _sap.IsAuthorised(req, log);
+            bool isAuthorised = await _sap.IsAuthorised(req, log);
             if (isAuthorised)
             {
                 Guid executionId = context.InvocationId;
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
 
                 FrameworkRunnerWorkerWithHttpRequest worker = RunFrameworkTasksCore;
-                FrameworkRunnerResult result = fr.Invoke(req, "RunFrameworkTasksHttpTrigger", worker);
+                FrameworkRunnerResult result = await fr.Invoke(req, "RunFrameworkTasksHttpTrigger", worker);
                 if (result.Succeeded)
                 {
                     return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -108,7 +109,7 @@ namespace FunctionApp.Functions
             {
                 log.LogWarning("User is not authorised to call RunFrameworkTasksHttpTrigger.");
                 short taskRunnerId = Convert.ToInt16(req.Query["TaskRunnerId"]);
-                _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
+                await _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
                 return new BadRequestObjectResult(new { Error = "User is not authorised to call this API...." });
             }
         }
@@ -124,10 +125,10 @@ namespace FunctionApp.Functions
         {            
             try
             {
-                _taskMetaDataDatabase.ExecuteSql($"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
+                await _taskMetaDataDatabase.ExecuteSql($"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
 
                 //Fetch Top # tasks
-                JArray tasks = GetTaskInstancesForTaskRunner(logging.DefaultActivityLogItem.ExecutionUid.Value, taskRunnerId,  logging);
+                JArray tasks = await GetTaskInstancesForTaskRunner(logging.DefaultActivityLogItem.ExecutionUid.Value, taskRunnerId,  logging);
 
                 var utcCurDay = DateTime.UtcNow.ToString("yyyyMMdd");
                 foreach (var jsonTask in tasks)
@@ -229,14 +230,14 @@ namespace FunctionApp.Functions
             catch (Exception runnerException)
             {
                 //Set Runner back to Idle
-                _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
+                await _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
                 logging.LogErrors(runnerException);
                 //log and re-throw the error
                 throw;
             }
 
             //Set Runner back to Idle
-            _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
+            await _taskMetaDataDatabase.ExecuteSql($"exec [dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
 
             //Return success
             JObject root = new JObject
@@ -286,7 +287,7 @@ namespace FunctionApp.Functions
                 logging.LogInformation("Pipeline run ID: " + runResponse.RunId);
 
                 logging.DefaultActivityLogItem.AdfRunUid = Guid.Parse(runResponse.RunId);
-                await using var con = _taskMetaDataDatabase.GetSqlConnection();
+                using var con = await _taskMetaDataDatabase.GetSqlConnection();
                 await con.ExecuteAsync(SqlInsertTaskInstanceExecution, new
                 {
                     ExecutionUid = logging.DefaultActivityLogItem.ExecutionUid.ToString(),
@@ -330,7 +331,7 @@ namespace FunctionApp.Functions
                 System.Threading.Thread.Sleep(1000);
 
                 var response = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
-                var content = response.ReadAsStringAsync().Result;
+                var content = await response.ReadAsStringAsync();
                 runId = JObject.Parse(content.ToString())["runId"].ToString();
 
                 logging.LogInformation("Pipeline run ID: " + runId);
@@ -338,7 +339,7 @@ namespace FunctionApp.Functions
 
                 logging.DefaultActivityLogItem.AdfRunUid = Guid.Parse(runId);
 
-                await using var con = _taskMetaDataDatabase.GetSqlConnection();
+                using var con = await _taskMetaDataDatabase.GetSqlConnection();
                 await con.ExecuteAsync(SqlInsertTaskInstanceExecution, new
                 {
                     ExecutionUid = Guid.Parse(logging.DefaultActivityLogItem.ExecutionUid.ToString()),
@@ -413,11 +414,11 @@ namespace FunctionApp.Functions
             return ret;
         }
 
-        public JArray GetTaskInstancesForTaskRunner(Guid ExecutionUid, short TaskRunnerId, Logging.Logging logging)
+        public async Task<JArray> GetTaskInstancesForTaskRunner(Guid ExecutionUid, short TaskRunnerId, Logging.Logging logging)
         {
+            SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection();
             //Get All Task Instance Objects for the current Framework Task Runner
-            IEnumerable<GetTaskInstanceJsonResult> taskInstances = _taskMetaDataDatabase.GetSqlConnection()
-                .Query<GetTaskInstanceJsonResult>($"Exec [dbo].[GetTaskInstanceJSON] {TaskRunnerId}, '{ExecutionUid}'");
+            IEnumerable<GetTaskInstanceJsonResult> taskInstances = con.Query<GetTaskInstanceJsonResult>($"Exec [dbo].[GetTaskInstanceJSON] {TaskRunnerId}, '{ExecutionUid}'");
             JArray isJson = new JArray();
 
             //Instantiate the Collections that contain the JSON Schemas (These are used to populate valid TaskObject json to send to ADF
@@ -485,7 +486,7 @@ namespace FunctionApp.Functions
             return isJson;
         }
 
-        private void SendAlert(JObject task, Logging.Logging logging)
+        private async Task SendAlert(JObject task, Logging.Logging logging)
         {
             try
             {
@@ -531,12 +532,12 @@ namespace FunctionApp.Functions
                                 };
                                 msg.AddTo(new EmailAddress(alert["EmailRecepient"].ToString(),
                                     alert["EmailRecepientName"].ToString()));
-                                var res = client.SendEmailAsync(msg).Result;
+                                var res = await client.SendEmailAsync(msg);
                             }
                         }
                     }
 
-                    _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(task["TaskInstanceId"]),
+                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(task["TaskInstanceId"]),
                         Guid.Parse(task["ExecutionUid"].ToString()), TaskInstance.TaskStatus.Complete,
                         Guid.Empty, "");
                 }
@@ -544,7 +545,7 @@ namespace FunctionApp.Functions
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(task["TaskInstanceId"]),
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(task["TaskInstanceId"]),
                     Guid.Parse(task["ExecutionUid"].ToString()), TaskInstance.TaskStatus.FailedNoRetry,
                     Guid.Empty, "Failed to send email");
             }

@@ -1,6 +1,7 @@
 using System;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Models;
 using FunctionApp.Services;
@@ -23,7 +24,7 @@ namespace FunctionApp.Functions
             _taskMetaDataDatabase = taskMetaDataDatabase;
         }
         [FunctionName("WaterMark")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -31,7 +32,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = UpdateWaterMark;
-            FrameworkRunnerResult result = frp.Invoke(req, "UpdateWaterMark", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "UpdateWaterMark", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -42,10 +43,10 @@ namespace FunctionApp.Functions
             }
 
         }
-        public JObject UpdateWaterMark(HttpRequest req,
+        public async Task<JObject> UpdateWaterMark(HttpRequest req,
             Logging.Logging LogHelper)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             dynamic taskMasterId = JObject.Parse(data.ToString())["TaskMasterId"];
@@ -97,7 +98,7 @@ namespace FunctionApp.Functions
                 dt.Rows.Add(dr);
 
                 string tempTableName = $"#Temp_TaskMasterWaterMark_{Guid.NewGuid()}";
-                _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskMasterWaterMark");
+                await _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskMasterWaterMark");
             }
 
             JObject root = new JObject

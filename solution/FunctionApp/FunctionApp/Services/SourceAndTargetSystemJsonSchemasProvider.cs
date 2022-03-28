@@ -18,7 +18,7 @@ namespace FunctionApp.Models
 
         public SourceAndTargetSystemJsonSchemasProvider(TaskMetaDataDatabase taskMetaDataDatabase)
         {
-            _jsonSchemas = taskMetaDataDatabase.GetSqlConnection().QueryWithRetry<SourceAndTargetSystemJsonSchema>("select * from [dbo].[SourceAndTargetSystems_JsonSchema]").ToList();
+            _jsonSchemas = taskMetaDataDatabase.GetSqlConnection().Result.QueryWithRetry<SourceAndTargetSystemJsonSchema>("select * from [dbo].[SourceAndTargetSystems_JsonSchema]").ToList();
         }
         
         public SourceAndTargetSystemJsonSchema GetBySystemType(string SystemType)

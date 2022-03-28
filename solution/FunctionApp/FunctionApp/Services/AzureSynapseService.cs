@@ -96,7 +96,7 @@ namespace FunctionApp.Services
                 JObject jsonContent = new JObject();
                 jsonContent["TaskObject"] = JsonConvert.SerializeObject(pipelineParams["TaskObject"]);
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
-                var response = c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent).Result;
+                var response = await c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent);
                 HttpContent responseContent = response.Content;
                 return responseContent;
 

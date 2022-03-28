@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.Models;
 using FunctionApp.Services;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,7 @@ using Newtonsoft.Json.Linq;
 namespace FunctionApp.Functions
 {
     // ReSharper disable once UnusedMember.Global
-    public static class AdfGetInformationSchemaSql
+    public class AdfGetInformationSchemaSql
     {
         /// <summary>
         /// The purpose of this function is to provide a SQL query that the Data Factory can use
@@ -24,7 +25,7 @@ namespace FunctionApp.Functions
         /// <param name="context"></param>
         /// <returns></returns>
         [FunctionName("GetInformationSchemaSQL")]
-        public static IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -32,7 +33,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = GetInformationSchemaSqlCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "GetInformationSchemaSQL", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "GetInformationSchemaSQL", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -43,9 +44,9 @@ namespace FunctionApp.Functions
             }
         }
 
-        public static JObject GetInformationSchemaSqlCore(HttpRequest req, Logging.Logging logging)
+        public async Task<JObject> GetInformationSchemaSqlCore(HttpRequest req, Logging.Logging logging)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             string tableSchema = JObject.Parse(data.ToString())["TableSchema"];
