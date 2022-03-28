@@ -6,6 +6,7 @@
 -----------------------------------------------------------------------*/
 
 using System;
+using System.Threading.Tasks;
 using FunctionApp.Helpers;
 using FunctionApp.Services;
 using Newtonsoft.Json.Linq;
@@ -15,15 +16,15 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
     public partial class AdfJsonBaseTask : GetTaskInstanceJsonResult
     {
 
-        public void ProcessTaskInstance(TaskTypeMappingProvider ttm)
+        public async Task ProcessTaskInstance(TaskTypeMappingProvider ttm)
         {
             //Validate TaskInstance based on JSON Schema
-            var mappings = ttm.GetAllActive();
+            var mappings = await ttm.GetAllActive();
             var mapping = TaskTypeMappingProvider.LookupMappingForTaskMaster(mappings, SourceSystemType, TargetSystemType, _taskMasterJsonSource["Type"].ToString(), _taskMasterJsonTarget["Type"].ToString(), TaskTypeId, TaskExecutionType);
             string mappingSchema = mapping.TaskInstanceJsonSchema;
             if (mappingSchema != null)
             {
-                TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, mappingSchema, TaskInstanceJson, "Failed to validate TaskInstance JSON for TaskTypeMapping: " + mapping.MappingName + ". ");
+                TaskIsValid = await JsonHelpers.ValidateJsonUsingSchema(_logging, mappingSchema, TaskInstanceJson, "Failed to validate TaskInstance JSON for TaskTypeMapping: " + mapping.MappingName + ". ");
             }
 
             if (TaskIsValid)

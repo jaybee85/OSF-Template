@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using FunctionApp.Authentication;
 using FunctionApp.Helpers;
@@ -30,9 +31,9 @@ namespace FunctionApp.DataAccess
             _options = options.Value;
         }
 
-        public void LogTaskInstanceCompletion(System.Int64 TaskInstanceId, System.Guid ExecutionId, TaskInstance.TaskStatus Status, System.Guid AdfRunUid, string Comment)
+        public async Task LogTaskInstanceCompletion(System.Int64 TaskInstanceId, System.Guid ExecutionId, TaskInstance.TaskStatus Status, System.Guid AdfRunUid, string Comment)
         {
-            using var con = GetSqlConnection();
+            using var con = await GetSqlConnection();
             Dictionary<string, object> sqlParams = new Dictionary<string, object>
                     {
                         { "ExecutionStatus", Status.ToString() },
@@ -67,11 +68,11 @@ namespace FunctionApp.DataAccess
 
         }
 
-        public void ExecuteSql(string SqlCommandText)
+        public async Task ExecuteSql(string SqlCommandText)
         {
             using var cmd = new SqlCommand
             {
-                Connection = GetSqlConnection(),
+                Connection = await GetSqlConnection(),
                 CommandText = SqlCommandText
             };
             cmd.ExecuteNonQueryWithVerboseThrow();
@@ -88,20 +89,20 @@ namespace FunctionApp.DataAccess
             cmd.ExecuteNonQueryWithVerboseThrow();
         }
 
-        public SqlConnection GetSqlConnection()
+        public async Task<SqlConnection> GetSqlConnection()
         {
             SqlConnection con = new SqlConnection(GetConnectionString());
             if (!_options.ServiceConnections.AdsGoFastTaskMetaDataDatabaseUseTrustedConnection)
             {
-                string token = _azureAuthProvider.GetAzureRestApiToken("https://database.windows.net/").Result;
+                string token = await _azureAuthProvider.GetAzureRestApiToken("https://database.windows.net/");
                 con.AccessToken = token;
             }
             return con;
         }
 
-        public void BulkInsert(DataTable data, SqlTable targetSqlTable, bool CreateTable)
+        public async Task BulkInsert(DataTable data, SqlTable targetSqlTable, bool CreateTable)
         {
-            SqlConnection con = GetSqlConnection();
+            SqlConnection con = await GetSqlConnection();
             con.Open();
             BulkInsert(data, targetSqlTable, CreateTable, con);
             con.Close();
@@ -118,9 +119,9 @@ namespace FunctionApp.DataAccess
             destTable.BulkInsertTableData(con, targetSqlTable.QuotedSchemaAndName(), data);
         }
 
-        public void AutoBulkInsertAndMerge(DataTable dt, string StagingTableName, string TargetTableName)
+        public async Task AutoBulkInsertAndMerge(DataTable dt, string StagingTableName, string TargetTableName)
         {
-            using SqlConnection conn = GetSqlConnection();
+            using SqlConnection conn = await GetSqlConnection();
 
             SqlTable sourceSqlTable = new SqlTable
             {

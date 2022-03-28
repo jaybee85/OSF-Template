@@ -26,11 +26,11 @@ namespace FunctionApp.Services
         }
 
 
-        public bool IsAuthorised(HttpRequest req, ILogger log)
+        public async Task<bool> IsAuthorised(HttpRequest req, ILogger log)
         {
             bool ret = false;
             string token = GetAccessToken(req);
-            var principal = ValidateAccessToken(token, log).Result;
+            var principal = await ValidateAccessToken(token, log);
             foreach (var r in _appOptions.ServiceConnections.CoreFunctionsAllowedRoles)
             {
                 if (principal.IsInRole(r))

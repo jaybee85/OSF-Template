@@ -30,7 +30,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetSQLCreateStatementFromSchema")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -39,7 +39,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = GetSqlCreateStatementFromSchemaCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "GetSQLCreateStatementFromSchema", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "GetSQLCreateStatementFromSchema", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -54,7 +54,7 @@ namespace FunctionApp.Functions
         public async Task<JObject> GetSqlCreateStatementFromSchemaCore(HttpRequest req, Logging.Logging logging)
         {
 
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
 
             return await GetSqlCreateStatementFromSchemaCore(data, logging);
@@ -85,7 +85,7 @@ namespace FunctionApp.Functions
 
                 TokenCredential storageToken = new TokenCredential(await _authProvider.GetAzureRestApiToken($"https://{storageAccountName}.blob.core.windows.net"));
 
-                arr = (JArray)JsonConvert.DeserializeObject(AzureBlobStorageService.ReadFile(storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken));
+                arr = (JArray)JsonConvert.DeserializeObject( await AzureBlobStorageService.ReadFile(storageAccountName, storageAccountContainer, relativePath, schemaFileName, storageToken));
             }
             else
             {

@@ -37,15 +37,15 @@ namespace FunctionApp.Services
                 HttpResponseMessage response;
                 if (Method.ToLower() == "get")
                 {
-                    response = c.GetAsync($"https://{PurviewAccountName}{APIURIDomain}{APIURIPath}?&api-version={APIVersion}").Result;
+                    response = await c.GetAsync($"https://{PurviewAccountName}{APIURIDomain}{APIURIPath}?&api-version={APIVersion}");
                 }
                 else
                 {
-                    response = c.PostAsync($"https://{PurviewAccountName}{APIURIDomain}{APIURIPath}?&api-version={APIVersion}", postContent).Result;
+                    response = await c.PostAsync($"https://{PurviewAccountName}{APIURIDomain}{APIURIPath}?&api-version={APIVersion}", postContent);
                 }
 
                 HttpContent responseContent = response.Content;
-                var res = response.Content.ReadAsStringAsync().Result;
+                var res = await response.Content.ReadAsStringAsync();
                 return res;
 
 

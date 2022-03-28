@@ -1,6 +1,7 @@
 using System;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.Authentication;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
@@ -31,7 +32,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetSQLMergeStatement")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -39,7 +40,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = GetSqlMergeStatementCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "GetSqlMergeStatement", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "GetSqlMergeStatement", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -49,15 +50,15 @@ namespace FunctionApp.Functions
                 return new BadRequestObjectResult(new { Error = "Execution Failed...." });
             }
         }
-        public JObject GetSqlMergeStatementCore(HttpRequest req,
+        public async Task<JObject> GetSqlMergeStatementCore(HttpRequest req,
             Logging.Logging logging)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
 
             JObject root = new JObject();
-            using (SqlConnection con = _taskMetaDataDatabase.GetSqlConnection())
+            using (SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection())
             {
                 String g = Guid.NewGuid().ToString().Replace("-", "");
                 JArray arrStage = (JArray)data["Stage"];

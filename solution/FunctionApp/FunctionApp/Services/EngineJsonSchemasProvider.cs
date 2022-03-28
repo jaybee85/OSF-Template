@@ -18,7 +18,7 @@ namespace FunctionApp.Models
 
         public EngineJsonSchemasProvider(TaskMetaDataDatabase taskMetaDataDatabase)
         {
-            _jsonSchemas = taskMetaDataDatabase.GetSqlConnection().QueryWithRetry<EngineJsonSchema>("select * from [dbo].[ExecutionEngine_JsonSchema]").ToList();
+            _jsonSchemas = taskMetaDataDatabase.GetSqlConnection().Result.QueryWithRetry<EngineJsonSchema>("select * from [dbo].[ExecutionEngine_JsonSchema]").ToList();
         }
         
         public EngineJsonSchema GetBySystemType(string SystemType)

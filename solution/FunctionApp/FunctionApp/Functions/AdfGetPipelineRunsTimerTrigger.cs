@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FormatWith;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
@@ -35,7 +36,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetADFPipelineRunsTimerTrigger")]
-        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
 
@@ -43,14 +44,14 @@ namespace FunctionApp.Functions
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = GetAdfPipelineRuns;
-                FrameworkRunnerResult result = fr.Invoke("GetADFPipelineRunsTimerTrigger", worker);
+                FrameworkRunnerResult result = await fr.Invoke("GetADFPipelineRunsTimerTrigger", worker);
             }
         }
 
-        public dynamic GetAdfPipelineRuns(Logging.Logging logging)
+        public async Task<dynamic> GetAdfPipelineRuns(Logging.Logging logging)
         {
             using var client = _httpClientFactory.CreateClient(HttpClients.LogAnalyticsHttpClientName);
-            using SqlConnection conRead = _taskMetaDataDatabase.GetSqlConnection();
+            using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
             //Get Last Request Date
             var maxTimesGen = conRead.QueryWithRetry(@"
@@ -98,7 +99,7 @@ namespace FunctionApp.Functions
 
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent).Result;
+                var response = await client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent);
 
                 logging.LogInformation(response.ToString());
 
@@ -106,7 +107,7 @@ namespace FunctionApp.Functions
                 {
                     //Start to parse the response content
                     HttpContent responseContent = response.Content;
-                    var content = response.Content.ReadAsStringAsync().Result;
+                    var content = await response.Content.ReadAsStringAsync();
                     var tables = ((JArray)(JObject.Parse(content)["tables"]));
 
                     if (tables.Count > 0)
@@ -137,7 +138,7 @@ namespace FunctionApp.Functions
                         t.Schema = "dbo";
                         string tableGuid = Guid.NewGuid().ToString();
                         t.Name = $"#ADFPipelineRun{tableGuid}";
-                        using (SqlConnection conWrite = _taskMetaDataDatabase.GetSqlConnection())
+                        using (SqlConnection conWrite = await _taskMetaDataDatabase.GetSqlConnection())
                         {
                             TaskMetaDataDatabase.BulkInsert(dt, t, true, conWrite);
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>

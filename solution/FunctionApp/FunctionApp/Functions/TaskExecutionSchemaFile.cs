@@ -41,7 +41,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("TaskExecutionSchemaFile")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -49,7 +49,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = TaskExecutionSchemaFileCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "TaskExecutionSchemaFile", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "TaskExecutionSchemaFile", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));

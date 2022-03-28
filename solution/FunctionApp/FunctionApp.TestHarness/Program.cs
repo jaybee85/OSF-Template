@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Dapper;
 using FunctionApp.Authentication;
 using FunctionApp.DataAccess;
@@ -130,14 +131,14 @@ namespace FunctionApp.TestHarness
         }
 
 
-        public void InsertTestTasksIntoDb()
+        public async Task InsertTestTasksIntoDb()
         {
             // Test_GetSQLCreateStatementFromSchema(LogHelper);
 
             var testTaskInstances = GetTests();
 
             var tmdb = new TaskMetaDataDatabase(_options,_authProvider);
-            var con = tmdb.GetSqlConnection();
+            var con = await tmdb.GetSqlConnection();
 
             var @sql = @"
 
@@ -267,14 +268,14 @@ namespace FunctionApp.TestHarness
 
         }
 
-        public void GenerateTestTaskScript()
+        public async Task GenerateTestTaskScript()
         {
             // Test_GetSQLCreateStatementFromSchema(LogHelper);
 
             var testTaskInstances = GetTests();
 
             var tmdb = new TaskMetaDataDatabase(_options, _authProvider);
-            var con = tmdb.GetSqlConnection();
+            var con = await tmdb.GetSqlConnection();
 
             var @sql = @"
 

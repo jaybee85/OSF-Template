@@ -8,12 +8,13 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace FunctionApp.Services
 {    
     public interface ISecurityAccessProvider
     {
-        public bool IsAuthorised(HttpRequest req, ILogger log);
+        public Task<bool> IsAuthorised(HttpRequest req, ILogger log);
     }
   
 }
