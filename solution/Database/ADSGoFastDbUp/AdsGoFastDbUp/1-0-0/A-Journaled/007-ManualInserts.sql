@@ -103,7 +103,7 @@ GO
 UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '(local)'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
-	,SystemJSON = '{  "Database" : "msdb"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
+	,SystemJSON = '{  "Database" : "Adventureworks"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
 	,SystemAuthType = 'WindowsAuth'
 	,SystemUserName = 'adminuser'
 	,SystemSecretName = 'selfhostedsqlpw'
