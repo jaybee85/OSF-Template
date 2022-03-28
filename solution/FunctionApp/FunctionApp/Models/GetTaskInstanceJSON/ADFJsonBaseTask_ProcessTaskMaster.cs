@@ -86,7 +86,15 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             });
 
             source["IncrementalType"] = "CDC";
-            if (source["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+
+            if (Helpers.JsonHelpers.CheckForJsonProperty("Instance", source) == false)
+            {
+                var e = new Exception("CDC Extraction Task Type does not have an instance element within taskmasterjson");
+                _logging.LogErrors(e);
+                throw e;
+            }
+            var _instance = source["Instance"];
+            if (_instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
             {
                 source["SQLStatement"] = @$"
                     DECLARE @from_lsn binary(10), @to_lsn binary(10);
@@ -95,11 +103,11 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                     SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
                     ";
             }
-            else if (source["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            else if (_instance["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
             {
                 source["SQLStatement"] = @$"
                     DECLARE @from_lsn binary(10), @to_lsn binary(10);
-                    SET @from_lsn = {source["IncrementalValue"]};
+                    SET @from_lsn = {_instance["IncrementalValue"]};
                     SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',GETDATE()); 
                     SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
                     ";

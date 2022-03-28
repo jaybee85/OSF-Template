@@ -104,8 +104,8 @@ namespace FunctionApp.TestHarness
             //_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
             //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
             //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
-            PurviewCreateEntitiesTest();
-            //DebugRunFrameworkTasks();
+            //PurviewCreateEntitiesTest();
+            DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
             //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
             //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
