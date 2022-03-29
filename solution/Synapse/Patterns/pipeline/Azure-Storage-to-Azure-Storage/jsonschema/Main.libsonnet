@@ -21,10 +21,10 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
         },
         "QualifiedIDAssociation": {
             "type": "string",
-            "default": "TaskMasterID",
+            "default": "TaskMasterId",
             "enum": [
-                "ExecutionID",
-                "TaskMasterID"
+                "ExecutionId",
+                "TaskMasterId"
             ],
             "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage."
         },      

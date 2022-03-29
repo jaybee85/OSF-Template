@@ -356,12 +356,12 @@ namespace FunctionApp.Services
                 }
                 else if (metadata["TaskObject"]["TMOptionals"]["QualifiedIDAssociation"].ToString() == "TaskMasterId")
                 {
-                    QualifiedName = "Synapse_Pipeline_Execution_UID_" + metadata["TaskObject"]["TaskMasterId"];
+                    QualifiedName = "TaskMasterId_" + metadata["TaskObject"]["TaskMasterId"];
                 }
                 else
                 {
                     logging.LogErrors(new Exception("No QualifiedIDAssociation found - using TaskMasterId"));
-                    QualifiedName = "Synapse_Pipeline_Execution_UID_" + metadata["TaskObject"]["TaskMasterId"];
+                    QualifiedName = "TaskMasterId_" + metadata["TaskObject"]["TaskMasterId"];
 
 
                 }
@@ -393,6 +393,10 @@ namespace FunctionApp.Services
             {
                 logging.LogErrors(e);
                 logging.LogErrors(new Exception("PurviewGetMetaDataCore Failed"));
+                return new JObject(new JObject
+                {
+                    ["Result"] = "Failure: " + e 
+                });
                 throw;
             }
         }

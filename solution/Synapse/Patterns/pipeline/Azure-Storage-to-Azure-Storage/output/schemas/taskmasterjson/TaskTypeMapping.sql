@@ -11,6 +11,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -160,6 +169,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {
@@ -313,6 +331,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -462,6 +489,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {
@@ -615,6 +651,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -764,6 +809,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {
@@ -917,6 +971,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1066,6 +1129,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {
@@ -1219,6 +1291,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1368,6 +1449,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {
@@ -1521,6 +1611,15 @@
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
          "type": "string"
       },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
+         "type": "string"
+      },
       "Source": {
          "properties": {
             "DataFileName": {
@@ -1670,6 +1769,15 @@
             "Disabled"
          ],
          "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine.",
+         "type": "string"
+      },
+      "QualifiedIDAssociation": {
+         "default": "TaskMasterId",
+         "enum": [
+            "ExecutionId",
+            "TaskMasterId"
+         ],
+         "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage.",
          "type": "string"
       },
       "Source": {

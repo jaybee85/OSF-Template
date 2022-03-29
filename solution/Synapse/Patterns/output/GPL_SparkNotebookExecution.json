@@ -32,11 +32,7 @@
           },
           "snapshot": true,
           "sparkPool": {
-<<<<<<< HEAD
-            "referenceName": "adsdevsynspads",
-=======
             "referenceName": "arkstgsynspads",
->>>>>>> 576a2bd2499c78bdab9e01fcf4e438485df0a7bf
             "type": "BigDataPoolReference"
           }
         },
@@ -86,11 +82,7 @@
                 },
                 "snapshot": true,
                 "sparkPool": {
-<<<<<<< HEAD
-                  "referenceName": "adsdevsynspads",
-=======
                   "referenceName": "arkstgsynspads",
->>>>>>> 576a2bd2499c78bdab9e01fcf4e438485df0a7bf
                   "type": "BigDataPoolReference"
                 }
               },

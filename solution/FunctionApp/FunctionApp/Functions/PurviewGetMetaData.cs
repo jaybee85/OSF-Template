@@ -55,7 +55,16 @@ namespace FunctionApp.Functions
 
             string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
             JObject metadata = JsonConvert.DeserializeObject<JObject>(requestBody);
-            return new OkObjectResult(_purviewService.PurviewMetaDataCheck(metadata, _funcAppLogger));
+            var result = new JObject(_purviewService.PurviewMetaDataCheck(metadata, _funcAppLogger));
+
+            if (result["Result"].ToString() == "Complete")
+            {
+                return new OkObjectResult("Purview Metadata upload complete");
+            }
+            else
+            {
+                return new BadRequestObjectResult(new { Error = "Execution Failed: " + result["Result"].ToString() });
+            }
 
         }
 
