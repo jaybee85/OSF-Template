@@ -32,7 +32,11 @@ namespace FunctionApp.Services
             
             try
             {
-                using var c = _httpClientFactory.CreateClient(HttpClients.PurviewHttpClientName);                                   
+                using var c = _httpClientFactory.CreateClient(HttpClients.PurviewHttpClientName);
+                if (c.DefaultRequestHeaders.Authorization == null)
+                {
+                    await Task.Delay(2000);
+                }                
                 var postContent = new StringContent(PostBody.ToString(), System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response;
