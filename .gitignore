@@ -281,6 +281,13 @@ deploy/
 
 
 secrets.libsonnet
+
+#ADF Build Directories
 solution/DataFactory/Patterns/output/
 solution/DataFactory/Patterns/SqlTests.sql
 solution/FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json
+solution/Synapse/Patterns/output/
+solution/Synapse/Patterns/SqlTests.sql
+solution/Synapse/Patterns/pipeline/Azure-Storage-to-Azure-Storage/output/
+solution/FunctionApp/Patterns/pipeline/Azure-Storage-to-Azure-Storage/output/
+
