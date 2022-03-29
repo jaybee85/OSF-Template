@@ -51,6 +51,10 @@ namespace FunctionApp.Functions
         public async Task<dynamic> GetAdfActivityErrors(Logging.Logging logging)
         {
             using var client = _httpClientFactory.CreateClient(HttpClients.LogAnalyticsHttpClientName);
+            if (client.DefaultRequestHeaders.Authorization == null)
+            {
+                await Task.Delay(2000);
+            }
             using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
             //Get Last Request Date
