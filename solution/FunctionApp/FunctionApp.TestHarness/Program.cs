@@ -436,6 +436,13 @@ namespace FunctionApp.TestHarness
         }
 
         public void PurviewCreateEntitiesTest() {
+
+
+            // Test Purview Connectivity
+            string PurviewAccountName = "adsdevpurads";
+            JObject EmptyDatasetBody = new JObject();
+            JObject datasetGuid0 = JObject.Parse(_purviewService.ExecuteRequest(PurviewAccountName, "get", ".catalog.purview.azure.com", "/api/atlas/v2/types/typedefs", "2021-07-01", EmptyDatasetBody, _funcAppLogger).Result);
+
             var testData = "{\"SourceHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"SourceColumns\": \"Invalid\", \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 1, \"TaskMasterId\": 2, \"TaskStatus\": \"InProgress\", \"TaskType\": \"TestTask Type Name\", \"Enabled\": 1, \"ExecutionUid\": \"8448eabb-9ba4-4779-865b-29e973431273\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -1, \"EngineName\": \"ark-stg-adf-ads-irud\", \"SystemType\": \"Datafactory\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure\", \"EngineJson\": \"{}\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {}}, \"Source\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"\"}, \"WriteSchemaToPurview\": \"Enabled\", \"DataFileName\": \"Input.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"WriteSchemaToPurview\": \"Enabled\", \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\", \"Type\": \"Parquet\"}}}";
             JObject metadata = JsonConvert.DeserializeObject<JObject>(testData);
 
@@ -485,7 +492,7 @@ namespace FunctionApp.TestHarness
                 JObject datasetJson = new JObject(new JProperty("entity", dataset));
                 var datasetConv = datasetJson.ToString();
                 var datasetBody = JObject.Parse(datasetConv);
-                JObject datasetGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", datasetBody, _funcAppLogger).Result);
+                JObject datasetGuid = JObject.Parse(_purviewService.ExecuteRequest("adsdevpurads", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", datasetBody, _funcAppLogger).Result);
                 //This is for the process at the end
                //datasets.Add(datasetGuid["guidAssignments"].First.Last.ToString());
 
