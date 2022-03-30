@@ -24,6 +24,9 @@ function(SourceType = "", SourceFormat = "Not-Applicable", TargetType = "", Targ
                 "Start",
                 "Pause"
             ],
+            "options": {
+                "infoText": "Use this field to select whether you would like to start or pause the SQLPool you have defined."
+            },
         },
         "Source": partials[SourceFormat](),
         "Target": partials[TargetFormat]()
