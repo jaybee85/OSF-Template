@@ -28,7 +28,7 @@ namespace FunctionApp.Services
         }
         public async Task StartStopSynapseSqlPool(string SubscriptionId, string ResourceGroupName, string SynapseWorkspaceName, string SynapsePoolName, string Action, Logging.Logging logging)
         {
-                        try
+            try
             {
                 string token = await _authProvider.GetAzureRestApiToken("https://management.azure.com/").ConfigureAwait(false);
                 ServiceClientCredentials cred = new TokenCredentials(token);
@@ -37,6 +37,7 @@ namespace FunctionApp.Services
 
                 SynapseManagementClient synapseManagementClient = new SynapseManagementClient(cred);
                 synapseManagementClient.SubscriptionId = SubscriptionId;
+                //ToDo Add error handling
                 var sqlPool = synapseManagementClient.SqlPools.Get(ResourceGroupName, SynapseWorkspaceName, SynapsePoolName);
                 logging.LogInformation($"Synapse SQL pool ({SynapsePoolName}) is currently: {sqlPool.Status}");
                 if (sqlPool.Status == "Paused" || sqlPool.Status == "Pausing")
@@ -77,7 +78,7 @@ namespace FunctionApp.Services
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                logging.LogErrors(new Exception("Initiation of SQLPool command failed:"));
+                logging.LogErrors(new Exception($"Initiation of SQLPool command failed for SqlPool: {SynapsePoolName} and Workspase: {SynapseWorkspaceName}" ));
                 throw;
 
             }

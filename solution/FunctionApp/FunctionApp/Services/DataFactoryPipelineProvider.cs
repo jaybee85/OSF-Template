@@ -144,14 +144,14 @@ namespace FunctionApp.Services
             if (activityDt.Rows.Count > 0)
             {
                 string tempTableName = "#Temp_ADFActivities_" + Guid.NewGuid().ToString();
-                _taskMetaDataDatabase.AutoBulkInsertAndMerge(activityDt, tempTableName, "ADFActivity");
+                await _taskMetaDataDatabase.AutoBulkInsertAndMerge(activityDt, tempTableName, "ADFActivity");
             }
 
 
             if (dt.Rows.Count > 0)
             {
                 string tempTableName = "#Temp_ADFPipelineRun_" + Guid.NewGuid().ToString();
-                _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "ADFPipelineRun");
+                await _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "ADFPipelineRun");
             }
 
             #endregion

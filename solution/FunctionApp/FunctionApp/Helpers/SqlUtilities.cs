@@ -246,18 +246,18 @@ namespace FunctionApp.Helpers
                             || (cTarget.KeyColumn == false && cTarget.IsIdentity == false && cTarget.IsComputed == false && IncludeOtherColumns == true) //Include other columns
                            )
                         {
-                            output = (output == "" ? "" : output + Concatenator);
+                            output = (string.IsNullOrEmpty(output) ? "" : output + Concatenator);
 
                             if (!(SourceListOnly))
                             {
                                 output = output
-                                            + (TargetAlias == "" ? "" : TargetAlias + ".")
+                                            + (string.IsNullOrEmpty(TargetAlias) ? "" : TargetAlias + ".")
                                             + (string.Concat("[", c.ColumnName, "]") + " ")
                                             + (BooleanOperator + " ");
                             }
 
                             output = output
-                                        + (SourceAlias == "" ? "" : SourceAlias + ".")
+                                        + (string.IsNullOrEmpty(SourceAlias) ? "" : SourceAlias + ".")
                                          + (string.Concat("[", c.ColumnName, "]"));
                         }
                     }

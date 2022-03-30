@@ -145,14 +145,14 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             }
         }
 
-        public JObject ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider, EngineJsonSchemasProvider engineSchemaProvider)
+        public async Task<JObject> ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider, EngineJsonSchemasProvider engineSchemaProvider)
         {
             CreateInternalObjectsForProcessingJsonFields();
-            ProcessSourceSystem(sourceTargetSchemaProvider);
-            ProcessTargetSystem(sourceTargetSchemaProvider);
-            ProcessEngineJson(engineSchemaProvider);
-            ProcessTaskInstance(ttm);
-            ProcessTaskMaster(ttm);
+            await ProcessSourceSystem(sourceTargetSchemaProvider);
+            await ProcessTargetSystem(sourceTargetSchemaProvider);
+            await ProcessEngineJson(engineSchemaProvider);
+            await ProcessTaskInstance(ttm);
+            await ProcessTaskMaster(ttm);
             return _jsonObjectForAdf; 
 
         }

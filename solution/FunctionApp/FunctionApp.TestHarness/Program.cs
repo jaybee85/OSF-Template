@@ -648,7 +648,7 @@ namespace FunctionApp.TestHarness
         /// <summary>
         /// 
         /// </summary>
-        public void GenerateUnitTestResults()
+        public async Task GenerateUnitTestResults()
         {            
 
             var testTaskInstances = GetTests();
@@ -667,7 +667,7 @@ namespace FunctionApp.TestHarness
                 {
                     var T = new AdfJsonBaseTask(testTaskInstance, _funcAppLogger);
                     T.CreateJsonObjectForAdf((Guid)_funcAppLogger.DefaultActivityLogItem.ExecutionUid);
-                    processedTaskObject = T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider, engineSchemas);
+                    processedTaskObject = await T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider, engineSchemas);
                 }
                 catch (Exception e)
                 {

@@ -117,18 +117,18 @@ namespace FunctionApp.Functions
                 else
                 { 
                     root["Result"] = "Please pass a name, resourcegroup and action to request body";
-                    _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Task missing VMname, ResourceGroup or SubscriptionUid in Target element.");
+                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Task missing VMname, ResourceGroup or SubscriptionUid in Target element.");
                     return root;
                 }
                 //Update Task Instance
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, System.Guid.Empty, "");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, System.Guid.Empty, "");
 
                 return root;
             }
             catch (System.Exception taskException)
             {
                 logging.LogErrors(taskException);
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Failed when trying to start or stop VM");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Failed when trying to start or stop VM");
 
                 JObject root = new JObject
                 {

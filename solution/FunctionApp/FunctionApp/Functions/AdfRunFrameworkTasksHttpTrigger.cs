@@ -145,7 +145,7 @@ namespace FunctionApp.Functions
 
                     if (_options.Value.TestingOptions.GenerateTaskObjectTestFiles)
                     {
-                        GenerateTaskObjectTestFiles(logging, task, pipelineName, taskInstanceId);
+                        await GenerateTaskObjectTestFiles(logging, task, pipelineName, taskInstanceId);
                     }
                     else
                     {
@@ -179,12 +179,12 @@ namespace FunctionApp.Functions
                                         TriggerAzureFunction(pipelineName, task);
                                         break;
                                     case "Cache-File-List-To-Email-Alert":
-                                        SendAlert(task, logging);
+                                        await SendAlert(task, logging);
                                         break;
                                     default:
                                         var msg = $"Could not find execution path for Task Type of {pipelineName} and Execution Type of {task["TaskExecutionType"]}";
                                         logging.LogErrors(new Exception(msg));
-                                        _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, msg);
+                                        await _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, msg);
                                         break;
                                 }
                                 //To Do // Batch to make less "chatty"
@@ -207,21 +207,21 @@ namespace FunctionApp.Functions
                                     default:
                                         var msg = $"Could not find execution path for Task Type of {pipelineName} and Execution Type of {task["TaskExecutionType"]}";
                                         logging.LogErrors(new Exception(msg));
-                                        _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, msg);
+                                        await _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, msg);
                                         completeCheck = false;
                                         break;
                                 }
                                 if (completeCheck)
                                 {
                                     var completemsg = $"Sucessfully completed {pipelineName} and Execution Type of {task["TaskExecutionType"]}";
-                                    _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.Complete, System.Guid.Empty, completemsg);
+                                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.Complete, System.Guid.Empty, completemsg);
                                 }
                             }
                         }
                         catch (Exception taskException)
                         {
                             logging.LogErrors(taskException);
-                            _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty,"Runner failed to execute task.");
+                            await _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId, logging.DefaultActivityLogItem.ExecutionUid.Value, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty,"Runner failed to execute task.");
                         }
 
                     }
@@ -357,7 +357,7 @@ namespace FunctionApp.Functions
             //To Do // Upgrade to stored procedure call
         } 
 
-        private void GenerateTaskObjectTestFiles(Logging.Logging logging, JObject task, string pipelineName, long taskInstanceId)
+        private async Task GenerateTaskObjectTestFiles(Logging.Logging logging, JObject task, string pipelineName, long taskInstanceId)
         {
             string fileFullPath = $"{_options.Value.TestingOptions.TaskObjectTestFileLocation}/";
             // Determine whether the directory exists.
@@ -369,7 +369,7 @@ namespace FunctionApp.Functions
 
             fileFullPath = $"{fileFullPath}{task["TaskType"]}_{pipelineName}_{task["TaskMasterId"]}.json";
             System.IO.File.WriteAllText(fileFullPath, task.ToString());
-            _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId,
+            await _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceId,
                 logging.DefaultActivityLogItem.ExecutionUid.Value,
                 TaskInstance.TaskStatus.Complete, Guid.Empty, "Complete");
         }
@@ -465,7 +465,7 @@ namespace FunctionApp.Functions
                 {
                     logging.LogErrors(e);
                     //ToDo: Convert to bulk insert                    
-                    _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceJson.TaskInstanceId, ExecutionUid, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, "Uncaught error building Task Instance JSON object.");
+                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(taskInstanceJson.TaskInstanceId, ExecutionUid, TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, "Uncaught error building Task Instance JSON object.");
                     DataRow dr = invalidTIs.NewRow();
                     dr["TaskInstanceId"] = taskInstanceJson.TaskInstanceId;
                     dr["ExecutionUid"] = ExecutionUid;
@@ -479,7 +479,7 @@ namespace FunctionApp.Functions
             foreach (DataRow dr in invalidTIs.Rows)
             {
                 //ToDo: Convert to bulk insert    
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(dr["TaskInstanceId"]), ExecutionUid,
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(dr["TaskInstanceId"]), ExecutionUid,
                     TaskInstance.TaskStatus.FailedNoRetry, Guid.Empty, dr["LastExecutionComment"].ToString());
             }
 

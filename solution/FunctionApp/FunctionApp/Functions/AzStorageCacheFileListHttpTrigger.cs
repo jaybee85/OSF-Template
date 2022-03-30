@@ -180,7 +180,7 @@ namespace FunctionApp.Functions
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, Guid.Empty, "Failed when trying to Generate Sas URI and Send Email");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, Guid.Empty, "Failed when trying to Generate Sas URI and Send Email");
 
                 JObject root = new JObject
                 {

@@ -43,14 +43,14 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("PrepareFrameworkTasksTimerTrigger")]
-        public void Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
             if (_appOptions.Value.TimerTriggers.EnablePrepareFrameworkTasks)
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = PrepareFrameworkTasksCore;
-                fr.Invoke("PrepareFrameworkTasksHttpTrigger", worker);
+                await fr.Invoke("PrepareFrameworkTasksHttpTrigger", worker);
             }
         }
 
@@ -62,7 +62,7 @@ namespace FunctionApp.Functions
             short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
 
             //Generate new task instances based on task master and schedules
-            CreateScheduleAndTaskInstances(logging);
+            await CreateScheduleAndTaskInstances(logging);
 
             await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
 

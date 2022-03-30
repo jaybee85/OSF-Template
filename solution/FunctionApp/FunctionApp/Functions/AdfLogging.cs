@@ -69,7 +69,8 @@ namespace FunctionApp.Functions
             dynamic startDateTimeOffSet = data["StartDateTimeOffSet"];
             dynamic status = data["Status"]; //Started Failed Completed
             dynamic comment = data["Comment"];
-            comment = comment == null ? null : comment.ToString().Replace("'", "");
+            comment = System.Web.HttpUtility.UrlEncode(comment);
+            //comment = comment == null ? null : comment.ToString().Replace("'", "");
             dynamic endDateTimeOffSet = data["EndDateTimeOffSet"];
             dynamic rowsInserted = data["RowsInserted"];
 
@@ -99,11 +100,11 @@ namespace FunctionApp.Functions
                     {
                         string invalidStatus = $"TaskStatus Enum does not exist for: {status}";
                         LogHelper.LogErrors(new Exception(invalidStatus));
-                        comment = $"{comment}.{invalidStatus}";
+                        comment = string.Concat(comment,".",invalidStatus);
                         taskStatus = TaskInstance.TaskStatus.FailedNoRetry;
                     }
                 }
-                _taskMetaDataDatabase.LogTaskInstanceCompletion((Int64)taskInstanceId, (Guid)postObjectExecutionUid, taskStatus, (Guid)adfRunUid, (String)comment);
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion((Int64)taskInstanceId, (Guid)postObjectExecutionUid, taskStatus, (Guid)adfRunUid, (String)comment);
             }
 
             return new JObject
