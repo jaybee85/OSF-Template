@@ -445,7 +445,7 @@ namespace FunctionApp.Functions
                     AdfJsonBaseTask T =  new AdfJsonBaseTask(taskInstanceJson, logging);
                     //Set the base properties using data stored in non-json columns of the database
                     T.CreateJsonObjectForAdf(ExecutionUid);
-                    var root = T.ProcessRoot(ttMappingProvider, systemSchemas, engineSchemas);
+                    JObject root = await T.ProcessRoot(ttMappingProvider, systemSchemas, engineSchemas);
 
                     if (T.TaskIsValid)
                     {

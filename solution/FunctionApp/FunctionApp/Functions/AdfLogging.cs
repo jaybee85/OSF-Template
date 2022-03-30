@@ -69,8 +69,8 @@ namespace FunctionApp.Functions
             dynamic startDateTimeOffSet = data["StartDateTimeOffSet"];
             dynamic status = data["Status"]; //Started Failed Completed
             dynamic comment = data["Comment"];
-            comment = System.Web.HttpUtility.UrlEncode(comment);
-            //comment = comment == null ? null : comment.ToString().Replace("'", "");
+            comment = comment == null ? "" : comment.ToString();
+            comment = System.Web.HttpUtility.UrlDecode(comment);
             dynamic endDateTimeOffSet = data["EndDateTimeOffSet"];
             dynamic rowsInserted = data["RowsInserted"];
 

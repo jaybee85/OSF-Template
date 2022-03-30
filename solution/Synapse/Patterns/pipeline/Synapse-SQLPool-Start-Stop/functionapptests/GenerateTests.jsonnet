@@ -79,7 +79,7 @@ function(seed=0)
     template(
         t.SynapsePipeline,
         t.Pattern, 
-        seed+index,//t.TestNumber,
+        seed-index,//t.TestNumber,
         t.SourceFormat,
         t.SourceType,
         t.SourceDataFilename,   

@@ -69,13 +69,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/1/\"\n}",
-      "TaskMasterId": 1,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/1\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-1/\"\n}",
+      "TaskMasterId": -1,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"SalesLT.Customer*.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"SalesLT.Customer*.json\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-1\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[1]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)"
+      "TestDescription": "[-1]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
@@ -108,13 +108,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/2/\"\n}",
-      "TaskMasterId": 2,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"*.*\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/2\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-2/\"\n}",
+      "TaskMasterId": -2,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"*.*\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-2\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[2]  Folder copy between datalake zones of *.* (Binary) from ADLS to ADLS  (Binary)"
+      "TestDescription": "[-2]  Folder copy between datalake zones of *.* (Binary) from ADLS to ADLS  (Binary)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
@@ -147,13 +147,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to SQL Database/3/\"\n}",
-      "TaskMasterId": 3,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to SQL Database/3\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Parquet\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to SQL Database/-3/\"\n}",
+      "TaskMasterId": -3,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.parquet\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to SQL Database/-3\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Parquet\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to SQL Database",
       "TaskTypeId": -2,
-      "TestDescription": "[3]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.parquet (Parquet)"
+      "TestDescription": "[-3]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.parquet (Parquet)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
@@ -186,13 +186,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/4/\"\n}",
-      "TaskMasterId": 4,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/4\",\n        \"SchemaFileName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-4/\"\n}",
+      "TaskMasterId": -4,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.csv\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-4\",\n        \"SchemaFileName\": \"\",\n        \"SkipLineCount\": 0,\n        \"Type\": \"Csv\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (Csv)"
+      "TestDescription": "[-4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (Csv)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobFS_Binary_AzureBlobFS_Binary",
@@ -225,13 +225,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/5/\"\n}",
-      "TaskMasterId": 5,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/5\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Json\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-5/\"\n}",
+      "TaskMasterId": -5,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"FirstRowAsHeader\": \"true\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"SheetName\": \"yellow_tripdata_2017-03\",\n        \"SkipLineCount\": \"\",\n        \"Type\": \"Excel\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.json\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-5\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Json\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[5]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.json (Json)"
+      "TestDescription": "[-5]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.json (Json)"
    },
    {
       "ADFPipeline": "GPL_FileServer_Binary_AzureBlobStorage_Binary",
@@ -264,13 +264,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/6/\"\n}",
-      "TaskMasterId": 6,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Sample/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/6\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-6/\"\n}",
+      "TaskMasterId": -6,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Sample/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-6\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[6]  File copy from FileServer to data lake of yellow_tripdata_2017-03.xlsx (Binary) from FileServer to Azure Blob yellow_tripdata_2017-03.xlsx (Binary)"
+      "TestDescription": "[-6]  File copy from FileServer to data lake of yellow_tripdata_2017-03.xlsx (Binary) from FileServer to Azure Blob yellow_tripdata_2017-03.xlsx (Binary)"
    },
    {
       "ADFPipeline": "GPL_FileServer_Binary_AzureBlobFS_Binary",
@@ -303,13 +303,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/7/\"\n}",
-      "TaskMasterId": 7,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Sample/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/7\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-7/\"\n}",
+      "TaskMasterId": -7,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Sample/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"/Tests/Azure Storage to Azure Storage/-7\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[7]  File copy from FileServer to data lake of yellow_tripdata_2017-03.xlsx (Binary) from FileServer to ADLS yellow_tripdata_2017-03.xlsx (Binary)"
+      "TestDescription": "[-7]  File copy from FileServer to data lake of yellow_tripdata_2017-03.xlsx (Binary) from FileServer to ADLS yellow_tripdata_2017-03.xlsx (Binary)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobStorage_Binary_FileServer_Binary",
@@ -342,13 +342,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/8/\"\n}",
-      "TaskMasterId": 8,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Tests/Azure Storage to Azure Storage/8\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-8/\"\n}",
+      "TaskMasterId": -8,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Tests/Azure Storage to Azure Storage/-8\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[8]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from Azure Blob to FileServer yellow_tripdata_2017-03.xlsx (Binary)"
+      "TestDescription": "[-8]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from Azure Blob to FileServer yellow_tripdata_2017-03.xlsx (Binary)"
    },
    {
       "ADFPipeline": "GPL_AzureBlobFS_Binary_FileServer_Binary",
@@ -381,12 +381,12 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/9/\"\n}",
-      "TaskMasterId": 9,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Tests/Azure Storage to Azure Storage/9\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"SourceRelativePath\": \"samples/\",\n    \"TargetRelativePath\": \"/Tests/Azure Storage to Azure Storage/-9/\"\n}",
+      "TaskMasterId": -9,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"samples/\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"yellow_tripdata_2017-03.xlsx\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"c:/Tests/Azure Storage to Azure Storage/-9\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Binary\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Azure Storage to Azure Storage",
       "TaskTypeId": -2,
-      "TestDescription": "[9]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from ADLS to FileServer yellow_tripdata_2017-03.xlsx (Binary)"
+      "TestDescription": "[-9]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from ADLS to FileServer yellow_tripdata_2017-03.xlsx (Binary)"
    }
 ]
