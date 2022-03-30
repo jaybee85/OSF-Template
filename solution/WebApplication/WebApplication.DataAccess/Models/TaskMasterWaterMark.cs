@@ -17,11 +17,14 @@ namespace WebApplication.Models
         public DateTime? TaskMasterWaterMarkDateTime { get; set; }
         [Display(Name = "Big Integer Value")]
         public long? TaskMasterWaterMarkBigInt { get; set; }
+        [Display(Name = "String / LSN Value")]
+        public string TaskMasterWaterMarkString { get; set; }
         [Display(Name = "Configuration Json")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please input valid Json Data")]
         public string TaskWaterMarkJson { get; set; }
         [Display(Name = "Is Active")]
         public bool ActiveYn { get; set; }
         public DateTimeOffset UpdatedOn { get; set; }
+
     }
 }
