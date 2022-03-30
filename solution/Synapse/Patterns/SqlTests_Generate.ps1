@@ -1,6 +1,7 @@
 
 
 $sql = @"
+/*
 delete from [dbo].[TaskGroup] where taskgroupid <=0;            
             
 SET IDENTITY_INSERT [dbo].[TaskGroup] ON
@@ -21,7 +22,7 @@ SET IDENTITY_INSERT [dbo].[TaskGroup] OFF
 delete from [dbo].[TaskMaster] where taskmasterid <=0;
 
 delete from [dbo].[TaskInstance] where taskmasterid <=0;
-
+*/
 
 
 

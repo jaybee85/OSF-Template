@@ -2,7 +2,7 @@ $patterns = ((Get-Content "Patterns.json") | ConvertFrom-Json).Folder | Sort-Obj
 $CurDir = $PWD.ToString()
 
 $AllTests = @()
-$counter = 0
+$counter = -1000
 foreach ($pattern in $patterns) {   
 
     Write-Host "_____________________________"
