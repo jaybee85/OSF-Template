@@ -16,8 +16,12 @@ local GetTargetMetadata = import './partials/CDC_CopyActivity_GetTargetMetadata.
 
 
 local name =  if(!generateArmAsBool) 
-			then "GPL_"+SourceType+"_"+SourceFormat+"_"+TargetType+"_"+TargetFormat+"_CDC_" + "Primary_" + GFPIR 
-			else "[concat(parameters('dataFactoryName'), '/','GPL_"+SourceType+"_"+SourceFormat+"_"+TargetType+"_"+TargetFormat+"_CDC_Primary_" + "', parameters('integrationRuntimeShortName'))]";
+			then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_CDC_" + "Primary_" + GFPIR 
+			else "[concat(parameters('dataFactoryName'), '/','GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_CDC_Primary_" + "', parameters('integrationRuntimeShortName'))]";
+
+local Folder =  if(GenerateArm=="false") 
+					then "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC/" + GFPIR + "/"
+					else "[concat('ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC', parameters('integrationRuntimeShortName'), '/')]";
 
 local copyActivityName = "Copy %(Source)s to %(Target)s" % {Source: SourceType, Target: TargetType};
 local logSuccessActivityName = "%(ActivityName)s Succeed" % {ActivityName: copyActivityName};
@@ -320,7 +324,7 @@ local pipeline =
             }
         },
         "folder": {
-            "name": "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC"
+            "name": Folder
         },
         "annotations": [],
         "lastPublishTime": "2022-03-27T00:15:57Z"
