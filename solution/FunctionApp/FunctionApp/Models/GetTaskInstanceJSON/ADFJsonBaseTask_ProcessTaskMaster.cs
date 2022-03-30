@@ -95,11 +95,11 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 throw e;
             }
             var _instance = source["Instance"];
-            if (_instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            if ((string.IsNullOrEmpty(_instance["IncrementalValue"].ToString()) ||  _instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string") && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
             {
                 source["SQLStatement"] = @$"                    
                     /*Remove First*/-- DECLARE  @from_lsn binary(10), @to_lsn binary(10);  
-                    /*Remove First*/-- SET @from_lsn =sys.fn_cdc_get_min_lsn((SELECT capture_instance FROM cdc.change_tables where source_object_id  = object_id({source["TableSchema"]}.{source["TableName"]})));  
+                    /*Remove First*/-- SET @from_lsn =sys.fn_cdc_get_min_lsn((SELECT capture_instance FROM cdc.change_tables where source_object_id  = object_id('{source["TableSchema"]}.{source["TableName"]}')));  
                     /*Remove First*/-- SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',  GETDATE());
                     /*Remove First*/--  SELECT CONVERT(varchar(max),@to_lsn,1) to_lsn,CONVERT(varchar(max),@from_lsn,1) from_lsn, count(*) ChangeCount FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, N'all');
                     /*Remove Second*/-- SELECT * FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(convert(binary(10),'/*from_lsn*/',1), convert(binary(10),'/*to_lsn*/',1), N'all');
