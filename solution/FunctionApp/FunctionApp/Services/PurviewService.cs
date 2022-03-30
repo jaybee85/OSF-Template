@@ -150,7 +150,7 @@ namespace FunctionApp.Services
                 }
 
 
-                return new JObject(PurviewGetMetaDataCore(metadata, logging));
+                return await (PurviewGetMetaDataCore(metadata, logging));
 
             }
             catch (Exception error)
@@ -360,10 +360,8 @@ namespace FunctionApp.Services
                 }
                 else
                 {
-                    logging.LogErrors(new Exception("No QualifiedIDAssociation found - using TaskMasterId"));
+                    logging.LogInformation("No valid QualifiedIDAssociation found - using TaskMasterId");
                     QualifiedName = "TaskMasterId_" + metadata["TaskObject"]["TaskMasterId"];
-
-
                 }
                 JObject process = JObject.FromObject(new
                 {
@@ -384,18 +382,18 @@ namespace FunctionApp.Services
                 var processGuid = JObject.Parse(ExecuteRequest(purviewAccount, "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", processBody, logging).Result);
 
                 //
-                return new JObject(new JObject
+                return JObject.FromObject(new
                 {
-                    ["Result"] = "Complete"
+                    Result = "Complete"
                 });
             }
             catch (Exception e)
             {
                 logging.LogErrors(e);
                 logging.LogErrors(new Exception("PurviewGetMetaDataCore Failed"));
-                return new JObject(new JObject
+                return JObject.FromObject(new
                 {
-                    ["Result"] = "Failure: " + e 
+                    Result = "Failure: " + e 
                 });
                 throw;
             }

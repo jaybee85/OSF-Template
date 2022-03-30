@@ -199,7 +199,7 @@ namespace WebApplication.Controllers
             HumanizeColumns(cols);
 
             JArray pkeycols = new JArray();
-            pkeycols.Add("Id");
+            pkeycols.Add("EngineId");
 
             JArray Navigations = new JArray();
 
