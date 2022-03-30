@@ -50,7 +50,11 @@ namespace FunctionApp.Functions
             if (_options.Value.TimerTriggers.EnableRunFrameworkTasks)
             {
                 using var client = _httpClientFactory.CreateClient(HttpClients.CoreFunctionsHttpClientName);
-                
+                if (client.DefaultRequestHeaders.Authorization == null)
+                {
+                    await Task.Delay(2000);
+                }
+
                 using SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection();
                 
                 // Get a list of framework task runners that are currently idle

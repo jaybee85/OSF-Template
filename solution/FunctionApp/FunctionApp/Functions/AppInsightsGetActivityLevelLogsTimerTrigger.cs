@@ -55,6 +55,10 @@ namespace FunctionApp.Functions
         {
             string appInsightsWorkspaceId = _appOptions.Value.ServiceConnections.AppInsightsWorkspaceId;
             using var client = _httpClientFactory.CreateClient(HttpClients.AppInsightsHttpClientName);
+            if (client.DefaultRequestHeaders.Authorization == null)
+            {
+                await Task.Delay(2000);
+            }
 
             using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
