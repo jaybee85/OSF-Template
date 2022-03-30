@@ -27,13 +27,12 @@ function(
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
     TestDescription = "",
-    SQLPoolName = "",
     SQLPoolOperation = ""
     )
 {
     local TaskMasterJson =     
     {
-        "SQLPoolName": SQLPoolName,
+        "SQLPoolName": vars.synapse_sql_pool_name,
         "SQLPoolOperation": SQLPoolOperation,
         "Source":{
             "Type": SourceFormat,                       

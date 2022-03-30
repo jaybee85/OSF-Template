@@ -8,3 +8,8 @@ az vm run-command create --name "test2" --vm-name $tout.selfhostedsqlvm_name --r
 
 #Check Results
 az vm run-command show --name "test2" --vm-name $tout.selfhostedsqlvm_name --resource-group $tout.resource_group_name --instance-view
+
+
+sqlcmd -Q "EXEC sys.sp_cdc_enable_table @source_schema = N'SalesLT',  @source_name   = N'Product',  @role_name     = NULL,  @supports_net_changes = 1" -d "Adventureworks"
+sqlcmd -Q "EXEC sys.sp_cdc_enable_table @source_schema = N'SalesLT',  @source_name   = N'Customer',  @role_name     = NULL,  @supports_net_changes = 1" -d "Adventureworks"
+sqlcmd -Q "EXEC sys.sp_cdc_enable_table @source_schema = N'SalesLT',  @source_name   = N'SalesOrderHeader',  @role_name     = NULL,  @supports_net_changes = 1" -d "Adventureworks"

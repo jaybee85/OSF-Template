@@ -1,3 +1,6 @@
+Import-Module .\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform
+
 $patterns = ((Get-Content "Patterns.json") | ConvertFrom-Json).Folder | Sort-Object | Get-Unique
 $CurDir = $PWD.ToString()
 
@@ -19,9 +22,9 @@ foreach ($pattern in $patterns) {
     else
     {
         write-host "Tests Folder already exists"
-    }
-
+    }    
     $testfile = "./tests/tests.json"
+
     jsonnet --tla-code seed=$counter "./GenerateTests.jsonnet" | Set-Content($testfile)
     $testfilejson = Get-Content $testfile | ConvertFrom-Json | ForEach-Object {
         $_.TaskMasterId = $counter
