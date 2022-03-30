@@ -95,7 +95,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 throw e;
             }
             var _instance = source["Instance"];
-            if (_instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            if ((string.IsNullOrEmpty(_instance["IncrementalValue"].ToString()) ||  _instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string") && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
             {
                 source["SQLStatement"] = @$"                    
                     /*Remove First*/-- DECLARE  @from_lsn binary(10), @to_lsn binary(10);  
