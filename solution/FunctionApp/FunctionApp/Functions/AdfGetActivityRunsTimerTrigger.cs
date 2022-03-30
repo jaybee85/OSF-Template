@@ -72,7 +72,7 @@ namespace FunctionApp.Functions
                                         ExecutionEngine a left join 
                                         ( Select b.EngineId, MaxActivityTimeGenerated = Max(MaxActivityTimeGenerated) 
                                         from ADFActivityRun b
-                                        group by b.EngineId) b on a.Id = b.EngineId
+                                        group by b.EngineId) b on a.EngineId = b.EngineId
 
                              ");
 

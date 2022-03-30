@@ -572,7 +572,7 @@ local process = function(index, t)
 template(
     t.ADFPipeline,
     t.Pattern, 
-    seed+index,//t.TestNumber,
+    seed-index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
     t.DataFilename,

@@ -70,11 +70,11 @@
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
       "TaskInstanceJson": "{\n\n}",
-      "TaskMasterId": -1003,
+      "TaskMasterId": -1005,
       "TaskMasterJson": "{\n    \"SQLPoolName\": \"adsdevsyndpads\",\n    \"SQLPoolOperation\": \"pause\",\n    \"Source\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Not-Applicable\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Not-Applicable\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Synapse-SQLPool-Start-Stop",
       "TaskTypeId": -6,
-      "TestDescription": "[-1003]  SQL Dedicated Pool pause execution test."
+      "TestDescription": "[-1005]  SQL Dedicated Pool pause execution test."
    }
 ]
