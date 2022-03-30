@@ -8,13 +8,21 @@
 
 
 	<ItemGroup>
+		<Compile Remove="Components\**" />
 		<Compile Remove="Controllers\Enums\**" />
+		<Compile Remove="Models\Stats\**" />
 		<Compile Remove="Templates\**" />
+		<Content Remove="Components\**" />
 		<Content Remove="Controllers\Enums\**" />
+		<Content Remove="Models\Stats\**" />
 		<Content Remove="Templates\**" />
+		<EmbeddedResource Remove="Components\**" />
 		<EmbeddedResource Remove="Controllers\Enums\**" />
+		<EmbeddedResource Remove="Models\Stats\**" />
 		<EmbeddedResource Remove="Templates\**" />
+		<None Remove="Components\**" />
 		<None Remove="Controllers\Enums\**" />
+		<None Remove="Models\Stats\**" />
 		<None Remove="Templates\**" />
 	</ItemGroup>
 
@@ -60,11 +68,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Enums\" />
     <Folder Include="wwwroot\js\bswindow\" />
-    <Folder Include="Models\Stats\" />
     <Folder Include="wwwroot\fonts\" />
-    <Folder Include="Components\" />
   </ItemGroup>
 
   <ItemGroup>

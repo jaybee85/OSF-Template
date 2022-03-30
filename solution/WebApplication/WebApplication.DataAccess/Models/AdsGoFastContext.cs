@@ -681,6 +681,8 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Discoverability).HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.SubjectAreaName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -688,6 +690,10 @@ namespace WebApplication.Models
                 entity.Property(e => e.UpdatedBy)
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.Property(e => e.ValidFrom).HasColumnType("datetime2(0)");
+
+                entity.Property(e => e.ValidTo).HasColumnType("datetime2(0)");
             });
 
             modelBuilder.Entity<SubjectAreaForm>(entity =>
@@ -739,7 +745,9 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                
+                entity.Property(e => e.ValidFrom).HasColumnType("datetime2(0)");
+
+                entity.Property(e => e.ValidTo).HasColumnType("datetime2(0)");
             });
 
             OnModelCreatingPartial(modelBuilder);

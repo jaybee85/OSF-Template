@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Models
 {
@@ -10,5 +12,9 @@ namespace WebApplication.Models
         public DateTime ExpiryDate { get; set; }
         public bool ActiveYn { get; set; }
         public string UpdatedBy { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime ValidFrom { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime ValidTo { get; set; }
     }
 }

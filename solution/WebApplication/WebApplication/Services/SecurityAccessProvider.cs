@@ -110,6 +110,10 @@ namespace WebApplication.Services
                 //Next Get Role based on App Roles
                 roles = GetUserRoles(identity);
             }
+            
+            if (roles.Any() && !roles.Contains("Reader"))
+                roles.Add("Reader");
+            
             return roles;
         }
 
