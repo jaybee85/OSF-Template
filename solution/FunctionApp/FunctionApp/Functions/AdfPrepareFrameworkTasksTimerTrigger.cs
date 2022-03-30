@@ -82,7 +82,7 @@ namespace FunctionApp.Functions
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduledDateTimeOffset", typeof(DateTimeOffset)));
             dtScheduleInstance.Columns.Add(new DataColumn("ActiveYN", typeof(bool)));
 
-            dynamic resScheduleInstance = await con.QueryWithRetry(@"
+            dynamic resScheduleInstance = con.QueryWithRetry(@"
                 Select 
 	                SM.ScheduleMasterId, 
 	                SM.ScheduleCronExpression, 

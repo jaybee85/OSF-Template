@@ -55,7 +55,7 @@ namespace FunctionApp.Functions
 
             string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
             JObject metadata = JsonConvert.DeserializeObject<JObject>(requestBody);
-            var result = new JObject(_purviewService.PurviewMetaDataCheck(metadata, _funcAppLogger));
+            var result = (_purviewService.PurviewMetaDataCheck(metadata, _funcAppLogger).Result);
 
             if (result["Result"].ToString() == "Complete")
             {
