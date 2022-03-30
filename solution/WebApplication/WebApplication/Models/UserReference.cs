@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Newtonsoft.Json;
 
-namespace WebApplication.Models.Forms
+namespace WebApplication.Models
 {
     public class UserReference
     {

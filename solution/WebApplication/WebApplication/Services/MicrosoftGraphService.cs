@@ -1,16 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
 using Microsoft.Graph;
-using Microsoft.Graph.Auth;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Web;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication.Forms.PIAWizard;
 using WebApplication.Models;
 using WebApplication.Models.Options;
-using System.Security.Claims;
 
 namespace WebApplication.Services
 {
@@ -31,8 +28,9 @@ namespace WebApplication.Services
                 .WithClientSecret(_azureOptions.Value.ClientSecret)
                 .Build();
 
-            ClientCredentialProvider authProvider = new ClientCredentialProvider(confidentialClient);
-            _graphServiceClient = new GraphServiceClient(authProvider);
+            //TODO: Fix the graph serice client auth (we removed the obsolete Graph.Auth package dependency
+            //ClientCredentialProvider authProvider = new ClientCredentialProvider(confidentialClient);
+            //_graphServiceClient = new GraphServiceClient();
         }
 
         public async Task<IEnumerable<UserReference>> GetMembers()

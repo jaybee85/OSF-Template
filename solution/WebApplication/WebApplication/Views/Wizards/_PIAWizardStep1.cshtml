@@ -105,8 +105,8 @@
         <label asp-for="PhnId" class="control-label"></label>
     </div>
     <div class="formSelect col-6">
-        @Html.DropDownListFor(model => model.PhnZone.Id, ViewBag.PhnZones as SelectList, "Select Your PHN Zone", new { @class = "form-control", @id = "dsSelection" })
-        @Html.HiddenFor(model => model.PhnZone.Name, new { @id = "hiddenPhnName"})
+        @Html.DropDownListFor(model => model.Site.Id, ViewBag.PhnZones as SelectList, "Select Your PHN Zone", new { @class = "form-control", @id = "dsSelection" })
+        @Html.HiddenFor(model => model.Site.Name, new { @id = "hiddenPhnName"})
         <span asp-validation-for="PhnId" class="text-danger"></span>
     </div>
 </div>

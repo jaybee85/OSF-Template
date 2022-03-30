@@ -23,22 +23,16 @@ namespace WebApplication.Controllers
     public class WizardsController : BaseController
     {
         private readonly AdsGoFastContext _context;
-        private readonly Services.IMicrosoftGraphService _graphService;
-        private readonly IEmailService _emailService;
-        private readonly ProcessingFunctionClient _processingClient;
+        private readonly IMicrosoftGraphService _graphService;
 
         public WizardsController(AdsGoFastContext context,
             Services.ISecurityAccessProvider securityProvider,
             Services.IEntityRoleProvider roleProvider,
-            Services.IMicrosoftGraphService graphService,
-            Services.IEmailService emailService,
-            ProcessingFunctionClient processingClient)
+            IMicrosoftGraphService graphService)
             : base(securityProvider, roleProvider)
         {
             _context = context;
             _graphService = graphService;
-            _emailService = emailService;
-            _processingClient = processingClient;
         }
 
         [HttpGet]
@@ -64,7 +58,7 @@ namespace WebApplication.Controllers
             //ViewBag.PhnZones = new SelectList(new List<PhnZone>(phnZones)
             //    .OrderBy(x => x.Name), "Id", "Name");
 
-            var users = await GetPHNUsers();
+            var users = await GetUsers();
             ViewBag.PHNUsers = new SelectList(users.OrderBy(x => x.DisplayName),
                 "UserId", "DisplayName");
         }
@@ -162,8 +156,11 @@ namespace WebApplication.Controllers
                     {
                         // notify all phn users whose roles are set throgh the form by email
                         string[] stewards = PIA.DataStewards.Select(ds => ds.UserId).ToArray();
-                        await _emailService.SendNotificationToPHNUsers(PIA.DataOwner.UserId, PIA.DataCustodian.UserId, stewards);
-                        await _processingClient.QueueSubjectAreaProvisioning(PIA.SubjectAreaId);
+
+                        SendNotificationToSubjectAreaUsers();
+
+                        DoProcessingAndAutomationForSubjectArea();
+                        
                         // Redirect out of wizard and
                         return RedirectToAction("Details", "SubjectArea", new { id = PIA.SubjectAreaId });
                     }
@@ -182,6 +179,17 @@ namespace WebApplication.Controllers
             }
 
             return View(nameof(PIAWizard), PIA);
+        }
+
+        private void DoProcessingAndAutomationForSubjectArea()
+        {
+            // TODO:
+            // If there are any automation steps like setting up security access / Azure AD security groups etc
+        }
+
+        private void SendNotificationToSubjectAreaUsers()
+        {
+            //TODO: Send emails to PIA.DataOwner.UserId, PIA.DataCustodian.UserId, and stewards
         }
 
         private async Task<SubjectAreaForm> UpdatePIAData(PIAWizardViewModel PIA)
@@ -223,10 +231,9 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> AddDataSteward([Bind("DataStewards")] PIAWizardViewModel pia)
         {
-            var testData = await GetPHNUsers();
+            var users = await GetUsers();
 
-            ViewBag.PHNUsers = new SelectList(testData,
-                "UserId", "DisplayName");
+            ViewBag.PHNUsers = new SelectList(users, "UserId", "DisplayName");
 
             var dataSteward = new UserReference();
 
@@ -238,9 +245,9 @@ namespace WebApplication.Controllers
         [HttpPost]
         public async Task<IActionResult> RemoveDataSteward([Bind("DataStewards")] PIAWizardViewModel pia)
         {
-            var PHNUsers = await GetPHNUsers();
+            var users = await GetUsers();
 
-            ViewBag.PHNUsers = new SelectList(PHNUsers,
+            ViewBag.PHNUsers = new SelectList(users,
                 "UserId", "DisplayName"); // find better way to do this
 
             if (pia.DataStewards.Count > 1)
@@ -251,7 +258,7 @@ namespace WebApplication.Controllers
             return PartialView("_DataStewards", pia);
         }
 
-        private async Task<List<UserReference>> GetPHNUsers()
+        private async Task<List<UserReference>> GetUsers()
         {
             var members = await _graphService.GetMembers();
 

@@ -28,8 +28,8 @@ namespace WebApplication.Services
                     return await LoadSubjectAreaRoles(x.SubjectAreaId, groups);
                 case SubjectAreaForm x:
                     return await LoadSubjectAreaFormRoles(x.SubjectAreaFormId, groups);
-                case TaskGroup x when x.SubjectAreaId.HasValue:
-                    return await LoadSubjectAreaRoles(x.SubjectAreaId.Value, groups);
+                case TaskGroup x:
+                    return await LoadSubjectAreaRoles(x.SubjectAreaId, groups);
                 case TaskInstance x:
                     return await LoadTaskInstanceRoles(x.TaskInstanceId, groups);
                 case TaskInstanceExecution x:

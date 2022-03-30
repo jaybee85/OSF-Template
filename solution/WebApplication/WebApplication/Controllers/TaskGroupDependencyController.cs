@@ -252,7 +252,8 @@ namespace WebApplication.Controllers
                 //filter the list by permitted roles
                 if (!CanPerformCurrentActionGlobally())
                 {
-                    var requiredRoles = GetPermittedRolesForCurrentAction();
+                    //TODO: Test that the change from GetPermittedRolesForCurrentAction didnt' break this
+                    var requiredRoles = GetPermittedGroupsForCurrentAction();
 
                     var filteredTaskGroups =
                         from tg in _context.TaskGroup
