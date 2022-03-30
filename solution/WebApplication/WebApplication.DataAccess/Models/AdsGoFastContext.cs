@@ -603,6 +603,9 @@ namespace WebApplication.Models
 
                 entity.Property(e => e.TaskMasterWaterMarkBigInt).HasColumnName("TaskMasterWaterMark_BigInt");
 
+                entity.Property(e => e.TaskMasterWaterMarkString).HasColumnName("TaskMasterWaterMark_String");
+
+
                 entity.Property(e => e.TaskMasterWaterMarkColumn)
                     .IsRequired()
                     .HasMaxLength(200);
