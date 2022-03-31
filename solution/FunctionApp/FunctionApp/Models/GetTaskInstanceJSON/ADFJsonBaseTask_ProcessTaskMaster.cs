@@ -199,6 +199,15 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
         {
             string sqlStatement = "";
 
+            if (Helpers.JsonHelpers.CheckForJsonProperty("Instance", Extraction) == false)
+            {
+                var e = new Exception("Incremental Extraction Task Type does not have an instance element within taskmasterjson");
+                _logging.LogErrors(e);
+                throw e;
+            }
+            var _instance = Extraction["Instance"];
+
+
             if (Extraction["IncrementalType"] != null)
             {
 
@@ -216,45 +225,45 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && _instance["IncrementalColumnType"].ToString().ToLower() == "datetime")
                 {
                     sqlStatement = @$"
                         SELECT 
-	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
+	                        MAX([{_instance["IncrementalField"]}]) AS newWatermark
                         FROM 
 	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-                        WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+                        WHERE [{_instance["IncrementalField"]}] > CAST('{_instance["IncrementalValue"]}' as datetime)
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && _instance["IncrementalColumnType"].ToString().ToLower() != "datetime")
                 {
                     sqlStatement = @$"
                         SELECT 
-	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
+	                        MAX([{_instance["IncrementalField"]}]) AS newWatermark
                         FROM 
 	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-                        WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+                        WHERE [{_instance["IncrementalField"]}] > {_instance["IncrementalValue"]}
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && _instance["IncrementalColumnType"].ToString().ToLower() == "datetime")
                 {
                     sqlStatement = @$"
-                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+                        SELECT MAX([{_instance["IncrementalField"]}]) AS newWatermark, 
 		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
 	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-	                    WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+	                    WHERE [{_instance["IncrementalField"]}] > CAST('{_instance["IncrementalValue"]}' as datetime)
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && _instance["IncrementalColumnType"].ToString().ToLower() != "datetime")
                 {
                     sqlStatement = @$"
-                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+                        SELECT MAX([{_instance["IncrementalField"]}]) AS newWatermark, 
 		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
 	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-	                    WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+	                    WHERE [{_instance["IncrementalField"]}] > {_instance["IncrementalValue"]}
                     ";
                 }
 
