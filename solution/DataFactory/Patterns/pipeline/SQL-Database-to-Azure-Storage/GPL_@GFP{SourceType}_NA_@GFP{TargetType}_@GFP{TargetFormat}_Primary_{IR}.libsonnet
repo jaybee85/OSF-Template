@@ -192,21 +192,23 @@ local pipeline = {
 										},
 										"waitOnCompletion": true,
 										"parameters": {
-											"TaskObject": {
-												"value": "@pipeline().parameters.TaskObject",
-												"type": "Expression"
-											},
-											"Mapping": {
-												"value": "@activity('AF Persist Metadata and Get Mapping').output.value",
-												"type": "Expression"
-											},
-											"NewWaterMark": {
-												"value": "@activity('Lookup New Watermark').output.firstRow.newWatermark",
-												"type": "Expression"
-											},
-											"Item": "1",
-											"BatchCount": "1"
-										}
+                                            "BatchCount": {
+                                                "value": "@int('1')",
+                                                "type": "Expression"
+                                            },
+                                            "Mapping": {
+                                                "value": "@activity('AF Persist Metadata and Get Mapping').output.value",
+                                                "type": "Expression"
+                                            },
+                                            "NewWatermark": {
+                                                "value": "@activity('Lookup New Watermark').output.firstRow.newWatermark",
+                                                "type": "Expression"
+                                            },
+                                            "TaskObject": {
+                                                "value": "@pipeline().parameters.TaskObject",
+                                                "type": "Expression"
+                                            }
+                                        }
 									}
 								},
 								{

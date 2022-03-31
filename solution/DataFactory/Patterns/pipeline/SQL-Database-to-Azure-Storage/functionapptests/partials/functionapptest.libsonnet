@@ -23,7 +23,7 @@ function(
     {
         "Source":{
             "Type": SourceFormat,
-            "IncrementalType": IncrementalType,
+            "IncrementalType": IncrementalType,                        
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
