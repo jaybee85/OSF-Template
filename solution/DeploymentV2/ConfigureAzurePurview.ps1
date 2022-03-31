@@ -8,7 +8,7 @@
 #   - You must be authenticated using the Azure CLI
 #   - Ensure you set your environment name below
 #-------------------------------------------------------------------------------------------------------------------------------------
-$environmentName = "arkahna"
+$environmentName = "local"
 
 $deploymentFolderPath = (Get-Location).Path
 
@@ -29,8 +29,9 @@ $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $purview_sp_id=$outputs.purview_sp_id.value
+$is_vnet_isolated=$outputs.is_vnet_isolated.value
 
-$lockboxName = Read-Host -Prompt "Enter a friendly name for your purview environment"
+$  = Read-Host -Prompt "Enter a friendly name for your purview environment"
 $isFirstRun = Read-Host -Prompt "Is this the first time you have run the script? (y/n)"
 
 # Ensure we are on the right sub
@@ -79,10 +80,12 @@ CallPurviewApi -Method "PATCH" -Url $uri -Body $body
 #----------------------------------------------------------------------------------------------------------------
 # Create the self hosted IR
 #----------------------------------------------------------------------------------------------------------------
-$body = '{"name":"AzureIntegrationRuntime","properties":{"type":"SelfHosted"}}'
-$uri = "https://$purview_name.purview.azure.com/proxy/integrationRuntimes/AzureIntegrationRuntime?api-version=2020-12-01-preview"
-CallPurviewApi -Method "PUT" -Url $uri  -Body $body
-
+if($is_vnet_isolated)
+{
+  $body = '{"name":"AzureIntegrationRuntime","properties":{"type":"SelfHosted"}}'
+  $uri = "https://$purview_name.purview.azure.com/proxy/integrationRuntimes/AzureIntegrationRuntime?api-version=2020-12-01-preview"
+  CallPurviewApi -Method "PUT" -Url $uri  -Body $body
+}
 #----------------------------------------------------------------------------------------------------------------
 # Create a shared credential source 
 #----------------------------------------------------------------------------------------------------------------
@@ -108,10 +111,12 @@ $body = '{"kind":"AzureSqlDatabase","name":"'+$sqlserver_name+'","properties":{"
 $uri = "$purviewEndpoint/scan/datasources/$sqlserver_name"+"?api-version=2018-12-01-preview"
 CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 
+$irref = $is_vnet_isolated ? ''+$irref+'' : ''
+
 # Configure the scan for the source (x3 databases)
 #----------------------------------------------------------------------------------------------------------------
 if($isFirstRun -eq "n") {
-  $body = '{"name":"SqlScanWeeklyMeta","kind":"AzureSqlDatabaseCredential","properties":{"connectedVia":{"referenceName":"'+$integrationRuntimeName+'"},"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$metadatadb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
+  $body = '{"name":"SqlScanWeeklyMeta","kind":"AzureSqlDatabaseCredential","properties":{'+$irref+'"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$metadatadb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
   $uri = "$purviewEndpoint/scan/datasources/"+$sqlserver_name+"/scans/SqlScanWeeklyMeta?api-version=2018-12-01-preview"
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
   # Schedule
@@ -124,7 +129,7 @@ if($isFirstRun -eq "n") {
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 
   #----------------------------------------------------------------------------------------------------------------
-  $body = '{"name":"SqlScanWeeklyStaging","kind":"AzureSqlDatabaseCredential","properties":{"connectedVia":{"referenceName":"'+$integrationRuntimeName+'"},"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$stagingdb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
+  $body = '{"name":"SqlScanWeeklyStaging","kind":"AzureSqlDatabaseCredential","properties":{'+$irref+'"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$stagingdb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
   $uri = "$purviewEndpoint/scan/datasources/"+$sqlserver_name+"/scans/SqlScanWeeklyStaging?api-version=2018-12-01-preview"
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
   # Schedule
@@ -136,7 +141,7 @@ if($isFirstRun -eq "n") {
   $uri = "$purviewEndpoint/scan/datasources/"+$sqlserver_name+"/scans/SqlScanWeeklyStaging/filters/custom?api-version=2018-12-01-preview"
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
   #----------------------------------------------------------------------------------------------------------------
-  $body = '{"name":"SqlScanWeeklySamples","kind":"AzureSqlDatabaseCredential","properties":{"connectedVia":{"referenceName":"'+$integrationRuntimeName+'"},"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$sampledb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
+  $body = '{"name":"SqlScanWeeklySamples","kind":"AzureSqlDatabaseCredential","properties":{'+$irref+'"serverEndpoint":"'+$sqlserver_name+'.database.windows.net","databaseName":"'+$sampledb_name+'","credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureSqlDatabase"}}'
   $uri = "$purviewEndpoint/scan/datasources/"+$sqlserver_name+"/scans/SqlScanWeeklySamples?api-version=2018-12-01-preview"
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
   # Schedule
@@ -158,7 +163,7 @@ CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 
 if($isFirstRun -eq "n") {
   # Configure the scan
-  $body = '{"name":"BlobScanWeekly","kind":"AzureStorageCredential","properties":{"connectedVia":{"referenceName":"'+$integrationRuntimeName+'"},"credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureStorage"}}'
+  $body = '{"name":"BlobScanWeekly","kind":"AzureStorageCredential","properties":{'+$irref+'"credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AzureStorage"}}'
   $uri = "$purviewEndpoint/scan/datasources/"+$blobstorage_name+"/scans/BlobScanWeekly?api-version=2018-12-01-preview"
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 
@@ -180,7 +185,7 @@ $uri = "$purviewEndpoint/scan/datasources/"+$adlsstorage_name+"?api-version=2018
 CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 if($isFirstRun -eq "n") {
   $uri = "$purviewEndpoint/scan/datasources/"+$adlsstorage_name+"/scans/AdlsScanWeekly?api-version=2018-12-01-preview"
-  $body = '{"name":"AdlsScanWeekly","kind":"AdlsGen2Credential","properties":{"connectedVia":{"referenceName":"'+$integrationRuntimeName+'"},"credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AdlsGen2"}}'
+  $body = '{"name":"AdlsScanWeekly","kind":"AdlsGen2Credential","properties":{'+$irref+'"credential":{"referenceName":"SPCredentials","credentialType":"ServicePrincipal"},"collection":{"type":"CollectionReference","referenceName":"'+$purview_name+'"},"scanRulesetType":"System","scanRulesetName":"AdlsGen2"}}'
   CallPurviewApi -Method "PUT" -Url $uri  -Body $body
 
   # Schedule
@@ -207,3 +212,10 @@ az rest --url $uri --method patch --body $body --headers "Content-Type=applicati
 #----------------------------------------------------------------------------------------------------------------
 # Currently this needs to be done manually but we may automate this in the future.
 # https://docs.microsoft.com/en-us/azure/purview/tutorial-metadata-policy-collections-apis
+
+$uri = "$purviewEndpoint/policystore/metadataroles?api-version=2021-07-01"
+CallPurviewApi -Method "GET" -Url $uri  -Body $body
+
+
+$uri = "$purviewEndpoint/policystore/metadataPolicies?api-version=2021-07-01"
+$res = (CallPurviewApi -Method "GET" -Url $uri  -Body $body) 

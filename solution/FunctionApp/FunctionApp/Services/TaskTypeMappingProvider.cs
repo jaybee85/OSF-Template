@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Models;
 
@@ -15,9 +16,9 @@ namespace FunctionApp.Services
             _taskMetaDataDatabase = taskMetaDataDatabase;
         }
 
-        public List<TaskTypeMapping> GetAllActive()
+        public async Task<List<TaskTypeMapping>> GetAllActive()
         {
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             return con.QueryWithRetry<TaskTypeMapping>("select * from [dbo].[TaskTypeMapping] Where ActiveYN = 1").ToList();
         }
 

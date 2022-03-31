@@ -1,0 +1,10 @@
+﻿//-----------------------------------------------------------------------
+//
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+//
+//-----------------------------------------------------------------------*/
+
+SynapseIntegrationActivityRun
+        | where TimeGenerated >  datetime({MaxActivityTimeGenerated}) and Status in ("Failed")  
+            and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}"

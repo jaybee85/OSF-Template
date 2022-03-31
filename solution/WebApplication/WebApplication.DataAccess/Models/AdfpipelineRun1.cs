@@ -6,7 +6,7 @@ namespace WebApplication.Models
     {
         public int TaskInstanceId { get; set; }
         public Guid ExecutionUid { get; set; }
-        public int DatafactoryId { get; set; }
+        public int EngineId { get; set; }
         public Guid PipelineRunUid { get; set; }
         public DateTimeOffset? Start { get; set; }
         public DateTimeOffset? End { get; set; }

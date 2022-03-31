@@ -42,7 +42,7 @@ namespace WebApplication.Controllers
             }
 
             var ir = await _context.IntegrationRuntime
-                .Include(x=>x.DataFactory)
+                .Include(x=>x.ExecutionEngine)
                 .FirstOrDefaultAsync(m => m.IntegrationRuntimeId == id);
             if (ir == null)
                 return NotFound();
@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
         // GET: IntegrationRuntime/Create
         public IActionResult Create()
         {
-            ViewData["DataFactories"] = new SelectList(_context.DataFactory.OrderBy(x=>x.Name), "Id", "Name");
+            ViewData["ExecutionEngines"] = new SelectList(_context.ExecutionEngine.OrderBy(x=>x.EngineName), "EngineId", "EngineName");
             IntegrationRuntime ir = new IntegrationRuntime();
             ir.ActiveYn = true;
             return View(ir);
@@ -68,7 +68,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create([Bind("IntegrationRuntimeId,IntegrationRuntimeName,ActiveYn,DataFactoryId")] IntegrationRuntime ir)
+        public async Task<IActionResult> Create([Bind("IntegrationRuntimeId,IntegrationRuntimeName,ActiveYn,EngineId")] IntegrationRuntime ir)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            ViewData["DataFactories"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["ExecutionEngines"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             return View(ir);
         }
 
@@ -99,7 +99,7 @@ namespace WebApplication.Controllers
 
             if (!await CanPerformCurrentActionOnRecord(IntegrationRuntime))
                 return new ForbidResult();
-            ViewData["DataFactories"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["ExecutionEngines"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             return View(IntegrationRuntime);
         }
 
@@ -109,7 +109,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(int id, [Bind("IntegrationRuntimeId,IntegrationRuntimeName,ActiveYn,DataFactoryId")] IntegrationRuntime integrationRuntime)
+        public async Task<IActionResult> Edit(int id, [Bind("IntegrationRuntimeId,IntegrationRuntimeName,ActiveYn,EngineId")] IntegrationRuntime integrationRuntime)
         {
             if (id != integrationRuntime.IntegrationRuntimeId)
             {
@@ -140,7 +140,7 @@ namespace WebApplication.Controllers
                 }
                 return RedirectToAction(nameof(IndexDataTable));
             }
-            ViewData["DataFactories"] = new SelectList(_context.DataFactory.OrderBy(x => x.Name), "Id", "Name");
+            ViewData["ExecutionEngines"] = new SelectList(_context.ExecutionEngine.OrderBy(x => x.EngineName), "EngineId", "EngineName");
             return View(integrationRuntime);
         }
 
@@ -198,7 +198,7 @@ namespace WebApplication.Controllers
             JArray cols = new JArray();
             cols.Add(JObject.Parse("{ 'data':'IntegrationRuntimeId', 'name':'Id', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'IntegrationRuntimeName', 'name':'Name', 'autoWidth':true }"));
-            cols.Add(JObject.Parse("{ 'data':'DataFactoryId', 'name':'Data Factory', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'EngineId', 'name':'Execution Engine', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'Is Active', 'autoWidth':true, 'ads_format':'bool'}"));
 
             HumanizeColumns(cols);
@@ -260,7 +260,8 @@ namespace WebApplication.Controllers
 
                 //total number of rows count     
                 recordsTotal = await modelDataAll.CountAsync();
-                //Paging     
+                //Paging
+                Console.WriteLine(modelDataAll);
                 var data = await modelDataAll.Skip(skip).Take(pageSize).ToListAsync();
                 //Returning Json Data    
                 return new OkObjectResult(JsonConvert.SerializeObject(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data }, new Newtonsoft.Json.Converters.StringEnumConverter()));

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FormatWith;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
@@ -38,7 +39,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetActivityLevelLogs")]
-        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
 
@@ -46,28 +47,32 @@ namespace FunctionApp.Functions
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = GetActivityLevelLogsCore;
-                FrameworkRunnerResult result = fr.Invoke("GetActivityLevelLogs", worker);
+                FrameworkRunnerResult result = await fr.Invoke("GetActivityLevelLogs", worker);
             }
         }
 
-        public dynamic GetActivityLevelLogsCore(Logging.Logging logging)
+        public async Task<dynamic> GetActivityLevelLogsCore(Logging.Logging logging)
         {
             string appInsightsWorkspaceId = _appOptions.Value.ServiceConnections.AppInsightsWorkspaceId;
             using var client = _httpClientFactory.CreateClient(HttpClients.AppInsightsHttpClientName);
+            if (client.DefaultRequestHeaders.Authorization == null)
+            {
+                await Task.Delay(2000);
+            }
 
-            using SqlConnection conRead = _taskMetaDataDatabase.GetSqlConnection();
+            using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
             //Get Last Request Date
             var maxTimesGenQuery = conRead.QueryWithRetry(@"
                                     select max([timestamp]) maxtimestamp from ActivityLevelLogs");        
 
-            foreach (var datafactory in maxTimesGenQuery)
+            foreach (var executionengine in maxTimesGenQuery)
             {
                 DateTimeOffset maxAllowedLogTimeGenerated = DateTimeOffset.UtcNow.AddDays(-1*_appOptions.Value.ServiceConnections.AppInsightsMaxNumberOfDaysToRequest);
                 DateTimeOffset maxObservedLogTimeGenerated = DateTimeOffset.UtcNow.AddDays(-1*_appOptions.Value.ServiceConnections.AppInsightsMaxNumberOfDaysToRequest);
-                if (datafactory.maxtimestamp != null)
+                if (executionengine.maxtimestamp != null)
                 {
-                    maxObservedLogTimeGenerated = ((DateTimeOffset)datafactory.maxtimestamp).AddMinutes(-1* _appOptions.Value.ServiceConnections.AppInsightsMinutesOverlap);
+                    maxObservedLogTimeGenerated = ((DateTimeOffset)executionengine.maxtimestamp).AddMinutes(-1* _appOptions.Value.ServiceConnections.AppInsightsMinutesOverlap);
                     //Make sure that we don't get more than max to ensure we dont get timeouts etc.
                     if ((maxObservedLogTimeGenerated) <= maxAllowedLogTimeGenerated)
                     {
@@ -88,12 +93,12 @@ namespace FunctionApp.Functions
 
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync($"https://api.applicationinsights.io/v1/apps/{appInsightsWorkspaceId}/query", postContent).Result;
+                var response = await client.PostAsync($"https://api.applicationinsights.io/v1/apps/{appInsightsWorkspaceId}/query", postContent);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //Start to parse the response content
                     HttpContent responseContent = response.Content;
-                    var content = response.Content.ReadAsStringAsync().Result;
+                    var content = await response.Content.ReadAsStringAsync();
                     var tables = ((JArray)(JObject.Parse(content)["tables"]));
                     if (tables.Count > 0)
                     {
@@ -131,13 +136,13 @@ namespace FunctionApp.Functions
                         t.Schema = "dbo";
                         string tableGuid = Guid.NewGuid().ToString();
                         t.Name = "#ActivityLevelLogs{TableGuid}";
-                        using (SqlConnection conWrite = _taskMetaDataDatabase.GetSqlConnection())
+                        using (SqlConnection conWrite = await _taskMetaDataDatabase.GetSqlConnection())
                         {
                             TaskMetaDataDatabase.BulkInsert(dt, t, true, conWrite);
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>
                             {
                                 { "TempTable", t.QuotedSchemaAndName() },
-                                { "DatafactoryId", "1"}
+                                { "EngineId", "-1"}
                             };
 
                             string mergeSql = GenerateSqlStatementTemplates.GetSql(System.IO.Path.Combine(EnvironmentHelper.GetWorkingFolder(),_appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoActivityLevelLogs", sqlParams);

@@ -3,7 +3,7 @@ local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     ADFPipeline = "GPL_AzureBlobStorage_ParquetAzureSqlTable_NA",
     Pattern = "Azure Storage to SQL Database",
-    TestNumber = "1",
+    TestNumber = "-1",
     SourceFormat = "Azure SQL",
     SourceType = "Azure SQL",
     DataFilename = "SalesLT.Customer.parquet",
@@ -25,7 +25,9 @@ function(
     PreCopySQL,
     PostCopySQL,
     AutoGenerateMerge,
-    MergeSQL
+    MergeSQL,
+    TestDescription = "",
+    TaskDatafactoryIR = ""
     )
 {
     local TaskMasterJson =     
@@ -34,18 +36,19 @@ function(
             "Type": SourceFormat,                       
             "RelativePath": "samples/",
             "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName,
-            "SkipLineCount": SkipLineCount,
-            "FirstRowAsHeader":FirstRowAsHeader,
-            "SheetName":SheetName,
+            "SchemaFileName": SchemaFileName,                        
             "MaxConcurrentConnections": MaxConcurrentConnections,
             "Recursively": Recursively,
             "DeleteAfterCompletion": DeleteAfterCompletion,
-        },
-        "Target":{
-            "Type":TargetFormat,
-            "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName,
+            } 
+            + if (SourceFormat == "Excel") 
+            then {"FirstRowAsHeader":FirstRowAsHeader,"SkipLineCount": SkipLineCount,  "SheetName":SheetName}
+            else {}
+            + if (SourceFormat == "Csv" || SourceFormat == "DelimitedText") 
+            then {"SkipLineCount": SkipLineCount, "FirstRowAsHeader":FirstRowAsHeader}
+            else {},
+            "Target":{
+            "Type":TargetFormat,            
             "TableSchema":TableSchema,
             "TableName":TableName+TestNumber,
             "StagingTableSchema":StagingTableSchema,
@@ -54,8 +57,7 @@ function(
             "PreCopySQL":PreCopySQL,
             "PostCopySQL":PostCopySQL,
             "AutoGenerateMerge":AutoGenerateMerge,
-            "MergeSQL":MergeSQL,
-            "DynamicMapping":{}
+            "MergeSQL":MergeSQL
         }
     },
 
@@ -77,14 +79,15 @@ function(
     },
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
-    "TaskTypeId":1,
+    "TaskTypeId":-1,
     "TaskType":Pattern,
-    "DataFactoryName":vars.datafactory_name,
-    "DataFactoryResourceGroup":vars.resource_group_name,
-    "DataFactorySubscriptionId":vars.subscription_id,
+    "EngineName":vars.datafactory_name,
+    "EngineResourceGroup":vars.resource_group_name,
+    "EngineSubscriptionId":vars.subscription_id,
+    "EngineJson":  "{}",
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
-    "SourceSystemId":if(SourceType == "Azure Blob") then 3 else 4,
+    "SourceSystemId":if(SourceType == "Azure Blob") then -3 else -4,
     "SourceSystemJSON":std.manifestJson(SourceSystemJson),
     "SourceSystemType":SourceType,
     "SourceSystemServer":if(SourceType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
@@ -92,7 +95,7 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(TargetType == "Azure Synapse") then 10 else 2,
+    "TargetSystemId":if(TargetType == "Azure Synapse") then -10 else if(TargetType == "SQL Server") then -14 else -2,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
     "TargetSystemServer":if(TargetType == "Azure Synapse") then vars.synapse_workspace_name + ".database.windows.net" else vars.sqlserver_name + ".database.windows.net",
@@ -100,6 +103,10 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + DataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType,
+    "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR,
+    "DependencyChainTag": "",
+    "TaskGroupId": -6
 }+commons
 

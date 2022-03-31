@@ -6,6 +6,7 @@
 -----------------------------------------------------------------------*/
 
 using System;
+using System.Threading.Tasks;
 using FunctionApp.Helpers;
 using FunctionApp.Models;
 using Microsoft.AspNetCore.Http;
@@ -34,20 +35,20 @@ namespace FunctionApp.Services
 
         }
 
-        public FrameworkRunnerResult Invoke(string CallingMethodName, FrameworkRunnerWorker WorkerFunction)
+        public async Task<FrameworkRunnerResult> Invoke(string CallingMethodName, FrameworkRunnerWorker WorkerFunction)
         {
-            FrameworkRunnerResult r = FrameworkRunnerCore(null, CallingMethodName, WorkerFunction, null);
+            FrameworkRunnerResult r = await FrameworkRunnerCore(null, CallingMethodName, WorkerFunction, null);
             return r;
         }
 
-        public FrameworkRunnerResult Invoke(HttpRequest req, string CallingMethodName, FrameworkRunnerWorkerWithHttpRequest WorkerFunction)
+        public async Task<FrameworkRunnerResult> Invoke(HttpRequest req, string CallingMethodName, FrameworkRunnerWorkerWithHttpRequest WorkerFunction)
         {
-            FrameworkRunnerResult r = FrameworkRunnerCore(req, CallingMethodName, null, WorkerFunction);
+            FrameworkRunnerResult r = await FrameworkRunnerCore(req, CallingMethodName, null, WorkerFunction);
             return r;
 
         }
 
-        private FrameworkRunnerResult FrameworkRunnerCore(HttpRequest req, string CallingMethodName, FrameworkRunnerWorker WorkerFunction, FrameworkRunnerWorkerWithHttpRequest WorkerFunctionWithHttp)
+        private async Task<FrameworkRunnerResult> FrameworkRunnerCore(HttpRequest req, string CallingMethodName, FrameworkRunnerWorker WorkerFunction, FrameworkRunnerWorkerWithHttpRequest WorkerFunctionWithHttp)
         {
             LogHelper.DefaultActivityLogItem.StartDateTimeOffset = DateTimeOffset.UtcNow;
             LogHelper.DefaultActivityLogItem.EndDateTimeOffset = DateTimeOffset.UtcNow;
@@ -62,7 +63,7 @@ namespace FunctionApp.Services
 
                     // Leave the body open so the next middleware can read it.
                     using System.IO.StreamReader reader = new System.IO.StreamReader(req.Body, encoding: System.Text.Encoding.UTF8, detectEncodingFromByteOrderMarks: false, leaveOpen: true);
-                    string requestBody = reader.ReadToEndAsync().Result;
+                    string requestBody = await reader.ReadToEndAsync();
                     // Reset the request body stream position so the next middleware can read it
                     req.Body.Position = 0;
                     if (requestBody.Length > 0)
@@ -91,7 +92,7 @@ namespace FunctionApp.Services
             {
                 if (WorkerFunctionWithHttp == null)
                 {
-                    dynamic result = WorkerFunction.Invoke(LogHelper);
+                    var result = await WorkerFunction.Invoke(LogHelper);
                     if (result.GetType().FullName.Contains("Task"))
                     {
                         r.ReturnObject = JsonConvert.SerializeObject(result.Result).ToString();
@@ -103,7 +104,7 @@ namespace FunctionApp.Services
                 }
                 else
                 {
-                    dynamic result = WorkerFunctionWithHttp.Invoke(req, LogHelper);
+                    var result  = await WorkerFunctionWithHttp.Invoke(req, LogHelper);
                     if (result.GetType().FullName.Contains("Task"))
                     {
                         r.ReturnObject = JsonConvert.SerializeObject(result.Result).ToString();

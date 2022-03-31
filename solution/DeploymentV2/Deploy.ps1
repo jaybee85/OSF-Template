@@ -21,7 +21,13 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-$environmentName = "staging" # currently supports (local, staging)
+Import-Module .\pwshmodules\GetSelectionFromUser.psm1 -force
+$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+if ($environmentName -eq "Quit")
+{
+    Exit
+}
+
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
@@ -83,30 +89,6 @@ $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
-
-if ($skipDataFactoryPipelines) {
-    Write-Host "Skipping DataFactory Pipelines"    
-}
-else {
-    Set-Location ../
-    #Add Ip to SQL Firewall
-    $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
-    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
-    #Allow Azure services and resources to access this server
-    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
-    
-    $SqlInstalled = Get-InstalledModule SqlServer
-    if($null -eq $SqlInstalled)
-    {
-        write-host "Installing SqlServer Module"
-        Install-Module -Name SqlServer -Scope CurrentUser -Force
-    }
-
-    Invoke-Expression ./GenerateAndUploadADFPipelines.ps1
-    Set-Location ./terraform
-
-    
-}
 
 if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    
@@ -221,13 +203,14 @@ if($skipDatabase) {
     Write-Host "Skipping Populating Metadata Database"    
 }
 else {
+    
     Write-Host "Populating Metadata Database"
 
     Set-Location $deploymentFolderPath
-    Set-Location "..\Database\AdsGoFastDbUp\AdsGoFastDbUp"
+    Set-Location "..\Database\ADSGoFastDbUp\AdsGoFastDbUp"
     dotnet restore
     dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\'
-
+    
     #Add Ip to SQL Firewall
     $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
     $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
@@ -238,7 +221,7 @@ else {
     Set-Location ".\bin\publish\unzipped\database\"
 
     # This has been updated to use the Azure CLI cred
-    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name
+    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --PurviewAccountName $purview_name
 
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
     $SqlInstalled = Get-InstalledModule SqlServer
@@ -306,7 +289,7 @@ else {
          $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "AllowAllWindowsAzureIps" --start-ip-address "0.0.0.0" --end-ip-address "0.0.0.0"
     }
    
-    if([string]::IsNullOrEmpty($synapse_sql_pool_name))
+    if([string]::IsNullOrEmpty($synapse_sql_pool_name) )
     {
         write-host "Synapse pool is not deployed."
     }
@@ -323,7 +306,7 @@ else {
 
 
         $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
-        if (![string]::IsNullOrEmpty($datafactory_name))
+        if ((![string]::IsNullOrEmpty($datafactory_name)) -and ($synapse_sql_pool_name -ne 'Dummy') -and (![string]::IsNullOrEmpty($synapse_sql_pool_name)))
         {
             # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
             Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "IF NOT EXISTS (SELECT name
@@ -335,6 +318,34 @@ else {
 
 
 }
+
+#----------------------------------------------------------------------------------------------------------------
+#   Deploy Data Factory Pipelines
+#----------------------------------------------------------------------------------------------------------------
+if ($skipDataFactoryPipelines) {
+    Write-Host "Skipping DataFactory Pipelines"    
+}
+else {
+    Set-Location $deploymentFolderPath    
+    #Add Ip to SQL Firewall
+    $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
+    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
+    #Allow Azure services and resources to access this server
+    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
+    
+    $SqlInstalled = Get-InstalledModule SqlServer
+    if($null -eq $SqlInstalled)
+    {
+        write-host "Installing SqlServer Module"
+        Install-Module -Name SqlServer -Scope CurrentUser -Force
+    }
+
+    Invoke-Expression ./GenerateAndUploadADFPipelines.ps1
+    Set-Location ./terraform
+
+    
+}
+
 
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Sample Files
@@ -359,11 +370,14 @@ else
     $result = az storage container create --name "datalakeraw" --account-name $blobstorage_name --auth-mode login
     $result = az storage container create --name "transientin" --account-name $blobstorage_name --auth-mode login
 
-    $files = Get-ChildItem -Name
-    foreach ($file in $files) {
-        $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $adlsstorage_name --auth-mode login
-        $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $blobstorage_name --auth-mode login
-    }
+    $result = az storage blob upload-batch --destination "datalakeraw" --account-name $adlsstorage_name --source ./ --destination-path samples/ --auth-mode login
+    $result = az storage blob upload-batch --destination "datalakeraw" --account-name $blobstorage_name --source ./ --destination-path samples/ --auth-mode login
+
+    #$files = Get-ChildItem -Name
+    #foreach ($file in $files) {
+    #    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $adlsstorage_name --auth-mode login
+    #    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $blobstorage_name --auth-mode login
+    #}
 
 
 

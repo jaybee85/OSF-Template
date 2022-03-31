@@ -37,6 +37,11 @@
                 <span asp-validation-for="TaskMasterWaterMarkBigInt" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="TaskMasterWaterMarkString" class="control-label"></label>
+                <input asp-for="TaskMasterWaterMarkString" class="form-control" />
+                <span asp-validation-for="TaskMasterWaterMarkString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="TaskWaterMarkJson" class="control-label"></label>
                 <input asp-for="TaskWaterMarkJson" class="form-control" />
                 <span asp-validation-for="TaskWaterMarkJson" class="text-danger"></span>
@@ -47,7 +52,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <a href="javascript:history.go(-1)" title="Back to List" class="btn btn-secondary" ><i class="fa fa-arrow-circle-left"></i> Back</a>            
+                <a href="javascript:history.go(-1)" title="Back to List" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i> Back</a>
                 <input type="submit" value="Save" class="btn btn-danger" />
             </div>
         </form>

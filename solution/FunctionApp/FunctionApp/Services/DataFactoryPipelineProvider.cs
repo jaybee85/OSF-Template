@@ -144,14 +144,14 @@ namespace FunctionApp.Services
             if (activityDt.Rows.Count > 0)
             {
                 string tempTableName = "#Temp_ADFActivities_" + Guid.NewGuid().ToString();
-                _taskMetaDataDatabase.AutoBulkInsertAndMerge(activityDt, tempTableName, "ADFActivity");
+                await _taskMetaDataDatabase.AutoBulkInsertAndMerge(activityDt, tempTableName, "ADFActivity");
             }
 
 
             if (dt.Rows.Count > 0)
             {
                 string tempTableName = "#Temp_ADFPipelineRun_" + Guid.NewGuid().ToString();
-                _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "ADFPipelineRun");
+                await _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "ADFPipelineRun");
             }
 
             #endregion
@@ -202,10 +202,10 @@ namespace FunctionApp.Services
         }
 
 
-        public dynamic GetLongRunningPipelines(Logging.Logging logging)
+        public async Task<dynamic> GetLongRunningPipelines(Logging.Logging logging)
         {
             logging.LogDebug("Get GetActivePipelines called.");
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             dynamic res = con.QueryWithRetry(@" Select  * 
                 from [dbo].[TaskInstanceExecution] 
                 where Status in ('InProgress',  'Queued')
@@ -218,10 +218,10 @@ namespace FunctionApp.Services
         /// </summary>
         /// <param name="logging"></param>
         /// <returns></returns>
-        public short CountActivePipelines(Logging.Logging logging)
+        public async Task<short> CountActivePipelines(Logging.Logging logging)
         {
             logging.LogDebug("Get CountActivePipelines called.");
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             IEnumerable<short> res = con.QueryWithRetry<short>(@"
             
             Select 

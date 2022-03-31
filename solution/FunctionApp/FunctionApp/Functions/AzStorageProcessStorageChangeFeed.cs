@@ -60,7 +60,7 @@ namespace FunctionApp.Functions
             SqlTable destSqlTable = new SqlTable();
             destSqlTable.Name = "AzureStorageChangeFeed";
             destSqlTable.Schema = "dbo";
-            taskMetaDataDatabase.BulkInsert(dt, destSqlTable, true);
+            taskMetaDataDatabase.BulkInsert(dt, destSqlTable, true).Wait();
         }
 
         private static async Task<List<BlobChangeFeedEvent>> ProcessChangeFeedTask(string BlobStorageAccountName, DateTimeOffset start, DateTimeOffset end)

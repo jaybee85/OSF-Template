@@ -33,12 +33,13 @@ namespace FunctionApp.Authentication
                     AuthenticationContext context =
                         new AuthenticationContext("https://login.windows.net/" + _authOptions.TenantId);
                     ClientCredential cc = new ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
-                    AuthenticationResult result = context.AcquireTokenAsync(resourceName, cc).Result;
+                    AuthenticationResult result = await context.AcquireTokenAsync(resourceName, cc);
                     return result.AccessToken;
                 }
             }
-            catch
+            catch (System.Exception e)
             {
+                throw e;
                 return "";
             }
         }

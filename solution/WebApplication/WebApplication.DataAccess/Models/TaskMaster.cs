@@ -19,6 +19,6 @@ namespace WebApplication.Models
         public string TaskMasterJson { get; set; }
         public bool ActiveYn { get; set; }
         public string DependencyChainTag { get; set; }
-        public long DataFactoryId { get; set; }
+        public long EngineId { get; set; }
     }
 }

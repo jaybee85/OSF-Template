@@ -1,10 +1,4 @@
-﻿/*-----------------------------------------------------------------------
-
- Copyright (c) Microsoft Corporation.
- Licensed under the MIT license.
-
------------------------------------------------------------------------*/
-create view WebApp.TaskGroupStats as
+﻿create view WebApp.TaskGroupStats as
 Select 
 	tg.TaskGroupId,
 	tg.TaskGroupName, 

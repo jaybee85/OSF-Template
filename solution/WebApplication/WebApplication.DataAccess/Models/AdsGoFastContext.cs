@@ -24,7 +24,8 @@ namespace WebApplication.Models
         public virtual DbSet<AzureStorageChangeFeed> AzureStorageChangeFeed { get; set; }
         public virtual DbSet<AzureStorageChangeFeedCursor> AzureStorageChangeFeedCursor { get; set; }
         public virtual DbSet<AzureStorageListing> AzureStorageListing { get; set; }
-        public virtual DbSet<DataFactory> DataFactory { get; set; }
+// public virtual DbSet<DataFactory> DataFactory { get; set; }
+        public virtual DbSet<ExecutionEngine> ExecutionEngine { get; set; }
         public virtual DbSet<IntegrationRuntime> IntegrationRuntime { get; set; }
         public virtual DbSet<Execution> Execution { get; set; }
         public virtual DbSet<FrameworkTaskRunner> FrameworkTaskRunner { get; set; }
@@ -164,7 +165,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<AdfactivityRun>(entity =>
             {
-                entity.HasKey(e => new { e.PipelineRunUid, e.DataFactoryId });
+                entity.HasKey(e => new { e.PipelineRunUid, e.EngineId });
 
                 entity.ToTable("ADFActivityRun");
 
@@ -179,7 +180,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<AdfpipelineRun>(entity =>
             {
-                entity.HasKey(e => new { e.TaskInstanceId, e.ExecutionUid, e.DatafactoryId, e.PipelineRunUid });
+                entity.HasKey(e => new { e.TaskInstanceId, e.ExecutionUid, e.EngineId, e.PipelineRunUid });
 
                 entity.ToTable("ADFPipelineRun");
 
@@ -211,7 +212,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<AdfpipelineStats>(entity =>
             {
-                entity.HasKey(e => new { e.TaskInstanceId, e.ExecutionUid, e.DataFactoryId });
+                entity.HasKey(e => new { e.TaskInstanceId, e.ExecutionUid, e.EngineId });
 
                 entity.ToTable("ADFPipelineStats");
 
@@ -332,14 +333,14 @@ namespace WebApplication.Models
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<DataFactory>(entity =>
+            modelBuilder.Entity<ExecutionEngine>(entity =>
             {
-                entity.Property(e => e.DefaultKeyVaultUrl)
+                entity.Property(e => e.DefaultKeyVaultURL)
                     .HasColumnName("DefaultKeyVaultURL")
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Name)
+                entity.Property(e => e.EngineName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
@@ -549,14 +550,6 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.DatafactoryName)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DatafactoryResourceGroup)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.PipelineName)
                     .HasMaxLength(200)
                     .IsUnicode(false);
@@ -609,6 +602,9 @@ namespace WebApplication.Models
                 entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
 
                 entity.Property(e => e.TaskMasterWaterMarkBigInt).HasColumnName("TaskMasterWaterMark_BigInt");
+
+                entity.Property(e => e.TaskMasterWaterMarkString).HasColumnName("TaskMasterWaterMark_String");
+
 
                 entity.Property(e => e.TaskMasterWaterMarkColumn)
                     .IsRequired()

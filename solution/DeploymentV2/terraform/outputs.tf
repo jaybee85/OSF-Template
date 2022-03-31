@@ -63,7 +63,7 @@ output "aad_funcreg_id" {
   value = azuread_application.function_app_reg[0].application_id
 }
 output "purview_sp_id" {
-  value = var.deploy_purview ?   azuread_application.purview_ir[0].application_id : "0"
+  value = var.deploy_purview && var.is_vnet_isolated ?   azuread_application.purview_ir[0].application_id : "0"
 }
 output "integration_runtimes" {
   value = local.integration_runtimes
@@ -100,4 +100,7 @@ output "synapse_sql_pool_name" {
 }
 output "synapse_spark_pool_name" {
   value = var.deploy_synapse && var.deploy_synapse_sparkpool ?   azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
+}
+output "selfhostedsqlvm_name" {
+  value = local.selfhostedsqlvm_name
 }

@@ -1,0 +1,21 @@
+﻿{
+    "entity": {
+        "typeName": "Process",
+        "status": "ACTIVE",
+        "attributes": {
+            "inputs": [
+                {
+                    "guid": "aa220695-c547-4fd3-8331-16a874454661"
+                }
+            ],
+            "outputs": [
+                {
+                    "guid": "f135f8f6-0ad8-4142-b24f-4e9c3a1ab51d"
+                }
+            ],
+            "qualifiedName": "customProcess://whynotwork",
+            "name":  "cool process"
+
+        }
+    }
+}

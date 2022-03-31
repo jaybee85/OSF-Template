@@ -6,13 +6,17 @@ local partials = {
    "Binary": import "Partial_Binary.libsonnet"   
 };
 
+local partials_filesystem = {   
+   "Binary": import "Partial_Binary_FileSystem.libsonnet"   
+};
+
 function(SourceType = "", SourceFormat = "Excel",TargetType = "AzureSqlTable", TargetFormat = "Excel")
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "title": "TaskMasterJson",
     "properties": {
-        "Source": partials[SourceFormat](),
+        "Source": if SourceType=="FileSystem" then partials_filesystem[SourceFormat]() else partials[SourceFormat](),
         "Target": partials[TargetFormat]()
     },
     "required": [

@@ -3,7 +3,7 @@ local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
     Pattern = "SQL Database to Azure Storage",
-    TestNumber = "1",
+    TestNumber = "-1",
     SourceFormat = "Azure SQL",
     SourceType = "Azure SQL",
     ExtractionSQL = "",
@@ -15,19 +15,15 @@ function(
     ChunkField = "",
     ChunkSize = 0,
     IncrementalType = "Full",
-    IncrementalField = "",
-    IncrementalColumnType = "",
-    IncrementalValue = "0"
+    TestDescription = "",
+    TaskDatafactoryIR = ""
     )
 {
     local TaskMasterJson =     
     {
         "Source":{
             "Type": SourceFormat,
-            "IncrementalType": IncrementalType,
-            "IncrementalColumnType":IncrementalColumnType,
-            "IncrementalField":IncrementalField,
-            "IncrementalValue":IncrementalValue,
+            "IncrementalType": IncrementalType,                        
             "TableSchema": "SalesLT",
             "TableName": "Customer",
             "ExtractionSQL": ExtractionSQL,                   
@@ -36,7 +32,7 @@ function(
         },
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":"/Tests/"+Pattern+"/"+TestNumber,
+            "RelativePath":if TargetType == "FileServer" then "c:/Tests/"+Pattern+"/"+TestNumber else "/Tests/"+Pattern+"/"+TestNumber,
             "DataFileName": DataFilename,
             "SchemaFileName": SchemaFileName
         }
@@ -61,13 +57,14 @@ function(
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
     "TaskType":Pattern,
-    "TaskTypeId":3,
-    "DataFactoryName":vars.datafactory_name,
-    "DataFactoryResourceGroup":vars.resource_group_name,
-    "DataFactorySubscriptionId":vars.subscription_id,
+    "TaskTypeId":-3,
+    "EngineName":vars.datafactory_name,
+    "EngineResourceGroup":vars.resource_group_name,
+    "EngineSubscriptionId":vars.subscription_id,
+    "EngineJson":  "{}",
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
-    "SourceSystemId":if(SourceType == "Azure SQL") then 1 else 6,
+    "SourceSystemId":if(SourceType == "Azure SQL") then -1 else if(SourceType == "SQL Server") then -14 else -6,
     "SourceSystemJSON":std.manifestJson(SourceSystemJson),
     "SourceSystemType":SourceType,
     "SourceSystemServer":vars.sqlserver_name + ".database.windows.net",
@@ -75,7 +72,7 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(SourceType == "Azure Blob") then 3 else 4,
+    "TargetSystemId":if(TargetType == "Azure Blob") then -3 else if(TargetType == "FileServer") then -15 else -4,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
     "TargetSystemServer":if(TargetType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
@@ -83,6 +80,9 @@ function(
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline
+    "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + "SalesLT.Customer" + " (" + SourceFormat + ") from " + SourceType + " to " + DataFilename  + " in " + TargetType +  "(" + TargetFormat + ")",
+    "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR,
+    "DependencyChainTag": ""
 }+commons
 

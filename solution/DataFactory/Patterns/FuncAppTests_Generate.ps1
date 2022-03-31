@@ -26,7 +26,7 @@ foreach ($pattern in $patterns) {
     $testfilejson = Get-Content $testfile | ConvertFrom-Json | ForEach-Object {
         $_.TaskMasterId = $counter
         $AllTests += $_
-        $counter += 1
+        $counter -= 1
     }    
 
 }

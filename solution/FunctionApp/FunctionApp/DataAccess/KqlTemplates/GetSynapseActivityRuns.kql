@@ -1,0 +1,59 @@
+﻿//-----------------------------------------------------------------------
+//
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+//
+//-----------------------------------------------------------------------*/
+
+SynapseIntegrationActivityRuns
+        | where TimeGenerated >  datetime("2022-03-05") and Status in ("Succeeded", "Failed", "Cancelled")  
+            and ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}"
+                    | extend        MeterType = "",  
+                        MeterDuration = 0,
+                        MeterUnit = 0,
+                        rowsCopied_ = 0,
+                        dataRead_ = 0,
+                        dataWritten_ = 0, 
+                        throughput_ = 0,
+                        FailedActivities1 = case(Status=="Failed",1,0)
+        | extend    IncursOrchestrationFee = true,
+                    IncursExecutionTimeFee = true,
+                    DurationToNearestMinute = 0
+        | extend    CloudOrchestrationCost1 = 0,       
+                    SelfHostedOrchestrationCost1 = 0,    
+                    SelfHostedDataMovementCost1 = 0,
+                    CloudDataMovementCost1 = 0,                                                 
+                    SelfHostedPipelineActivityCost1 = 0,
+                    CloudPipelineActivityCost1 = 0
+        | extend 
+                    TotalCost1 = 0
+        | project 
+                    PipelineRunId,
+                    ActivityRunId,
+                    //ActivityName,
+                    rowsCopied_,
+                    dataRead_,
+                    dataWritten_, 
+                    throughput_,
+                    CloudOrchestrationCost1,
+                    SelfHostedOrchestrationCost1,
+                    SelfHostedDataMovementCost1,
+                    CloudDataMovementCost1,
+                    SelfHostedPipelineActivityCost1,
+                    CloudPipelineActivityCost1,
+                    TotalCost1, 
+                    FailedActivities1,
+                    TimeGenerated
+        | summarize Activities = dcount(ActivityRunId), 
+        TotalCost = sum(TotalCost1),
+        CloudOrchestrationCost = sum(CloudOrchestrationCost1),      
+        SelfHostedOrchestrationCost =  sum(SelfHostedOrchestrationCost1),  
+        SelfHostedDataMovementCost = sum(SelfHostedDataMovementCost1),
+        SelfHostedPipelineActivityCost = sum(SelfHostedPipelineActivityCost1),
+        CloudPipelineActivityCost = sum(CloudPipelineActivityCost1),
+        rowsCopied = sum(rowsCopied_),
+        dataRead = sum(dataRead_),
+        dataWritten = sum(dataWritten_), 
+        FailedActivities = sum(FailedActivities1),
+        MaxActivityTimeGenerated = max(TimeGenerated)
+by PipelineRunUid = PipelineRunId

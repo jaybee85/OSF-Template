@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FormatWith;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
@@ -35,7 +36,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetADFPipelineRunsTimerTrigger")]
-        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
 
@@ -43,45 +44,58 @@ namespace FunctionApp.Functions
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = GetAdfPipelineRuns;
-                FrameworkRunnerResult result = fr.Invoke("GetADFPipelineRunsTimerTrigger", worker);
+                FrameworkRunnerResult result = await fr.Invoke("GetADFPipelineRunsTimerTrigger", worker);
             }
         }
 
-        public dynamic GetAdfPipelineRuns(Logging.Logging logging)
+        public async Task<dynamic> GetAdfPipelineRuns(Logging.Logging logging)
         {
             using var client = _httpClientFactory.CreateClient(HttpClients.LogAnalyticsHttpClientName);
-            using SqlConnection conRead = _taskMetaDataDatabase.GetSqlConnection();
+            if (client.DefaultRequestHeaders.Authorization == null)
+            {
+                await Task.Delay(2000);
+            }
+            using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
             //Get Last Request Date
             var maxTimesGen = conRead.QueryWithRetry(@"
                                     Select a.*,  MaxPipelineTimeGenerated from 
-                                        DataFactory a left join 
-                                        ( Select b.DataFactoryId, MaxPipelineTimeGenerated = Max(MaxPipelineTimeGenerated) 
+                                        ExecutionEngine a left join 
+                                        ( Select b.EngineId, MaxPipelineTimeGenerated = Max(MaxPipelineTimeGenerated) 
                                         from ADFPipelineRun b
-                                        group by b.DatafactoryId) b on a.Id = b.DatafactoryId");
+                                        group by b.EngineId) b on a.EngineId = b.EngineId");
 
             DateTimeOffset maxPipelineTimeGenerated = DateTimeOffset.UtcNow.AddDays(-30);
 
 
-            foreach (var datafactory in maxTimesGen)
+            foreach (var executionengine in maxTimesGen)
             {
-                if (datafactory.MaxPipelineTimeGenerated != null)
+                if (executionengine.MaxPipelineTimeGenerated != null)
                 {
-                    maxPipelineTimeGenerated = ((DateTimeOffset)datafactory.MaxPipelineTimeGenerated).AddMinutes(-180);
+                    maxPipelineTimeGenerated = ((DateTimeOffset)executionengine.MaxPipelineTimeGenerated).AddMinutes(-180);
                 }
 
-                string workspaceId = datafactory.LogAnalyticsWorkspaceId.ToString();
+                string workspaceId = executionengine.LogAnalyticsWorkspaceId.ToString();
 
                 Dictionary<string, object> kqlParams = new Dictionary<string, object>
                 {
                     {"MaxPipelineTimeGenerated", maxPipelineTimeGenerated.ToString("yyyy-MM-dd HH:mm:ss.ff K") },
-                    {"SubscriptionId", ((string)datafactory.SubscriptionUid.ToString()).ToUpper()},
-                    {"ResourceGroupName", ((string)datafactory.ResourceGroup.ToString()).ToUpper() },
-                    {"DataFactoryName", ((string)datafactory.Name.ToString()).ToUpper() },
-                    {"DatafactoryId", datafactory.Id.ToString()  }
+                    {"SubscriptionId", ((string)executionengine.SubscriptionUid.ToString()).ToUpper()},
+                    {"ResourceGroupName", ((string)executionengine.ResourceGroup.ToString()).ToUpper() },
+                    {"EngineName", ((string)executionengine.EngineName.ToString()).ToUpper() },
+                    {"EngineId", executionengine.EngineId.ToString()  }
                 };
+                string kql = "";
+                switch (executionengine.SystemType.ToString())
+                {
+                    case "Datafactory":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
+                        break;
+                    case "Synapse":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetSynapsePipelineRuns.kql"));
+                        break;
+                }
 
-                string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
                 kql = kql.FormatWith(kqlParams, MissingKeyBehaviour.ThrowException, null, '{', '}');
 
                 JObject jsonContent = new JObject();
@@ -89,7 +103,7 @@ namespace FunctionApp.Functions
 
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent).Result;
+                var response = await client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent);
 
                 logging.LogInformation(response.ToString());
 
@@ -97,7 +111,7 @@ namespace FunctionApp.Functions
                 {
                     //Start to parse the response content
                     HttpContent responseContent = response.Content;
-                    var content = response.Content.ReadAsStringAsync().Result;
+                    var content = await response.Content.ReadAsStringAsync();
                     var tables = ((JArray)(JObject.Parse(content)["tables"]));
 
                     if (tables.Count > 0)
@@ -128,13 +142,13 @@ namespace FunctionApp.Functions
                         t.Schema = "dbo";
                         string tableGuid = Guid.NewGuid().ToString();
                         t.Name = $"#ADFPipelineRun{tableGuid}";
-                        using (SqlConnection conWrite = _taskMetaDataDatabase.GetSqlConnection())
+                        using (SqlConnection conWrite = await _taskMetaDataDatabase.GetSqlConnection())
                         {
                             TaskMetaDataDatabase.BulkInsert(dt, t, true, conWrite);
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>
                             {
                                 { "TempTable", t.QuotedSchemaAndName() },
-                                { "DatafactoryId", datafactory.Id.ToString()}
+                                { "EngineId", executionengine.EngineId.ToString()}
                             };
 
                             string mergeSql = GenerateSqlStatementTemplates.GetSql(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoADFPipelineRun", sqlParams);

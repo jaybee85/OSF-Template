@@ -14,7 +14,7 @@ local tests =
         "SourceType":"ADLS",        
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "false",
         "SheetName":"",
         "MaxConcurrentConnections":0,
@@ -34,7 +34,8 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA_FullLoad
@@ -47,7 +48,7 @@ local tests =
         "SourceType":"Azure Blob",        
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "false",
         "SheetName":"",
         "MaxConcurrentConnections":0,
@@ -67,7 +68,8 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobFS_Excel_AzureSqlTable_NA_FullLoad
@@ -80,7 +82,7 @@ local tests =
         "SourceType":"ADLS",        
         "DataFilename":"yellow_tripdata_2017-03.xlsx",
         "SchemaFileName":"", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "true",
         "SheetName": "yellow_tripdata_2017-03",
         "MaxConcurrentConnections":0,
@@ -100,7 +102,8 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobStorage_Excel_AzureSqlTable_NA_FullLoad
@@ -113,7 +116,7 @@ local tests =
         "SourceType":"Azure Blob",        
         "DataFilename":"yellow_tripdata_2017-03.xlsx",
         "SchemaFileName":"", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "true",
         "SheetName": "yellow_tripdata_2017-03",
         "MaxConcurrentConnections":0,
@@ -133,7 +136,8 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA_FullLoad
@@ -168,7 +172,8 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobStorage_json_AzureSqlTable_NA_FullLoad
@@ -202,7 +207,8 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA_FullLoad
@@ -237,7 +243,8 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
     //GPL_AzureBlobFS_json_AzureSqlTable_NA_FullLoad
@@ -271,7 +278,8 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA"
+        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlTable_NA",
+        "TaskDatafactoryIR":"Azure"
        
     },
 //****************************************************************/
@@ -287,7 +295,7 @@ local tests =
         "SourceType":"ADLS",        
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "false",
         "SheetName":"",
         "MaxConcurrentConnections":0,
@@ -307,7 +315,9 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA_FullLoad
@@ -320,7 +330,7 @@ local tests =
         "SourceType":"Azure Blob",        
         "DataFilename":"SalesLT.Customer.parquet",
         "SchemaFileName":"SalesLT.Customer.json", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "false",
         "SheetName":"",
         "MaxConcurrentConnections":0,
@@ -340,7 +350,9 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool" 
        
     },
     //GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA_FullLoad
@@ -353,7 +365,7 @@ local tests =
         "SourceType":"ADLS",        
         "DataFilename":"yellow_tripdata_2017-03.xlsx",
         "SchemaFileName":"", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "true",
         "SheetName": "yellow_tripdata_2017-03",
         "MaxConcurrentConnections":0,
@@ -373,7 +385,9 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA_FullLoad
@@ -386,7 +400,7 @@ local tests =
         "SourceType":"Azure Blob",        
         "DataFilename":"yellow_tripdata_2017-03.xlsx",
         "SchemaFileName":"", 
-        "SkipLineCount":"",
+        "SkipLineCount":0,
         "FirstRowAsHeader": "true",
         "SheetName": "yellow_tripdata_2017-03",
         "MaxConcurrentConnections":0,
@@ -406,7 +420,9 @@ local tests =
         "MergeSQL":"", 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA_FullLoad
@@ -437,11 +453,10 @@ local tests =
         "PostCopySQL": "",
         "AutoGenerateMerge": "false",
         "MergeSQL":"", 
-
-
-        
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_json_AzureSqlDWTable_NA_FullLoad
@@ -475,7 +490,9 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA_FullLoad
@@ -510,7 +527,9 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA" 
+        "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobFS_json_AzureSqlDWTable_NA_FullLoad
@@ -544,7 +563,9 @@ local tests =
 
         
         "Description": "FullLoad",  
-        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlDWTable_NA"
+        "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlDWTable_NA",
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     }
 
@@ -556,7 +577,7 @@ local process = function(index, t)
 template(
     t.ADFPipeline,
     t.Pattern, 
-    seed+index,//t.TestNumber,
+    seed-index,//t.TestNumber,
     t.SourceFormat,
     t.SourceType,
     t.DataFilename,
@@ -578,7 +599,9 @@ template(
     t.PreCopySQL,
     t.PostCopySQL,
     t.AutoGenerateMerge,
-    t.MergeSQL
+    t.MergeSQL,
+    t.Description,
+    t.TaskDatafactoryIR
 );
 
 

@@ -2,7 +2,7 @@ resource "azurerm_purview_account" "purview" {
   count                       = var.deploy_purview ? 1 : 0
   name                        = local.purview_name
   resource_group_name         = var.resource_group_name
-  location                    = var.resource_location
+  location                    = var.purview_resource_location == "" ? var.resource_location : var.purview_resource_location 
   managed_resource_group_name = local.purview_resource_group_name
   public_network_enabled      = var.is_vnet_isolated == false || var.delay_private_access
   tags                        = local.tags
@@ -105,6 +105,7 @@ resource "azuread_application" "purview_ir" {
 resource "azuread_service_principal" "purview_ir" {
   count          = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   application_id = azuread_application.purview_ir[0].application_id
+  owners         = [data.azurerm_client_config.current.object_id]
 }
 
 

@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Models;
 using FunctionApp.Models.Options;
@@ -30,7 +31,7 @@ namespace FunctionApp.Functions
             _taskMetaDataDatabase = taskMetaDataDatabase;
         }
         [FunctionName("Log")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -38,7 +39,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = LogCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "Log", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "Log", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -49,13 +50,13 @@ namespace FunctionApp.Functions
             }
 
         }
-        public JObject LogCore(HttpRequest req,
+        public async Task<JObject> LogCore(HttpRequest req,
             Logging.Logging LogHelper)
         {
             //short frameworkNumberOfRetries = _options.Value.FrameworkNumberOfRetries;
             short frameworkNumberOfRetries = 1;
 
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
 
             dynamic taskInstanceId = data["TaskInstanceId"];
@@ -68,7 +69,8 @@ namespace FunctionApp.Functions
             dynamic startDateTimeOffSet = data["StartDateTimeOffSet"];
             dynamic status = data["Status"]; //Started Failed Completed
             dynamic comment = data["Comment"];
-            comment = comment == null ? null : comment.ToString().Replace("'", "");
+            comment = comment == null ? "" : comment.ToString();
+            comment = System.Web.HttpUtility.UrlDecode(comment);
             dynamic endDateTimeOffSet = data["EndDateTimeOffSet"];
             dynamic rowsInserted = data["RowsInserted"];
 
@@ -98,11 +100,11 @@ namespace FunctionApp.Functions
                     {
                         string invalidStatus = $"TaskStatus Enum does not exist for: {status}";
                         LogHelper.LogErrors(new Exception(invalidStatus));
-                        comment = $"{comment}.{invalidStatus}";
+                        comment = string.Concat(comment,".",invalidStatus);
                         taskStatus = TaskInstance.TaskStatus.FailedNoRetry;
                     }
                 }
-                _taskMetaDataDatabase.LogTaskInstanceCompletion((Int64)taskInstanceId, (Guid)postObjectExecutionUid, taskStatus, (Guid)adfRunUid, (String)comment);
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion((Int64)taskInstanceId, (Guid)postObjectExecutionUid, taskStatus, (Guid)adfRunUid, (String)comment);
             }
 
             return new JObject

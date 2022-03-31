@@ -1,0 +1,17 @@
+﻿{
+  "entity": {
+    "status": "ACTIVE",
+    "version": 0,
+    "typeName": "Process",
+    "attributes": {
+      "inputs": [
+        { "guid": "{input}" }
+      ],
+      "outputs": [
+        { "guid": "{output}" }
+      ],
+      "qualifiedName": "apacheatlas://customlineage01",
+      "name": "lineage01"
+    }
+  }
+}

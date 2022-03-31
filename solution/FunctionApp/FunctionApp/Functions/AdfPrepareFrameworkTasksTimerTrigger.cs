@@ -43,39 +43,39 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("PrepareFrameworkTasksTimerTrigger")]
-        public void Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
             if (_appOptions.Value.TimerTriggers.EnablePrepareFrameworkTasks)
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = PrepareFrameworkTasksCore;
-                fr.Invoke("PrepareFrameworkTasksHttpTrigger", worker);
+                await fr.Invoke("PrepareFrameworkTasksHttpTrigger", worker);
             }
         }
 
-        public dynamic PrepareFrameworkTasksCore(Logging.Logging logging)
+        public async Task<dynamic> PrepareFrameworkTasksCore(Logging.Logging logging)
         {
-            _taskMetaDataDatabase.ExecuteSql(
+            await _taskMetaDataDatabase.ExecuteSql(
                 $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
 
             short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
 
             //Generate new task instances based on task master and schedules
-            CreateScheduleAndTaskInstances(logging);
+            await CreateScheduleAndTaskInstances(logging);
 
-            _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
+            await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
 
             return new { };
         }
        
-        private void CreateScheduleAndTaskInstances(Logging.Logging logging)
+        private async Task CreateScheduleAndTaskInstances(Logging.Logging logging)
         {
             logging.LogInformation("Create ScheduleInstance called.");
             DateTimeOffset date = DateTimeOffset.Now;
 
             // Generate the upcoming Schedule Instance for each of the schedule master records
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             using var dtScheduleInstance = new DataTable();
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduleMasterId", typeof(long)));
             dtScheduleInstance.Columns.Add(new DataColumn("ScheduledDateUtc", typeof(DateTime)));
@@ -148,7 +148,7 @@ namespace FunctionApp.Functions
             // Get a list of task masters that need Task Instance records created
             dynamic taskMasters = con.QueryWithRetry(@"Exec dbo.GetTaskMaster");
             // Get a list of Active task type mappings
-            var taskTypeMappings = _taskTypeMappingProvider.GetAllActive();
+            var taskTypeMappings = await _taskTypeMappingProvider.GetAllActive();
 
             foreach (dynamic row in taskMasters)
             {
@@ -157,7 +157,7 @@ namespace FunctionApp.Functions
                 logging.DefaultActivityLogItem.TaskMasterId = row.TaskMasterId;
                 var instanceGenerationErrorMessage = "";
                 try
-                {
+               {
                     dynamic taskMasterJson = JsonConvert.DeserializeObject(row.TaskMasterJSON);
                     string sourceSystem = row.SourceSystemType.ToString();
                     string targetSystem = row.TargetSystemType.ToString();
@@ -213,12 +213,18 @@ namespace FunctionApp.Functions
                         {
                             root["IncrementalValue"] = row.TaskMasterWaterMark_BigInt ?? -1;
                         }
+                        else if (row.TaskMasterWaterMarkColumnType == "lsn")
+                        {
+                            root["IncrementalValue"] = row.TaskMasterWaterMark_String ?? "NO_WATERMARK_STRING";
+                        }
                         if ((root["IncrementalField"] == null) || (string.IsNullOrEmpty(root["IncrementalField"].ToString())))
                         {
                             instanceGenerationErrorMessage +=
                                 $"TaskMasterId '{logging.DefaultActivityLogItem.TaskInstanceId}' has an IncrementalType of Watermark but does not have any entry in the TaskWatermark table. ";
                         }
                     }
+
+                   //here 
 
                     if (root == null)
                     {
@@ -265,16 +271,16 @@ namespace FunctionApp.Functions
         }
 
         //TODO: Move this to a data access layer
-        public List<TaskGroup> GetActiveTaskGroups()
+        public async Task<List<TaskGroup>> GetActiveTaskGroups()
         {
-            using var con = _taskMetaDataDatabase.GetSqlConnection();
+            using var con = await _taskMetaDataDatabase.GetSqlConnection();
             List<TaskGroup> res = con.QueryWithRetry<TaskGroup>("Exec dbo.GetTaskGroups").ToList();
             return res;
         }
 
-        public short CountRunnningPipelines(Logging.Logging logging)
+        public async Task<short> CountRunnningPipelines(Logging.Logging logging)
         {
-            return _dataFactoryPipelineProvider.CountActivePipelines(logging);
+            return await _dataFactoryPipelineProvider.CountActivePipelines(logging);
         }
 
 
@@ -285,16 +291,16 @@ namespace FunctionApp.Functions
         /// <returns></returns>
         public async Task<short> CheckLongRunningPipelines(Logging.Logging logging)
         {
-            dynamic activePipelines = _dataFactoryPipelineProvider.GetLongRunningPipelines(logging);
+            dynamic activePipelines = await _dataFactoryPipelineProvider.GetLongRunningPipelines(logging);
 
             short runningPipelines = 0;
             using var dt = new DataTable();
             dt.Columns.Add(new DataColumn("TaskInstanceId", typeof(string)));
             dt.Columns.Add(new DataColumn("ExecutionUid", typeof(Guid)));
             dt.Columns.Add(new DataColumn("PipelineName", typeof(string)));
-            dt.Columns.Add(new DataColumn("DatafactorySubscriptionUid", typeof(Guid)));
-            dt.Columns.Add(new DataColumn("DatafactoryResourceGroup", typeof(string)));
-            dt.Columns.Add(new DataColumn("DatafactoryName", typeof(string)));
+            dt.Columns.Add(new DataColumn("EngineSubscriptionUid", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("EngineResourceGroup", typeof(string)));
+            dt.Columns.Add(new DataColumn("EngineName", typeof(string)));
             dt.Columns.Add(new DataColumn("RunUid", typeof(Guid)));
             dt.Columns.Add(new DataColumn("Status", typeof(string)));
             dt.Columns.Add(new DataColumn("SimpleStatus", typeof(string)));
@@ -302,7 +308,7 @@ namespace FunctionApp.Functions
             //Check Each Running Pipeline
             foreach (dynamic pipeline in activePipelines)
             {
-                var pipelineStatus = await _dataFactoryPipelineProvider.CheckPipelineStatus(pipeline.DatafactorySubscriptionUid.ToString(), pipeline.DatafactoryResourceGroup.ToString(), pipeline.DatafactoryName.ToString(), pipeline.PipelineName.ToString(), pipeline.AdfRunUid.ToString(), logging);
+                var pipelineStatus = await _dataFactoryPipelineProvider.CheckPipelineStatus(pipeline.EngineSubscriptionUid.ToString(), pipeline.EngineResourceGroup.ToString(), pipeline.EngineName.ToString(), pipeline.PipelineName.ToString(), pipeline.AdfRunUid.ToString(), logging);
 
                 if (pipelineStatus["SimpleStatus"].ToString() == "Runnning")
                 {
@@ -313,9 +319,9 @@ namespace FunctionApp.Functions
 
                 dr["TaskInstanceId"] = pipeline.TaskInstanceId;
                 dr["ExecutionUid"] = pipeline.ExecutionUid;
-                dr["DatafactorySubscriptionUid"] = pipeline.DatafactorySubscriptionUid;
-                dr["DatafactoryResourceGroup"] = pipeline.DatafactoryResourceGroup;
-                dr["DatafactoryName"] = pipeline.DatafactoryName;
+                dr["EngineSubscriptionUid"] = pipeline.EngineSubscriptionUid;
+                dr["EngineResourceGroup"] = pipeline.EngineResourceGroup;
+                dr["EngineName"] = pipeline.EngineName;
 
                 dr["Status"] = pipelineStatus["Status"];
                 dr["SimpleStatus"] = pipelineStatus["SimpleStatus"];
@@ -327,7 +333,7 @@ namespace FunctionApp.Functions
 
             string tempTableName = $"#Temp{Guid.NewGuid()}";
             //Todo: Update both the TaskInstanceExecution and the TaskInstance;
-            _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskInstanceExecution");
+            await _taskMetaDataDatabase.AutoBulkInsertAndMerge(dt, tempTableName, "TaskInstanceExecution");
 
             return runningPipelines;
         }

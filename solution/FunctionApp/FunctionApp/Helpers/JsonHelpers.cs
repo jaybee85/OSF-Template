@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace FunctionApp.Helpers
@@ -98,14 +99,14 @@ namespace FunctionApp.Helpers
             return objectValid;
         }
 
-        public static bool ValidateJsonUsingSchema(Logging.Logging logging, string SchemaAsString, string JsonObjectToValidate, string ErrorComment)
+        public static async Task<bool> ValidateJsonUsingSchema(Logging.Logging logging, string SchemaAsString, string JsonObjectToValidate, string ErrorComment)
         {
             if (String.IsNullOrEmpty(SchemaAsString))
             {
                 SchemaAsString = "{}";
             }
             bool ret = true;
-            var schema = NJsonSchema.JsonSchema.FromJsonAsync(SchemaAsString).Result;
+            var schema = await NJsonSchema.JsonSchema.FromJsonAsync(SchemaAsString);
             var schemaData = schema.ToJson();
             var errors = schema.Validate(JsonObjectToValidate);
             if (errors.Any())

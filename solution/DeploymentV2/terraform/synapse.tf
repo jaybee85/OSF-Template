@@ -29,6 +29,9 @@ resource "azurerm_synapse_workspace" "synapse" {
   }
 }
 
+
+
+
 # --------------------------------------------------------------------------------------------------------------------
 # SQL Dedicated Pool
 # --------------------------------------------------------------------------------------------------------------------
@@ -77,7 +80,7 @@ resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
 # Synapse Workspace Firewall Rules (Allow Public Access)
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_firewall_rule" "cicd" {
-  count                = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name                 = "AllowGitHub"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   start_ip_address     = var.ip_address
@@ -93,6 +96,58 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   start_ip_address     = "0.0.0.0"
   end_ip_address       = "255.255.255.255"
+}
+
+# --------------------------------------------------------------------------------------------------------------------
+# Synapse Workspace Roles and Linked Services
+# --------------------------------------------------------------------------------------------------------------------
+resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
+  count                = var.deploy_synapse ? 1 : 0
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  role_name            = "Synapse Administrator"
+  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
+}
+
+resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
+  count                = var.deploy_synapse ? 1 : 0
+  name                 = "SLS_AzureKeyVault"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  type                 = "AzureKeyVault"
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
+  type_properties_json = <<JSON
+{
+  "baseUrl": "${azurerm_key_vault.app_vault.vault_uri}"
+}
+JSON
+}
+
+resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
+  count                = var.deploy_synapse ? 1 : 0
+  name                 = "SLS_AzureFunctionApp"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  type                 = "AzureFunction"
+  depends_on = [
+    azurerm_synapse_firewall_rule.cicd
+  ]
+  type_properties_json = <<JSON
+{
+  "functionAppUrl": "${local.functionapp_url}",
+  "functionKey": {
+    "type": "AzureKeyVaultSecret",
+    "store": {
+      "referenceName": "${azurerm_synapse_linked_service.synapse_keyvault_linkedservice[count.index].name}",
+      "type": "LinkedServiceReference"
+    },
+    "secretName": "AdsGfCoreFunctionAppKey"
+  },
+  "authentication": "Anonymous"
+}
+JSON
 }
 
 # --------------------------------------------------------------------------------------------------------------------
@@ -330,3 +385,5 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
 
 
 }
+
+

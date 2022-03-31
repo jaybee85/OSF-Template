@@ -69,6 +69,49 @@ else if (TargetType=="AzureBlobStorage"&&TargetFormat=="Parquet") then
     "recursive": true
   }
 }
+else if (TargetType=="FileServer"&&TargetFormat=="Parquet") then
+{
+  local referenceName = "GDS_FileServer_Parquet_",
+  "dataset": {    
+    "referenceName":if(GenerateArm=="false") 
+                    then referenceName + GFPIR
+                    else "[concat('"+referenceName+"', parameters('integrationRuntimeShortName'))]",   
+    "type": "DatasetReference",
+    "parameters": {
+      "Directory": {
+          "value": "@pipeline().parameters.TaskObject.Target.RelativePath",
+          "type": "Expression"
+      },
+      "File": {
+          "value": "@pipeline().parameters.TaskObject.Target.DataFileName",
+          "type": "Expression"
+      },
+      "Host": {
+          "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
+          "type": "Expression"
+      },
+      "KeyVaultBaseUrl": {
+          "value": "@pipeline().parameters.TaskObject.KeyVaultBaseUrl",
+          "type": "Expression"
+      },
+      "Secret": {
+          "value": "@pipeline().parameters.TaskObject.Target.System.PasswordKeyVaultSecretName",
+          "type": "Expression"
+      },
+      "UserId": {
+          "value": "@pipeline().parameters.TaskObject.Target.System.Username",
+          "type": "Expression"
+      }
+    }
+  },
+  "fieldList": [
+    "structure"
+  ],
+  "storeSettings": {
+    "type": "FileServerReadSettings",
+    "recursive": true
+  }
+}
 else 
   error 'Full_Load_GetTargetMetadata.libsonnet failed. No mapping for:' +GFPIR+","+TargetType+","+TargetFormat
 

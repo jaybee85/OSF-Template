@@ -16,6 +16,15 @@ Values (-3,'Test Tasks3',1, 0,10,null,1)
 INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
 Values (-4,'Test Tasks4',1, 0,10,null,1)
 
+INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+Values (-5,'DependencyChainL1',1, 0,10,null,1)
+
+INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+Values (-6,'DependencyChainL2',1, 0,10,null,1)
+
+INSERT INTO [dbo].[TaskGroup] ([TaskGroupId],[TaskGroupName],[SubjectAreaId], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[ActiveYN])
+Values (-7,'DependencyChainL3',1, 0,10,null,1)
+
 SET IDENTITY_INSERT [dbo].[TaskGroup] OFF
 
 delete from [dbo].[TaskMaster] where taskmasterid <=0;
@@ -35,20 +44,20 @@ foreach ($t in $tests)
     Write-Host "_____________________________"
     Write-Host "Writing test number: " $i.ToString()
     Write-Host "_____________________________"
-    $TaskMasterId = ($t.TaskMasterId * -1)
-    $TaskMasterName = $t.AdfPipeline + $t.TaskMasterId.ToString()
+    $TaskMasterId = ($t.TaskMasterId)
+    $TaskMasterName = $t.TestDescription
     $TaskTypeId = $t.TaskTypeId
-    $TaskGroupId = ( -1, -2, -3, -4 | Get-Random  )
-    $ScheduleMasterId = 4
+    $TaskGroupId = [bool]($t.PSobject.Properties.name -match "TaskGroupId") ? $t.TaskGroupId : ( -1, -2, -3, -4 | Get-Random  )
+    $ScheduleMasterId = -4
     $SourceSystemId = $t.SourceSystemId
     $TargetSystemId = $t.TargetSystemId
     $DegreeOfCopyParallelism = $t.DegreeOfCopyParallelism
     $AllowMultipleActiveInstances = 0
-    $TaskDatafactoryIR = "'Azure'"
+    $TaskDatafactoryIR = $t.TaskDatafactoryIR
     $TaskMasterJSON = $t.TaskMasterJson
     $ActiveYN = 0
-    $DependencyChainTag = ""
-    $DataFactoryId = $t.DataFactoryId
+    $DependencyChainTag = [bool]($t.PSobject.Properties.name -match "DependencyChainTag") ? $t.DependencyChainTag : ""
+    $EngineId = $t.EngineId
     
     $i+=1
 
@@ -70,7 +79,7 @@ foreach ($t in $tests)
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         $TaskMasterId                          ,
@@ -82,11 +91,11 @@ foreach ($t in $tests)
         $TargetSystemId                        ,
         $DegreeOfCopyParallelism               ,
         $AllowMultipleActiveInstances          ,
-        $TaskDatafactoryIR                     ,
+        '$TaskDatafactoryIR'                   ,
         '$TaskMasterJSON'                      ,
         $ActiveYN                              ,
         '$DependencyChainTag'                  ,
-        $DataFactoryId;  
+        $EngineId;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     

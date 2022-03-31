@@ -1,5 +1,5 @@
 
-function(SourceType = "AzureBlobStorage", SourceFormat = "Excel")	
+function(SourceType = "FileServer", SourceFormat = "Binary")	
 {
     local formatSettings = {
 		"Binary" : import './formatSettings/Binary.libsonnet',

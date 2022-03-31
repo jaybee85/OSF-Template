@@ -42,7 +42,7 @@ namespace WebApplication.Services
                 case SourceAndTargetSystems _:
                 case ScheduleInstance _:
                 case ScheduleMaster _:
-                case DataFactory _:
+                case ExecutionEngine _:
                 default:
                     return new string[0];
             }
