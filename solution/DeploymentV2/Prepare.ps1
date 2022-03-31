@@ -280,7 +280,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","true")
-        $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
 
     } 
     
