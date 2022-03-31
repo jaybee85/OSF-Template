@@ -167,12 +167,12 @@ namespace FunctionApp.DataAccess
         {
             if (CheckSchemaDrift)
             {
-                using SqlCommand sourceCommand = new SqlCommand($"Select * from {StagingTableSchema}.{StagingTableName}", con);
+                using SqlCommand sourceCommand = new SqlCommand($"Select * from [{StagingTableSchema}].[{StagingTableName}]", con);
                 using SqlDataAdapter sourceAdapter = new SqlDataAdapter(sourceCommand);
                 using DataTable stagingDt = new DataTable();
                 sourceAdapter.Fill(stagingDt);
 
-                using var targetCommand = new SqlCommand($"Select * from {TargetTableSchema}.{TargetTableName}", con);
+                using var targetCommand = new SqlCommand($"Select * from [{TargetTableSchema}].[{TargetTableName}]", con);
                 using var targetAdapter = new SqlDataAdapter(targetCommand);
                 using DataTable targetDt = new DataTable();
                 targetAdapter.Fill(targetDt);
