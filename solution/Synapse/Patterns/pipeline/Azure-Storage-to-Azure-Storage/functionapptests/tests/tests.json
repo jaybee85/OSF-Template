@@ -1,6 +1,7 @@
 [
    {
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "DeltaLoad",
       "EngineId": -2,
       "EngineJson": "{\"endpoint\": \"https://adsdevsynwadsy56o.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -40,6 +41,7 @@
    },
    {
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "DeltaLoad",
       "EngineId": -2,
       "EngineJson": "{\"endpoint\": \"https://adsdevsynwadsy56o.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -79,6 +81,7 @@
    },
    {
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "DeltaLoad",
       "EngineId": -2,
       "EngineJson": "{\"endpoint\": \"https://adsdevsynwadsy56o.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
       "EngineName": "ads-dev-adf-ads-y56o",

@@ -2,6 +2,7 @@
    {
       "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -41,6 +42,7 @@
    {
       "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -80,6 +82,7 @@
    {
       "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -119,6 +122,7 @@
    {
       "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -158,6 +162,7 @@
    {
       "ADFPipeline": "GPL_AzureSqlTable_NA_AzureBlobFS_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -197,6 +202,7 @@
    {
       "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -236,6 +242,7 @@
    {
       "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_Primary_OnPrem",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",

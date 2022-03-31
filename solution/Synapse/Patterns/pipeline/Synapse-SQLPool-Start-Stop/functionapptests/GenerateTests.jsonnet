@@ -35,7 +35,9 @@ function(seed=0)
             "TargetDeleteAfterCompletion":"false",
             "SynapsePipeline": "Not-Applicable",
             "Description": "Testing Starting of SQL Dedicated Pool",  
-            "SQLPoolOperation": "start"
+            "SQLPoolOperation": "start", 
+            "DependencyChainTag": "SynapseSqlPool",
+            "TaskGroupId":-5
         },
 
         {        
@@ -68,7 +70,9 @@ function(seed=0)
             "TargetDeleteAfterCompletion":"false",
             "SynapsePipeline": "Not-Applicable",
             "Description": "Testing Pausing of SQL Dedicated Pool",  
-            "SQLPoolOperation": "pause"
+            "SQLPoolOperation": "pause", 
+            "DependencyChainTag": "SynapseSqlPool",
+            "TaskGroupId":-7
         }
 
     ];
@@ -103,7 +107,8 @@ function(seed=0)
         t.TargetRecursively,
         t.TargetDeleteAfterCompletion,
         t.Description,
-        t.SQLPoolOperation
+        t.SQLPoolOperation,
+        t.TaskGroupId
     );
 
 
