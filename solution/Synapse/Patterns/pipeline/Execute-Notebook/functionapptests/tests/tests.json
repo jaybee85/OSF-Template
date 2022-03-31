@@ -1,6 +1,7 @@
 [
    {
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -2,
       "EngineJson": "{\"endpoint\": \"https://adsdevsynwadsy56o.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
       "EngineName": "ads-dev-adf-ads-y56o",

@@ -107,6 +107,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + SourceDataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType + " " + TargetDataFilename + " (" + TargetFormat + ")" 
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + SourceDataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType + " " + TargetDataFilename + " (" + TargetFormat + ")",
+    "DependencyChainTag": "DeltaLoad" 
 }+commons
 

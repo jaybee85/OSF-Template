@@ -2,6 +2,7 @@
    {
       "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobStorage_Parquet_CDC",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",
@@ -41,6 +42,7 @@
    {
       "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_CDC",
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -1,
       "EngineJson": "{}",
       "EngineName": "ads-dev-adf-ads-y56o",

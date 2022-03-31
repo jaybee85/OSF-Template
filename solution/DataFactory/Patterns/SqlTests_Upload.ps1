@@ -24,3 +24,33 @@ from [dbo].[TaskMaster] a left outer join [dbo].[TaskMasterWaterMark] b on a.Tas
 where a.[TaskTypeId] = -4 and b.TaskMasterId is null
 "@
 Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   
+
+#Add Group Level Dependencies 
+$sqlcommand = @"
+insert into [dbo].[TaskGroupDependency]  
+(
+	[AncestorTaskGroupid]                          ,
+	[DescendantTaskGroupId]                        ,
+	[DependencyType]                                   
+)
+select 
+	-5,
+	-6,
+	'EntireGroup'
+	;  
+
+
+insert into [dbo].[TaskGroupDependency]  
+(
+	[AncestorTaskGroupid]                          ,
+	[DescendantTaskGroupId]                        ,
+	[DependencyType]                                   
+)
+select 
+	-6,
+	-7,
+	'EntireGroup'
+	;  
+"@
+Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   
+

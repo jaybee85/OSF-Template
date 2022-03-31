@@ -67,9 +67,9 @@ WHERE SystemId = '-7'
 GO
 
 UPDATE [dbo].[SourceAndTargetSystems]
-SET SystemServer = 'https://$SynapseWorkspaceName$.dev.azuresynapse.net'
+SET SystemServer = '$SynapseWorkspaceName$.sql.azuresynapse.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
-	,SystemJSON = '{ "Workspace" : "$SynapseWorkspaceName$" }'
+	,SystemJSON = '{ "Workspace" : "$SynapseWorkspaceName$", "Database":"$SynapseSQLPoolName$" }'
 	,SystemName = '$SynapseWorkspaceName$'
 
 WHERE SystemId = '-10'

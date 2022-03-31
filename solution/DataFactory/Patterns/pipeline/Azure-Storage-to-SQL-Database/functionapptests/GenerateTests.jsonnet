@@ -316,7 +316,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure" 
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA_FullLoad
@@ -350,7 +351,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure" 
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool" 
        
     },
     //GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA_FullLoad
@@ -384,7 +386,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA_FullLoad
@@ -418,7 +421,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA_FullLoad
@@ -449,12 +453,10 @@ local tests =
         "PostCopySQL": "",
         "AutoGenerateMerge": "false",
         "MergeSQL":"", 
-
-
-        
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobStorage_json_AzureSqlDWTable_NA_FullLoad
@@ -489,7 +491,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobStorage_json_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA_FullLoad
@@ -525,7 +528,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     },
     //GPL_AzureBlobFS_json_AzureSqlDWTable_NA_FullLoad
@@ -560,7 +564,8 @@ local tests =
         
         "Description": "FullLoad",  
         "ADFPipeline": "GPL_AzureBlobFS_json_AzureSqlDWTable_NA",
-        "TaskDatafactoryIR":"Azure"
+        "TaskDatafactoryIR":"Azure", 
+        "DependencyChainTag": "SynapseSqlPool"
        
     }
 
