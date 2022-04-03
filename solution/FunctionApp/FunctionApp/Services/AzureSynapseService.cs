@@ -84,7 +84,7 @@ namespace FunctionApp.Services
             }
         } 
 
-        public async Task<HttpContent> RunSynapsePipeline(Uri endpoint, string pipelineName, Dictionary<string, object> pipelineParams, Logging.Logging logging)
+        public async Task<string> RunSynapsePipeline(Uri endpoint, string pipelineName, Dictionary<string, object> pipelineParams, Logging.Logging logging)
         {
             
             try
@@ -97,16 +97,22 @@ namespace FunctionApp.Services
                 JObject jsonContent = new JObject();
                 jsonContent["TaskObject"] = JsonConvert.SerializeObject(pipelineParams["TaskObject"]);
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
-                var response = await c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent);
+                HttpResponseMessage response = await c.PostAsync($"{endpoint.ToString()}/pipelines/{pipelineName}/createRun?api-version=2020-12-01", postContent);
                 HttpContent responseContent = response.Content;
-                return responseContent;
+                var status = response.StatusCode;
+                var content = await responseContent.ReadAsStringAsync();
+                if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+                {
+                    throw new Exception($"Synapse Pipeline Activation via Rest Failed. StatusCode: {status}; Message: {content}");
+                }
+
+                return content;
 
             }
             catch (Exception e)
             {
-                logging.LogErrors(e);
-                logging.LogErrors(new Exception("Initiation of pipeline Failed:"));
-                throw;
+                logging.LogErrors(e);                
+                throw e;
             }
 
         }
