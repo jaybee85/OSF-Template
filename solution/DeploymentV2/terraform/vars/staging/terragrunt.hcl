@@ -26,7 +26,7 @@ inputs = {
   resource_group_name                   = "dlzdev05"          # The resource group all resources will be deployed to
   owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "stg"                   # This is used on Azure tags as well as all resource names
-  ip_address                            = "60.227.47.61"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  ip_address                            = "60.227.87.73"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_sentinel                       = false
   deploy_purview                        = false  
   deploy_synapse                        = true
@@ -39,6 +39,6 @@ inputs = {
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
   deploy_synapse_sqlpool                = false
-  deploy_selfhostedsql                  = false
+  deploy_selfhostedsql                  = true
   is_onprem_datafactory_ir_registered   = false
 } 
