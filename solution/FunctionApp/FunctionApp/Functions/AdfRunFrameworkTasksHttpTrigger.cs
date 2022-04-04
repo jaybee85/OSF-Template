@@ -330,9 +330,10 @@ namespace FunctionApp.Functions
 
                 System.Threading.Thread.Sleep(1000);
 
-                var response = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);
-                var content = await response.ReadAsStringAsync();
-                runId = JObject.Parse(content.ToString())["runId"].ToString();
+                string response = await _azureSynapseService.RunSynapsePipeline(endpoint, pipelineName, pipelineParams, logging);                
+                //add error handling before checking runid
+                
+                runId = JObject.Parse(response)["runId"].ToString();
 
                 logging.LogInformation("Pipeline run ID: " + runId);
                 logging.LogInformation("Execution UID: " + logging.DefaultActivityLogItem.ExecutionUid.ToString());
@@ -350,8 +351,7 @@ namespace FunctionApp.Functions
                     StartDateTime = DateTimeOffset.UtcNow,
                     Status = "InProgress",
                     Comment = ""
-                }).ConfigureAwait(false);
-                logging.LogInformation("Test");
+                }).ConfigureAwait(false);                
             }
             //To Do // Batch to make less "chatty"
             //To Do // Upgrade to stored procedure call
