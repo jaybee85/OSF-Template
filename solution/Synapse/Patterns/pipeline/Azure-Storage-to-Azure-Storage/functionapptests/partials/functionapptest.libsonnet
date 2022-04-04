@@ -50,12 +50,13 @@ function(
 
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":"/Tests/Azure Storage to Azure Storage/",
+            "RelativePath":"/Tests/Azure Storage to Azure Storage/" + TestNumber + "/",
             "DataFileName": TargetDataFilename,
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
-            "DeleteAfterCompletion": TargetDeleteAfterCompletion
+            "DeleteAfterCompletion": TargetDeleteAfterCompletion,
+            "WriteSchemaToPurview": "Disabled"
         }
         + if (TargetFormat == "Excel") 
             then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader,  "SheetName":TargetSheetName}
