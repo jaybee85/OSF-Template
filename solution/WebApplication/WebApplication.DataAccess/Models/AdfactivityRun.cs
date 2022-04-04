@@ -5,7 +5,7 @@ namespace WebApplication.Models
     public partial class AdfactivityRun
     {
         public Guid PipelineRunUid { get; set; }
-        public long DataFactoryId { get; set; }
+        public long EngineId { get; set; }
         public long? Activities { get; set; }
         public float? TotalCost { get; set; }
         public float? CloudOrchestrationCost { get; set; }

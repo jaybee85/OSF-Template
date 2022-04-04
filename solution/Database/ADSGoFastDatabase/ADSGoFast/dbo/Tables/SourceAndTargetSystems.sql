@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
  Licensed under the MIT license.
@@ -16,7 +16,11 @@ CREATE TABLE [dbo].[SourceAndTargetSystems] (
     [SystemKeyVaultBaseUrl] NVARCHAR (500)  NULL,
     [SystemJSON]            NVARCHAR (4000) NULL,
     [ActiveYN]              BIT             NOT NULL,
+    [IsExternal]            BIT             NOT NULL,
+    [DataFactoryIR]         VARCHAR (20)    NULL,
     PRIMARY KEY CLUSTERED ([SystemId] ASC)
 );
+
+
 GO
 

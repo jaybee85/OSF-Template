@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
  Licensed under the MIT license.
@@ -6,7 +6,7 @@
 -----------------------------------------------------------------------*/
 CREATE TABLE [dbo].[ADFActivityRun] (
     [PipelineRunUid]                 UNIQUEIDENTIFIER   NOT NULL,
-    [DataFactoryId]                  BIGINT             NOT NULL,
+    [EngineId]                       BIGINT             NOT NULL,
     [Activities]                     BIGINT             NULL,
     [TotalCost]                      REAL               NULL,
     [CloudOrchestrationCost]         REAL               NULL,
@@ -22,6 +22,8 @@ CREATE TABLE [dbo].[ADFActivityRun] (
     [Start]                          DATETIMEOFFSET (7) NULL,
     [End]                            DATETIMEOFFSET (7) NULL,
     [MaxActivityTimeGenerated]       DATETIMEOFFSET (7) NULL,
-    CONSTRAINT [PK_ADFActivityRun] PRIMARY KEY CLUSTERED ([PipelineRunUid] ASC, [DataFactoryId] ASC)
+    CONSTRAINT [PK_ADFActivityRun] PRIMARY KEY CLUSTERED ([PipelineRunUid] ASC, [EngineId] ASC)
 );
+
+
 

@@ -55,33 +55,42 @@ namespace FunctionApp.Functions
             //Get Last Request Date
             var maxTimesGen = conRead.QueryWithRetry(@"
                                     Select a.*,  MaxPipelineTimeGenerated from 
-                                        DataFactory a left join 
-                                        ( Select b.DataFactoryId, MaxPipelineTimeGenerated = Max(MaxPipelineTimeGenerated) 
+                                        ExecutionEngine a left join 
+                                        ( Select b.EngineId, MaxPipelineTimeGenerated = Max(MaxPipelineTimeGenerated) 
                                         from ADFPipelineRun b
-                                        group by b.DatafactoryId) b on a.Id = b.DatafactoryId");
+                                        group by b.EngineId) b on a.EngineId = b.EngineId");
 
             DateTimeOffset maxPipelineTimeGenerated = DateTimeOffset.UtcNow.AddDays(-30);
 
 
-            foreach (var datafactory in maxTimesGen)
+            foreach (var executionengine in maxTimesGen)
             {
-                if (datafactory.MaxPipelineTimeGenerated != null)
+                if (executionengine.MaxPipelineTimeGenerated != null)
                 {
-                    maxPipelineTimeGenerated = ((DateTimeOffset)datafactory.MaxPipelineTimeGenerated).AddMinutes(-180);
+                    maxPipelineTimeGenerated = ((DateTimeOffset)executionengine.MaxPipelineTimeGenerated).AddMinutes(-180);
                 }
 
-                string workspaceId = datafactory.LogAnalyticsWorkspaceId.ToString();
+                string workspaceId = executionengine.LogAnalyticsWorkspaceId.ToString();
 
                 Dictionary<string, object> kqlParams = new Dictionary<string, object>
                 {
                     {"MaxPipelineTimeGenerated", maxPipelineTimeGenerated.ToString("yyyy-MM-dd HH:mm:ss.ff K") },
-                    {"SubscriptionId", ((string)datafactory.SubscriptionUid.ToString()).ToUpper()},
-                    {"ResourceGroupName", ((string)datafactory.ResourceGroup.ToString()).ToUpper() },
-                    {"DataFactoryName", ((string)datafactory.Name.ToString()).ToUpper() },
-                    {"DatafactoryId", datafactory.Id.ToString()  }
+                    {"SubscriptionId", ((string)executionengine.SubscriptionUid.ToString()).ToUpper()},
+                    {"ResourceGroupName", ((string)executionengine.ResourceGroup.ToString()).ToUpper() },
+                    {"EngineName", ((string)executionengine.EngineName.ToString()).ToUpper() },
+                    {"EngineId", executionengine.EngineId.ToString()  }
                 };
+                string kql = "";
+                switch (executionengine.SystemType.ToString())
+                {
+                    case "Datafactory":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
+                        break;
+                    case "Synapse":
+                        kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetSynapsePipelineRuns.kql"));
+                        break;
+                }
 
-                string kql = File.ReadAllText(Path.Combine(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.KQLTemplateLocation), "GetADFPipelineRuns.kql"));
                 kql = kql.FormatWith(kqlParams, MissingKeyBehaviour.ThrowException, null, '{', '}');
 
                 JObject jsonContent = new JObject();
@@ -134,7 +143,7 @@ namespace FunctionApp.Functions
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>
                             {
                                 { "TempTable", t.QuotedSchemaAndName() },
-                                { "DatafactoryId", datafactory.Id.ToString()}
+                                { "EngineId", executionengine.EngineId.ToString()}
                             };
 
                             string mergeSql = GenerateSqlStatementTemplates.GetSql(Path.Combine(EnvironmentHelper.GetWorkingFolder(), _appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoADFPipelineRun", sqlParams);

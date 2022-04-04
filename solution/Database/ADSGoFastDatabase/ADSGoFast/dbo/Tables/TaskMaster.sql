@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
  Licensed under the MIT license.
@@ -18,9 +18,11 @@ CREATE TABLE [dbo].[TaskMaster] (
     [TaskMasterJSON]               NVARCHAR (4000) NULL,
     [ActiveYN]                     BIT             NOT NULL,
     [DependencyChainTag]           VARCHAR (50)    NULL,
-    [DataFactoryId]                BIGINT          NOT NULL,
+    [EngineId]                     BIGINT          NOT NULL,
     CONSTRAINT [PK__TaskMast__EB7286F6C9A58EA9] PRIMARY KEY CLUSTERED ([TaskMasterId] ASC)
 );
+
+
 
 
 

@@ -25,6 +25,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
         private JObject _taskMasterJson;
         private JObject _sourceSystemJson;
         private JObject _targetSystemJson;
+        private JObject _engineSystemJson;
         private JObject _taskMasterJsonSource;
         private JObject _taskMasterJsonTarget;
         private JObject _taskInstanceJson;
@@ -68,18 +69,21 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 ["TaskGroupConcurrency"] = TaskGroupConcurrency,
                 ["TaskGroupPriority"] = TaskGroupPriority,
                 ["TaskExecutionType"] = TaskExecutionType
+
             };
 
-            JObject dataFactory = new JObject
+            JObject executionEngine = new JObject
             {
-                ["Id"] = DataFactoryId,
-                ["Name"] = DataFactoryName,
-                ["ResourceGroup"] = DataFactoryResourceGroup,
-                ["SubscriptionId"] = DataFactorySubscriptionId,
+                ["EngineId"] = EngineId,
+                ["EngineName"] = EngineName,
+                ["SystemType"] = EngineSystemType,
+                ["ResourceGroup"] = EngineResourceGroup,
+                ["SubscriptionId"] = EngineSubscriptionId,
                 ["ADFPipeline"] = AdfPipeline,
+                ["EngineJson"] = EngineJson,
                 ["TaskDatafactoryIR"] = TaskDatafactoryIr
             };
-            _jsonObjectForAdf["DataFactory"] = dataFactory;
+            _jsonObjectForAdf["ExecutionEngine"] = executionEngine;
             
 
         }
@@ -131,13 +135,21 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             {
                 _taskInstanceJson = JObject.Parse(TaskInstanceJson);
             }
+
+
+            _engineSystemJson = new JObject();
+            if (JsonHelpers.IsValidJson(EngineJson))
+            {
+                _engineSystemJson = JObject.Parse(EngineJson);
+            }
         }
 
-        public JObject ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider)
+        public JObject ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider, EngineJsonSchemasProvider engineSchemaProvider)
         {
             CreateInternalObjectsForProcessingJsonFields();
             ProcessSourceSystem(sourceTargetSchemaProvider);
             ProcessTargetSystem(sourceTargetSchemaProvider);
+            ProcessEngineJson(engineSchemaProvider);
             ProcessTaskInstance(ttm);
             ProcessTaskMaster(ttm);
             return _jsonObjectForAdf; 
@@ -169,6 +181,10 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             ProcessSourceSystem_Default(ref System);
             Source["System"] = System;
             _jsonObjectForAdf["Source"] = Source;
+            if (this.SourceSystemId == -16)
+            {
+
+            }
 
         }
 
@@ -217,5 +233,32 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 MergeArrayHandling = MergeArrayHandling.Union
             });
         }
+
+        public void ProcessEngineJson(EngineJsonSchemasProvider schemaProvider)
+        {
+            JObject Engine = ((JObject)_jsonObjectForAdf["ExecutionEngine"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["ExecutionEngine"];  //Validate ExecutionEngineJson based on JSON Schema
+            JObject Properties = ((JObject)_jsonObjectForAdf["ExecutionEngine"]["JsonProperties"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["ExecutionEngine"]["JsonProperties"];  //Validate ExecutionEngineJson based on JSON Schema
+
+            ProcessEngineJson_Default(ref Properties);
+            string engineSystemSchema = schemaProvider.GetBySystemType(this.EngineSystemType).JsonSchema;
+            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, engineSystemSchema, this.EngineJson,
+            "Failed to validate EngineJson JSON for System Type: " + this.EngineSystemType + ". ");
+            Engine["JsonProperties"] = Properties;
+            _jsonObjectForAdf["ExecutionEngine"] = Engine;
+        }
+        public void ProcessEngineJson_Default(ref JObject Engine)
+        {
+            Engine.Merge(_engineSystemJson, new JsonMergeSettings
+            {
+                // union array values together to avoid duplicates
+                MergeArrayHandling = MergeArrayHandling.Union
+            });
+        }
+
+
+
     }
+
+
 }
+

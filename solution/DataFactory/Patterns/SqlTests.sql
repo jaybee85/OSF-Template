@@ -39,16 +39,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         0                          ,
-        'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary0'                      ,
-        2                            ,
-        -1                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        '[0]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)'                      ,
+        -2                            ,
+        -3                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -56,31 +56,25 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "SalesLT.Customer*.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "SalesLT.Customer*.json",
-        "SheetName": "",
-        "SkipLineCount": "",
         "Type": "Binary"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
-        "RelativePath": "samples/storage-to-storage-copy/",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/0",
         "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
         "Type": "Binary"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -102,16 +96,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -1                          ,
-        'GPL_AzureBlobFS_Binary_AzureBlobFS_Binary1'                      ,
-        2                            ,
-        -1                           ,
-        4                      ,
-        4                        ,
-        4                        ,
+        '[1]  File copy between datalake zones of SalesLT.Customer*.parquet (Binary) from ADLS to ADLS SalesLT.Customer.parquet (Binary)'                      ,
+        -2                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -119,31 +113,25 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "SalesLT.Customer*.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "SalesLT.Customer*.json",
-        "SheetName": "",
-        "SkipLineCount": "",
         "Type": "Binary"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
-        "RelativePath": "samples/storage-to-storage-copy/",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/1",
         "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
         "Type": "Binary"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -165,16 +153,312 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
         -2                          ,
-        'GPL_AzureBlobFS_Parquet_AzureSqlTable_NA2'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        '[2]  Folder copy between datalake zones of *.* (Binary) from ADLS to ADLS  (Binary)'                      ,
+        -2                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "*.*",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Binary"
+    },
+    "Target": {
+        "DataFileName": "",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/2",
+        "SchemaFileName": "",
+        "Type": "Binary"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -3                          ,
+        '[3]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.parquet (Parquet)'                      ,
+        -2                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
+    },
+    "Target": {
+        "DataFileName": "yellow_tripdata_2017-03.parquet",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to SQL Database/3",
+        "SchemaFileName": "",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -4                          ,
+        '[4]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.csv (Csv)'                      ,
+        -2                            ,
+        -3                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
+    },
+    "Target": {
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/4",
+        "SchemaFileName": "",
+        "SkipLineCount": 0,
+        "Type": "Csv"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -5                          ,
+        '[5]  File copy between datalake zones of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to ADLS yellow_tripdata_2017-03.json (Json)'                      ,
+        -2                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": "",
+        "Type": "Excel"
+    },
+    "Target": {
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "/Tests/Azure Storage to Azure Storage/5",
+        "SchemaFileName": "",
+        "Type": "Json"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -6                          ,
+        '[6]  File copy from data lake to FileServer of yellow_tripdata_2017-03.xlsx (Binary) from ADLS to FileServer yellow_tripdata_2017-03.xlsx (Binary)'                      ,
+        -2                            ,
+        -3                           ,
+        -4                      ,
+        -4                        ,
+        -15                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Binary"
+    },
+    "Target": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "c:/Tests/Azure Storage to Azure Storage/6",
+        "SchemaFileName": "",
+        "Type": "Binary"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -7                          ,
+        '[-7]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -3                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -182,26 +466,568 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
     "Source": {
         "DataFileName": "SalesLT.Customer.parquet",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
         "Type": "Parquet"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "true",
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
+        "StagingTableName": "stg_Customer-7",
+        "StagingTableSchema": "dbo",
+        "TableName": "Customer-7",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -8                          ,
+        '[-6]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
         "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "true",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_Customer-6",
+        "StagingTableSchema": "dbo",
+        "TableName": "Customer-6",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -9                          ,
+        '[-5]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": 0,
+        "Type": "Excel"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata-5",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata-5",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -10                          ,
+        '[-4]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": 0,
+        "Type": "Excel"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata-4",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata-4",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -11                          ,
+        '[-3]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SkipLineCount": 0,
+        "Type": "Csv"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata-3",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata-3",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -12                          ,
+        '[-2]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure SQL'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -3                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Json"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata-2",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata-2",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -13                          ,
+        '[-1]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "SkipLineCount": 0,
+        "Type": "Csv"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata-1",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata-1",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -14                          ,
+        '[0]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure SQL'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -4                        ,
+        -2                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "",
+        "Type": "Json"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata0",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata0",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -15                          ,
+        '[1]  FullLoad of SalesLT.Customer.parquet (Parquet) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "true",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
+        "StagingTableName": "stg_Customer1",
+        "StagingTableSchema": "dbo",
+        "TableName": "Customer1",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -16                          ,
+        '[2]  FullLoad of SalesLT.Customer.parquet (Parquet) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "SalesLT.Customer.parquet",
+        "DeleteAfterCompletion": "false",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
+        "SchemaFileName": "SalesLT.Customer.json",
+        "Type": "Parquet"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "true",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
         "StagingTableName": "stg_Customer2",
         "StagingTableSchema": "dbo",
         "TableName": "Customer2",
@@ -211,7 +1037,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -233,84 +1059,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -3                          ,
-        'GPL_AzureBlobStorage_Parquet_AzureSqlTable_NA3'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        3                        ,
-        2                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
-        "Type": "Parquet"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "StagingTableName": "stg_Customer3",
-        "StagingTableSchema": "dbo",
-        "TableName": "Customer3",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -4                          ,
-        'GPL_AzureBlobFS_Excel_AzureSqlTable_NA4'                      ,
-        1                            ,
+        -17                          ,
+        '[3]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from ADLS to Azure Synapse'                      ,
+        -1                            ,
         -1                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -324,20 +1082,78 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "RelativePath": "samples/",
         "SchemaFileName": "",
         "SheetName": "yellow_tripdata_2017-03",
-        "SkipLineCount": "",
+        "SkipLineCount": 0,
         "Type": "Excel"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
+        "StagingTableName": "stg_yellow_tripdata3",
+        "StagingTableSchema": "dbo",
+        "TableName": "yellow_tripdata3",
+        "TableSchema": "dbo",
+        "Type": "Table"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -18                          ,
+        '[4]  FullLoad of yellow_tripdata_2017-03.xlsx (Excel) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DeleteAfterCompletion": "false",
+        "FirstRowAsHeader": "true",
+        "MaxConcurrentConnections": 0,
+        "Recursively": "false",
+        "RelativePath": "samples/",
         "SchemaFileName": "",
+        "SheetName": "yellow_tripdata_2017-03",
+        "SkipLineCount": 0,
+        "Type": "Excel"
+    },
+    "Target": {
+        "AutoCreateTable": "true",
+        "AutoGenerateMerge": "false",
+        "MergeSQL": "",
+        "PostCopySQL": "",
+        "PreCopySQL": "",
         "StagingTableName": "stg_yellow_tripdata4",
         "StagingTableSchema": "dbo",
         "TableName": "yellow_tripdata4",
@@ -347,7 +1163,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -369,43 +1185,37 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -5                          ,
-        'GPL_AzureBlobStorage_Excel_AzureSqlTable_NA5'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        -19                          ,
+        '[5]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -3                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
+        "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
         "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "SkipLineCount": "",
-        "Type": "Excel"
+        "SkipLineCount": 0,
+        "Type": "Csv"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "SchemaFileName": "",
         "StagingTableName": "stg_yellow_tripdata5",
         "StagingTableSchema": "dbo",
         "TableName": "yellow_tripdata5",
@@ -415,7 +1225,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -437,43 +1247,35 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -6                          ,
-        'GPL_AzureBlobStorage_DelimitedText_AzureSqlTable_NA6'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        -20                          ,
+        '[6]  FullLoad of yellow_tripdata_2017-03.json (Json) from Azure Blob to Azure Synapse'                      ,
+        -1                            ,
+        -1                           ,
+        -4                      ,
+        -3                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DataFileName": "yellow_tripdata_2017-03.json",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Csv"
+        "Type": "Json"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "SchemaFileName": "",
         "StagingTableName": "stg_yellow_tripdata6",
         "StagingTableSchema": "dbo",
         "TableName": "yellow_tripdata6",
@@ -483,7 +1285,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -505,43 +1307,37 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -7                          ,
-        'GPL_AzureBlobStorage_json_AzureSqlTable_NA7'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        3                        ,
-        2                        ,
+        -21                          ,
+        '[7]  FullLoad of yellow_tripdata_2017-03.csv (Csv) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -4                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
+        "DataFileName": "yellow_tripdata_2017-03.csv",
         "DeleteAfterCompletion": "false",
         "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "SheetName": "",
         "SkipLineCount": 0,
-        "Type": "Json"
+        "Type": "Csv"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "SchemaFileName": "",
         "StagingTableName": "stg_yellow_tripdata7",
         "StagingTableSchema": "dbo",
         "TableName": "yellow_tripdata7",
@@ -551,7 +1347,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -573,43 +1369,35 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -8                          ,
-        'GPL_AzureBlobFS_DelimitedText_AzureSqlTable_NA8'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        2                        ,
+        -22                          ,
+        '[8]  FullLoad of yellow_tripdata_2017-03.json (Json) from ADLS to Azure Synapse'                      ,
+        -1                            ,
+        -2                           ,
+        -4                      ,
+        -4                        ,
+        -10                        ,
         1               ,
         0          ,
         'Azure'                     ,
         '{
     "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
+        "DataFileName": "yellow_tripdata_2017-03.json",
         "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
         "MaxConcurrentConnections": 0,
         "Recursively": "false",
         "RelativePath": "samples/",
         "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Csv"
+        "Type": "Json"
     },
     "Target": {
         "AutoCreateTable": "true",
         "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DynamicMapping": {
-
-        },
         "MergeSQL": "",
         "PostCopySQL": "",
         "PreCopySQL": "",
-        "SchemaFileName": "",
         "StagingTableName": "stg_yellow_tripdata8",
         "StagingTableSchema": "dbo",
         "TableName": "yellow_tripdata8",
@@ -619,7 +1407,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -641,628 +1429,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -9                          ,
-        'GPL_AzureBlobFS_json_AzureSqlTable_NA9'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        4                        ,
-        2                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Json"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata9",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata9",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -10                          ,
-        'GPL_AzureBlobFS_Parquet_AzureSqlDWTable_NA10'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
-        "Type": "Parquet"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "StagingTableName": "stg_Customer10",
-        "StagingTableSchema": "dbo",
-        "TableName": "Customer10",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -11                          ,
-        'GPL_AzureBlobStorage_Parquet_AzureSqlDWTable_NA11'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        3                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "false",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "SheetName": "",
-        "SkipLineCount": "",
-        "Type": "Parquet"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "true",
-        "DataFileName": "SalesLT.Customer.parquet",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "SalesLT.Customer.json",
-        "StagingTableName": "stg_Customer11",
-        "StagingTableSchema": "dbo",
-        "TableName": "Customer11",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -12                          ,
-        'GPL_AzureBlobFS_Excel_AzureSqlDWTable_NA12'                      ,
-        1                            ,
+        -23                          ,
+        '[-23]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        -3                            ,
         -4                           ,
-        4                      ,
-        4                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "SkipLineCount": "",
-        "Type": "Excel"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata12",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata12",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -13                          ,
-        'GPL_AzureBlobStorage_Excel_AzureSqlDWTable_NA13'                      ,
-        1                            ,
-        -1                           ,
-        4                      ,
-        3                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "yellow_tripdata_2017-03",
-        "SkipLineCount": "",
-        "Type": "Excel"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.xlsx",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata13",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata13",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -14                          ,
-        'GPL_AzureBlobStorage_DelimitedText_AzureSqlDWTable_NA14'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        3                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Csv"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata14",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata14",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -15                          ,
-        'GPL_AzureBlobStorage_json_AzureSqlDWTable_NA15'                      ,
-        1                            ,
-        -3                           ,
-        4                      ,
-        3                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Json"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata15",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata15",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -16                          ,
-        'GPL_AzureBlobFS_DelimitedText_AzureSqlDWTable_NA16'                      ,
-        1                            ,
-        -2                           ,
-        4                      ,
-        4                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Csv"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.csv",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata16",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata16",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -17                          ,
-        'GPL_AzureBlobFS_json_AzureSqlDWTable_NA17'                      ,
-        1                            ,
-        -4                           ,
-        4                      ,
-        4                        ,
-        10                        ,
-        1               ,
-        0          ,
-        'Azure'                     ,
-        '{
-    "Source": {
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DeleteAfterCompletion": "false",
-        "FirstRowAsHeader": "true",
-        "MaxConcurrentConnections": 0,
-        "Recursively": "false",
-        "RelativePath": "samples/",
-        "SchemaFileName": "",
-        "SheetName": "",
-        "SkipLineCount": 0,
-        "Type": "Json"
-    },
-    "Target": {
-        "AutoCreateTable": "true",
-        "AutoGenerateMerge": "false",
-        "DataFileName": "yellow_tripdata_2017-03.json",
-        "DynamicMapping": {
-
-        },
-        "MergeSQL": "",
-        "PostCopySQL": "",
-        "PreCopySQL": "",
-        "SchemaFileName": "",
-        "StagingTableName": "stg_yellow_tripdata17",
-        "StagingTableSchema": "dbo",
-        "TableName": "yellow_tripdata17",
-        "TableSchema": "dbo",
-        "Type": "Table"
-    }
-}'                      ,
-        0                              ,
-        ''                  ,
-        1;  
-    
-    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
-    
-    
-                                        
-    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
-    insert into [dbo].[TaskMaster]
-    (
-        [TaskMasterId]                          ,
-        [TaskMasterName]                        ,
-        [TaskTypeId]                            ,
-        [TaskGroupId]                           ,
-        [ScheduleMasterId]                      ,
-        [SourceSystemId]                        ,
-        [TargetSystemId]                        ,
-        [DegreeOfCopyParallelism]               ,
-        [AllowMultipleActiveInstances]          ,
-        [TaskDatafactoryIR]                     ,
-        [TaskMasterJSON]                        ,
-        [ActiveYN]                              ,
-        [DependencyChainTag]                    ,
-        [DataFactoryId]                         
-    )
-    select 
-        -18                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet18'                      ,
-        3                            ,
-        -2                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1271,24 +1447,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/18",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-23",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1310,16 +1483,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -19                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet19'                      ,
-        3                            ,
+        -24                          ,
+        '[-22]  FullLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
         -1                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1328,24 +1501,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/19",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-22",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1367,16 +1537,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -20                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet20'                      ,
-        3                            ,
-        -4                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -25                          ,
+        '[-21]  FullLoadUsingExtractionSql of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -1                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1385,24 +1555,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/20",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-21",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1424,16 +1591,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -21                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet21'                      ,
-        3                            ,
+        -26                          ,
+        '[-20]  FullLoadWithChunk of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
         -3                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1442,24 +1609,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "CustomerID",
         "ChunkSize": 100,
         "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/21",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-20",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1481,16 +1645,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -22                          ,
-        'GPL_AzureSqlTable_NA_AzureBlobFS_Parquet22'                      ,
-        3                            ,
-        -3                           ,
-        4                      ,
-        1                        ,
-        4                        ,
+        -27                          ,
+        '[-19]  IncrementalLoad of SalesLT.Customer (Table) from Azure SQL to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -1                           ,
+        -4                      ,
+        -1                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1499,24 +1663,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "Select top 10 * from SalesLT.Customer",
-        "IncrementalColumnType": "int",
-        "IncrementalField": "CustomerID",
         "IncrementalType": "Watermark",
-        "IncrementalValue": "10",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/22",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-19",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1538,16 +1699,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -23                          ,
-        'GPL_SqlServerTable_NA_AzureBlobStorage_Parquet23'                      ,
-        3                            ,
-        -3                           ,
-        4                      ,
-        6                        ,
-        4                        ,
+        -28                          ,
+        '[-18]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)'                      ,
+        -3                            ,
+        -1                           ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1556,24 +1717,21 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/23",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-18",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     
@@ -1595,16 +1753,16 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         [TaskMasterJSON]                        ,
         [ActiveYN]                              ,
         [DependencyChainTag]                    ,
-        [DataFactoryId]                         
+        [EngineId]                         
     )
     select 
-        -24                          ,
-        'GPL_SqlServerTable_NA_AzureBlobFS_Parquet24'                      ,
-        3                            ,
-        -4                           ,
-        4                      ,
-        6                        ,
-        4                        ,
+        -29                          ,
+        '[-17]  FullLoad of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -2                           ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
         1               ,
         0          ,
         'Azure'                     ,
@@ -1613,24 +1771,75 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
         "ChunkField": "",
         "ChunkSize": 0,
         "ExtractionSQL": "",
-        "IncrementalColumnType": "",
-        "IncrementalField": "",
         "IncrementalType": "Full",
-        "IncrementalValue": "0",
         "TableName": "Customer",
         "TableSchema": "SalesLT",
         "Type": "Table"
     },
     "Target": {
         "DataFileName": "SalesLT.Customer.parquet",
-        "RelativePath": "/Tests/SQL Database to Azure Storage/24",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-17",
         "SchemaFileName": "SalesLT.Customer.json",
         "Type": "Parquet"
     }
 }'                      ,
         0                              ,
         ''                  ,
-        1;  
+        -1;  
+    
+    SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
+    
+    
+                                        
+    SET IDENTITY_INSERT [dbo].[TaskMaster] ON;
+    insert into [dbo].[TaskMaster]
+    (
+        [TaskMasterId]                          ,
+        [TaskMasterName]                        ,
+        [TaskTypeId]                            ,
+        [TaskGroupId]                           ,
+        [ScheduleMasterId]                      ,
+        [SourceSystemId]                        ,
+        [TargetSystemId]                        ,
+        [DegreeOfCopyParallelism]               ,
+        [AllowMultipleActiveInstances]          ,
+        [TaskDatafactoryIR]                     ,
+        [TaskMasterJSON]                        ,
+        [ActiveYN]                              ,
+        [DependencyChainTag]                    ,
+        [EngineId]                         
+    )
+    select 
+        -30                          ,
+        '[-16]  FullLoad of SalesLT.Customer (Table) from SQL Server to dbo.all_objects.parquet in ADLS(Parquet)'                      ,
+        -3                            ,
+        -2                           ,
+        -4                      ,
+        -6                        ,
+        -4                        ,
+        1               ,
+        0          ,
+        'Azure'                     ,
+        '{
+    "Source": {
+        "ChunkField": "",
+        "ChunkSize": 0,
+        "ExtractionSQL": "",
+        "IncrementalType": "Full",
+        "TableName": "Customer",
+        "TableSchema": "SalesLT",
+        "Type": "Table"
+    },
+    "Target": {
+        "DataFileName": "dbo.all_objects.parquet",
+        "RelativePath": "/Tests/SQL Database to Azure Storage/-16",
+        "SchemaFileName": "dbo_all_objects.json",
+        "Type": "Parquet"
+    }
+}'                      ,
+        0                              ,
+        ''                  ,
+        -1;  
     
     SET IDENTITY_INSERT [dbo].[TaskMaster] OFF;        
     

@@ -137,7 +137,7 @@
     
     bool ShowWarning()
     {
-        string[] _warnOnTheseModels = new[] { "TaskType", "TaskTypeMapping", "FrameworkTaskRunner", "SourceAndTargetSystems", "SourceAndTargetSystemsJsonSchema", "DataFactory" };
+        string[] _warnOnTheseModels = new[] { "TaskType", "TaskTypeMapping", "FrameworkTaskRunner", "SourceAndTargetSystems", "SourceAndTargetSystemsJsonSchema", "ExecutionEngine" };
         return _warnOnTheseModels.Any(x=>x == Model.ViewDataTypeShortName);
     }
 }

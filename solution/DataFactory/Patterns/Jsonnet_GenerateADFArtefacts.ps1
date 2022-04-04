@@ -1,6 +1,10 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 
+
+#Generate Patterns.json
+(jsonnet "./patterns.jsonnet") | Set-Content("./Patterns.json")
+
 $GenerateArm="false"
 
 function CoreReplacements ($string, $GFPIR, $SourceType, $SourceFormat, $TargetType, $TargetFormat) {
@@ -18,7 +22,14 @@ function CoreReplacements ($string, $GFPIR, $SourceType, $SourceFormat, $TargetT
     return  $string
 }
 
-
+if (!(Test-Path "./output"))
+{
+    New-Item -itemType Directory -Name "output"
+}
+else
+{
+    Write-Information "Output Folder already exists"
+}
 
 #Remove Previous Outputs
 Get-ChildItem ./output | foreach {
@@ -35,7 +46,29 @@ foreach ($file in $templates)
     $content | Set-Content -Path $outfile 
 }
 
+$irsjson = ($tout.integration_runtimes | ConvertTo-Json)
+
+
+$irsql = @"
+            Merge dbo.IntegrationRuntime Tgt
+            using (
+            Select * from OPENJSON('$irsjson') WITH 
+            (
+                name varchar(200), 
+                short_name varchar(20), 
+                is_azure bit, 
+                is_managed_vnet bit     
+            )
+            ) Src on Src.short_name = tgt.IntegrationRuntimeName 
+            when NOT matched by TARGET then insert
+            (IntegrationRuntimeName, EngineId, ActiveYN)
+            VALUES (Src.short_name,1,1);
+"@            
+
+$irsql | Set-Content "MergeIRs.sql"
+
 #Copy IR Specific Pipelines
+$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
 foreach ($ir in $tout.integration_runtimes)
 {    
 
@@ -45,9 +78,7 @@ foreach ($ir in $tout.integration_runtimes)
         Write-Host "Skipping Self Hosted Runtime as it is not yet registered"
     }
     else
-    {
-        $patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
-
+    {        
         foreach ($pattern in $patterns)
         {    
             $folder = "./pipeline/" + $pattern.Folder
@@ -74,72 +105,90 @@ foreach ($ir in $tout.integration_runtimes)
     }
 }
 
-#foreach ($pattern in $patterns)
-$patterns | ForEach-Object -Parallel {
-    $pattern = $_
-    $SourceType = $pattern.SourceType
-    $SourceFormat = $pattern.SourceFormat
-    $TargetType = $pattern.TargetType
-    $TargetFormat = $pattern.TargetFormat
+#foreach unique folder used by pattern.json
+$patternFolders = $patterns.Folder | Get-Unique 
+foreach ($patternFolder in $patternFolders)
+ {   
+    $patternsInFolder = ($patterns | where-object {$_.Folder -eq $patternFolder})
+    #get all patterns for that folder and generate the schema files
+    $patternsInFolder | ForEach-Object -Parallel {
+        $pattern = $_
+        $SourceType = $pattern.SourceType
+        $SourceFormat = $pattern.SourceFormat
+        $TargetType = $pattern.TargetType
+        $TargetFormat = $pattern.TargetFormat
 
-    $TaskTypeId = $pattern.TaskTypeId
-    
-    $folder = "./pipeline/" + $pattern.Folder
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF Schema Files: " 
-    Write-Host "_____________________________"
-    
-    $newfolder = ($folder + "/output")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
-    $newfolder = ($newfolder + "/schemas")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
-    $newfolder = ($newfolder + "/taskmasterjson/")
-    !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
-    
-    $schemafile = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "Main.libsonnet"  -Verbose)
-    #foreach ($schemafile in $schemafiles)
-    #{  
-        $mappingName = $pattern.pipeline
-        write-host $mappingName
-        $newname = ($schemafile.PSChildName).Replace(".libsonnet",".json").Replace("Main", $MappingName);
-        #(jsonnet $schemafile.FullName) | Set-Content('../../TaskTypeJson/' + $newname)
-        (jsonnet --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $schemafile) | Set-Content($newfolder + $newname)
-        #(jsonnet $schemafile.FullName) | Set-Content($newfolder + $newname)
-    #}
+        $TaskTypeId = $pattern.TaskTypeId
+        
+        $folder = "./pipeline/" + $pattern.Folder
+        Write-Host "_____________________________"
+        Write-Host "Generating ADF Schema Files: " 
+        Write-Host $folder 
+        Write-Host "_____________________________"
+        
+        $newfolder = ($folder + "/output")
+        !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+        $newfolder = ($newfolder + "/schemas")
+        !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+        $newfolder = ($newfolder + "/taskmasterjson/")
+        !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+        
+        $schemafile = (Get-ChildItem -Path ($folder+"/jsonschema/") -Filter "Main.libsonnet"  -Verbose)
+        #foreach ($schemafile in $schemafiles)
+        #{  
+            $mappingName = $pattern.pipeline
+            write-host $mappingName
+            $newname = ($schemafile.PSChildName).Replace(".libsonnet",".json").Replace("Main", $MappingName);
+            #(jsonnet $schemafile.FullName) | Set-Content('../../TaskTypeJson/' + $newname)
+            (jsonnet --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $schemafile) | Set-Content($newfolder + $newname)
+            #(jsonnet $schemafile.FullName) | Set-Content($newfolder + $newname)
+        #}
+    }    
     
     $sql = @"
     BEGIN 
     Select * into #TempTTM from ( VALUES
 "@
-    $schemafiles = (Get-ChildItem -Path ($newfolder) -Filter "*.json"  -Verbose)
-    foreach ($schemafile in $schemafiles)
-    {   
-        $pipeline = $schemafile.Name.replace(".json","")
+    $folder = "./pipeline/" + $patternFolder    
+    foreach ($pattern in  $patternsInFolder)
+    {  
+        $pipeline = $pattern.Pipeline        
+        $schemafile = $folder + "/output/schemas/taskmasterjson/"+ $pattern.Pipeline + ".json"
+                
+        #Write-Host "_____________________________"
+        #Write-Host "Inserting into TempTTM: " 
+        #Write-Host $pipeline
+        #Write-Host "_____________________________"        
         $psplit = $pipeline.split("_")
+        $SourceType = $pattern.SourceType
+        $SourceFormat = $pattern.SourceFormat
+        $TargetType = $pattern.TargetType
+        $TargetFormat = $pattern.TargetFormat
+        $TaskTypeId = $pattern.TaskTypeId
 
-        $SourceType = $psplit[1]
+        #$SourceType = $psplit[1]
         $SourceType = ($SourceType -eq "AzureBlobStorage") ? "Azure Blob":$SourceType
         $SourceType = ($SourceType -eq "AzureBlobFS") ? "ADLS" : $SourceType
         $SourceType = ($SourceType -eq "AzureSqlTable") ? "Azure SQL" : $SourceType
         $SourceType = ($SourceType -eq "AzureSqlDWTable") ? "Azure Synapse" : $SourceType
         $SourceType = ($SourceType -eq "SqlServerTable") ? "SQL Server" : $SourceType
 
-        $SourceFormat = $psplit[2]
+        #$SourceFormat = $psplit[2]
         $SourceFormat = ($SourceFormat -eq "DelimitedText") ? "Csv":$SourceFormat
 
-        $TargetType = $psplit[3]
+        #$TargetType = $psplit[3]
         $TargetType = ($TargetType -eq "AzureBlobStorage") ? "Azure Blob":$TargetType
         $TargetType = ($TargetType -eq "AzureBlobFS") ? "ADLS" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
         $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
 
-        $TargetFormat = $psplit[4]        
+        #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 
-        if ($TaskTypeId -eq 1)
+        if ($TaskTypeId -eq -1)
         {
-           $TargetFormat = "Table"
+        $TargetFormat = "Table"
         }
 
         $content = Get-Content $schemafile -raw
@@ -182,10 +231,10 @@ $patterns | ForEach-Object -Parallel {
         and ttm2.TargetType = ttm.TargetType 
     where ttm.TaskTypeMappingId is null
 
-    END
+    END 
 "@
 
-    $sql | Set-Content ($newfolder+"TaskTypeMapping.sql")
+        $sql | Set-Content ($folder + "/output/schemas/taskmasterjson/TaskTypeMapping.sql")    
 }
 
 # This will copy the output pipeline files into the locations required for the terraform deployment

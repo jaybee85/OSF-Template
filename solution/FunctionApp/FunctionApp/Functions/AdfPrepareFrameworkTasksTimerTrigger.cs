@@ -157,7 +157,7 @@ namespace FunctionApp.Functions
                 logging.DefaultActivityLogItem.TaskMasterId = row.TaskMasterId;
                 var instanceGenerationErrorMessage = "";
                 try
-                {
+               {
                     dynamic taskMasterJson = JsonConvert.DeserializeObject(row.TaskMasterJSON);
                     string sourceSystem = row.SourceSystemType.ToString();
                     string targetSystem = row.TargetSystemType.ToString();
@@ -213,12 +213,18 @@ namespace FunctionApp.Functions
                         {
                             root["IncrementalValue"] = row.TaskMasterWaterMark_BigInt ?? -1;
                         }
+                        else if (row.TaskMasterWaterMarkColumnType == "lsn")
+                        {
+                            root["IncrementalValue"] = row.TaskMasterWaterMark_String ?? "NO_WATERMARK_STRING";
+                        }
                         if ((root["IncrementalField"] == null) || (string.IsNullOrEmpty(root["IncrementalField"].ToString())))
                         {
                             instanceGenerationErrorMessage +=
                                 $"TaskMasterId '{logging.DefaultActivityLogItem.TaskInstanceId}' has an IncrementalType of Watermark but does not have any entry in the TaskWatermark table. ";
                         }
                     }
+
+                   //here 
 
                     if (root == null)
                     {
@@ -292,9 +298,9 @@ namespace FunctionApp.Functions
             dt.Columns.Add(new DataColumn("TaskInstanceId", typeof(string)));
             dt.Columns.Add(new DataColumn("ExecutionUid", typeof(Guid)));
             dt.Columns.Add(new DataColumn("PipelineName", typeof(string)));
-            dt.Columns.Add(new DataColumn("DatafactorySubscriptionUid", typeof(Guid)));
-            dt.Columns.Add(new DataColumn("DatafactoryResourceGroup", typeof(string)));
-            dt.Columns.Add(new DataColumn("DatafactoryName", typeof(string)));
+            dt.Columns.Add(new DataColumn("EngineSubscriptionUid", typeof(Guid)));
+            dt.Columns.Add(new DataColumn("EngineResourceGroup", typeof(string)));
+            dt.Columns.Add(new DataColumn("EngineName", typeof(string)));
             dt.Columns.Add(new DataColumn("RunUid", typeof(Guid)));
             dt.Columns.Add(new DataColumn("Status", typeof(string)));
             dt.Columns.Add(new DataColumn("SimpleStatus", typeof(string)));
@@ -302,7 +308,7 @@ namespace FunctionApp.Functions
             //Check Each Running Pipeline
             foreach (dynamic pipeline in activePipelines)
             {
-                var pipelineStatus = await _dataFactoryPipelineProvider.CheckPipelineStatus(pipeline.DatafactorySubscriptionUid.ToString(), pipeline.DatafactoryResourceGroup.ToString(), pipeline.DatafactoryName.ToString(), pipeline.PipelineName.ToString(), pipeline.AdfRunUid.ToString(), logging);
+                var pipelineStatus = await _dataFactoryPipelineProvider.CheckPipelineStatus(pipeline.EngineSubscriptionUid.ToString(), pipeline.EngineResourceGroup.ToString(), pipeline.EngineName.ToString(), pipeline.PipelineName.ToString(), pipeline.AdfRunUid.ToString(), logging);
 
                 if (pipelineStatus["SimpleStatus"].ToString() == "Runnning")
                 {
@@ -313,9 +319,9 @@ namespace FunctionApp.Functions
 
                 dr["TaskInstanceId"] = pipeline.TaskInstanceId;
                 dr["ExecutionUid"] = pipeline.ExecutionUid;
-                dr["DatafactorySubscriptionUid"] = pipeline.DatafactorySubscriptionUid;
-                dr["DatafactoryResourceGroup"] = pipeline.DatafactoryResourceGroup;
-                dr["DatafactoryName"] = pipeline.DatafactoryName;
+                dr["EngineSubscriptionUid"] = pipeline.EngineSubscriptionUid;
+                dr["EngineResourceGroup"] = pipeline.EngineResourceGroup;
+                dr["EngineName"] = pipeline.EngineName;
 
                 dr["Status"] = pipelineStatus["Status"];
                 dr["SimpleStatus"] = pipelineStatus["SimpleStatus"];

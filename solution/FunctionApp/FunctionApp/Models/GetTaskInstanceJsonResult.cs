@@ -37,13 +37,17 @@ namespace FunctionApp.Models
         [JsonProperty(Required = Required.Always)]
         public string TaskExecutionType { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public Int64 DataFactoryId { get; set; }
+        public Int64 EngineId { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public string DataFactoryName { get; set; }
+        public string EngineName { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public string DataFactoryResourceGroup { get; set; }
+        public string EngineSystemType { get; set; }
         [JsonProperty(Required = Required.Always)]
-        public Guid DataFactorySubscriptionId { get; set; }
+        public string EngineResourceGroup { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public Guid EngineSubscriptionId { get; set; }
+        [JsonProperty(Required = Required.Always)]
+        public string EngineJson {get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TaskMasterJson { get; set; }
         [JsonProperty(Required = Required.Always)]
@@ -52,9 +56,11 @@ namespace FunctionApp.Models
         public string AdfPipeline { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TaskDatafactoryIr { get; set; }
+        public string CustomDefinitions { get; set; }
+        public string ExecuteNotebook { get; set; }
 
 
-        
+
 
         //Task Instance
         public string TaskInstanceJson { get; set; }
@@ -96,7 +102,9 @@ namespace FunctionApp.Models
         public string TargetSystemUserName { get; set; }
         [JsonProperty(Required = Required.Always)]
         public string TargetSystemJson { get; set; }
-        
+
+
+
     } // End of class
 
    

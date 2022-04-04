@@ -72,7 +72,7 @@ namespace WebApplication.Controllers
 	                    b.ActivityType,
 	                    b.[Output]
                     from ADFPipelineRun a 
-                    join ADFActivityErrors b on a.DatafactoryId = b.DataFactoryId and a.PipelineRunUid = b.PipelineRunId
+                    join ADFActivityErrors b on a.EngineId = b.EngineId and a.PipelineRunUid = b.PipelineRunId
                     where TaskInstanceId =@TaskInstanceId and ExecutionUid=@ExecutionUid", SqlParams) select (IDictionary<string, object>)row).AsList();
 
 

@@ -1,3 +1,4 @@
+﻿
 /*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
@@ -37,11 +38,11 @@ SELECT
 	tt.TaskTypeId as TaskTypeId,
 	tt.TaskTypeName as TaskType,
 	tt.TaskExecutionType,
-	DF.DefaultKeyVaultURL as KeyVaultBaseUrl,
-	DF.Id as DataFactoryId,
-	DF.Name as DataFactoryName,
-	DF.ResourceGroup as DataFactoryResourceGroup,
-	DF.SubscriptionUid as DataFactorySubscriptionId,
+	EF.DefaultKeyVaultURL as KeyVaultBaseUrl,
+	EF.EngineId as EngineId,
+	EF.EngineName as EngineName,
+	EF.ResourceGroup as EngineResourceGroup,
+	EF.SubscriptionUid as EngineSubscriptionId,
 	TM.TaskMasterJSON,
 	TM.TaskMasterId,
 	TM.DegreeOfCopyParallelism,
@@ -83,7 +84,7 @@ INNER JOIN [dbo].[SourceAndTargetSystems] SS ON SS.SystemId = TM.[SourceSystemId
 	--AND SS.ActiveYN = 1
 INNER JOIN [dbo].[SourceAndTargetSystems] TS ON TS.SystemId = TM.TargetSystemId
 	--AND TS.ActiveYN = 1
-INNER JOIN [dbo].[DataFactory] DF on DF.Id = TM.DataFactoryId
+INNER JOIN [dbo].[ExecutionEngine] EF on EF.EngineId = TM.EngineId
 
 
 

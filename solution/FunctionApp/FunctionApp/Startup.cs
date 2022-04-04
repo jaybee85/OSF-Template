@@ -58,6 +58,7 @@ namespace FunctionApp
             services.AddSingleton<DataFactoryClientFactory>();
             services.AddSingleton<MicrosoftAzureManagementAuthenticationProvider>();
             services.AddSingleton<SourceAndTargetSystemJsonSchemasProvider>();
+            services.AddSingleton<AzureSynapseService>();
 
             services.AddSingleton<DataFactoryPipelineProvider>();
             services.AddSingleton<IAzureAuthenticationProvider>(downstreamAuthenticationProvider);
@@ -89,13 +90,15 @@ namespace FunctionApp
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));  //Set lifetime to five minutes
 
 
-            services.AddHttpClient(HttpClients.TaskMetaDataDatabaseHttpClientName, async (s, c) =>
+            services.AddHttpClient(HttpClients.PurviewHttpClientName, async (s, c) =>
             {
-                var token = await downstreamAuthenticationProvider.GetAzureRestApiToken("https://database.windows.net/").ConfigureAwait(false);
+                var token = await downstreamAuthenticationProvider.GetAzureRestApiToken("https://purview.azure.net").ConfigureAwait(false);
                 c.DefaultRequestHeaders.Accept.Clear();
                 c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));  //Set lifetime to five minutes
+
+            services.AddSingleton<PurviewService>();
         }
     }
 }

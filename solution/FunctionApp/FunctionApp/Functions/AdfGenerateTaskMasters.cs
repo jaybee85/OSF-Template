@@ -118,7 +118,7 @@ namespace FunctionApp.Functions
             dt.Columns.Add(new DataColumn("TaskDatafactoryIR", typeof(string)));
             dt.Columns.Add(new DataColumn("ActiveYN", typeof(bool)));
             dt.Columns.Add(new DataColumn("DependencyChainTag", typeof(string)));
-            dt.Columns.Add(new DataColumn("DataFactoryId", typeof(Int64)));
+            dt.Columns.Add(new DataColumn("EngineId", typeof(Int64)));
             dt.Columns.Add(new DataColumn("TaskMasterJSON", typeof(string)));
 
             foreach (JToken t in tables)
@@ -135,7 +135,7 @@ namespace FunctionApp.Functions
                 dr["TaskDatafactoryIR"] = jsontemplate["TaskDatafactoryIR"];
                 dr["ActiveYN"] = jsontemplate["ActiveYN"];
                 dr["DependencyChainTag"] = jsontemplate["DependencyChainTag"].ToString().Replace("{@TableSchema@}", t["TABLE_SCHEMA"].ToString()).Replace("{@TableName@}", t["TABLE_NAME"].ToString());
-                dr["DataFactoryId"] = jsontemplate["DataFactoryId"];
+                dr["EngineId"] = jsontemplate["EngineId"];
                 dr["TaskDatafactoryIR"] = jsontemplate["TaskDatafactoryIR"];
 
                 JObject taskMasterJson = new JObject

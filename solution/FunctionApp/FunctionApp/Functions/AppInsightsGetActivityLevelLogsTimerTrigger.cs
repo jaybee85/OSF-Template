@@ -61,13 +61,13 @@ namespace FunctionApp.Functions
             var maxTimesGenQuery = conRead.QueryWithRetry(@"
                                     select max([timestamp]) maxtimestamp from ActivityLevelLogs");        
 
-            foreach (var datafactory in maxTimesGenQuery)
+            foreach (var executionengine in maxTimesGenQuery)
             {
                 DateTimeOffset maxAllowedLogTimeGenerated = DateTimeOffset.UtcNow.AddDays(-1*_appOptions.Value.ServiceConnections.AppInsightsMaxNumberOfDaysToRequest);
                 DateTimeOffset maxObservedLogTimeGenerated = DateTimeOffset.UtcNow.AddDays(-1*_appOptions.Value.ServiceConnections.AppInsightsMaxNumberOfDaysToRequest);
-                if (datafactory.maxtimestamp != null)
+                if (executionengine.maxtimestamp != null)
                 {
-                    maxObservedLogTimeGenerated = ((DateTimeOffset)datafactory.maxtimestamp).AddMinutes(-1* _appOptions.Value.ServiceConnections.AppInsightsMinutesOverlap);
+                    maxObservedLogTimeGenerated = ((DateTimeOffset)executionengine.maxtimestamp).AddMinutes(-1* _appOptions.Value.ServiceConnections.AppInsightsMinutesOverlap);
                     //Make sure that we don't get more than max to ensure we dont get timeouts etc.
                     if ((maxObservedLogTimeGenerated) <= maxAllowedLogTimeGenerated)
                     {
@@ -137,7 +137,7 @@ namespace FunctionApp.Functions
                             Dictionary<string, string> sqlParams = new Dictionary<string, string>
                             {
                                 { "TempTable", t.QuotedSchemaAndName() },
-                                { "DatafactoryId", "1"}
+                                { "EngineId", "-1"}
                             };
 
                             string mergeSql = GenerateSqlStatementTemplates.GetSql(System.IO.Path.Combine(EnvironmentHelper.GetWorkingFolder(),_appOptions.Value.LocalPaths.SQLTemplateLocation), "MergeIntoActivityLevelLogs", sqlParams);

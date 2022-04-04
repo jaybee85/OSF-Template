@@ -38,6 +38,13 @@ function()
                 "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data."
             }
         },
+        "SkipLineCount": {
+            "type": "integer",
+            "default": 0,
+            "options": {                        
+                "infoText": "The number of rows to skip or ignore in the incoming file."
+            }
+        },       
         "FirstRowAsHeader": {
             "type": "string",
             "enum": [

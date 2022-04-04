@@ -1,11 +1,11 @@
-/*-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
  Licensed under the MIT license.
 
 -----------------------------------------------------------------------*/
 CREATE TABLE [dbo].[ADFActivityErrors] (
-    [DatafactoryId]               BIGINT           NULL,
+    [EngineId]                    BIGINT           NULL,
     [TenantId]                    VARCHAR (MAX)    NULL,
     [SourceSystem]                VARCHAR (MAX)    NULL,
     [TimeGenerated]               DATETIME         NULL,
@@ -33,11 +33,13 @@ CREATE TABLE [dbo].[ADFActivityErrors] (
     [PipelineName]                VARCHAR (MAX)    NULL,
     [Input]                       VARCHAR (MAX)    NULL,
     [Output]                      VARCHAR (MAX)    NULL,
-    [ErrorCode]                   INT              NULL,
+    [ErrorCode]                   VARCHAR (50)     NULL,
     [ErrorMessage]                VARCHAR (MAX)    NULL,
     [Error]                       VARCHAR (MAX)    NULL,
     [Type]                        VARCHAR (MAX)    NULL
 );
+
+
 
 
 

@@ -1,4 +1,4 @@
-/*-----------------------------------------------------------------------
+﻿/*-----------------------------------------------------------------------
 
  Copyright (c) Microsoft Corporation.
  Licensed under the MIT license.
@@ -7,7 +7,7 @@
 CREATE TABLE [dbo].[ADFPipelineStats] (
     [TaskInstanceId]                 INT                NOT NULL,
     [ExecutionUid]                   UNIQUEIDENTIFIER   NOT NULL,
-    [DataFactoryId]                  BIGINT             NOT NULL,
+    [EngineId]                       BIGINT             NOT NULL,
     [Activities]                     BIGINT             NULL,
     [TotalCost]                      REAL               NULL,
     [CloudOrchestrationCost]         REAL               NULL,
@@ -26,6 +26,8 @@ CREATE TABLE [dbo].[ADFPipelineStats] (
     [MaxPipelineTimeGenerated]       DATETIMEOFFSET (7) NOT NULL,
     [MaxPipelineDateGenerated]       AS                 (CONVERT([date],[MaxPipelineTimeGenerated])) PERSISTED,
     [MaxActivityDateGenerated]       AS                 (CONVERT([date],[MaxActivityTimeGenerated])) PERSISTED,
-    CONSTRAINT [PK_ADFPipelineStats] PRIMARY KEY CLUSTERED ([TaskInstanceId] ASC, [ExecutionUid] ASC, [DataFactoryId] ASC)
+    CONSTRAINT [PK_ADFPipelineStats] PRIMARY KEY CLUSTERED ([TaskInstanceId] ASC, [ExecutionUid] ASC, [EngineId] ASC)
 );
+
+
 

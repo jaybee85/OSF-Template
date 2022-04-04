@@ -6,5 +6,6 @@
         public const string TaskMetaDataDatabaseHttpClientName = "TaskMetaDataDatabase";
         public const string AppInsightsHttpClientName = "AppInsights";
         public const string CoreFunctionsHttpClientName = "CoreFunctions";
+        public const string PurviewHttpClientName = "Purview";
     }
 }
