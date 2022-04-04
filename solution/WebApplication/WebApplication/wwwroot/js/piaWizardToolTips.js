@@ -14,7 +14,7 @@ tippy("#dataOwnerTT",
 tippy('#dataCustodianTT',
     {
         appendTo: "parent",
-        content: "An entity which handles data. For the purposes of this document, we assume that data custodians are handling data that contains (or is derived from) personal information. This definition may have different interpretations depending on which State or jurisdiction within Australia a PHN is in."
+        content: "An entity which handles data. For the purposes of this document, we assume that data custodians are handling data that contains (or is derived from) personal information. This definition may have different interpretations depending on which State or jurisdiction within Australia the data and entity resides."
     });
 
 tippy('#penetrationTestTT',

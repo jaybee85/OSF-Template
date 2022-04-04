@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Identity;
 using WebApplication.Models;
 using WebApplication.Models.Options;
 
@@ -15,22 +16,15 @@ namespace WebApplication.Services
     {
         private readonly IOptions<MicrosoftIdentityOptions> _azureOptions;
         private readonly IOptions<SecurityModelOptions> _securityOptions;
-        private GraphServiceClient _graphServiceClient;
+        private readonly GraphServiceClient _graphServiceClient;
 
         public MicrosoftGraphService(IOptions<MicrosoftIdentityOptions> azureOptions, IOptions<SecurityModelOptions> securityOptions)
         {
             _azureOptions = azureOptions;
             _securityOptions = securityOptions;
 
-            IConfidentialClientApplication confidentialClient = ConfidentialClientApplicationBuilder
-                .Create(_azureOptions.Value.ClientId)
-                .WithTenantId(_azureOptions.Value.TenantId)
-                .WithClientSecret(_azureOptions.Value.ClientSecret)
-                .Build();
-
-            //TODO: Fix the graph serice client auth (we removed the obsolete Graph.Auth package dependency
-            //ClientCredentialProvider authProvider = new ClientCredentialProvider(confidentialClient);
-            //_graphServiceClient = new GraphServiceClient();
+            var credential = new ClientSecretCredential(azureOptions.Value.TenantId, azureOptions.Value.ClientId, azureOptions.Value.ClientSecret);
+            _graphServiceClient = new GraphServiceClient(credential);
         }
 
         public async Task<IEnumerable<UserReference>> GetMembers()
@@ -51,6 +45,7 @@ namespace WebApplication.Services
                     {
                         if (!members.ContainsKey(member.Id))
                         {
+                            var user = await _graphServiceClient.Users[member.Id].Request().GetAsync();
                             members.Add(member.Id, (User)member);
                         }   
                     }

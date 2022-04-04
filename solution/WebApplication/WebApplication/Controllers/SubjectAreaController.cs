@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebApplication.Services;
 using WebApplication.Framework;
 using WebApplication.Models;
@@ -13,6 +14,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using WebApplication.Forms;
 using WebApplication.Models.Forms;
+using WebApplication.Models.Options;
 using WebApplication.Models.Wizards;
 
 namespace WebApplication.Controllers
@@ -20,12 +22,14 @@ namespace WebApplication.Controllers
     public partial class SubjectAreaController : BaseController
     {
         protected readonly AdsGoFastContext _context;
-        
+        private readonly IOptions<ApplicationOptions> _options;
 
-        public SubjectAreaController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider) : base(securityAccessProvider, roleProvider)
+
+        public SubjectAreaController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider, IOptions<ApplicationOptions> options) : base(securityAccessProvider, roleProvider)
         {
             Name = "SubjectArea";
             _context = context;
+            _options = options;
         }
 
         // GET: SubjectArea
@@ -114,15 +118,13 @@ namespace WebApplication.Controllers
 
         private async Task CreateEmptySubjectAreaFormAndPIAAsync(SubjectArea subjectArea)
         {
-            // TODO: Replace this zone with a configurable item that is more generic that PHN
-            //await _sharedZoneService.GetZone();
-            var currentPhnZone = new Site();
+            var currentSite = new Site() { Name = _options.Value.SiteName, Id = _options.Value.SiteId };
 
             PIAWizardViewModel pia = new PIAWizardViewModel()
             {
                 BelongingDataset = subjectArea.SubjectAreaName,
                 BelongingDatasetCode = subjectArea.ShortCode,
-                Site = currentPhnZone
+                Site = currentSite
             };
 
             var form = new SubjectAreaForm()
@@ -309,7 +311,6 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'DefaultTargetSchema', 'name':'Default Target Schema', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'UpdatedBy', 'name':'Updated By', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'Is Active', 'autoWidth':true, 'ads_format':'bool'}"));
-			cols.Add(JObject.Parse("{ 'data':'Discoverability', 'name':'Discoverability', 'autoWidth':true, 'ads_format':'discoverability'}"));
             HumanizeColumns(cols);
 
             JArray pkeycols = new JArray();

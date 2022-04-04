@@ -263,7 +263,6 @@ namespace WebApplication.Controllers
                 //filter the list by permitted roles
                 if (!CanPerformCurrentActionGlobally())
                 {
-                    //TODO: Make sure this works with the Groups instead of ROles 
                     var permittedRoles = GetPermittedGroupsForCurrentAction();
 
                     modelDataAll =

@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using WebApplication.Forms;
-using WebApplication.Forms.PIAWizard;
-using Newtonsoft.Json.Linq;
 using WebApplication.Framework;
 using WebApplication.Models;
 using WebApplication.Models.Wizards;
 using WebApplication.Services;
-using Microsoft.Extensions.Options;
 using WebApplication.Models.Forms;
 using WebApplication.Models.Options;
-using SubjectArea = WebApplication.Models.SubjectArea;
 
 namespace WebApplication.Controllers
 {
@@ -24,15 +19,18 @@ namespace WebApplication.Controllers
     {
         private readonly AdsGoFastContext _context;
         private readonly IMicrosoftGraphService _graphService;
+        private readonly IOptions<ApplicationOptions> _options;
 
         public WizardsController(AdsGoFastContext context,
             Services.ISecurityAccessProvider securityProvider,
             Services.IEntityRoleProvider roleProvider,
-            IMicrosoftGraphService graphService)
+            IMicrosoftGraphService graphService,
+            IOptions<ApplicationOptions> options)
             : base(securityProvider, roleProvider)
         {
             _context = context;
             _graphService = graphService;
+            _options = options;
         }
 
         [HttpGet]
@@ -53,13 +51,11 @@ namespace WebApplication.Controllers
             ViewBag.SourceSystems = new SelectList(_context.SourceAndTargetSystems
                 .OrderBy(x => x.SystemName), "SystemId", "SystemName");
 
-            //TODO: Refactor this out
-            //var phnZones = await _sharedZoneService.GetAllZones();
-            //ViewBag.PhnZones = new SelectList(new List<PhnZone>(phnZones)
-            //    .OrderBy(x => x.Name), "Id", "Name");
+            var sites = new List<Site>() { new Site(){Name = _options.Value.SiteName, Id = _options.Value.SiteId} }; 
+            ViewBag.Sites = new SelectList(sites.OrderBy(x => x.Name), "Id", "Name");
 
             var users = await GetUsers();
-            ViewBag.PHNUsers = new SelectList(users.OrderBy(x => x.DisplayName),
+            ViewBag.Users = new SelectList(users.OrderBy(x => x.DisplayName),
                 "UserId", "DisplayName");
         }
 
@@ -154,10 +150,10 @@ namespace WebApplication.Controllers
                     // If submitted form
                     if (subjectAreaForm.FormStatus == (int)SubjectAreaFormStatus.Complete)
                     {
-                        // notify all phn users whose roles are set throgh the form by email
+                        // notify all users whose roles are set throgh the form by email
                         string[] stewards = PIA.DataStewards.Select(ds => ds.UserId).ToArray();
 
-                        SendNotificationToSubjectAreaUsers();
+                        SendNotificationToSubjectAreaUsers(stewards);
 
                         DoProcessingAndAutomationForSubjectArea();
                         
@@ -187,7 +183,7 @@ namespace WebApplication.Controllers
             // If there are any automation steps like setting up security access / Azure AD security groups etc
         }
 
-        private void SendNotificationToSubjectAreaUsers()
+        private void SendNotificationToSubjectAreaUsers(string[] stewards)
         {
             //TODO: Send emails to PIA.DataOwner.UserId, PIA.DataCustodian.UserId, and stewards
         }
@@ -233,7 +229,7 @@ namespace WebApplication.Controllers
         {
             var users = await GetUsers();
 
-            ViewBag.PHNUsers = new SelectList(users, "UserId", "DisplayName");
+            ViewBag.Users = new SelectList(users, "UserId", "DisplayName");
 
             var dataSteward = new UserReference();
 
@@ -247,8 +243,7 @@ namespace WebApplication.Controllers
         {
             var users = await GetUsers();
 
-            ViewBag.PHNUsers = new SelectList(users,
-                "UserId", "DisplayName"); // find better way to do this
+            ViewBag.Users = new SelectList(users, "UserId", "DisplayName"); // find better way to do this
 
             if (pia.DataStewards.Count > 1)
             {
@@ -330,7 +325,6 @@ namespace WebApplication.Controllers
                     RelativePath = upload.RelativePath,
                     DataFileName = upload.UploadFileName,
                     TargetSystem = upload.TargetSystemId,
-                    PHIWideTransientInZoneIDForPHNX = upload.TargetSystemId,
                     FileUploaderWebAppURL = upload.FileUploaderWebAppURL,
                     TargetSystemUidInPHI = upload.TargetSystemUidInPHI // target system guid user inputs?
                 },
@@ -340,7 +334,7 @@ namespace WebApplication.Controllers
                     EmailSubject = upload.EmailSubject,
                     EmailRecipient = upload.OperatorEmail,
                     EmailRecipientName = upload.OperatorName,
-                    EmailTemplateFileName = "PipQISasUriEmail"
+                    EmailTemplateFileName = "SasUriEmailTemplate"
                 }
             };
 

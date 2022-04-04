@@ -27,7 +27,7 @@
         </label>
     </div>
     <div class="col-6">
-        @Html.DropDownListFor(model => model.DataOwner.UserId, ViewBag.PHNUsers as SelectList, "Select User", new { @class = "form-control", @id = "nameDroplist", @onchange = "setOwnerDisplayName(this)" })
+        @Html.DropDownListFor(model => model.DataOwner.UserId, ViewBag.Users as SelectList, "Select User", new { @class = "form-control", @id = "nameDroplist", @onchange = "setOwnerDisplayName(this)" })
         @Html.HiddenFor(model => model.DataOwner.DisplayName, new { @id = "ownerName"})
     </div>    
 </div>
@@ -41,7 +41,7 @@
         </label>
     </div>
     <div class="col-6">
-        @Html.DropDownListFor(model => model.DataCustodian.UserId, ViewBag.PHNUsers as SelectList, "Select User", new { @class = "form-control", @id = "nameDroplist", @onchange = "setOwnerDisplayName(this)" })
+        @Html.DropDownListFor(model => model.DataCustodian.UserId, ViewBag.Users as SelectList, "Select User", new { @class = "form-control", @id = "nameDroplist", @onchange = "setOwnerDisplayName(this)" })
         @Html.HiddenFor(model => model.DataCustodian.DisplayName, new { @id = "custodianName"})
     </div>    
 </div>

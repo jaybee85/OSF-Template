@@ -54,9 +54,8 @@ namespace WebApplication.Models.Wizards
         [Required(ErrorMessage = "This field is required")]
         public string DataSetDescription { get; set; }
 
-        // dropdown for all phns
-        [Display(Name = "6. To which PHN does the Dataset belong?")]
-        public Guid? PhnId { get; set; }
+        [Display(Name = "6. To which site does the Dataset belong?")]
+        public Guid? SiteId { get; set; }
 
         [Display(Name = "6a. Please provide the source of the data from where it was captured?")]
         [Required(ErrorMessage = "This field is required")]
@@ -78,9 +77,9 @@ namespace WebApplication.Models.Wizards
         /// When parsing data from model, combine the names of 5. + 6. + 7. + version number
         /// joined together using an underscore as a separator, to a single value "System purpose version"
         /// </summary>        
-        [Display(Name = "8. PHN_System_Purpose_Version E.g. WAPHA_PATCAT_GP_V0.3")]
+        [Display(Name = "8. Identifier")]
         public string SystemPurposeVersion { get; set; }
-        public string PhnName { get; set; }
+        public string SiteName { get; set; }
         [Required(ErrorMessage = "This field is required")]
         public string SourceSystemName { get; set; }
         [Required(ErrorMessage = "This field is required")]
@@ -356,8 +355,8 @@ namespace WebApplication.Models.Wizards
                 StakeholdersAssurance = StakeholdersAssurance.GetSelections(),
                 Step = Step,
                 SubjectAreaId = SubjectAreaId,
-                PhnId = this.Site.Id,
-                PhnName = this.Site.Name,
+                SiteId = this.Site.Id,
+                SiteName = this.Site.Name,
                 ProvidedTransparencyExplanation = this.ProvidedTransparencyExplanation,
                 PopulationVulnerabilityExplanation = this.PopulationVulnerabilityExplanation,
                 StakeholderAssuranceExplanation = this.StakeholderAssuranceExplanation,
@@ -436,9 +435,9 @@ namespace WebApplication.Models.Wizards
                 StakeholdersAssurance = form.StakeholdersAssurance.AsInputSelectionOptions(),
                 Step = form.Step,
                 SubjectAreaId = form.SubjectAreaId,
-                PhnId = form.PhnId,
-                PhnName = form.PhnName,
-                Site = new Site() {Id = form.PhnId.GetValueOrDefault(), Name = form.PhnName},
+                SiteId = form.SiteId,
+                SiteName = form.SiteName,
+                Site = new Site() {Id = form.SiteId.GetValueOrDefault(), Name = form.SiteName },
                 ProvidedTransparencyExplanation = form.ProvidedTransparencyExplanation,
                 PopulationVulnerabilityExplanation = form.PopulationVulnerabilityExplanation,
                 SensitiveVariableExpl = form.SensitiveVariableExpl,

@@ -292,23 +292,6 @@ function DataTablesGridStart(GridOptions, PrepOptions) {
                     return item;
                 };
             }
-
-            if (value.ads_format.toLowerCase() === "discoverability") {
-                GridOptions.GridColumns[index].render = function (data, type, row, meta) {
-
-                    if (data === 0) {
-                        return "None";
-                    }
-
-                    if (data === 1) {
-                        return "My PHN";
-                    }
-
-                    if (data === 3) {
-                        return "Global";
-                    }
-                }
-            }
         }
     });
 

@@ -208,9 +208,7 @@ $(document).ready(function () {
         var event = new Event('change');
         personalDataBox.dispatchEvent(event);
     }
-
-    // sets phn system purpose version name text inputs 
-    // todo: rewrite this, make it cleaner
+    
     var tgSelection = document.getElementById("tgSelection");
     var dsSelection = document.getElementById("dsSelection");
 
@@ -219,16 +217,16 @@ $(document).ready(function () {
 
         var dropdownText = source.options[source.selectedIndex].text;
 
-        if (dropdownText === "Select Your Source System" || dropdownText === "Select Your PHN Zone") {
+        if (dropdownText === "Select Your Source System" || dropdownText === "Select Your Site Zone") {
             return;
         }
 
         if (source.id === "dsSelection") {
-            var datasetField = document.getElementById("spvPhnName");
-            var phnNameField = document.getElementById("hiddenPhnName");
+            var datasetField = document.getElementById("spvSiteName");
+            var siteNameField = document.getElementById("hiddenSiteName");
 
             datasetField.value = dropdownText; // set the hidden field to make form save properly
-            phnNameField.value = dropdownText;
+            siteNameField.value = dropdownText;
         } else {
             var taskGroupField = document.getElementById("spdSourceSystemName");
             taskGroupField.value = dropdownText;

@@ -12,13 +12,15 @@ namespace WebApplication.Services
     public class SecurityAccessProvider : ISecurityAccessProvider
     {
         private readonly ILogger _logger;
+        private readonly IMicrosoftGraphService _graphService;
         private readonly IOptions<SecurityModelOptions> _options;
         private const string WildCardString = "*";
 
-        public SecurityAccessProvider(IOptions<SecurityModelOptions> options, ILogger<SecurityAccessProvider> logger)
+        public SecurityAccessProvider(IOptions<SecurityModelOptions> options, ILogger<SecurityAccessProvider> logger, IMicrosoftGraphService graphService)
         {
             _options = options;
             _logger = logger;
+            _graphService = graphService;
         }
 
         public bool CanPerformOperation(string controllerName, string actionName, ClaimsIdentity identity)
@@ -77,7 +79,7 @@ namespace WebApplication.Services
                 .Select(x => x.Key)
                 .ToArray();
         }
-
+        
         public string[] GetUserGroups(ClaimsIdentity identity)
         {
             return identity is null 

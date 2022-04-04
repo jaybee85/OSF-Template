@@ -24,6 +24,5 @@ namespace WebApplication.Models
         public DateTime ValidFrom { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ValidTo { get; set; }
-        public byte? Discoverability { get; set; }
     }
 }

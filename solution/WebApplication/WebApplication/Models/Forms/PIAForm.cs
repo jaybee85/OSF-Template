@@ -22,12 +22,12 @@ namespace WebApplication.Models.Forms
         public string BelongingDatasetCode { get; set; } 
         public string BelongingDataset { get; set; } // name of associated subject area code
 
-        public Guid? PhnId { get; set; }
+        public Guid? SiteId { get; set; }
         public string DataSourceLocation { get; set; }
         public int? OwningSystem { get; set; }
         public string SystemDataLocation { get; set; }
         public string SystemPurposeVersion { get; set; }
-        public string PhnName { get; set; }
+        public string SiteName { get; set; }
         public string SourceSystemName { get; set; }
         public string SystemPurposeVersionNumber { get; set; }
 

@@ -681,8 +681,6 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Discoverability).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.SubjectAreaName)
                     .HasMaxLength(255)
                     .IsUnicode(false);

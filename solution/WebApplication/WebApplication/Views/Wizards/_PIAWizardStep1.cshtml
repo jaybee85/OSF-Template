@@ -102,12 +102,12 @@
 
 <div class="form-group row col-12 wizardSelector">
     <div class="col-6">
-        <label asp-for="PhnId" class="control-label"></label>
+        <label asp-for="SiteId" class="control-label"></label>
     </div>
     <div class="formSelect col-6">
-        @Html.DropDownListFor(model => model.Site.Id, ViewBag.PhnZones as SelectList, "Select Your PHN Zone", new { @class = "form-control", @id = "dsSelection" })
-        @Html.HiddenFor(model => model.Site.Name, new { @id = "hiddenPhnName"})
-        <span asp-validation-for="PhnId" class="text-danger"></span>
+        @Html.DropDownListFor(model => model.Site.Id, ViewBag.Sites as SelectList, "Select Your site", new { @class = "form-control", @id = "dsSelection" })
+        @Html.HiddenFor(model => model.Site.Name, new { @id = "hiddenSiteName"})
+        <span asp-validation-for="SiteId" class="text-danger"></span>
     </div>
 </div>
 
@@ -146,7 +146,7 @@
         <label asp-for="SystemPurposeVersion" style="width:90%" class="control-label"></label>
     </div>
     <div class="col-6" id="sysVersionInput">
-        @Html.TextBoxFor(model => model.PhnName, new { @size = 3, id = "spvPhnName", @readonly = "readonly" })
+        @Html.TextBoxFor(model => model.SiteName, new { @size = 3, id = "spvSiteName", @readonly = "readonly" })
         _
         @Html.TextBoxFor(model => model.SourceSystemName, new { @size = 3, id = "spdSourceSystemName", @readonly = "readonly" })
         _
