@@ -68,6 +68,7 @@ jobs:
       - name: Deploy Solution
         id: solution-deployment
         working-directory: ./solution/DeploymentV2/
+        shell: pwsh
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
