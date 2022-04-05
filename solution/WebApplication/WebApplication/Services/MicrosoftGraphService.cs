@@ -14,11 +14,11 @@ namespace WebApplication.Services
 {
     public class MicrosoftGraphService : IMicrosoftGraphService
     {
-        private readonly IOptions<MicrosoftIdentityOptions> _azureOptions;
+        private readonly IOptions<AuthOptions> _azureOptions;
         private readonly IOptions<SecurityModelOptions> _securityOptions;
         private readonly GraphServiceClient _graphServiceClient;
 
-        public MicrosoftGraphService(IOptions<MicrosoftIdentityOptions> azureOptions, IOptions<SecurityModelOptions> securityOptions)
+        public MicrosoftGraphService(IOptions<AuthOptions> azureOptions, IOptions<SecurityModelOptions> securityOptions)
         {
             _azureOptions = azureOptions;
             _securityOptions = securityOptions;
