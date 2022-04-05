@@ -8,8 +8,6 @@ on:
 jobs:
     deploy-to-staging:
       name: Deploy to Staging Environment
-      permissions:
-       id-token: write
       env:
         environmentName: staging
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
