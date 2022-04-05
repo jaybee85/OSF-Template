@@ -30,7 +30,9 @@ jobs:
         name: staging
       runs-on: ubuntu-latest
       steps:
-      - uses: actions/checkout@v2
+      
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
 
       - name: Get public IP
         id: ip
