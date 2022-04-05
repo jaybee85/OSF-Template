@@ -1,0 +1,10 @@
+﻿Dear {Alert.EmailRecepientName},
+
+Thank you for uploading your file for this quarter's PIPQI.
+
+We can confirm that we have received it.
+
+If we encounter any problems during the processing, we’ll get back to you.
+
+ 
+PracticeAssist. 

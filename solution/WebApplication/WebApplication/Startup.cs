@@ -43,6 +43,8 @@ namespace WebApplication
 
             //Configure Entity Framework with Token Auth via Interceptor
             services.AddSingleton<AadAuthenticationDbConnectionInterceptor>();
+            services.AddSingleton<IMicrosoftGraphService, MicrosoftGraphService>();
+            
             services.AddDbContext<AdsGoFastContext>((provider, options) =>
             {
                 var appOptions = provider.GetService<IOptions<ApplicationOptions>>();

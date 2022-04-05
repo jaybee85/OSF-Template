@@ -1,0 +1,34 @@
+Dear {NAME}
+
+Thank you for choosing to use the WA Primary Health Alliance (WAPHA) Data Upload facility (“WAPHA Portal”) for your secure submission of the Practice Incentives Program Quality Improvement (PIP QI) 10 Quality Improvement Measures (10QIM) dataset.
+
+IMPORTANT
+
+PLEASE READ THE END USER LICENCE AGREEMENT CAREFULLY BEFORE ACCESSING AND USING THE WAPHA PORTAL. IT PROVIDES YOU WITH IMPORTANT INFORMATION CONCERNING THE WAPHA PORTAL AND CONTAINS WARRANTY AND LIABILITY INFORMATION.
+
+BY ACCESSING OR USING THE PORTAL, AND TO THE EXTENT PERMITTED BY LAW, YOU ACCEPT THE WAPHA PORTAL“AS IS” AND AGREE TO BE BOUND BY THE TERMS AND CONDITIONS OF THE END USER LICENCE AGREEMENT. IF YOU DO NOT WISH TO DO SO, DO NOT PROCEED TO ACCESS AND USE THE WAPHA PORTAL.
+
+END USER LICENSE AGREEMENT AVAILABLE HERE: https://www.practiceassist.com.au/PracticeAssist/media/ResourceLibrary/Medicare%20Benefits%20Schedule/End-User-Licence-Agreement-WAPHA-Portal-20200918.pdf
+
+A simple guide to the WAPHA PIP-QI Data Upload Facility is available here: https://www.practiceassist.com.au/PracticeAssist/media/ResourceLibrary/Human%20Resources%20and%20Staff%20Management/PIP-QI-Uploader-Instructions_200930.pdf.
+
+In order to upload your data for this quarter, please visit the link below where you will be asked to attach and submit the compliant PIP QI Eligible Dataset extracted from your clinical information system.
+
+{FileUploaderUrl}?&TargetSystemUidInPHI={TargetSystemUidInPHI}{SASTOKEN}
+
+IMPORTANT: this link will expire XX days/hours from the date of this email. If you need a new link generated, please contact Practice Assist on the details below.
+
+The WAPHA Portal will notify you on the success of your upload within XX. Please retain this email for your records.
+
+For any further information on your data sharing arrangement or the WAPHA Portal facility, please contact Practice Assist on 1800 277 478 or practiceassist@wapha.org.au
+
+
+Copyright © 2020 WA Primary Health Alliance, All rights reserved.
+
+You are receiving this email as a general practice, or other health professional, in Western Australia or if you are subscribed to GP Connect or Practice Connect.
+
+Our mailing address is:
+
+WA Primary Health Alliance 7 Tanunda Drive Rivervale, WA 6103 Australia
+
+You can change your email preferences for this service by contacting practiceassist@wapha.org.au
