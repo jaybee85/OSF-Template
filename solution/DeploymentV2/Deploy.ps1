@@ -46,12 +46,13 @@ $deploymentFolderPath = (Get-Location).Path
 Set-Location "./terraform"
 $env:TF_VAR_ip_address = $myIp
 
+terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+
 if ($skipTerraformDeployment) {
     Write-Host "Skipping Terraform Deployment"
 }
 else {
     Write-Host "Starting Terraform Deployment"
-    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
 }
 
