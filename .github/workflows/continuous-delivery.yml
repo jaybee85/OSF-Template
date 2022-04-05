@@ -54,8 +54,6 @@ jobs:
         run: |
           brew install terragrunt    
           az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
-          terragrunt init --terragrunt-config vars/staging/terragrunt.hcl
-          terragrunt plan --terragrunt-config vars/staging/terragrunt.hcl        
 
       - name: Install Jsonnet
         id: jsonnet-install
@@ -72,4 +70,4 @@ jobs:
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          ./aDeploy.ps1           
+          ./Deploy.ps1           
