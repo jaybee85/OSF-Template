@@ -10,6 +10,7 @@ jobs:
       name: Deploy to Staging Environment
       env:
         environmentName: staging
+        skipTerraformDeployment: true
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         # Required for Terraform
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
