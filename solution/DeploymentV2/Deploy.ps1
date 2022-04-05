@@ -225,7 +225,12 @@ else {
     dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --PurviewAccountName $purview_name
 
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
-    $SqlInstalled = Get-InstalledModule SqlServer
+    $SqlInstalled = false
+    try { 
+        $SqlInstalled = Get-InstalledModule SqlServer
+    }
+    catch { "SqlServer PowerShell module not installed." }
+    
     if($null -eq $SqlInstalled)
     {
         write-host "Installing SqlServer Module"
