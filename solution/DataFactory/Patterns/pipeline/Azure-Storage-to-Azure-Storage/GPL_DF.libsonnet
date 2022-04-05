@@ -53,7 +53,7 @@
                                 "linkedService": {
                                     "StorageAccountEndpoint": {
                                         "value": "@pipeline().parameters.TaskObject.Target.System.SystemServer",
-                                        "type": "Expression"
+                                        "type ": "Expression"
                                     }
                                 }
                             }
