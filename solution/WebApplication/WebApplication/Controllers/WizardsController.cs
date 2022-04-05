@@ -41,7 +41,9 @@ namespace WebApplication.Controllers
             ViewData["TargetSystemId"] = new SelectList(await _context.SourceAndTargetSystems.Where(t => t.SystemType.ToLower() == "azure blob" || t.SystemType.ToLower() == "adls").OrderBy(t => t.SystemName).ToListAsync(), "SystemId", "SystemName");
             ViewData["TaskGroupId"] = new SelectList(await _context.TaskGroup.OrderBy(t => t.TaskGroupName).ToListAsync(), "TaskGroupId", "TaskGroupName");
             ViewData["ScheduleMasterId"] = new SelectList(await _context.ScheduleMaster.OrderBy(t => t.ScheduleDesciption).ToListAsync(), "ScheduleMasterId", "ScheduleDesciption");
-            ViewData["DataFactoryId"] = new SelectList(await _context.DataFactory.OrderBy(t => t.Name).ToListAsync(), "Id", "Name");
+            ViewData["EngineId"] = new SelectList(await _context.ExecutionEngine.OrderBy(t => t.EngineName).ToListAsync(), "EngineId", "EngineName");
+            ViewData["IntegrationRuntimeId"] = new SelectList(await _context.IntegrationRuntime.OrderBy(t => t.IntegrationRuntimeName).ToListAsync(), "IntegrationRuntimeId", "IntegrationRuntimeName");
+            
 
             return View();
         }
@@ -301,7 +303,7 @@ namespace WebApplication.Controllers
                 TaskMasterJson = upload.ExternalParties,
                 ActiveYn = upload.IsActive,
                 DependencyChainTag = upload.DependencyChainTag,
-                DataFactoryId = upload.DataFactoryId,
+                EngineId = upload.EngineId,
                 DegreeOfCopyParallelism = upload.DegreeOfCopyParallelism,
             };
 

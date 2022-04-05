@@ -9,7 +9,7 @@ namespace WebApplication.Models.Wizards
         public Int64 EmailSystemId { get; set; }
         public Int64 TargetSystemId { get; set; } 
         public Int64 ScheduleMasterId { get; set; }
-        public Int64 DataFactoryId { get; set; }
+        public Int64 EngineId { get; set; }
         public Int64 TaskGroupId { get; set; }
         public Int64 TaskTypeId { get; set; }
 
