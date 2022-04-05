@@ -21,8 +21,9 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-Import-Module .\pwshmodules\GetSelectionFromUser.psm1 -force
-$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+$environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
+$skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
+
 if ($environmentName -eq "Quit")
 {
     Exit
@@ -31,7 +32,6 @@ if ($environmentName -eq "Quit")
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $false
 $deploymentFolderPath = (Get-Location).Path
 
 #----------------------------------------------------------------------------------------------------------------
