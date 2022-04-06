@@ -34,8 +34,16 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
-        "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": ""
+
        
     },
 
@@ -44,9 +52,305 @@ local tests =
         "Pattern": "Azure Storage to Azure Storage",         
         "SourceSystemAuthType": "MSI",
         
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource - Enabled: SparkTableCreate",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Enabled",
+        "SparkTableDBName": "TestDB",
+        "SparkTableName": "TestTable"
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / CDCSource - Enabled: Purview",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Enabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": ""
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / Purview - Enabled: CDCSource",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Enabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": ""
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: CDCSource - Enabled: SparkTableCreate / Purview",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Enabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Enabled",
+        "SparkTableDBName": "TestDB",
+        "SparkTableName": "TestTable2"
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview - Enabled: SparkTableCreate / CDCSource",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Enabled",
+        "SparkTableCreate": "Enabled",
+        "SparkTableDBName": "TestDB",
+        "SparkTableName": "TestTable3"
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate - Enabled: Purview / CDCSource",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Enabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Enabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": ""
+
+       
+    },
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
+        "SourceFormat":"Parquet",
+        "SourceType":"ADLS",        
+        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceSourceSystemAuthType": "MSI",
+        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSkipLineCount":"",
+        "SourceFirstRowAsHeader": "false",
+        "SourceSheetName":"",
+        "SourceMaxConcurrentConnections":0,
+        "SourceRecursively":"false",
+        "SourceDeleteAfterCompletion":"false",
+        
+        "TargetFormat":"Delta",
+        "TargetType":"ADLS",        
+        "TargetDataFilename":"SalesLT.Customer",
+        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetSourceSystemAuthType":"MSI", 
+        "TargetSkipLineCount":"",
+        "TargetFirstRowAsHeader": "false",
+        "TargetSheetName":"",
+        "TargetMaxConcurrentConnections":0,
+        "TargetRecursively":"false",
+        "TargetDeleteAfterCompletion":"false",
+        
+        "Description": "File copy between datalake zones - parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
+
+        "Purview": "Enabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Enabled",
+        "SparkTableCreate": "Enabled",
+        "SparkTableDBName": "TestDB",
+        "SparkTableName": "TestTable4"
+
+       
+    },
+
+
+
+    {        
+        "Active": true,        
+        "Pattern": "Azure Storage to Azure Storage",         
+        "SourceSystemAuthType": "MSI",
+        
         "SourceFormat":"Delta",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT-Customer-Delta/SalesLT.Customer/",
+        "SourceDataFilename":"SalesLT_Customer_Delta/SalesLT.Customer/",
         "SourceSourceSystemAuthType": "MSI",
         "SourceSchemaFileName":"SalesLT.Customer*.json", 
         "SourceSkipLineCount":"",
@@ -68,8 +372,15 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
-        "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
+        "Description": "File copy between datalake zones - delta to delta",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": "" 
        
     },
 
@@ -81,7 +392,7 @@ local tests =
         
         "SourceFormat":"Delta",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT-Customer-Delta/SalesLT.Customer/",
+        "SourceDataFilename":"SalesLT_Customer_Delta/SalesLT.Customer/",
         "SourceSourceSystemAuthType": "MSI",
         "SourceSchemaFileName":"SalesLT.Customer*.json", 
         "SourceSkipLineCount":"",
@@ -103,8 +414,15 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         
-        "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure" 
+        "Description": "File copy between datalake zones - delta to parquet",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
+
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId",
+        "CDCSource": "Disabled",
+        "SparkTableCreate": "Disabled",
+        "SparkTableDBName": "",
+        "SparkTableName": "" 
        
     }
 
@@ -139,7 +457,13 @@ template(
     t.TargetMaxConcurrentConnections,
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
-    t.Description
+    t.Description,
+    t.Purview,
+    t.QualifiedIDAssociation,
+    t.CDCSource,
+    t.SparkTableCreate,
+    t.SparkTableDBName,
+    t.SparkTableName
 );
 
 
