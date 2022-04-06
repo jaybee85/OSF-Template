@@ -36,7 +36,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate",  
+        "Description": "parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -81,7 +81,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource - Enabled: SparkTableCreate",  
+        "Description": "parquet to delta - Disabled: Purview / CDCSource - Enabled: SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -125,7 +125,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / CDCSource - Enabled: Purview",  
+        "Description": "parquet to delta - Disabled: SparkTableCreate / CDCSource - Enabled: Purview",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -169,7 +169,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / Purview - Enabled: CDCSource",  
+        "Description": "parquet to delta - Disabled: SparkTableCreate / Purview - Enabled: CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -213,7 +213,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: CDCSource - Enabled: SparkTableCreate / Purview",  
+        "Description": "parquet to delta - Disabled: CDCSource - Enabled: SparkTableCreate / Purview",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -257,7 +257,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview - Enabled: SparkTableCreate / CDCSource",  
+        "Description": "parquet to delta - Disabled: Purview - Enabled: SparkTableCreate / CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -301,7 +301,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate - Enabled: Purview / CDCSource",  
+        "Description": "parquet to delta - Disabled: SparkTableCreate - Enabled: Purview / CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -345,7 +345,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "File copy between datalake zones - parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate",  
+        "Description": "parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -434,7 +434,7 @@ local tests =
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
-        
+
         "Description": "File copy between datalake zones - delta to parquet",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
 
