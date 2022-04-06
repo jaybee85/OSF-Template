@@ -21,7 +21,7 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
                 "infoText": "Set this to enabled if your incoming data is from a CDC formatted database. This will modify how the default notebook interacts with the source data. Note: CDC specific columns will be removed from the sink."
             }
         },
-        "SaveAsPersistentTable": {
+        "SparkTableCreate": {
             "type": "string",
             "default": "Disabled",
             "enum": [
@@ -32,7 +32,7 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
                 "infoText": "Set this to enabled if you want to save your output data as an external persistent table within synapse. Note: Currently persistent tables do not support delta format so we have to create a parquet of the latest version within the sink directory."
             }
         },
-        "PersistentDBName": {
+        "SparkTableDBName": {
             "type": "string",
             "options": {
                 "inputAttributes": {
@@ -41,7 +41,7 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
                 "infoText": "This is the database of the persistent table you want to save. Will create a DB if provided name does not already exist. Note: This relies on SaveAsPersistentTable being Enabled - otherwise does nothing."
             }
         },
-        "PersistentTableName": {
+        "SparkTableName": {
             "type": "string",
             "options": {
                 "inputAttributes": {

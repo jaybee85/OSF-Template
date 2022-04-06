@@ -27,10 +27,22 @@ function(
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
     TestDescription = "",
+    Purview = "Disabled",
+    QualifiedIDAssociation = "TaskMasterId",
+    CDCSource = "",
+    SparkTableCreate = "Disabled",
+    SparkTableName = "",
+    SparkTableDBName = ""
     )
 {
     local TaskMasterJson =     
     {
+        "Purview": Purview,
+        "QualifiedIDAssociation": QualifiedIDAssociation,
+        "CDCSource": CDCSource,
+        "SparkTableCreate": SparkTableCreate,
+        "SparkTableDBName": SparkTableDBName,
+        "SparkTableName": SparkTableName,
         "Source":{
             "Type": SourceFormat,                       
             "RelativePath": "samples/",
