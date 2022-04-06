@@ -35,9 +35,10 @@ local tests =
         
         "ExecuteNotebook": "Notebook 1",
         "CustomDefinitions": "",
-        "Description": "File copy between datalake zones",  
-        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure"
-         
+        "Description": "Execute Notebook test - Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",  
+        "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
+        "Purview": "Disabled",
+        "QualifiedIDAssociation": "TaskMasterId"   
        
     }
 
@@ -74,7 +75,9 @@ template(
     t.TargetDeleteAfterCompletion,
     t.Description,
     t.ExecuteNotebook,
-    t.CustomDefinitions
+    t.CustomDefinitions,
+    t.Purview,
+    t.QualifiedIDAssociation
 );
 
 
