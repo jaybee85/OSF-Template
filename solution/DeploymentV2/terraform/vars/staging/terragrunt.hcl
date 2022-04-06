@@ -41,4 +41,6 @@ inputs = {
   deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = true
   is_onprem_datafactory_ir_registered   = false
+
+  purview_name = "dlzdev06purv"
 } 

@@ -20,7 +20,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Notebook-Optional",
         "TargetType":"N/A",        
         "TargetDataFilename":"",
@@ -32,7 +33,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "ExecuteNotebook": "Notebook 1",
         "CustomDefinitions": "",
         "Description": "Execute Notebook test - Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",  
@@ -62,6 +64,7 @@ template(
     t.SourceMaxConcurrentConnections,
     t.SourceRecursively,
     t.SourceDeleteAfterCompletion,
+    t.SourceWriteSchemaToPurview,
     t.TargetFormat,
     t.TargetType,
     t.TargetDataFilename,
@@ -73,6 +76,7 @@ template(
     t.TargetMaxConcurrentConnections,
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
+    t.TargetWriteSchemaToPurview,
     t.Description,
     t.ExecuteNotebook,
     t.CustomDefinitions,

@@ -21,6 +21,7 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
+        "SourceWriteSchemaToPurview": "Disabled",
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
@@ -33,7 +34,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -63,6 +65,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
+        "SourceWriteSchemaToPurview": "Disabled",
+
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
@@ -75,7 +79,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview / CDCSource - Enabled: SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -105,7 +110,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer",
@@ -117,7 +123,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / CDCSource - Enabled: Purview",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -147,7 +154,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer",
@@ -159,7 +167,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate / Purview - Enabled: CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -189,7 +198,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer",
@@ -201,7 +211,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: CDCSource - Enabled: SparkTableCreate / Purview",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -231,6 +242,7 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
+        "SourceWriteSchemaToPurview": "Disabled",
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
@@ -243,7 +255,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: Purview - Enabled: SparkTableCreate / CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -273,7 +286,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer",
@@ -285,7 +299,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Disabled: SparkTableCreate - Enabled: Purview / CDCSource",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -315,6 +330,7 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
+        "SourceWriteSchemaToPurview": "Disabled",
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
@@ -327,7 +343,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
@@ -359,6 +376,7 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
+        "SourceWriteSchemaToPurview": "Disabled",
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
@@ -371,7 +389,8 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
-        
+        "TargetWriteSchemaToPurview": "Disabled",
+
         "Description": "File copy between datalake zones - delta to delta",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
 
@@ -401,7 +420,8 @@ local tests =
         "SourceMaxConcurrentConnections":0,
         "SourceRecursively":"false",
         "SourceDeleteAfterCompletion":"false",
-        
+        "SourceWriteSchemaToPurview": "Disabled",
+
         "TargetFormat":"Parquet",
         "TargetType":"ADLS",        
         "TargetDataFilename":"SalesLT.Customer*.parquet",
@@ -413,6 +433,7 @@ local tests =
         "TargetMaxConcurrentConnections":0,
         "TargetRecursively":"false",
         "TargetDeleteAfterCompletion":"false",
+        "TargetWriteSchemaToPurview": "Disabled",
         
         "Description": "File copy between datalake zones - delta to parquet",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
@@ -446,6 +467,7 @@ template(
     t.SourceMaxConcurrentConnections,
     t.SourceRecursively,
     t.SourceDeleteAfterCompletion,
+    t.SourceWriteSchemaToPurview,
     t.TargetFormat,
     t.TargetType,
     t.TargetDataFilename,
@@ -457,6 +479,7 @@ template(
     t.TargetMaxConcurrentConnections,
     t.TargetRecursively,
     t.TargetDeleteAfterCompletion,
+    t.TargetWriteSchemaToPurview,
     t.Description,
     t.Purview,
     t.QualifiedIDAssociation,

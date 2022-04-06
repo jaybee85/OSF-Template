@@ -15,6 +15,7 @@ function(
     SourceMaxConcurrentConnections = 0,
     SourceRecursively = "false",
     SourceDeleteAfterCompletion = "",
+    SourceWriteSchemaToPurview = "Disabled",
     TargetFormat = "N/A",
     TargetType = "Notebook-Optional",
     TargetDataFilename = "",
@@ -26,6 +27,7 @@ function(
     TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
+    TargetWriteSchemaToPurview = "Disabled",
     TestDescription = "",
     ExecuteNotebook = "Notebook 1",
     CustomDefinitions = "",
@@ -47,6 +49,7 @@ function(
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
+            "WriteSchemaToPurview": SourceWriteSchemaToPurview
             
         },
 
@@ -57,7 +60,9 @@ function(
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
-            "DeleteAfterCompletion": TargetDeleteAfterCompletion
+            "DeleteAfterCompletion": TargetDeleteAfterCompletion,
+            "WriteSchemaToPurview": TargetWriteSchemaToPurview
+
         },
     },
 

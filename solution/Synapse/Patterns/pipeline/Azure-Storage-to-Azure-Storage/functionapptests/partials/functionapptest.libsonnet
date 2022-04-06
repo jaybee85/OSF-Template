@@ -15,6 +15,7 @@ function(
     SourceMaxConcurrentConnections = 0,
     SourceRecursively = "false",
     SourceDeleteAfterCompletion = "",
+    SourceWriteSchemaToPurview = "Disabled",
     TargetFormat = "Azure SQL",
     TargetType = "Azure SQL",
     TargetDataFilename = "SalesLT.Customer.parquet",
@@ -26,6 +27,7 @@ function(
     TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
+    TargetWriteSchemaToPurview = "Disabled",
     TestDescription = "",
     Purview = "Disabled",
     QualifiedIDAssociation = "TaskMasterId",
@@ -51,6 +53,7 @@ function(
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
+            "WriteSchemaToPurview": SourceWriteSchemaToPurview
             
         }
         + if (SourceFormat == "Excel") 
@@ -68,7 +71,7 @@ function(
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
             "DeleteAfterCompletion": TargetDeleteAfterCompletion,
-            "WriteSchemaToPurview": "Disabled"
+            "WriteSchemaToPurview": TargetWriteSchemaToPurview
         }
         + if (TargetFormat == "Excel") 
             then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader,  "SheetName":TargetSheetName}

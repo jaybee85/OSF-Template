@@ -77,7 +77,7 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
     },
     "required": [
         "CDCSource",
-        "SaveAsPersistentTable",
+        "SparkTableCreate",
         "Source",
         "Target",
         "Purview"
