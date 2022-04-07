@@ -40,7 +40,7 @@ inputs = {
   publish_web_app_addcurrentuserasadmin = true
   deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = true
-  is_onprem_datafactory_ir_registered   = false
+  is_onprem_datafactory_ir_registered   = true
 
   purview_name = "dlzdev06purv"
 } 
