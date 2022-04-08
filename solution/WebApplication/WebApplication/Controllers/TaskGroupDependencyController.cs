@@ -58,7 +58,7 @@ namespace WebApplication.Controllers
         {
             ViewData["AncestorTaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName");
             ViewData["DescendantTaskGroupId"] = new SelectList(_context.TaskGroup.OrderBy(x=>x.TaskGroupName), "TaskGroupId", "TaskGroupName");
-     TaskGroupDependency taskGroupDependency = new TaskGroupDependency();
+            TaskGroupDependency taskGroupDependency = new TaskGroupDependency();
             return View(taskGroupDependency);
         }
 

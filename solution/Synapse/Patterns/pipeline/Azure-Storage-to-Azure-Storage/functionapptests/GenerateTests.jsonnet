@@ -36,7 +36,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate",  
+        "Description": "parquet to delta - Disabled: Purview / CDCSource / SparkTableCreate - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -81,7 +81,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: Purview / CDCSource - Enabled: SparkTableCreate",  
+        "Description": "parquet to delta - Enabled: SparkTableCreate | Disabled: Purview / CDCSource -",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -125,7 +125,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: SparkTableCreate / CDCSource - Enabled: Purview",  
+        "Description": "parquet to delta - Enabled: Purview | Disabled: SparkTableCreate / CDCSource - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -145,9 +145,9 @@ local tests =
         
         "SourceFormat":"Parquet",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceDataFilename":"SalesLT.CustomerCDCInit.parquet",
         "SourceSourceSystemAuthType": "MSI",
-        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSchemaFileName":"SalesLT.CustomerCDCInit.json", 
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
@@ -158,8 +158,8 @@ local tests =
 
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
-        "TargetDataFilename":"SalesLT.Customer",
-        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetDataFilename":"CustomerCDCDeltaTest",
+        "TargetSchemaFileName":"CustomerCDCDeltaTest.json",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
@@ -169,7 +169,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: SparkTableCreate / Purview - Enabled: CDCSource",  
+        "Description": "parquet to delta - Enabled: CDCSource | Disabled: SparkTableCreate / Purview - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -213,7 +213,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: CDCSource - Enabled: SparkTableCreate / Purview",  
+        "Description": "parquet to delta - Enabled: SparkTableCreate / Purview | Disabled: CDCSource - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -233,9 +233,9 @@ local tests =
         
         "SourceFormat":"Parquet",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceDataFilename":"SalesLT.CustomerCDCEdit1.parquet",
         "SourceSourceSystemAuthType": "MSI",
-        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSchemaFileName":"SalesLT.CustomerCDCEdit1.json", 
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
@@ -246,8 +246,8 @@ local tests =
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
-        "TargetDataFilename":"SalesLT.Customer",
-        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetDataFilename":"CustomerCDCDeltaTest",
+        "TargetSchemaFileName":"CustomerCDCDeltaTest.json",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
@@ -257,7 +257,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: Purview - Enabled: SparkTableCreate / CDCSource",  
+        "Description": "parquet to delta - Enabled: SparkTableCreate / CDCSource | Disabled: Purview - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Disabled",
@@ -277,9 +277,9 @@ local tests =
         
         "SourceFormat":"Parquet",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceDataFilename":"SalesLT.CustomerCDCEdit2.parquet",
         "SourceSourceSystemAuthType": "MSI",
-        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSchemaFileName":"SalesLT.CustomerCDCEdit2.json", 
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
@@ -290,8 +290,8 @@ local tests =
 
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
-        "TargetDataFilename":"SalesLT.Customer",
-        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetDataFilename":"CustomerCDCDeltaTest",
+        "TargetSchemaFileName":"CustomerCDCDeltaTest.json",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
@@ -301,7 +301,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Disabled: SparkTableCreate - Enabled: Purview / CDCSource",  
+        "Description": "parquet to delta - Enabled: Purview / CDCSource | Disabled: SparkTableCreate - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
@@ -321,9 +321,9 @@ local tests =
         
         "SourceFormat":"Parquet",
         "SourceType":"ADLS",        
-        "SourceDataFilename":"SalesLT.Customer*.parquet",
+        "SourceDataFilename":"SalesLT.CustomerCDCEdit3.parquet",
         "SourceSourceSystemAuthType": "MSI",
-        "SourceSchemaFileName":"SalesLT.Customer*.json", 
+        "SourceSchemaFileName":"SalesLT.CustomerCDCEdit3.json", 
         "SourceSkipLineCount":"",
         "SourceFirstRowAsHeader": "false",
         "SourceSheetName":"",
@@ -334,8 +334,8 @@ local tests =
         
         "TargetFormat":"Delta",
         "TargetType":"ADLS",        
-        "TargetDataFilename":"SalesLT.Customer",
-        "TargetSchemaFileName":"SalesLT.Customer.json",
+        "TargetDataFilename":"CustomerCDCDeltaTest",
+        "TargetSchemaFileName":"CustomerCDCDeltaTest.json",
         "TargetSourceSystemAuthType":"MSI", 
         "TargetSkipLineCount":"",
         "TargetFirstRowAsHeader": "false",
@@ -345,7 +345,7 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "Description": "parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate",  
+        "Description": "parquet to delta - Enabled: Purview / CDCSource / SparkTableCreate - ",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure", 
 
         "Purview": "Enabled",
