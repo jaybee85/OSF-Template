@@ -1,5 +1,6 @@
 using System;
 using System.Data.SqlClient;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -46,7 +47,12 @@ namespace FunctionApp.Functions
         [FunctionName("RunFrameworkTasksTimerTrigger")]         
         public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
-            log.LogInformation("FunctionAppDirectory:" + context.FunctionAppDirectory);
+           await Core(log);        
+        }
+
+        public async Task Core(ILogger log)
+        {
+            //log.LogInformation("FunctionAppDirectory:" + context.FunctionAppDirectory);
             if (_options.Value.TimerTriggers.EnableRunFrameworkTasks)
             {
                 using var client = _httpClientFactory.CreateClient(HttpClients.CoreFunctionsHttpClientName);
@@ -56,13 +62,20 @@ namespace FunctionApp.Functions
                 }
 
                 using SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection();
-                
+
                 // Get a list of framework task runners that are currently idle
                 var frameworkTaskRunners = con.QueryWithRetry("Exec dbo.GetFrameworkTaskRunners");
 
                 foreach (var runner in frameworkTaskRunners)
                 {
                     int taskRunnerId = ((dynamic)runner).TaskRunnerId;
+                    using (FileStream fs = File.Create($"./runners/hb_{taskRunnerId.ToString()}_{DateTime.Now.ToString("yyyyMMddhhmm")}.txt"))
+                    {
+                        Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("");
+                        fs.Write(info, 0, info.Length);
+                    }
+
+
                     try
                     {
                         // Trigger the Http triggered function
@@ -73,10 +86,10 @@ namespace FunctionApp.Functions
                             Method = HttpMethod.Get,
                             RequestUri = new Uri(secureFunctionApiurl)
                         };
-                                
+
                         //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
                         var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
-                            
+
                     }
                     catch (Exception)
                     {
@@ -85,8 +98,8 @@ namespace FunctionApp.Functions
                     }
                 }
             }
-            
         }
+
 
     }
 }

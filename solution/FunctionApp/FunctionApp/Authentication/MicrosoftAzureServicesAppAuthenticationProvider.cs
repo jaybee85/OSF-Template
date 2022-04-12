@@ -33,14 +33,14 @@ namespace FunctionApp.Authentication
                     AuthenticationContext context =
                         new AuthenticationContext("https://login.windows.net/" + _authOptions.TenantId);
                     ClientCredential cc = new ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
-                    AuthenticationResult result = await context.AcquireTokenAsync(resourceName, cc);
+                    AuthenticationResult result =  await context.AcquireTokenAsync(resourceName, cc).ConfigureAwait(false);
                     return result.AccessToken;
                 }
             }
             catch (System.Exception e)
             {
                 throw e;
-                return "";
+                return "Failed to GetAzureRestApiToken";
             }
         }
     }
