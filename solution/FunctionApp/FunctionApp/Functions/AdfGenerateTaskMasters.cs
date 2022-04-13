@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
 using FunctionApp.Models;
@@ -79,7 +80,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GenerateTaskMasters")]
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -87,7 +88,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = GenerateTaskMastersCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "GenerateTaskMasters", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "GenerateTaskMasters", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -99,9 +100,9 @@ namespace FunctionApp.Functions
 
         }
 
-        private dynamic GenerateTaskMastersCore(HttpRequest req, Logging.Logging logging)
+        private async Task<dynamic> GenerateTaskMastersCore(HttpRequest req, Logging.Logging logging)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             JObject data = JsonConvert.DeserializeObject<JObject>(requestBody);
             JArray tables = JArray.Parse(data["TableList"].ToString());
             JObject jsontemplate = JObject.Parse(data["JsonTemplate"].ToString());
@@ -154,7 +155,7 @@ namespace FunctionApp.Functions
             {
                 Name = tempTableName
             };
-            SqlConnection con = _taskMetaDataDatabase.GetSqlConnection();
+            SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection();
             TaskMetaDataDatabase.BulkInsert(dt, tempSqlTable, true, con);
 
             Dictionary<string, string> sqlParams = new Dictionary<string, string>

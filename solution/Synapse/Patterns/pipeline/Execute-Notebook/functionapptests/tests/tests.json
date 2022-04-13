@@ -1,14 +1,15 @@
 [
    {
       "DegreeOfCopyParallelism": 1,
+      "DependencyChainTag": "",
       "EngineId": -2,
-      "EngineJson": "{\"endpoint\": \"https://arkstgsynwadshyya.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
-      "EngineName": "ark-stg-adf-ads-hyya",
-      "EngineResourceGroup": "dlzdev03",
-      "EngineSubscriptionId": "14f299e1-be54-43e9-bf5e-696840f86fc4",
+      "EngineJson": "{\"endpoint\": \"https://adsdevsynwadsy56o.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\"}",
+      "EngineName": "ads-dev-adf-ads-y56o",
+      "EngineResourceGroup": "gfj1",
+      "EngineSubscriptionId": "035a1364-f00d-48e2-b582-4fe125905ee3",
       "NumberOfRetries": 3,
       "ScheduleMasterId": "-2",
-      "SourceKeyVaultBaseUrl": "https://ark-stg-kv-ads-hyya.vault.azure.net",
+      "SourceKeyVaultBaseUrl": "https://ads-dev-kv-ads-y56o.vault.azure.net",
       "SourceSystemAuthType": "MSI",
       "SourceSystemId": -16,
       "SourceSystemJSON": "{\n\n}",
@@ -17,7 +18,7 @@
       "SourceSystemType": "N/A",
       "SourceSystemUserName": "",
       "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
-      "TargetKeyVaultBaseUrl": "https://ark-stg-kv-ads-hyya.vault.azure.net",
+      "TargetKeyVaultBaseUrl": "https://ads-dev-kv-ads-y56o.vault.azure.net",
       "TargetSystemAuthType": "MSI",
       "TargetSystemId": -16,
       "TargetSystemJSON": "{\n\n}",
@@ -31,11 +32,11 @@
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
       "TaskInstanceJson": "{\n\n}",
-      "TaskMasterId": -3,
+      "TaskMasterId": -1003,
       "TaskMasterJson": "{\n    \"CustomDefinitions\": \"\",\n    \"ExecuteNotebook\": \"Notebook 1\",\n    \"Source\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Notebook-Optional\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"\",\n        \"DeleteAfterCompletion\": \"false\",\n        \"MaxConcurrentConnections\": 0,\n        \"Recursively\": \"false\",\n        \"RelativePath\": \"\",\n        \"SchemaFileName\": \"\",\n        \"Type\": \"Notebook-Optional\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "Execute-Notebook",
       "TaskTypeId": -5,
-      "TestDescription": "[-3]  Notebook execution test."
+      "TestDescription": "[-1003]  Notebook execution test."
    }
 ]

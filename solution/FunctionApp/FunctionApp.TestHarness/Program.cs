@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Dapper;
 using FunctionApp.Authentication;
 using FunctionApp.DataAccess;
@@ -17,7 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
+using Microsoft.AspNetCore.Http;
 namespace FunctionApp.TestHarness
 {
     public class Program
@@ -58,7 +59,6 @@ namespace FunctionApp.TestHarness
         private readonly ISecurityAccessProvider _sap;
         private readonly AzureSynapseService _azureSynapseService;
         private readonly PurviewService _purviewService;
-
         public App(ILogger<App> logger,
             TaskTypeMappingProvider taskTypeMappingProvider,
             SourceAndTargetSystemJsonSchemasProvider schemasProvider,
@@ -69,7 +69,8 @@ namespace FunctionApp.TestHarness
             DataFactoryClientFactory dataFactoryClientFactory,
             ISecurityAccessProvider sap,
             AzureSynapseService azureSynapseService, 
-            PurviewService purviewService)
+            PurviewService purviewService
+            )
         {
             _logger = logger;
             _taskTypeMappingProvider = taskTypeMappingProvider;
@@ -104,14 +105,16 @@ namespace FunctionApp.TestHarness
             //_purviewService.TestPurview("adsgfpv", "get", ".purview.azure.com", "/account/collections", "2019-11-01-preview", _funcAppLogger);
             //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
             //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", body, _funcAppLogger).Result);
-            PurviewCreateEntitiesTest();
-            //DebugRunFrameworkTasks();
+            //PurviewCreateEntitiesTest();
+            //DebugPrepareFrameworkTasks();
+            DebugRunFrameworkTasks();
             //DebugSynapsePipeline();
-            //var body = JObject.Parse(File.ReadAllText("PurviewSample_Entities.json"));
-            //JObject res = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity/bulk", "2021-07-01", body, _funcAppLogger).Result);
+            //var body = JObject.Parse("{\"SourceHttpPath\": \"https://datalakeraw/arkstgdlsadsirudadsl.dfs.core.windows.net/samples/SalesLT.Customer.chunk_1.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TesstDelta\", \"SourceColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 5, \"TaskMasterId\": 4, \"TaskStatus\": \"InProgress\", \"TaskType\": \"Azure Storage to Azure Storage\", \"Enabled\": 1, \"ExecutionUid\": \"6b9769c0-cfd0-462a-aeda-c75b842f56db\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -2, \"EngineName\": \"arkstgsynwadsirud\", \"SystemType\": \"Synapse\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_SparkNotebookExecution_Azure\", \"EngineJson\": \"{\\r\\n             \\\"endpoint\\\": \\\"https://arkstgsynwadsirud.dev.azuresynapse.net\\\", \\\"DeltaProcessingNotebook\\\": \\\"DeltaProcessingNotebook\\\", \\\"PurviewAccountName\\\": \\\"dlzdev04purv\\\"\\r\\n        }\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {\"endpoint\": \"https://arkstgsynwadsirud.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\", \"PurviewAccountName\": \"dlzdev04purv\"}}, \"Source\": {\"System\": {\"SystemId\": -4, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakeraw\"}, \"Instance\": {\"SourceRelativePath\": \"samples/\", \"TargetRelativePath\": \"\"}, \"DataFileName\": \"yooyoyo.parquet\", \"MaxConcurrentConnections\": 100, \"RelativePath\": \"samples/\", \"SchemaFileName\": \"SalesLT.Customer.json\", \"Type\": \"Parquet\", \"WriteSchemaToPurview\": \"Enabled\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"samples/\", \"TargetRelativePath\": \"\"}, \"DataFileName\": \"Iwork\", \"MaxConcurrentConnections\": 100, \"RelativePath\": \"\", \"SchemaFileName\": \"\", \"Type\": \"Delta\", \"WriteSchemaToPurview\": \"Enabled\"}, \"TMOptionals\": {\"Purview\": \"Enabled\", \"QualifiedIDAssociation\": \"TaskMasterID\"}}}");
 
- 
+            //var body = JObject.Parse("{\"SourceHttpPath\":\"https://datalakeraw/arkstgdlsadsenrzadsl.dfs.core.windows.net/samples/SalesLT.Customer.chunk_1.parquet\",\"TargetHttpPath\":\"https://datalakelanding/arkstgdlsadsenrzadsl.dfs.core.windows.net/Iwork\",\"SourceColumns\":[{\"name\":\"CustomerID\",\"type\":\"int\"},{\"name\":\"NameStyle\",\"type\":\"boolean\"},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"FirstName\",\"type\":\"string\"},{\"name\":\"MiddleName\",\"type\":\"string\"},{\"name\":\"LastName\",\"type\":\"string\"},{\"name\":\"Suffix\",\"type\":\"string\"},{\"name\":\"CompanyName\",\"type\":\"string\"},{\"name\":\"SalesPerson\",\"type\":\"string\"},{\"name\":\"EmailAddress\",\"type\":\"string\"},{\"name\":\"Phone\",\"type\":\"string\"},{\"name\":\"PasswordHash\",\"type\":\"string\"},{\"name\":\"PasswordSalt\",\"type\":\"string\"},{\"name\":\"rowguid\",\"type\":\"string\"},{\"name\":\"ModifiedDate\",\"type\":\"timestamp\"}],\"TargetColumns\":[{\"name\":\"CustomerID\",\"type\":\"int\"},{\"name\":\"NameStyle\",\"type\":\"boolean\"},{\"name\":\"Title\",\"type\":\"string\"},{\"name\":\"FirstName\",\"type\":\"string\"},{\"name\":\"MiddleName\",\"type\":\"string\"},{\"name\":\"LastName\",\"type\":\"string\"},{\"name\":\"Suffix\",\"type\":\"string\"},{\"name\":\"CompanyName\",\"type\":\"string\"},{\"name\":\"SalesPerson\",\"type\":\"string\"},{\"name\":\"EmailAddress\",\"type\":\"string\"},{\"name\":\"Phone\",\"type\":\"string\"},{\"name\":\"PasswordHash\",\"type\":\"string\"},{\"name\":\"PasswordSalt\",\"type\":\"string\"},{\"name\":\"rowguid\",\"type\":\"string\"},{\"name\":\"ModifiedDate\",\"type\":\"timestamp\"}],\"TaskObject\":{\"TaskInstanceId\":5,\"TaskMasterId\":4,\"TaskStatus\":\"InProgress\",\"TaskType\":\"Azure Storage to Azure Storage\",\"Enabled\":1,\"ExecutionUid\":\"6b9769c0-cfd0-462a-aeda-c75b842f56db\",\"NumberOfRetries\":0,\"DegreeOfCopyParallelism\":1,\"KeyVaultBaseUrl\":\"https://ark-stg-kv-ads-enrz.vault.azure.net/\",\"ScheduleMasterId\":\"-4\",\"TaskGroupConcurrency\":\"10\",\"TaskGroupPriority\":0,\"TaskExecutionType\":\"ADF\",\"ExecutionEngine\":{\"EngineId\":-2,\"EngineName\":\"arkstgsynwadsenrz\",\"SystemType\":\"Synapse\",\"ResourceGroup\":\"dlzdev05\",\"SubscriptionId\":\"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\",\"ADFPipeline\":\"GPL_SparkNotebookExecution_Azure\",\"TaskDatafactoryIR\":\"Azure\",\"JsonProperties\":{\"endpoint\":\"https://arkstgsynwadsenrz.dev.azuresynapse.net\",\"DeltaProcessingNotebook\":\"DeltaProcessingNotebook\",\"PurviewAccountName\":\"dlzdev05purv\"}},\"Source\":{\"System\":{\"SystemId\":-4,\"SystemServer\":\"https://arkstgdlsadsenrzadsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakeraw\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"\"},\"DataFileName\":\"SalesLT.Customer.chunk_1.parquet\",\"MaxConcurrentConnections\":100,\"RelativePath\":\"samples/\",\"SchemaFileName\":\"SalesLT.Customer.json\",\"Type\":\"Parquet\",\"WriteSchemaToPurview\":\"Enabled\"},\"Target\":{\"System\":{\"SystemId\":-8,\"SystemServer\":\"https://arkstgdlsadsenrzadsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakelanding\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"\"},\"DataFileName\":\"Iwork\",\"MaxConcurrentConnections\":100,\"RelativePath\":\"\",\"SchemaFileName\":\"\",\"Type\":\"Delta\",\"WriteSchemaToPurview\":\"Enabled\"},\"TMOptionals\":{\"Purview\":\"Enabled\",\"QualifiedIDAssociation\":\"TaskMasterID\"}}}");
 
+
+            //var result =  (_purviewService.PurviewMetaDataCheck(body, _funcAppLogger).Result);
         }
 
 
@@ -130,14 +133,14 @@ namespace FunctionApp.TestHarness
         }
 
 
-        public void InsertTestTasksIntoDb()
+        public async Task InsertTestTasksIntoDb()
         {
             // Test_GetSQLCreateStatementFromSchema(LogHelper);
 
             var testTaskInstances = GetTests();
 
             var tmdb = new TaskMetaDataDatabase(_options,_authProvider);
-            var con = tmdb.GetSqlConnection();
+            var con = await tmdb.GetSqlConnection();
 
             var @sql = @"
 
@@ -267,14 +270,14 @@ namespace FunctionApp.TestHarness
 
         }
 
-        public void GenerateTestTaskScript()
+        public async Task GenerateTestTaskScript()
         {
             // Test_GetSQLCreateStatementFromSchema(LogHelper);
 
             var testTaskInstances = GetTests();
 
             var tmdb = new TaskMetaDataDatabase(_options, _authProvider);
-            var con = tmdb.GetSqlConnection();
+            var con = await tmdb.GetSqlConnection();
 
             var @sql = @"
 
@@ -437,7 +440,14 @@ namespace FunctionApp.TestHarness
         }
 
         public void PurviewCreateEntitiesTest() {
-            var testData = "{\"SourceHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"SourceColumns\": \"Invalid\", \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 1, \"TaskMasterId\": 2, \"TaskStatus\": \"InProgress\", \"TaskType\": \"TestTask Type Name\", \"Enabled\": 1, \"ExecutionUid\": \"8448eabb-9ba4-4779-865b-29e973431273\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -1, \"EngineName\": \"ark-stg-adf-ads-irud\", \"SystemType\": \"Datafactory\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure\", \"EngineJson\": \"{}\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {}}, \"Source\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"\"}, \"DataFileName\": \"Input.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\", \"Type\": \"Parquet\"}}}";
+
+
+            // Test Purview Connectivity
+            string PurviewAccountName = "adsdevpurads";
+            JObject EmptyDatasetBody = new JObject();
+            JObject datasetGuid0 = JObject.Parse(_purviewService.ExecuteRequest(PurviewAccountName, "get", ".catalog.purview.azure.com", "/api/atlas/v2/types/typedefs", "2021-07-01", EmptyDatasetBody, _funcAppLogger).Result);
+
+            var testData = "{\"SourceHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TestFile.parquet\", \"SourceColumns\": \"Invalid\", \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 1, \"TaskMasterId\": 2, \"TaskStatus\": \"InProgress\", \"TaskType\": \"TestTask Type Name\", \"Enabled\": 1, \"ExecutionUid\": \"8448eabb-9ba4-4779-865b-29e973431273\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -1, \"EngineName\": \"ark-stg-adf-ads-irud\", \"SystemType\": \"Datafactory\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_AzureSqlTable_NA_AzureBlobFS_Parquet_Azure\", \"EngineJson\": \"{}\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {}}, \"Source\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"\"}, \"WriteSchemaToPurview\": \"Enabled\", \"DataFileName\": \"Input.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"TargetRelativePath\": \"\"}, \"WriteSchemaToPurview\": \"Enabled\", \"DataFileName\": \"TestFile.parquet\", \"RelativePath\": \"\", \"SchemaFileName\": \"TestFile.json\", \"Type\": \"Parquet\"}}}";
             JObject metadata = JsonConvert.DeserializeObject<JObject>(testData);
 
 
@@ -486,9 +496,9 @@ namespace FunctionApp.TestHarness
                 JObject datasetJson = new JObject(new JProperty("entity", dataset));
                 var datasetConv = datasetJson.ToString();
                 var datasetBody = JObject.Parse(datasetConv);
-                JObject datasetGuid = JObject.Parse(_purviewService.ExecuteRequest("dlzdev04purv", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", datasetBody, _funcAppLogger).Result);
+                JObject datasetGuid = JObject.Parse(_purviewService.ExecuteRequest("adsdevpurads", "post", ".catalog.purview.azure.com", "/api/atlas/v2/entity", "2021-07-01", datasetBody, _funcAppLogger).Result);
                 //This is for the process at the end
-                datasets.Add(datasetGuid["guidAssignments"].First.Last.ToString());
+               //datasets.Add(datasetGuid["guidAssignments"].First.Last.ToString());
 
                 //If the dataset has columns at all, we need to create a schema, a dataset-schema relationship, columns and a schema-column relationship.
                 if (metadata["TaskObject"][choice]["WriteSchemaToPurview"].ToString() == "Enabled")
@@ -639,7 +649,7 @@ namespace FunctionApp.TestHarness
         /// <summary>
         /// 
         /// </summary>
-        public void GenerateUnitTestResults()
+        public async Task GenerateUnitTestResults()
         {            
 
             var testTaskInstances = GetTests();
@@ -658,7 +668,7 @@ namespace FunctionApp.TestHarness
                 {
                     var T = new AdfJsonBaseTask(testTaskInstance, _funcAppLogger);
                     T.CreateJsonObjectForAdf((Guid)_funcAppLogger.DefaultActivityLogItem.ExecutionUid);
-                    processedTaskObject = T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider, engineSchemas);
+                    processedTaskObject = await T.ProcessRoot(_taskTypeMappingProvider, _schemasProvider, engineSchemas);
                 }
                 catch (Exception e)
                 {

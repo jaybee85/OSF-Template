@@ -1,4 +1,4 @@
-function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable", TargetType="AzureBlobFS",TargetFormat="Parquet") 
+function(GenerateArm="false",GFPIR="IRA", SourceType="SqlServerTable", TargetType="AzureBlobFS",TargetFormat="Parquet", SQLStatement = "") 
 local AzureBlobFS_Parquet_CopyActivity_Output = import './CDC_CopyActivity_AzureBlobFS_Parquet_Outputs.libsonnet';
 local AzureBlobStorage_Parquet_CopyActivity_Output = import './CDC_CopyActivity_AzureBlobStorage_Parquet_Outputs.libsonnet';
 local AzureSqlTable_NA_CopyActivity_Inputs = import './CDC_CopyActivity_AzureSqlTable_NA_Inputs.libsonnet';
@@ -10,7 +10,7 @@ if(SourceType=="AzureSqlTable"&&TargetType=="AzureBlobFS"&&TargetFormat=="Parque
     "source": {
       "type": "AzureSqlSource",
       "sqlReaderQuery": {
-        "value": "@variables('SQLStatement2')",
+        "value": SQLStatement,
         "type": "Expression"
       },
       "queryTimeout": "02:00:00",
@@ -37,7 +37,7 @@ else if(SourceType=="AzureSqlTable"&&TargetType=="AzureBlobStorage"&&TargetForma
     "source": {
       "type": "AzureSqlSource",
       "sqlReaderQuery": {
-        "value": "@variables('SQLStatement2')",
+        "value": SQLStatement,
         "type": "Expression"
       },
       "queryTimeout": "02:00:00",
@@ -64,7 +64,7 @@ else if (SourceType=="SqlServerTable" && TargetType=="AzureBlobFS"&&TargetFormat
     "source": {
       "type": "SqlServerSource",
       "sqlReaderQuery": {
-        "value": "@variables('SQLStatement2')",
+        "value": SQLStatement,
         "type": "Expression"
       },
       "queryTimeout": "02:00:00"
@@ -90,7 +90,7 @@ else if (SourceType=="SqlServerTable" && TargetType=="AzureBlobStorage"&&TargetF
     "source": {
       "type": "SqlServerSource",
       "sqlReaderQuery": {
-        "value": "@variables('SQLStatement2')",
+        "value": SQLStatement,
         "type": "Expression"
       },
       "queryTimeout": "02:00:00"

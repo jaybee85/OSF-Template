@@ -61,7 +61,7 @@ function UploadADFItem ($items) {
 
             write-host ($lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
                         
-            write-host $uri
+            write-host $uri        
             $rest = az rest --method put --uri $uri --headers '{\"Content-Type\":\"application/json\"}' --body "@ffu$guid.json" --uri-parameters 'api-version=2018-06-01'
         }
         Get-ChildItem -path "ffu*.json" | Remove-Item

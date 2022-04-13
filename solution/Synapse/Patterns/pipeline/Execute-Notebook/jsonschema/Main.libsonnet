@@ -16,8 +16,21 @@ function(SourceType = "", SourceFormat = "Notebook-Optional",TargetType = "", Ta
                 "Enabled",
                 "Disabled"
             ],
-            "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine."
+            "options": {
+                "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine."
+            }
         },
+        "QualifiedIDAssociation": {
+            "type": "string",
+            "default": "TaskMasterId",
+            "enum": [
+                "ExecutionId",
+                "TaskMasterId"
+            ],
+            "options": {
+                "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage."
+            }
+        }, 
         "ExecuteNotebook": {
             "type": "string",
             "options": {

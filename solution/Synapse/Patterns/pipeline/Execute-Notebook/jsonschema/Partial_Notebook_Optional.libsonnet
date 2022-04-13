@@ -18,7 +18,9 @@ function()
                 "Enabled",
                 "Disabled"
             ],
-            "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned."
+            "options": {
+                "infoText": "Use this if you wish to push metadata about your schema from this task to Purview. Note: It is advise to only use this after resources have been initially scanned."
+            },
         },
         "RelativePath": {
             "type": "string",

@@ -72,7 +72,7 @@ namespace FunctionApp.Services
             blob.UploadTextAsync(content).Wait();
         }
 
-        public static string ReadFile(string BlobStorageAccountName, string BlobStorageContainerName, string BlobStorageFolderPath, string TargetFileName, TokenCredential tokenCredential)
+        public static async Task<string> ReadFile(string BlobStorageAccountName, string BlobStorageContainerName, string BlobStorageFolderPath, string TargetFileName, TokenCredential tokenCredential)
         {
 
             StorageCredentials storageCredentials = new StorageCredentials(tokenCredential);
@@ -83,7 +83,7 @@ namespace FunctionApp.Services
 
             CloudBlobDirectory directory = container.GetDirectoryReference(BlobStorageFolderPath);
             CloudBlockBlob blob = directory.GetBlockBlobReference(TargetFileName);
-            return blob.DownloadTextAsync().Result;
+            return await blob.DownloadTextAsync();
         }
 
 

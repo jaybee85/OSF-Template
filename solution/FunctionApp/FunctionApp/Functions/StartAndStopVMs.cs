@@ -41,7 +41,7 @@ namespace FunctionApp.Functions
             _options = options?.Value;
         }
         [FunctionName("StartAndStopVMs")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log, ExecutionContext context, System.Security.Claims.ClaimsPrincipal principal)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log, ExecutionContext context, System.Security.Claims.ClaimsPrincipal principal)
         {
             bool allowed = false;
             var roles = principal.Claims.Where(e => e.Type == "roles").Select(e => e.Value);
@@ -62,7 +62,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = StartAndStopVMsCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "StartAndStopVMs", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "StartAndStopVMs", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -117,18 +117,18 @@ namespace FunctionApp.Functions
                 else
                 { 
                     root["Result"] = "Please pass a name, resourcegroup and action to request body";
-                    _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Task missing VMname, ResourceGroup or SubscriptionUid in Target element.");
+                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Task missing VMname, ResourceGroup or SubscriptionUid in Target element.");
                     return root;
                 }
                 //Update Task Instance
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, System.Guid.Empty, "");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, System.Guid.Empty, "");
 
                 return root;
             }
             catch (System.Exception taskException)
             {
                 logging.LogErrors(taskException);
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Failed when trying to start or stop VM");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(System.Convert.ToInt64(taskInstanceId), System.Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, System.Guid.Empty, "Failed when trying to start or stop VM");
 
                 JObject root = new JObject
                 {

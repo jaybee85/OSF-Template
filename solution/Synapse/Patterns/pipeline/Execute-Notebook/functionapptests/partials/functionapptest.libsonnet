@@ -98,6 +98,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test." 
+    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test.",
+    "DependencyChainTag": "" 
 }+commons
 

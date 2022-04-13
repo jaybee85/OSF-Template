@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using FunctionApp.Models;
 using FunctionApp.Services;
 using Microsoft.AspNetCore.Http;
@@ -11,11 +12,11 @@ using Newtonsoft.Json.Linq;
 namespace FunctionApp.Functions
 {
     // ReSharper disable once UnusedMember.Global
-    public static class MsSqlGetAllTablesFromDatabaseSql
+    public class MsSqlGetAllTablesFromDatabaseSql
     {
         [FunctionName("MsSqlGetAllTablesFromDatabaseSQL")]
         // ReSharper disable once UnusedMember.Global
-        public static IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
@@ -25,7 +26,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = MsSqlGetAllTablesFromDatabaseSqlCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "MsSqlGetAllTablesFromDatabaseSQL", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "MsSqlGetAllTablesFromDatabaseSQL", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));

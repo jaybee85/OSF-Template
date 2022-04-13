@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
 using FunctionApp.Models;
@@ -36,13 +37,13 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("AZStorageCacheFileListHttpTrigger")]
-        public IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,  ILogger log, ExecutionContext context)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,  ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = GetAzureStorageListingsCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "AZStorageCacheFileListHttpTrigger", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "AZStorageCacheFileListHttpTrigger", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -55,9 +56,9 @@ namespace FunctionApp.Functions
 
 
 
-        public dynamic GetAzureStorageListingsCore(HttpRequest req, Logging.Logging logging)
+        public async Task<dynamic> GetAzureStorageListingsCore(HttpRequest req, Logging.Logging logging)
         {
-            string requestBody = new System.IO.StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new System.IO.StreamReader(req.Body).ReadToEndAsync();
             dynamic taskInformation = JsonConvert.DeserializeObject(requestBody);
             string taskInstanceId = taskInformation["TaskInstanceId"].ToString();
             string executionUid = taskInformation["ExecutionUid"].ToString();
@@ -70,7 +71,7 @@ namespace FunctionApp.Functions
                 string storageAccountToken = taskInformation["Source"]["StorageAccountToken"];
                 Int64 sourceSystemId = taskInformation["Source"]["SystemId"];
 
-                using SqlConnection con = _taskMetaDataDatabase.GetSqlConnection();
+                using SqlConnection con = await _taskMetaDataDatabase.GetSqlConnection();
 
                 var res = con.QueryWithRetry(
                     $"Select Max(PartitionKey) MaxPartitionKey from AzureStorageListing where SystemId = {sourceSystemId.ToString()}");
@@ -119,7 +120,7 @@ namespace FunctionApp.Functions
                     TableContinuationToken token = null;
                     do
                     {
-                        TableQuerySegment<DynamicTableEntity> resultSegment = table.ExecuteQuerySegmentedAsync(query, token).Result;
+                        TableQuerySegment<DynamicTableEntity> resultSegment = await table.ExecuteQuerySegmentedAsync(query, token);
                         token = resultSegment.ContinuationToken;
 
                         //load into data table
@@ -162,7 +163,7 @@ namespace FunctionApp.Functions
                                 //Only Send out for Operator Level Alerts
                                 if (alert["AlertCategory"].ToString() == "Task Specific Operator Alert")
                                 {
-                                    AlertOperator(sourceSystemId, alert["AlertEmail"].ToString(), "", filelist);
+                                    await AlertOperator(sourceSystemId, alert["AlertEmail"].ToString(), "", filelist);
                                 }
                             }
                         }
@@ -170,7 +171,7 @@ namespace FunctionApp.Functions
 
                     con.Close();
                     con.Dispose();
-                    _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, Guid.Empty, "");
+                    await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.Complete, Guid.Empty, "");
 
 
                 }
@@ -179,7 +180,7 @@ namespace FunctionApp.Functions
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, Guid.Empty, "Failed when trying to Generate Sas URI and Send Email");
+                await _taskMetaDataDatabase.LogTaskInstanceCompletion(Convert.ToInt64(taskInstanceId), Guid.Parse(executionUid), TaskInstance.TaskStatus.FailedRetry, Guid.Empty, "Failed when trying to Generate Sas URI and Send Email");
 
                 JObject root = new JObject
                 {
@@ -195,7 +196,7 @@ namespace FunctionApp.Functions
 
 
 
-        public static void AlertOperator(Int64 SourceSystemId, string EmailRecipient, string EmailRecipientName, string FileList)
+        public static async Task AlertOperator(Int64 SourceSystemId, string EmailRecipient, string EmailRecipientName, string FileList)
         {
             //Send Email 
             string senderEmail = Environment.GetEnvironmentVariable("DefaultSentFromEmailAddress");
@@ -214,7 +215,7 @@ namespace FunctionApp.Functions
                 PlainTextContent = plainTextContent
             };
             msg.AddTo(new EmailAddress(EmailRecipient, EmailRecipientName));
-            var res = client.SendEmailAsync(msg).Result;
+            var res = await client.SendEmailAsync(msg);
 
         }
 

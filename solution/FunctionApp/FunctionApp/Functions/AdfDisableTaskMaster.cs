@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Models;
 using FunctionApp.Services;
@@ -39,17 +40,17 @@ namespace FunctionApp.Functions
         /// <returns></returns>
         [FunctionName("DisableTaskMaster")]
         // ReSharper disable once UnusedMember.Global
-        public IActionResult Run(
+        public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
             FrameworkRunnerWorkerWithHttpRequest worker = DisableTaskMasterCore;
-            FrameworkRunnerResult result = frp.Invoke(req, "DisableTaskMaster", worker);
-            if (result.Succeeded)
+            Task<FrameworkRunnerResult> result = frp.Invoke(req, "DisableTaskMaster", worker);
+            if (result.Result.Succeeded)
             {
-                return new OkObjectResult(JObject.Parse(result.ReturnObject));
+                return new OkObjectResult(JObject.Parse(result.Result.ReturnObject));
             }
             else
             {
@@ -57,13 +58,13 @@ namespace FunctionApp.Functions
             }
         }
 
-        public JObject DisableTaskMasterCore(HttpRequest req,
+        public async Task<JObject> DisableTaskMasterCore(HttpRequest req,
             Logging.Logging logging)
         {
-            string requestBody = new StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             dynamic taskMasterId = JObject.Parse(data.ToString())["TaskMasterId"];
-            _taskMetaDataDatabase.ExecuteSql(string.Format(@"Update [dbo].[TaskMaster] SET ActiveYN = '0' Where [TaskMasterId] = {0}", taskMasterId));
+            await _taskMetaDataDatabase.ExecuteSql(string.Format(@"Update [dbo].[TaskMaster] SET ActiveYN = '0' Where [TaskMasterId] = {0}", taskMasterId));
 
             JObject root = new JObject
             {

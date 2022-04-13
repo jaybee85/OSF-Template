@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
 using FormatWith;
 using FunctionApp.DataAccess;
 using FunctionApp.Helpers;
@@ -35,7 +36,7 @@ namespace FunctionApp.Functions
         }
 
         [FunctionName("GetADFActivityErrors")]
-        public void Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        public async Task Run([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
 
@@ -43,14 +44,18 @@ namespace FunctionApp.Functions
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
                 FrameworkRunnerWorker worker = GetAdfActivityErrors;
-                FrameworkRunnerResult result = fr.Invoke("GetADFActivityErrorsTimerTrigger", worker);
+                FrameworkRunnerResult result = await fr.Invoke("GetADFActivityErrorsTimerTrigger", worker);
             }
         }
 
-        public dynamic GetAdfActivityErrors(Logging.Logging logging)
+        public async Task<dynamic> GetAdfActivityErrors(Logging.Logging logging)
         {
             using var client = _httpClientFactory.CreateClient(HttpClients.LogAnalyticsHttpClientName);
-            using SqlConnection conRead = _taskMetaDataDatabase.GetSqlConnection();
+            if (client.DefaultRequestHeaders.Authorization == null)
+            {
+                await Task.Delay(2000);
+            }
+            using SqlConnection conRead = await _taskMetaDataDatabase.GetSqlConnection();
 
             //Get Last Request Date
             //ToDo Add DataFactoryId field to ADFActivityErrors
@@ -110,12 +115,12 @@ namespace FunctionApp.Functions
 
                 var postContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
 
-                var response = client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent).Result;
+                var response = await client.PostAsync($"https://api.loganalytics.io/v1/workspaces/{workspaceId}/query", postContent);
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     //Start to parse the response content
                     HttpContent responseContent = response.Content;
-                    var content = response.Content.ReadAsStringAsync().Result;
+                    var content = await response.Content.ReadAsStringAsync();
                     var tables = ((JArray)(JObject.Parse(content)["tables"]));
                     if (tables.Count > 0)
                     {
@@ -155,7 +160,7 @@ namespace FunctionApp.Functions
                             Name = $"#ADFActivityErrors{tableGuid}"
                         };
                         
-                        using SqlConnection conWrite = _taskMetaDataDatabase.GetSqlConnection();
+                        using SqlConnection conWrite = await _taskMetaDataDatabase.GetSqlConnection();
                         TaskMetaDataDatabase.BulkInsert(dt, t, true, conWrite);
                         Dictionary<string, string> sqlParams = new Dictionary<string, string>
                         {

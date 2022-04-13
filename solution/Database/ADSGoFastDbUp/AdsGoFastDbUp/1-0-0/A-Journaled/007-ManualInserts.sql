@@ -17,7 +17,7 @@ SET EngineName = '$SynapseWorkspaceName$'
 	,DefaultKeyVaultURL = 'https://$KeyVaultName$.vault.azure.net/'
 	,LogAnalyticsWorkspaceId = '$LogAnalyticsWorkspaceId$'
 	,EngineJson = '{
-            "endpoint": "https://$SynapseWorkspaceName$.dev.azuresynapse.net", "DeltaProcessingNotebook": "DeltaProcessingNotebook, "Purview": "$PurviewAccountName$"
+            "endpoint": "https://$SynapseWorkspaceName$.dev.azuresynapse.net", "DeltaProcessingNotebook": "DeltaProcessingNotebook", "PurviewAccountName": "$PurviewAccountName$"
         }'
 WHERE EngineId = '-2'
 GO
@@ -67,9 +67,9 @@ WHERE SystemId = '-7'
 GO
 
 UPDATE [dbo].[SourceAndTargetSystems]
-SET SystemServer = 'https://$SynapseWorkspaceName$.dev.azuresynapse.net'
+SET SystemServer = '$SynapseWorkspaceName$.sql.azuresynapse.net'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
-	,SystemJSON = '{ "Workspace" : "$SynapseWorkspaceName$" }'
+	,SystemJSON = '{ "Workspace" : "$SynapseWorkspaceName$", "Database":"$SynapseSQLPoolName$" }'
 	,SystemName = '$SynapseWorkspaceName$'
 
 WHERE SystemId = '-10'
@@ -103,7 +103,7 @@ GO
 UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '(local)'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
-	,SystemJSON = '{  "Database" : "msdb"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
+	,SystemJSON = '{  "Database" : "Adventureworks"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
 	,SystemAuthType = 'WindowsAuth'
 	,SystemUserName = 'adminuser'
 	,SystemSecretName = 'selfhostedsqlpw'

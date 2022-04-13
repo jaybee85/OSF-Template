@@ -27,13 +27,13 @@ function(
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
     TestDescription = "",
-    SQLPoolName = "",
-    SQLPoolOperation = ""
+    SQLPoolOperation = "",
+    TaskGroupId = 0
     )
 {
     local TaskMasterJson =     
     {
-        "SQLPoolName": SQLPoolName,
+        "SQLPoolName": vars.synapse_sql_pool_name,
         "SQLPoolOperation": SQLPoolOperation,
         "Source":{
             "Type": SourceFormat,                       
@@ -71,7 +71,7 @@ function(
     {   
          
     },
-             
+    "TaskGroupId": TaskGroupId,       
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
     "TaskTypeId":-6,
     "TaskType":Pattern,
@@ -98,6 +98,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " SQL Dedicated Pool " + SQLPoolOperation + " execution test." 
+    "TestDescription": "[" + TestNumber + "] " +  " SQL Dedicated Pool " + SQLPoolOperation + " execution test.",
+    "DependencyChainTag": "" 
 }+commons
 

@@ -188,7 +188,7 @@ foreach ($patternFolder in $patternFolders)
 
         if ($TaskTypeId -eq -1)
         {
-        $TargetFormat = "Table"
+            $TargetFormat = "Table"
         }
 
         $content = Get-Content $schemafile -raw

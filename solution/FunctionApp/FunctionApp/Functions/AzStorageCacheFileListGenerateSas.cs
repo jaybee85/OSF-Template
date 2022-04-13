@@ -6,6 +6,7 @@
 -----------------------------------------------------------------------*/
 
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -18,7 +19,7 @@ using Newtonsoft.Json;
 namespace FunctionApp.Functions
 {
 
-    public static class AzStorageCacheFileListGenerateSas
+    public class AzStorageCacheFileListGenerateSas
     {
         /// <summary>
         /// Use this function to generate the SASURI for the StorageFileCache Tasks
@@ -27,11 +28,11 @@ namespace FunctionApp.Functions
         /// <returns></returns>
         [FunctionName("AZStorageCacheFileListGenerateSAS")]
         // ReSharper disable once UnusedMember.Global
-        public static IActionResult Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req)
         {
 
             //Get SASURI for table access
-            string requestBody = new System.IO.StreamReader(req.Body).ReadToEndAsync().Result;
+            string requestBody = await new System.IO.StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             
            

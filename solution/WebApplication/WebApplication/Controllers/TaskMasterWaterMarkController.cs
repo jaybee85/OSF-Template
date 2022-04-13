@@ -80,7 +80,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterWaterMarkColumn,TaskMasterWaterMarkColumnType,TaskMasterWaterMarkDateTime,TaskMasterWaterMarkBigInt,TaskWaterMarkJson,ActiveYn,UpdatedOn")] TaskMasterWaterMark taskMasterWaterMark)
+        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterWaterMarkColumn,TaskMasterWaterMarkColumnType,TaskMasterWaterMarkDateTime,TaskMasterWaterMarkBigInt,TaskMasterWaterMarkString,TaskWaterMarkJson,ActiveYn,UpdatedOn")] TaskMasterWaterMark taskMasterWaterMark)
         {
             if (ModelState.IsValid)
             {
@@ -122,7 +122,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterWaterMarkColumn,TaskMasterWaterMarkColumnType,TaskMasterWaterMarkDateTime,TaskMasterWaterMarkBigInt,TaskWaterMarkJson,ActiveYn,UpdatedOn")] TaskMasterWaterMark taskMasterWaterMark)
+        public async Task<IActionResult> Edit(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterWaterMarkColumn,TaskMasterWaterMarkColumnType,TaskMasterWaterMarkDateTime,TaskMasterWaterMarkBigInt,TaskMasterWaterMarkString,TaskWaterMarkJson,ActiveYn,UpdatedOn")] TaskMasterWaterMark taskMasterWaterMark)
         {
             if (id != taskMasterWaterMark.TaskMasterId)
             {
@@ -217,6 +217,7 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkColumnType', 'name':'Column Type', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkDateTime', 'name':'Watermark Date', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkBigInt', 'name':'Watermark Value', 'autoWidth':true }"));
+            cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkString', 'name':'Watermark String Value', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TaskWaterMarkJson', 'name':'Json', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'Is Active', 'autoWidth':true, 'ads_format': 'bool' }"));
 

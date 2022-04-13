@@ -105,6 +105,8 @@ function(
 	"TargetSystemUserName":"",
     "ADFPipeline": ADFPipeline,
     "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + DataFilename + " (" + SourceFormat + ") from " + SourceType + " to " + TargetType,
-    "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR
+    "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR,
+    "DependencyChainTag": "",
+    "TaskGroupId": -6
 }+commons
 

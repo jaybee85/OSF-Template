@@ -7,6 +7,7 @@
 
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using FunctionApp.Helpers;
 using FunctionApp.Services;
 using Newtonsoft.Json;
@@ -144,19 +145,19 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             }
         }
 
-        public JObject ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider, EngineJsonSchemasProvider engineSchemaProvider)
+        public async Task<JObject> ProcessRoot(TaskTypeMappingProvider ttm, SourceAndTargetSystemJsonSchemasProvider sourceTargetSchemaProvider, EngineJsonSchemasProvider engineSchemaProvider)
         {
             CreateInternalObjectsForProcessingJsonFields();
-            ProcessSourceSystem(sourceTargetSchemaProvider);
-            ProcessTargetSystem(sourceTargetSchemaProvider);
-            ProcessEngineJson(engineSchemaProvider);
-            ProcessTaskInstance(ttm);
-            ProcessTaskMaster(ttm);
+            await ProcessSourceSystem(sourceTargetSchemaProvider);
+            await ProcessTargetSystem(sourceTargetSchemaProvider);
+            await ProcessEngineJson(engineSchemaProvider);
+            await ProcessTaskInstance(ttm);
+            await ProcessTaskMaster(ttm);
             return _jsonObjectForAdf; 
 
         }
 
-        public void ProcessSourceSystem(SourceAndTargetSystemJsonSchemasProvider schemaProvider)
+        public async Task ProcessSourceSystem(SourceAndTargetSystemJsonSchemasProvider schemaProvider)
         {
             JObject Source = ((JObject)_jsonObjectForAdf["Source"]) == null
                 ? new JObject()
@@ -175,7 +176,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
 
             //Validate SourceSystemJson based on JSON Schema
             string sourceSystemSchema = schemaProvider.GetBySystemType(this.SourceSystemType).JsonSchema;
-            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, sourceSystemSchema, SourceSystemJson,
+            TaskIsValid = await JsonHelpers.ValidateJsonUsingSchema(_logging, sourceSystemSchema, SourceSystemJson,
                 "Failed to validate SourceSystem JSON for System Type: " + this.SourceSystemType + ". ");
 
             ProcessSourceSystem_Default(ref System);
@@ -199,7 +200,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
         }
 
 
-        public void ProcessTargetSystem(SourceAndTargetSystemJsonSchemasProvider schemaProvider)
+        public async Task ProcessTargetSystem(SourceAndTargetSystemJsonSchemasProvider schemaProvider)
         {
             JObject Target = ((JObject)_jsonObjectForAdf["Target"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["Target"];
 
@@ -216,7 +217,7 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
 
             //Validate TargetSystemJson based on JSON Schema
             string targetSystemSchema = schemaProvider.GetBySystemType(this.TargetSystemType).JsonSchema;
-            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, targetSystemSchema, this.TargetSystemJson, "Failed to validate TargetSystem JSON for System Type: " + this.TargetSystemType + ". ");
+            TaskIsValid = await JsonHelpers.ValidateJsonUsingSchema(_logging, targetSystemSchema, this.TargetSystemJson, "Failed to validate TargetSystem JSON for System Type: " + this.TargetSystemType + ". ");
 
             ProcessTargetSystem_Default(ref System);
             Target["System"] = System;
@@ -234,14 +235,14 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             });
         }
 
-        public void ProcessEngineJson(EngineJsonSchemasProvider schemaProvider)
+        public async Task ProcessEngineJson(EngineJsonSchemasProvider schemaProvider)
         {
             JObject Engine = ((JObject)_jsonObjectForAdf["ExecutionEngine"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["ExecutionEngine"];  //Validate ExecutionEngineJson based on JSON Schema
             JObject Properties = ((JObject)_jsonObjectForAdf["ExecutionEngine"]["JsonProperties"]) == null ? new JObject() : (JObject)_jsonObjectForAdf["ExecutionEngine"]["JsonProperties"];  //Validate ExecutionEngineJson based on JSON Schema
 
             ProcessEngineJson_Default(ref Properties);
             string engineSystemSchema = schemaProvider.GetBySystemType(this.EngineSystemType).JsonSchema;
-            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, engineSystemSchema, this.EngineJson,
+            TaskIsValid = await JsonHelpers.ValidateJsonUsingSchema(_logging, engineSystemSchema, this.EngineJson,
             "Failed to validate EngineJson JSON for System Type: " + this.EngineSystemType + ". ");
             Engine["JsonProperties"] = Properties;
             _jsonObjectForAdf["ExecutionEngine"] = Engine;

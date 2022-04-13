@@ -99,7 +99,7 @@ INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VA
 GO
 INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Azure SQL', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Database": {      "type": "string"    }  },  "required": [    "Database"  ]}')
 GO
-INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Azure Synapse', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Workspace": {      "type": "string"    }  },  "required": [    "Workspace"  ]}')
+INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Azure Synapse', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Workspace": {      "type": "string"    }, "Database": {      "type": "string"    }  },  "required": [    "Workspace", "Database"  ]}')
 GO
 INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'AzureVM', N'{     "$schema": "http://json-schema.org/draft-04/schema#",     "type": "object",     "properties": {         "SubscriptionUid": {             "type": "string"         },         "VMname": {           "type": "string"       },       "ResourceGroup": {         "type": "string"     }     },     "required": [         "SubscriptionUid",         "VMname",         "ResourceGroup"      ] }')
 GO

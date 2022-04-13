@@ -78,7 +78,7 @@ local pipeline = {
 					"waitOnCompletion": false,
 					"parameters": {
 						"Body": {
-							"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Get Metadata\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"', string(activity('Lookup Get SQL Metadata').error.message), '\",\"Status\":\"Failed\"}'))",
+							"value": "@json(concat('{\"TaskInstanceId\":\"', string(pipeline().parameters.TaskObject.TaskInstanceId), '\",\"ExecutionUid\":\"', string(pipeline().parameters.TaskObject.ExecutionUid), '\",\"RunId\":\"', string(pipeline().RunId), '\",\"LogTypeId\":1,\"LogSource\":\"ADF\",\"ActivityType\":\"Get Metadata\",\"StartDateTimeOffSet\":\"', string(pipeline().TriggerTime), '\",\"EndDateTimeOffSet\":\"', string(utcnow()), '\",\"Comment\":\"', encodeUriComponent(string(activity('Lookup Get SQL Metadata').error.message)), '\",\"Status\":\"Failed\"}'))",
 							"type": "Expression"
 						},
 						"FunctionName": "Log",
@@ -186,27 +186,29 @@ local pipeline = {
 									"typeProperties": {
 										"pipeline": {										
 											"referenceName": if(GenerateArm=="false") 
-																then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_"+GFPIR 
-																else "[concat('GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_" + "', parameters('integrationRuntimeShortName'))]",
+																then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_Chunk_"+GFPIR 
+																else "[concat('GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_Watermark_Chunk_" + "', parameters('integrationRuntimeShortName'))]",
 											"type": "PipelineReference"
 										},
 										"waitOnCompletion": true,
 										"parameters": {
-											"TaskObject": {
-												"value": "@pipeline().parameters.TaskObject",
-												"type": "Expression"
-											},
-											"Mapping": {
-												"value": "@activity('AF Persist Metadata and Get Mapping').output.value",
-												"type": "Expression"
-											},
-											"NewWaterMark": {
-												"value": "@activity('Lookup New Watermark').output.firstRow.newWatermark",
-												"type": "Expression"
-											},
-											"Item": "1",
-											"BatchCount": "1"
-										}
+                                            "BatchCount": {
+                                                "value": "@int('1')",
+                                                "type": "Expression"
+                                            },
+                                            "Mapping": {
+                                                "value": "@activity('AF Persist Metadata and Get Mapping').output.value",
+                                                "type": "Expression"
+                                            },
+                                            "NewWatermark": {
+                                                "value": "@activity('Lookup New Watermark').output.firstRow.newWatermark",
+                                                "type": "Expression"
+                                            },
+                                            "TaskObject": {
+                                                "value": "@pipeline().parameters.TaskObject",
+                                                "type": "Expression"
+                                            }
+                                        }
 									}
 								},
 								{

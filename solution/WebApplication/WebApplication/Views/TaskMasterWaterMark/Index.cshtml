@@ -14,7 +14,7 @@
     <thead class="thead-dark">
         <tr>
             <th></th>
-             <th>
+            <th>
                 @Html.DisplayNameFor(model => model.TaskMasterId)
             </th>
             <th>
@@ -28,6 +28,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaskMasterWaterMarkBigInt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskMasterWaterMarkString)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaskWaterMarkJson)
@@ -63,6 +66,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.TaskMasterWaterMarkBigInt)
             </td>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskMasterWaterMarkString)
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.TaskWaterMarkJson)
             </td>

@@ -376,8 +376,8 @@ else
     $result = az storage container create --name "datalakeraw" --account-name $blobstorage_name --auth-mode login
     $result = az storage container create --name "transientin" --account-name $blobstorage_name --auth-mode login
 
-    az storage blob upload-batch --destination "datalakeraw" --account-name $adlsstorage_name --source ./ --destination-path samples/ --auth-mode login
-    az storage blob upload-batch --destination "datalakeraw" --account-name $blobstorage_name --source ./ --destination-path samples/ --auth-mode login
+    $result = az storage blob upload-batch --destination "datalakeraw" --account-name $adlsstorage_name --source ./ --destination-path samples/ --auth-mode login
+    $result = az storage blob upload-batch --destination "datalakeraw" --account-name $blobstorage_name --source ./ --destination-path samples/ --auth-mode login
 
     #$files = Get-ChildItem -Name
     #foreach ($file in $files) {

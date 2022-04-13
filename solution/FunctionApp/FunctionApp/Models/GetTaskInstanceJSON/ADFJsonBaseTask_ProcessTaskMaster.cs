@@ -6,6 +6,7 @@
 -----------------------------------------------------------------------*/
 
 using System;
+using System.Threading.Tasks;
 using FunctionApp.Helpers;
 using FunctionApp.Services;
 using Newtonsoft.Json.Linq;
@@ -14,13 +15,13 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
 {
     public partial class AdfJsonBaseTask
     {
-        public void ProcessTaskMaster(TaskTypeMappingProvider ttm)
+        public async Task ProcessTaskMaster(TaskTypeMappingProvider ttm)
         {
             //Validate TaskmasterJson based on JSON Schema
-            var mappings = ttm.GetAllActive();
+            var mappings = await ttm.GetAllActive();
             var mapping = TaskTypeMappingProvider.LookupMappingForTaskMaster(mappings,SourceSystemType, TargetSystemType, _taskMasterJsonSource["Type"].ToString(), _taskMasterJsonTarget["Type"].ToString(), TaskTypeId, TaskExecutionType);            
             string mappingSchema = mapping.TaskMasterJsonSchema;
-            TaskIsValid = JsonHelpers.ValidateJsonUsingSchema(_logging, mappingSchema, TaskMasterJson, "Failed to validate TaskMaster JSON for TaskTypeMapping: " + mapping.MappingName + ". ");
+            TaskIsValid = await JsonHelpers.ValidateJsonUsingSchema(_logging, mappingSchema, TaskMasterJson, "Failed to validate TaskMaster JSON for TaskTypeMapping: " + mapping.MappingName + ". ");
             
             if (TaskIsValid)
             {
@@ -86,22 +87,32 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
             });
 
             source["IncrementalType"] = "CDC";
-            if (source["IncrementalValue"].ToString().ToLower() == "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+
+            if (Helpers.JsonHelpers.CheckForJsonProperty("Instance", source) == false)
             {
-                source["SQLStatement"] = @$"
-                    DECLARE @from_lsn binary(10), @to_lsn binary(10);
-                    SET @from_lsn = sys.fn_cdc_get_min_lsn('{source["TableSchema"]}_{source["TableName"]}');
-                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal', GETDATE()); 
-                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                var e = new Exception("CDC Extraction Task Type does not have an instance element within taskmasterjson");
+                _logging.LogErrors(e);
+                throw e;
+            }
+            var _instance = source["Instance"];
+            if ((string.IsNullOrEmpty(_instance["IncrementalValue"].ToString()) ||  _instance["IncrementalValue"].ToString().ToLower() == "no_watermark_string") && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            {
+                source["SQLStatement"] = @$"                    
+                    /*Remove First*/-- DECLARE  @from_lsn binary(10), @to_lsn binary(10);  
+                    /*Remove First*/-- SET @from_lsn =sys.fn_cdc_get_min_lsn((SELECT capture_instance FROM cdc.change_tables where source_object_id  = object_id('{source["TableSchema"]}.{source["TableName"]}')));  
+                    /*Remove First*/-- SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',  GETDATE());
+                    /*Remove First*/--  SELECT CONVERT(varchar(max),@to_lsn,1) to_lsn,CONVERT(varchar(max),@from_lsn,1) from_lsn, count(*) ChangeCount FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, N'all');
+                    /*Remove Second*/-- SELECT * FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(convert(binary(10),'/*from_lsn*/',1), convert(binary(10),'/*to_lsn*/',1), N'all');
                     ";
             }
-            else if (source["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && source["IncrementalColumnType"].ToString().ToLower() == "lsn")
+            else if (_instance["IncrementalValue"].ToString().ToLower() != "no_watermark_string" && _instance["IncrementalColumnType"].ToString().ToLower() == "lsn")
             {
                 source["SQLStatement"] = @$"
-                    DECLARE @from_lsn binary(10), @to_lsn binary(10);
-                    SET @from_lsn = {source["IncrementalValue"]};
-                    SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',GETDATE()); 
-                    SELECT * FROM cdc.fn_cdc_get_net_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, 'all')
+                    /*Remove First*/-- DECLARE  @from_lsn binary(10), @to_lsn binary(10);  
+                    /*Remove First*/-- SET @from_lsn = {_instance["IncrementalValue"]};
+                    /*Remove First*/-- SET @to_lsn = sys.fn_cdc_map_time_to_lsn('largest less than or equal',  GETDATE());
+                    /*Remove First*/--  SELECT CONVERT(varchar(max),@to_lsn,1) to_lsn,CONVERT(varchar(max),@from_lsn,1) from_lsn, count(*) ChangeCount FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(@from_lsn, @to_lsn, N'all');
+                    /*Remove Second*/-- SELECT * FROM cdc.fn_cdc_get_all_changes_{source["TableSchema"]}_{source["TableName"]}(convert(binary(10),'/*from_lsn*/',1), convert(binary(10),'/*to_lsn*/',1), N'all');
                     ";
             }
 
@@ -188,6 +199,15 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
         {
             string sqlStatement = "";
 
+            if (Helpers.JsonHelpers.CheckForJsonProperty("Instance", Extraction) == false)
+            {
+                var e = new Exception("Incremental Extraction Task Type does not have an instance element within taskmasterjson");
+                _logging.LogErrors(e);
+                throw e;
+            }
+            var _instance = Extraction["Instance"];
+
+
             if (Extraction["IncrementalType"] != null)
             {
 
@@ -205,45 +225,45 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && _instance["IncrementalColumnType"].ToString().ToLower() == "datetime")
                 {
                     sqlStatement = @$"
                         SELECT 
-	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
+	                        MAX([{_instance["IncrementalField"]}]) AS newWatermark
                         FROM 
 	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-                        WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+                        WHERE [{_instance["IncrementalField"]}] > CAST('{_instance["IncrementalValue"]}' as datetime)
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark" && _instance["IncrementalColumnType"].ToString().ToLower() != "datetime")
                 {
                     sqlStatement = @$"
                         SELECT 
-	                        MAX([{Extraction["IncrementalField"]}]) AS newWatermark
+	                        MAX([{_instance["IncrementalField"]}]) AS newWatermark
                         FROM 
 	                        [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-                        WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+                        WHERE [{_instance["IncrementalField"]}] > {_instance["IncrementalValue"]}
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() == "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && _instance["IncrementalColumnType"].ToString().ToLower() == "datetime")
                 {
                     sqlStatement = @$"
-                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+                        SELECT MAX([{_instance["IncrementalField"]}]) AS newWatermark, 
 		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
 	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-	                    WHERE [{Extraction["IncrementalField"]}] > CAST('{Extraction["IncrementalValue"]}' as datetime)
+	                    WHERE [{_instance["IncrementalField"]}] > CAST('{_instance["IncrementalValue"]}' as datetime)
                     ";
                 }
 
-                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && Extraction["IncrementalColumnType"].ToString().ToLower() != "datetime")
+                if (Extraction["IncrementalType"].ToString().ToLower() == "watermark_chunk" && _instance["IncrementalColumnType"].ToString().ToLower() != "datetime")
                 {
                     sqlStatement = @$"
-                        SELECT MAX([{Extraction["IncrementalField"]}]) AS newWatermark, 
+                        SELECT MAX([{_instance["IncrementalField"]}]) AS newWatermark, 
 		                       CAST(CASE when count(*) = 0 then 0 else CEILING(count(*)/{Extraction["ChunkSize"]} + 0.00001) end as int) as  batchcount
 	                    FROM  [{Extraction["TableSchema"]}].[{Extraction["TableName"]}] 
-	                    WHERE [{Extraction["IncrementalField"]}] > {Extraction["IncrementalValue"]}
+	                    WHERE [{_instance["IncrementalField"]}] > {_instance["IncrementalValue"]}
                     ";
                 }
 
