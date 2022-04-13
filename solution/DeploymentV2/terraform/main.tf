@@ -37,12 +37,11 @@ module "naming" {
   source  = "Azure/naming/azurerm"
   version = "0.1.1"
   prefix = [
-    var.prefix    
+    var.prefix,
+    var.environment_tag
   ]
   suffix = [
-    var.environment_tag,
-    var.app_name,
-    "001"
+    var.app_name
   ]
 }
 
