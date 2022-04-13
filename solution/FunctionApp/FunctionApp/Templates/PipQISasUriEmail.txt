@@ -1,2 +1,1 @@
-﻿Hi {NAME}, Use the link below to upload files: 
-{FileUploaderUrl}?{SASTOKEN}
+﻿
