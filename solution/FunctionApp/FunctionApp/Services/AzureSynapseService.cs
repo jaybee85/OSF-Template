@@ -24,7 +24,7 @@ namespace FunctionApp.Services
     {
         private readonly IAzureAuthenticationProvider _authProvider;
         private readonly IOptions<ApplicationOptions> _options;
-        private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
+        private readonly TaskMetaDataDatabase _taskMetaDataDatabase;       
 
         public AzureSynapseService(IAzureAuthenticationProvider authProvider, IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase)
         {
@@ -123,12 +123,12 @@ namespace FunctionApp.Services
 
         }
 
-        public async Task StartSparkSession(Uri endpoint, string taskName,  string poolName, Logging.Logging logging)
+        public async Task StartSparkSession(Uri endpoint, string taskName,  string poolName, Logging.Logging logging, string sessionFolder)
         {
             int tryCount = 0;
             while (tryCount < 10)
             { 
-                var res = await StartSparkSessionCore(endpoint, taskName, poolName, logging);
+                var res = await StartSparkSessionCore(endpoint, taskName, poolName, logging, sessionFolder);
                 if (res == "succeeded")
                 {
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
@@ -140,7 +140,7 @@ namespace FunctionApp.Services
             }
         }
 
-        public async Task<string> StartSparkSessionCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging)
+        public async Task<string> StartSparkSessionCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder)
         {
 
             try
@@ -148,7 +148,7 @@ namespace FunctionApp.Services
                 var c = await GetSynapseClient();
                 var guid = Guid.NewGuid();
                 //Get Sessions Waiting To Start
-                DirectoryInfo folder = Directory.CreateDirectory("./sessions");
+                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "/runners"));
                 var files = folder.GetFiles();
                 var matchedFiles = files.Where(f => f.Name.StartsWith($"cs_"));
                 int sessionsWaitingToStart = 0;

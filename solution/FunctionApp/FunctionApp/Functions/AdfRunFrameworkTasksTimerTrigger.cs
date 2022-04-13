@@ -24,6 +24,7 @@ namespace FunctionApp.Functions
         private readonly IOptions<ApplicationOptions> _options;
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly IHttpClientFactory _httpClientFactory;
+        private string _heartBeatFolder; 
 
         public AdfRunFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, IHttpClientFactory httpClientFactory)
         {
@@ -69,7 +70,7 @@ namespace FunctionApp.Functions
                 foreach (var runner in frameworkTaskRunners)
                 {
                     int taskRunnerId = ((dynamic)runner).TaskRunnerId;
-                    DirectoryInfo folder = Directory.CreateDirectory("./runners");
+                    DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "/runners"));
                     var files = folder.GetFiles();
 
                     if (((dynamic)runner).Status == "Running" && ((dynamic)runner).RunNow == "Y")

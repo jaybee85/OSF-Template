@@ -450,13 +450,13 @@ namespace FunctionApp.TestHarness
         }
         public async Task DebugStartSynapseSessions()
         {
-            var T1 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job1", "adsdevsynspads", _funcAppLogger);
+            var T1 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job1", "adsdevsynspads", _funcAppLogger, "./");
             System.Threading.Thread.Sleep(1000);
-            var T2 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job2", "adsdevsynspads", _funcAppLogger);
+            var T2 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job2", "adsdevsynspads", _funcAppLogger, "./");
             System.Threading.Thread.Sleep(1000);
-            var T3 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job3", "adsdevsynspads", _funcAppLogger);
+            var T3 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job3", "adsdevsynspads", _funcAppLogger, "./");
             System.Threading.Thread.Sleep(1000);
-            var T4 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job4", "adsdevsynspads", _funcAppLogger);
+            var T4 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job4", "adsdevsynspads", _funcAppLogger, "./");
             await Task.WhenAll(T1, T2, T3, T4);
 
         }

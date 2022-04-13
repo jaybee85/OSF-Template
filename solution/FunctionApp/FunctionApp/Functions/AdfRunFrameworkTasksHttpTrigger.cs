@@ -67,6 +67,7 @@ namespace FunctionApp.Functions
         private readonly IAzureAuthenticationProvider _authProvider;
         private readonly DataFactoryClientFactory _dataFactoryClientFactory;
         private readonly AzureSynapseService _azureSynapseService;
+        private string _heartBeatFolder;
 
 
         public AdfRunFrameworkTasksHttpTrigger(ISecurityAccessProvider sap, 
@@ -89,6 +90,7 @@ namespace FunctionApp.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger log,
             ExecutionContext context, System.Security.Claims.ClaimsPrincipal principal)
         {
+            _heartBeatFolder = context.FunctionAppDirectory;
             bool isAuthorised = await _sap.IsAuthorised(req, log);
             if (isAuthorised)
             {
@@ -127,7 +129,7 @@ namespace FunctionApp.Functions
             try
             {
                 //Delete the runner heartbeat file -- this is here so that we can track successful HTTP trigger execution without the parent caller actually having to wait for a response
-                DirectoryInfo folder = Directory.CreateDirectory("./runners");
+                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "/runners"));
                 var files = folder.GetFiles();
                 foreach (var f in files.Where(f => f.Name.StartsWith($"hb_{taskRunnerId.ToString()}_")))
                 {
