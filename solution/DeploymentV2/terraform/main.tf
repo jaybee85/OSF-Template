@@ -41,11 +41,9 @@ module "naming" {
   ]
   suffix = [
     var.environment_tag,
-    "ae",
     var.app_name,
     "001"
   ]
-  unique-length = 0
 }
 
 
