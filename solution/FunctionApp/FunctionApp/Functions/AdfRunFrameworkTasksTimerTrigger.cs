@@ -72,7 +72,7 @@ namespace FunctionApp.Functions
                 foreach (var runner in frameworkTaskRunners)
                 {
                     int taskRunnerId = ((dynamic)runner).TaskRunnerId;
-                    DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "/runners"));
+                    DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "runners"));
                     var files = folder.GetFiles();
 
                     if (((dynamic)runner).Status == "Running" && ((dynamic)runner).RunNow == "Y")

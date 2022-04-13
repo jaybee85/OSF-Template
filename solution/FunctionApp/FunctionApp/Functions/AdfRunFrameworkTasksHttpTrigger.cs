@@ -129,7 +129,7 @@ namespace FunctionApp.Functions
             try
             {
                 //Delete the runner heartbeat file -- this is here so that we can track successful HTTP trigger execution without the parent caller actually having to wait for a response
-                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "/runners"));
+                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "runners"));
                 var files = folder.GetFiles();
                 foreach (var f in files.Where(f => f.Name.StartsWith($"hb_{taskRunnerId.ToString()}_")))
                 {
