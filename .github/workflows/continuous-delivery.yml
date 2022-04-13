@@ -43,12 +43,6 @@ jobs:
           creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
           enable-AzPSSession: true 
 
-      - name: Associate PAL
-        id: pal_association
-        run: |
-          az extension add --name managementpartner 
-          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669 
-
       - name: Terragrunt Install
         id: terragrunt_install
         working-directory: ./solution/DeploymentV2/terraform
