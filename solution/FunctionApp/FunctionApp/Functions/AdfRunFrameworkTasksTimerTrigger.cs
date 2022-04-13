@@ -49,6 +49,7 @@ namespace FunctionApp.Functions
         [FunctionName("RunFrameworkTasksTimerTrigger")]         
         public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
+            log.LogInformation(context.FunctionAppDirectory);
             _heartBeatFolder = context.FunctionAppDirectory;
             await Core(log);        
         }
