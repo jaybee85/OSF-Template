@@ -32,6 +32,7 @@ using Newtonsoft.Json.Linq;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace FunctionApp.Functions
 {
@@ -125,6 +126,15 @@ namespace FunctionApp.Functions
         {            
             try
             {
+                //Delete the runner heartbeat file -- this is here so that we can track successful HTTP trigger execution without the parent caller actually having to wait for a response
+                DirectoryInfo folder = Directory.CreateDirectory("./runners");
+                var files = folder.GetFiles();
+                foreach (var f in files.Where(f => f.Name.StartsWith($"hb_{taskRunnerId.ToString()}_")))
+                {
+                    f.Delete();
+                }
+
+
                 await _taskMetaDataDatabase.ExecuteSql($"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
 
                 //Fetch Top # tasks
