@@ -134,7 +134,7 @@ namespace FunctionApp.Services
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
                     break; 
                 }
-                logging.LogWarning("Task Named " + taskName + " Failed To Start. Attempt Number" + tryCount.ToString());
+                logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{res}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
                 await Task.Delay(1000);
             }
@@ -148,7 +148,7 @@ namespace FunctionApp.Services
                 var c = await GetSynapseClient();
                 var guid = Guid.NewGuid();
                 //Get Sessions Waiting To Start
-                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "/runners"));
+                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "sessions"));
                 var files = folder.GetFiles();
                 var matchedFiles = files.Where(f => f.Name.StartsWith($"cs_"));
                 int sessionsWaitingToStart = 0;
@@ -167,7 +167,21 @@ namespace FunctionApp.Services
 
                 //TODO: Need to centralise this information so that multiple function executions do not pick up the same idle sesson.. for now will put into a static maybe
                 //Get Idle Sessions
-                JObject sessions = JObject.Parse(await GetFromSynapseApi(endpoint, $"livyApi/versions/2019-01-01/sparkPools/{poolName}/sessions?detailed=True", logging));
+                JObject sessions= new JObject();
+                sessions["sessions"] = new JArray();
+                int reqSessionCount = 20;
+                int reqFromSession = 0;
+                while (reqSessionCount >= 20)
+                {
+                    JObject tmpSessions = JObject.Parse(await GetFromSynapseApi(endpoint, $"livyApi/versions/2019-01-01/sparkPools/{poolName}/sessions?from={reqFromSession}&size=20&detailed=True", logging));
+                    foreach (var s in tmpSessions["sessions"])
+                    {
+                        ((JArray)sessions["sessions"]).Add(s);                        
+                    }
+                    reqSessionCount = System.Convert.ToInt16(tmpSessions["total"]);
+                    reqFromSession += reqSessionCount;
+                }
+                
                 int sessionCount = 0 + sessionsWaitingToStart;
                 string idleSession = "";
                
@@ -221,16 +235,7 @@ namespace FunctionApp.Services
                             }
                         }
                     }
-                }
-
-
-
-                if (sessionCount > 5)
-                {
-                    //TODO: Throw Error && Fail the task -- Set task to untried with message that there are no spark sessions available
-                    // await _taskMetaDataDatabase.LogTaskInstanceCompletion((Int64)taskInstanceId, (Guid)postObjectExecutionUid, taskStatus, (Guid)adfRunUid, (String)comment);
-                    { return "nosessions"; }
-                }
+                }               
 
 
                 //If no idle sessions then create new one
@@ -317,9 +322,46 @@ namespace FunctionApp.Services
                     //If current thread has wrote the first heartbeat then allow it to continue
                     if (minGuid == guid)
                     {
-                        await Task.Delay(10000);
-                        string code = "{\"code\": \"print('Hello')\", \"kind\":\"pyspark\"}";
-                        JObject statement = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions/{idleSession}/statements", code, logging));
+                        string code = "";
+                        //Get the Notebook 
+                        JObject Notebook = JObject.Parse(await GetFromSynapseApi(endpoint, $"/notebooks/DeltaProcessingNotebook?api-version=2020-12-01",logging));
+                        foreach (JObject cell in Notebook["properties"]["cells"])
+                        {
+                            bool cellIsParam = false;
+                            if (cell["cell_type"].ToString() == "code")
+                            {
+                                var metadataBool = Helpers.JsonHelpers.CheckForJsonProperty("metadata",cell);
+                                if (metadataBool)
+                                {
+                                    var tagsBool = Helpers.JsonHelpers.CheckForJsonProperty("tags", (JObject)cell["metadata"]);
+                                    if (tagsBool)
+                                    {
+                                        if (((JArray)cell["metadata"]["tags"]).ToList().Contains("parameters"))
+                                        {
+                                            cellIsParam = true;
+                                            //TODO Insert the TaskObject
+                                        }
+                                    }
+                                    
+                                }
+
+                                if(!cellIsParam)
+                                {
+                                    foreach (var line in cell["source"])
+                                    {
+                                        code += line.ToString();
+                                    }
+                                    code += System.Environment.NewLine;
+                                }
+                            }                           
+                        }                        
+
+                        JObject postContent = new JObject();
+                        postContent["code"] = code;
+                        postContent["kind"] = "pyspark";
+                       
+
+                        JObject statement = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions/{idleSession}/statements", Newtonsoft.Json.JsonConvert.SerializeObject(postContent), logging));
                         //Delete the files and reset the runner as it has failed to start previously                            
                         foreach (var f in matchedFiles2)
                         {
@@ -358,9 +400,8 @@ namespace FunctionApp.Services
             try
             {
                 var c = await GetSynapseClient();
-                JObject jsonContent = new JObject();
-                jsonContent = JObject.Parse(postContent);
-                var postStringContent = new StringContent(jsonContent.ToString(), System.Text.Encoding.UTF8, "application/json");
+                JObject jsonContent = new JObject();                
+                var postStringContent = new StringContent(postContent, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await c.PostAsync($"{endpoint.ToString()}/{Path}", postStringContent);
                 HttpContent responseContent = response.Content;
                 var status = response.StatusCode;
