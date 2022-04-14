@@ -24,7 +24,7 @@ namespace FunctionApp.Functions
         private readonly IOptions<ApplicationOptions> _options;
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly IHttpClientFactory _httpClientFactory;
-        private string _heartBeatFolder; 
+        public string HeartBeatFolder { get; set; }
 
         public AdfRunFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, IHttpClientFactory httpClientFactory)
         {
@@ -50,7 +50,7 @@ namespace FunctionApp.Functions
         public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             log.LogInformation(context.FunctionAppDirectory);
-            _heartBeatFolder = context.FunctionAppDirectory;
+            this.HeartBeatFolder = context.FunctionAppDirectory;
             await Core(log);        
         }
 
@@ -72,7 +72,7 @@ namespace FunctionApp.Functions
                 foreach (var runner in frameworkTaskRunners)
                 {
                     int taskRunnerId = ((dynamic)runner).TaskRunnerId;
-                    DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(_heartBeatFolder, "runners"));
+                    DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(this.HeartBeatFolder, "runners"));
                     var files = folder.GetFiles();
 
                     if (((dynamic)runner).Status == "Running" && ((dynamic)runner).RunNow == "Y")
@@ -97,7 +97,7 @@ namespace FunctionApp.Functions
                             };
 
                             //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
-                            //var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
+                            var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
 
                         }
                         catch (Exception)
