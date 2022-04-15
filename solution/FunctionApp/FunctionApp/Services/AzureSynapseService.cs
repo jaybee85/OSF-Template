@@ -17,6 +17,10 @@ using System.Linq;
 using FunctionApp.Functions;
 using FunctionApp.DataAccess;
 using System.IO;
+using Azure.Analytics.Synapse.Spark;
+using Azure.Analytics.Synapse.Spark.Models;
+using Azure;
+using Azure.Analytics.Synapse.Artifacts.Models;
 
 namespace FunctionApp.Services
 {
@@ -123,12 +127,12 @@ namespace FunctionApp.Services
 
         }
 
-        public async Task StartSparkSession(Uri endpoint, string taskName,  string poolName, Logging.Logging logging, string sessionFolder)
+        public async Task ExecuteNotebook(Uri endpoint, string taskName,  string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
             int tryCount = 0;
             while (tryCount < 10)
             { 
-                var res = await StartSparkSessionCore(endpoint, taskName, poolName, logging, sessionFolder);
+                var res = await ExecuteNotebookCore(endpoint, taskName, poolName, logging, sessionFolder, TaskObject);
                 if (res == "succeeded")
                 {
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
@@ -140,12 +144,14 @@ namespace FunctionApp.Services
             }
         }
 
-        public async Task<string> StartSparkSessionCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder)
+        public async Task<string> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
 
             try
             {
                 var c = await GetSynapseClient();
+                SparkSessionClient ssc = GetSessionClient(endpoint, poolName);                
+
                 var guid = Guid.NewGuid();
                 //Get Sessions Waiting To Start
                 DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "sessions"));
@@ -169,81 +175,95 @@ namespace FunctionApp.Services
                 //Get Idle Sessions
                 JObject sessions= new JObject();
                 sessions["sessions"] = new JArray();
+                List<SparkSession> sscl = new List<SparkSession>();
                 int reqSessionCount = 20;
                 int reqFromSession = 0;
                 while (reqSessionCount >= 20)
                 {
-                    JObject tmpSessions = JObject.Parse(await GetFromSynapseApi(endpoint, $"livyApi/versions/2019-01-01/sparkPools/{poolName}/sessions?from={reqFromSession}&size=20&detailed=True", logging));
-                    foreach (var s in tmpSessions["sessions"])
+
+                    Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession,20,false);
+                    foreach (SparkSession s in ss.Value.Sessions)
                     {
-                        ((JArray)sessions["sessions"]).Add(s);                        
+                        if (s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Killed && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Dead && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Error)
+                        {
+                            logging.LogInformation($"Viable Session Found Id:{s.Id}, State:{s.State}");
+                            sscl.Add(s);
+                        }                        
                     }
-                    reqSessionCount = System.Convert.ToInt16(tmpSessions["total"]);
-                    reqFromSession += reqSessionCount;
+                   
+                    reqSessionCount = ss.Value.Total;
+                    if (reqSessionCount > 0)
+                    {
+                        reqFromSession += ss.Value.Total;
+                    }
                 }
                 
                 int sessionCount = 0 + sessionsWaitingToStart;
-                string idleSession = "";
+                string idleSessionId = "";
                
-                foreach (JObject s in sessions["sessions"])
+                foreach (SparkSession s in sscl)
                 {
-                    if (Helpers.JsonHelpers.CheckForJsonProperty("livyInfo", s))
+                    //Session number for current loop iteration
+                    var loopSession = s.Id.ToString();
+                    double timeSinceStarted = 0;
+                    SparkSession sd = await ssc.GetSparkSessionAsync(s.Id, true);
+                    if (!string.IsNullOrEmpty(sd.LivyInfo.StartingAt.ToString()))
                     {
-                        JObject li = (JObject)s["livyInfo"];
-                        if (Helpers.JsonHelpers.CheckForJsonProperty("startingAt", li))
-                        {
-                            //Session number for current loop iteration
-                            var loopSession = s["id"].ToString();
-                            double timeSinceStarted = 0;
-                            if (!string.IsNullOrEmpty(s["livyInfo"]["startingAt"].ToString()))
-                            {
-                                timeSinceStarted = (DateTime.Now - (DateTime)s["livyInfo"]["startingAt"]).TotalSeconds;
-                            }
+                        timeSinceStarted = (DateTimeOffset.Now-(DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
+                    }
 
-                            if (s["state"].ToString() == "idle" & timeSinceStarted > 180)
-                            {
-                                if (string.IsNullOrEmpty(idleSession))
-                                {
+                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle & timeSinceStarted > 180)
+                    {
+                        if (string.IsNullOrEmpty(idleSessionId))
+                        {
                                     
-                                    //Check if heartbeat files exist
-                                    files = folder.GetFiles();
-                                    matchedFiles = files.Where(f => f.Name.StartsWith($"us_{loopSession.ToString()}_"));
-                                    if (matchedFiles.Any())
-                                    {
-                                        //Skip this session and move on to the next
-                                        //logging.LogInformation($"Processing Task {taskName}. Session {loopSession} for application AdsGoFast {sessionCount} is idle but marked for use.");
-                                    }
-                                    else
-                                    {
-                                        //Write a session heartbeat file
-                                        logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {sessionCount}. Signaling intent to use...");
-                                        WriteSessionHeartBeat(folder, loopSession, guid, "us");
-                                        idleSession = loopSession;
-                                    }
-                                }
-                                sessionCount += 1;
-                            }
-                            if (s["state"].ToString() == "idle" & timeSinceStarted <= 180)
+                            //Check if heartbeat files exist
+                            files = folder.GetFiles();
+                            matchedFiles = files.Where(f => f.Name.StartsWith($"us_{loopSession.ToString()}_"));
+                            if (matchedFiles.Any())
                             {
-                                logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it has only just been created and will most likely be used by its creator.");
-                                sessionCount += 1;
+                                //Skip this session and move on to the next
+                                //logging.LogInformation($"Processing Task {taskName}. Session {loopSession} for application AdsGoFast {sessionCount} is idle but marked for use.");
                             }
-                            if (s["state"].ToString() == "busy")
+                            else
                             {
-                                sessionCount += 1;
-                                logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
+                                //Write a session heartbeat file
+                                logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {sessionCount}. Signaling intent to use...");
+                                WriteSessionHeartBeat(folder, loopSession, guid, "us");
+                                idleSessionId = loopSession;
                             }
                         }
+                        sessionCount += 1;
                     }
+                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle & timeSinceStarted <= 180)
+                    {
+                        logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it has only just been created and will most likely be used by its creator.");
+                        sessionCount += 1;
+                    }
+                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Busy)
+                    {
+                        sessionCount += 1;
+                        logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
+                    }
+                        
+                    
                 }               
 
 
                 //If no idle sessions then create new one
-                if (string.IsNullOrEmpty(idleSession) && (sessionCount <= 2))
+                if (string.IsNullOrEmpty(idleSessionId) && (sessionCount <= 2))
                 {
                     var startTimer = DateTime.Now;
                     string sessionName = "AdsGoFast_" + (sessionCount + 1).ToString();
-                    string jsonContent = "{\"tags\": null,\"Name\": \"" + sessionName + "\", \"driverMemory\": \"4g\",  \"driverCores\": 1,  \"executorMemory\": \"2g\", \"executorCores\": 2, \"numExecutors\": 2, \"artifactId\": \"dldj\"}";
+                    //string jsonContent = "{\"tags\": null,\"Name\": \"" + sessionName + "\", \"driverMemory\": \"4g\",  \"driverCores\": 1,  \"executorMemory\": \"2g\", \"executorCores\": 2, \"numExecutors\": 2, \"artifactId\": \"dldj\"}";
+                    SparkSessionOptions sso = new SparkSessionOptions(sessionName);
+                    sso.DriverCores = 1;
+                    sso.DriverMemory = "4g";
+                    sso.ExecutorCores = 2;
+                    sso.ExecutorMemory = "2g";
+                    sso.ExecutorCount = 2;
+                    sso.ArtifactId = "test";                    
+
                     WriteSessionHeartBeat(folder, sessionCount.ToString(), guid, "cs");
                     await Task.Delay(1000);
                     files = folder.GetFiles();
@@ -261,22 +281,24 @@ namespace FunctionApp.Services
                     //If current thread has wrote the first heartbeat then allow it to continue
                     if (minGuid == guid)
                     {
-                        JObject newSession = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions?detailed=True", jsonContent, logging));
-                        idleSession = newSession["id"].ToString();
-                       
-                        WriteSessionHeartBeat(folder, idleSession, guid, "us");
+                        //JObject newSession = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions?detailed=True", jsonContent, logging));
+                        SparkSessionOperation ns = ssc.StartCreateSparkSession(sso, true);
+                        idleSessionId = ns.Id.ToString();
+                        SparkSession newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(ns.Id), true);                        
+
+                        WriteSessionHeartBeat(folder, idleSessionId, guid, "us");
                         //Wait for session to start
-                        if (newSession["state"].ToString() == "not_started")
+                        if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.NotStarted)
                         {
                             //Will Wait for up to 100 seconds
                             for (int i = 0; i < 20; i++)
                             {
                                 await Task.Delay(5000);
                                 var startUpTime = (DateTime.Now - startTimer).TotalSeconds;
-                                JObject session = JObject.Parse(await GetFromSynapseApi(endpoint, $"livyApi/versions/2019-01-01/sparkPools/{poolName}/sessions/{idleSession}", logging));
-                                if (session["state"].ToString() == "idle")
+                                newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(newSession.Id), true);
+                                if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle)
                                 {
-                                    logging.LogInformation($"Processing Task {taskName}. Session {idleSession}. Started in {startUpTime.ToString()} seconds.");
+                                    logging.LogInformation($"Processing Task {taskName}. Session {idleSessionId}. Started in {startUpTime.ToString()} seconds.");
                                     //Wait a tiny bit longer just to make sure session is ready
                                     await Task.Delay(3000);
                                     foreach (var f in matchedFiles)
@@ -287,7 +309,7 @@ namespace FunctionApp.Services
                                 }
                                 else
                                 {
-                                    logging.LogInformation($"Processing Task {taskName}. Waiting for Session {idleSession} for application {sessionName}. Current state is {session["state"].ToString()}. Startup time has been {startUpTime.ToString()} seconds.");
+                                    logging.LogInformation($"Processing Task {taskName}. Waiting for Session {idleSessionId} for application {sessionName}. Current state is {newSession.State.ToString()}. Startup time has been {startUpTime.ToString()} seconds.");
                                 }
                             }
                         }
@@ -306,14 +328,14 @@ namespace FunctionApp.Services
                 //TODO: Get the notebook and consolidate all cells into single statement
                 //Check to see if there is any session contention                              
                 var files2 = folder.GetFiles();
-                var matchedFiles2 = files2.Where(f => f.Name.StartsWith($"us_{idleSession.ToString()}_"));
+                var matchedFiles2 = files2.Where(f => f.Name.StartsWith($"us_{idleSessionId.ToString()}_"));
                 if (matchedFiles2.Any())
                 {
                     Guid minGuid = Guid.Empty;
                     //If the runner is not idle check the heartbeat files to ensure it hasn't previously failed on start
                     foreach (var f in matchedFiles2)
                     {
-                        Guid GuidInFileStr = Guid.Parse(f.Name.Replace($"us_{idleSession}_", "").Replace(".txt", ""));
+                        Guid GuidInFileStr = Guid.Parse(f.Name.Replace($"us_{idleSessionId}_", "").Replace(".txt", ""));
                         if (Guid.Empty.CompareTo(minGuid) == 0) { minGuid = GuidInFileStr; }
                         if (minGuid.CompareTo(GuidInFileStr) == -1)
                         { minGuid = GuidInFileStr; }
@@ -322,51 +344,56 @@ namespace FunctionApp.Services
                     //If current thread has wrote the first heartbeat then allow it to continue
                     if (minGuid == guid)
                     {
+                        SparkSession idleSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(idleSessionId), true);
                         string code = "";
                         //Get the Notebook 
-                        JObject Notebook = JObject.Parse(await GetFromSynapseApi(endpoint, $"/notebooks/DeltaProcessingNotebook?api-version=2020-12-01",logging));
-                        foreach (JObject cell in Notebook["properties"]["cells"])
+                        NotebookClient nc = GetNotebookClient(endpoint);
+                        NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");                            
+                        foreach (NotebookCell cell in Notebook.Properties.Cells)
                         {
                             bool cellIsParam = false;
-                            if (cell["cell_type"].ToString() == "code")
+                            if (cell.CellType == "code")
                             {
-                                var metadataBool = Helpers.JsonHelpers.CheckForJsonProperty("metadata",cell);
-                                if (metadataBool)
+                                Dictionary<string,object> metadata = (Dictionary<string, object>)cell.Metadata; 
+                                if(metadata.ContainsKey("tags"))
                                 {
-                                    var tagsBool = Helpers.JsonHelpers.CheckForJsonProperty("tags", (JObject)cell["metadata"]);
-                                    if (tagsBool)
+                                    object[] tags = (object[])metadata["tags"];
+                                    if (!string.IsNullOrEmpty((string)Array.Find<object>(tags, t=> t.ToString() == "parameters")))
                                     {
-                                        if (((JArray)cell["metadata"]["tags"]).ToList().Contains("parameters"))
-                                        {
-                                            cellIsParam = true;
-                                            //TODO Insert the TaskObject
-                                        }
+                                      cellIsParam = true;
+                                        //Insert the TaskObject as a Parameter
+                                        var t = TaskObject;
+                                        var t1 = JsonConvert.SerializeObject(t);
+                                        var t2 = t1.Replace("\\", "\\\\");
+                                        var t3 = t2.Replace(@"""", @"\""");                                        
+                                        code += "TaskObject = " + "\"" + t3 + "\"";
+                                        code += System.Environment.NewLine;
                                     }
                                     
                                 }
 
                                 if(!cellIsParam)
                                 {
-                                    foreach (var line in cell["source"])
+                                    foreach (var line in cell.Source)
                                     {
                                         code += line.ToString();
                                     }
                                     code += System.Environment.NewLine;
                                 }
                             }                           
-                        }                        
+                        }                                               
 
-                        JObject postContent = new JObject();
-                        postContent["code"] = code;
-                        postContent["kind"] = "pyspark";
-                       
+                        SparkStatementOptions sso = new SparkStatementOptions();
+                        sso.Kind = "pyspark";
+                        sso.Code = code;
 
-                        JObject statement = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions/{idleSession}/statements", Newtonsoft.Json.JsonConvert.SerializeObject(postContent), logging));
-                        //Delete the files and reset the runner as it has failed to start previously                            
+                        SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);                                          
                         foreach (var f in matchedFiles2)
                         {
                             f.Delete();
                         }
+
+                        SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
                         //TODO
 
                         logging.LogInformation($"Processing Task {taskName}. PySpark Statement Created and Executed.");
@@ -478,12 +505,25 @@ namespace FunctionApp.Services
 
         public async Task<HttpClient> GetSynapseClient()
         {
-            string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net");
+            string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net//.default");
             HttpClient c = new HttpClient();
             c.DefaultRequestHeaders.Accept.Clear();
             c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             c.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             return c;
+        }
+
+        public SparkSessionClient GetSessionClient(Uri endpoint, string poolName)
+        {
+            TokenCredential credential = _authProvider.GetAzureRestApiTokenCredential("https://dev.azuresynapse.net//.default");
+            SparkSessionClient ssc = new SparkSessionClient(endpoint, poolName, credential, "2019-11-01-preview", null);
+            return ssc;
+        }
+        public NotebookClient GetNotebookClient(Uri endpoint)
+        {
+            TokenCredential credential = _authProvider.GetAzureRestApiTokenCredential("https://dev.azuresynapse.net//.default");
+            NotebookClient nc = new NotebookClient(endpoint, credential);
+            return nc;
         }
 
         private void WriteSessionHeartBeat(DirectoryInfo folder, string id, Guid guid, string prefix)

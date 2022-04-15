@@ -55,6 +55,22 @@ namespace FunctionApp.Authentication
 
             return result.Token;
         }
+
+        public Azure.Core.TokenCredential GetAzureRestApiTokenCredential(string resourceName)
+        {
+            TokenCredential credential;
+            if (!_appOptions.UseMSI)
+            {
+                credential = new ClientSecretCredential(_authOptions.TenantId, _authOptions.ClientId, _authOptions.ClientSecret);
+            }
+            else
+            {
+                var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions();
+                credential = new DefaultAzureCredential(defaultAzureCredentialOptions);
+            }            
+
+            return credential;
+        }
     }
 
 }

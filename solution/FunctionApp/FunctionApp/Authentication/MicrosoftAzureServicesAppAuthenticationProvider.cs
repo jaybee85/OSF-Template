@@ -43,5 +43,10 @@ namespace FunctionApp.Authentication
                 return "Failed to GetAzureRestApiToken";
             }
         }
+
+        public Azure.Core.TokenCredential GetAzureRestApiTokenCredential(string resourceName)
+        {
+            throw new System.Exception("GetAzureRestApiTokenCredential method not valid for MicrosoftAzureServicesAppAuthenticationProvider  did you intend to use the AzureIdentityAuthenticationProvider?");            
+        }
     }
 }
