@@ -28,7 +28,7 @@ namespace FunctionApp.Services
     {
         private readonly IAzureAuthenticationProvider _authProvider;
         private readonly IOptions<ApplicationOptions> _options;
-        private readonly TaskMetaDataDatabase _taskMetaDataDatabase;       
+        private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
 
         public AzureSynapseService(IAzureAuthenticationProvider authProvider, IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase)
         {
@@ -88,18 +88,18 @@ namespace FunctionApp.Services
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                logging.LogErrors(new Exception($"Initiation of SQLPool command failed for SqlPool: {SynapsePoolName} and Workspase: {SynapseWorkspaceName}" ));
+                logging.LogErrors(new Exception($"Initiation of SQLPool command failed for SqlPool: {SynapsePoolName} and Workspase: {SynapseWorkspaceName}"));
                 throw;
 
             }
-        } 
+        }
 
         public async Task<string> RunSynapsePipeline(Uri endpoint, string pipelineName, Dictionary<string, object> pipelineParams, Logging.Logging logging)
         {
-            
+
             try
             {
-                string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net").ConfigureAwait(false); 
+                string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net").ConfigureAwait(false);
                 HttpClient c = new HttpClient();
                 c.DefaultRequestHeaders.Accept.Clear();
                 c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -121,36 +121,39 @@ namespace FunctionApp.Services
             }
             catch (Exception e)
             {
-                logging.LogErrors(e);                
+                logging.LogErrors(e);
                 throw e;
             }
 
         }
 
-        public async Task ExecuteNotebook(Uri endpoint, string taskName,  string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
+        public async Task<string> ExecuteNotebook(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
             int tryCount = 0;
+            SparkNotebookExecutionResult res = new SparkNotebookExecutionResult();
             while (tryCount < 10)
-            { 
-                var res = await ExecuteNotebookCore(endpoint, taskName, poolName, logging, sessionFolder, TaskObject);
-                if (res == "succeeded")
+            {
+                res = await ExecuteNotebookCore(endpoint, taskName, poolName, logging, sessionFolder, TaskObject);
+                if (res.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
                 {
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
-                    break; 
+                    break;
                 }
-                logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{res}' Attempt Number {tryCount.ToString()}");
+                logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{res.StatementResult}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
                 await Task.Delay(1000);
             }
+
+            return Newtonsoft.Json.JsonConvert.SerializeObject(res);
         }
 
-        public async Task<string> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
+        public async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
-
+            SparkNotebookExecutionResult sner = new SparkNotebookExecutionResult();
             try
             {
                 var c = await GetSynapseClient();
-                SparkSessionClient ssc = GetSessionClient(endpoint, poolName);                
+                SparkSessionClient ssc = GetSessionClient(endpoint, poolName);
 
                 var guid = Guid.NewGuid();
                 //Get Sessions Waiting To Start
@@ -168,12 +171,12 @@ namespace FunctionApp.Services
                     }
 
                     var snumsd = snums.Distinct();
-                    sessionsWaitingToStart = snums.Max()+1;
+                    sessionsWaitingToStart = snums.Max() + 1;
                 }
 
                 //TODO: Need to centralise this information so that multiple function executions do not pick up the same idle sesson.. for now will put into a static maybe
                 //Get Idle Sessions
-                JObject sessions= new JObject();
+                JObject sessions = new JObject();
                 sessions["sessions"] = new JArray();
                 List<SparkSession> sscl = new List<SparkSession>();
                 int reqSessionCount = 20;
@@ -181,26 +184,26 @@ namespace FunctionApp.Services
                 while (reqSessionCount >= 20)
                 {
 
-                    Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession,20,false);
+                    Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession, 20, false);
                     foreach (SparkSession s in ss.Value.Sessions)
                     {
                         if (s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Killed && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Dead && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Error)
                         {
                             logging.LogInformation($"Viable Session Found Id:{s.Id}, State:{s.State}");
                             sscl.Add(s);
-                        }                        
+                        }
                     }
-                   
+
                     reqSessionCount = ss.Value.Total;
                     if (reqSessionCount > 0)
                     {
                         reqFromSession += ss.Value.Total;
                     }
                 }
-                
+
                 int sessionCount = 0 + sessionsWaitingToStart;
                 string idleSessionId = "";
-               
+
                 foreach (SparkSession s in sscl)
                 {
                     //Session number for current loop iteration
@@ -209,14 +212,14 @@ namespace FunctionApp.Services
                     SparkSession sd = await ssc.GetSparkSessionAsync(s.Id, true);
                     if (!string.IsNullOrEmpty(sd.LivyInfo.StartingAt.ToString()))
                     {
-                        timeSinceStarted = (DateTimeOffset.Now-(DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
+                        timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
                     }
 
                     if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle & timeSinceStarted > 180)
                     {
                         if (string.IsNullOrEmpty(idleSessionId))
                         {
-                                    
+
                             //Check if heartbeat files exist
                             files = folder.GetFiles();
                             matchedFiles = files.Where(f => f.Name.StartsWith($"us_{loopSession.ToString()}_"));
@@ -245,9 +248,9 @@ namespace FunctionApp.Services
                         sessionCount += 1;
                         logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
                     }
-                        
-                    
-                }               
+
+
+                }
 
 
                 //If no idle sessions then create new one
@@ -262,8 +265,8 @@ namespace FunctionApp.Services
                     sso.ExecutorCores = 2;
                     sso.ExecutorMemory = "2g";
                     sso.ExecutorCount = 2;
-                    sso.ArtifactId = "test";  
-                    
+                    sso.ArtifactId = "test";
+
 
                     WriteSessionHeartBeat(folder, sessionCount.ToString(), guid, "cs");
                     await Task.Delay(1000);
@@ -285,7 +288,7 @@ namespace FunctionApp.Services
                         //JObject newSession = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions?detailed=True", jsonContent, logging));
                         SparkSessionOperation ns = ssc.StartCreateSparkSession(sso, true);
                         idleSessionId = ns.Id.ToString();
-                        SparkSession newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(ns.Id), true);                        
+                        SparkSession newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(ns.Id), true);
 
                         WriteSessionHeartBeat(folder, idleSessionId, guid, "us");
                         //Wait for session to start
@@ -318,7 +321,8 @@ namespace FunctionApp.Services
                     else
                     {
                         logging.LogInformation($"Processing Task {taskName}. This thread has been aborted due to a session concurrency issue. Beginning Retry. Application: {sessionName}");
-                        return "retry";
+                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.retry;
+                        return sner;
                     }
 
 
@@ -349,31 +353,31 @@ namespace FunctionApp.Services
                         string code = "";
                         //Get the Notebook 
                         NotebookClient nc = GetNotebookClient(endpoint);
-                        NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");                            
+                        NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");
                         foreach (NotebookCell cell in Notebook.Properties.Cells)
                         {
                             bool cellIsParam = false;
                             if (cell.CellType == "code")
                             {
-                                Dictionary<string,object> metadata = (Dictionary<string, object>)cell.Metadata; 
-                                if(metadata.ContainsKey("tags"))
+                                Dictionary<string, object> metadata = (Dictionary<string, object>)cell.Metadata;
+                                if (metadata.ContainsKey("tags"))
                                 {
                                     object[] tags = (object[])metadata["tags"];
-                                    if (!string.IsNullOrEmpty((string)Array.Find<object>(tags, t=> t.ToString() == "parameters")))
+                                    if (!string.IsNullOrEmpty((string)Array.Find<object>(tags, t => t.ToString() == "parameters")))
                                     {
-                                      cellIsParam = true;
+                                        cellIsParam = true;
                                         //Insert the TaskObject as a Parameter
                                         var t = TaskObject;
                                         var t1 = JsonConvert.SerializeObject(t);
                                         var t2 = t1.Replace("\\", "\\\\");
-                                        var t3 = t2.Replace(@"""", @"\""");                                        
+                                        var t3 = t2.Replace(@"""", @"\""");
                                         code += "TaskObject = " + "\"" + t3 + "\"";
                                         code += System.Environment.NewLine;
                                     }
-                                    
+
                                 }
 
-                                if(!cellIsParam)
+                                if (!cellIsParam)
                                 {
                                     foreach (var line in cell.Source)
                                     {
@@ -381,35 +385,40 @@ namespace FunctionApp.Services
                                     }
                                     code += System.Environment.NewLine;
                                 }
-                            }                           
-                        }                                               
+                            }
+                        }
 
                         SparkStatementOptions sso = new SparkStatementOptions();
                         sso.Kind = "pyspark";
                         sso.Code = code;
 
-                        SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);                                          
+                        SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
                         foreach (var f in matchedFiles2)
                         {
                             f.Delete();
                         }
 
                         SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
-                        //TODO
 
                         logging.LogInformation($"Processing Task {taskName}. PySpark Statement Created and Executed.");
-                        return "succeeded";
+                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.succeeded;
+                        sner.SessionId = idleSession.Id;
+                        sner.StatementId = statement.Id;
+                        sner.StatementState= statement.State;
+                        return sner;
                     }
                     else
                     {
                         logging.LogInformation($"Processing Task {taskName}. This thread has been aborted due to a session concurrency issue. Beginning Retry.");
-                        return "retry"; 
+                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.retry;
+                        return sner;
                     }
                 }
                 else
                 {
                     logging.LogInformation($"Processing Task {taskName}. No existing idle sessions found and no available new session slots.");
-                    return "nosessions"; 
+                    sner.StatementResult = SparkNotebookExecutionResult.statementResult.nosessions;
+                    return sner;
                 }
 
 
@@ -418,17 +427,18 @@ namespace FunctionApp.Services
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                return "failed";
+                sner.StatementResult = SparkNotebookExecutionResult.statementResult.failed;
+                return sner;
             }
 
         }
-        public async Task<string> PostToSynapseApi(Uri endpoint,  string Path, string postContent, Logging.Logging logging)
+        public async Task<string> PostToSynapseApi(Uri endpoint, string Path, string postContent, Logging.Logging logging)
         {
 
             try
             {
                 var c = await GetSynapseClient();
-                JObject jsonContent = new JObject();                
+                JObject jsonContent = new JObject();
                 var postStringContent = new StringContent(postContent, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await c.PostAsync($"{endpoint.ToString()}/{Path}", postStringContent);
                 HttpContent responseContent = response.Content;
@@ -455,7 +465,7 @@ namespace FunctionApp.Services
 
             try
             {
-                var c = await GetSynapseClient();                
+                var c = await GetSynapseClient();
                 HttpResponseMessage response = await c.GetAsync($"{endpoint.ToString()}/{Path}");
                 HttpContent responseContent = response.Content;
                 var status = response.StatusCode;
@@ -537,5 +547,23 @@ namespace FunctionApp.Services
                 fs.Write(info, 0, info.Length);
             }
         }
+
+
+    }
+
+    public class SparkNotebookExecutionResult
+    {
+        public SparkNotebookExecutionResult()
+        { }
+        public enum statementResult {failed, retry, succeeded, nosessions }
+
+        public statementResult StatementResult { get; set; } 
+
+        public int StatementId { get; set; }
+
+        public int SessionId { get; set; } 
+        
+        public LivyStatementStates? StatementState { get; set; }
+
     }
 }
