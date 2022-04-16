@@ -44,7 +44,7 @@ namespace FunctionApp.Functions
             FrameworkRunner frp = new FrameworkRunner(log, executionId);
             this.SessionFolder = context.FunctionAppDirectory;
             FrameworkRunnerWorkerWithHttpRequest worker = AdfExecuteSynapseNotebookCore;
-            FrameworkRunnerResult result = await frp.Invoke(req, "Log", worker);
+            FrameworkRunnerResult result = await frp.Invoke(req, "ExecuteSynapseNotebook", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));
@@ -58,12 +58,12 @@ namespace FunctionApp.Functions
         public async Task<JObject> AdfExecuteSynapseNotebookCore(HttpRequest req,
             Logging.Logging LogHelper)
         {
-            //short frameworkNumberOfRetries = _options.Value.FrameworkNumberOfRetries;
-            short frameworkNumberOfRetries = 1;
-
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             JObject data = JObject.Parse(requestBody);
-            await _azureSynapseService.ExecuteNotebook(new Uri(""), "", "", LogHelper, this.SessionFolder, data);
+            string SparkPoolName = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
+            string Endpoint = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
+            string JobName = $"TaskInstance_{data["TaskInstanceId"].ToString()}";
+            await _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, LogHelper, "./", data);            
 
             return new JObject
             {

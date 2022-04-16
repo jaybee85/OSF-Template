@@ -262,7 +262,8 @@ namespace FunctionApp.Services
                     sso.ExecutorCores = 2;
                     sso.ExecutorMemory = "2g";
                     sso.ExecutorCount = 2;
-                    sso.ArtifactId = "test";                    
+                    sso.ArtifactId = "test";  
+                    
 
                     WriteSessionHeartBeat(folder, sessionCount.ToString(), guid, "cs");
                     await Task.Delay(1000);
@@ -290,8 +291,8 @@ namespace FunctionApp.Services
                         //Wait for session to start
                         if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.NotStarted)
                         {
-                            //Will Wait for up to 100 seconds
-                            for (int i = 0; i < 20; i++)
+                            //Will Wait for up to 200 seconds
+                            for (int i = 0; i < 40; i++)
                             {
                                 await Task.Delay(5000);
                                 var startUpTime = (DateTime.Now - startTimer).TotalSeconds;
@@ -300,7 +301,7 @@ namespace FunctionApp.Services
                                 {
                                     logging.LogInformation($"Processing Task {taskName}. Session {idleSessionId}. Started in {startUpTime.ToString()} seconds.");
                                     //Wait a tiny bit longer just to make sure session is ready
-                                    await Task.Delay(3000);
+                                    await Task.Delay(1000);
                                     foreach (var f in matchedFiles)
                                     {
                                         f.Delete();
@@ -505,7 +506,7 @@ namespace FunctionApp.Services
 
         public async Task<HttpClient> GetSynapseClient()
         {
-            string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net//.default");
+            string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net");
             HttpClient c = new HttpClient();
             c.DefaultRequestHeaders.Accept.Clear();
             c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

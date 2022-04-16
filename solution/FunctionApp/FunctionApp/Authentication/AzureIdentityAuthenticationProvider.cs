@@ -49,7 +49,7 @@ namespace FunctionApp.Authentication
                 var defaultAzureCredentialOptions = new DefaultAzureCredentialOptions();
                 credential = new DefaultAzureCredential(defaultAzureCredentialOptions);
             }
-
+            resourceName = resourceName + "/.default";
             var requestContext = new TokenRequestContext(new [] {resourceName});
             var result = await credential.GetTokenAsync(requestContext, new CancellationToken()).ConfigureAwait(false);
 
