@@ -130,6 +130,7 @@ namespace FunctionApp.Services
         public async Task<string> ExecuteNotebook(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
             int tryCount = 0;
+            bool success = false;
             SparkNotebookExecutionResult res = new SparkNotebookExecutionResult();
             while (tryCount < 10)
             {
@@ -137,14 +138,21 @@ namespace FunctionApp.Services
                 if (res.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
                 {
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
+                    success = true;
                     break;
                 }
                 logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{res.StatementResult}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
                 await Task.Delay(1000);
             }
-
-            return Newtonsoft.Json.JsonConvert.SerializeObject(res);
+            if (success)
+            {
+                return Newtonsoft.Json.JsonConvert.SerializeObject(res);
+            }
+            else
+            {
+                throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
+            }
         }
 
         public async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
