@@ -150,11 +150,14 @@ namespace FunctionApp.Services
         public async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
         {
             SparkNotebookExecutionResult sner = new SparkNotebookExecutionResult();
+            sner.Endpoint = endpoint.ToString();
+            sner.PoolName = poolName;
+
             try
             {
                 var c = await GetSynapseClient();
                 SparkSessionClient ssc = GetSessionClient(endpoint, poolName);
-
+               
                 var guid = Guid.NewGuid();
                 //Get Sessions Waiting To Start
                 DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "sessions"));
@@ -432,6 +435,15 @@ namespace FunctionApp.Services
             }
 
         }
+
+        public async Task<string> CheckStatementExecution(JObject Params)
+        {
+            SparkSessionClient ssc = GetSessionClient(new Uri(Params["Endpoint"].ToString()), Params["PoolName"].ToString());
+            SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(Params["SessionId"]), System.Convert.ToInt32(Params["StatementId"]));
+            return statement.State.ToString();
+
+        }
+
         public async Task<string> PostToSynapseApi(Uri endpoint, string Path, string postContent, Logging.Logging logging)
         {
 
@@ -562,7 +574,11 @@ namespace FunctionApp.Services
         public int StatementId { get; set; }
 
         public int SessionId { get; set; } 
-        
+
+        public string Endpoint { get; set; }
+
+        public string PoolName { get; set; }
+
         public LivyStatementStates? StatementState { get; set; }
 
     }

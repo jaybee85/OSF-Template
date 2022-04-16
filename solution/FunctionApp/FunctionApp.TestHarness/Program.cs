@@ -463,7 +463,8 @@ namespace FunctionApp.TestHarness
             string SparkPoolName = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
             string Endpoint = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
             string JobName = $"TaskInstance_{TaskObject["TaskInstanceId"].ToString()}";
-            var T1 = _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, _funcAppLogger, "./", TaskObject);
+            var T1 = await _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, _funcAppLogger, "./", TaskObject);
+            
             //System.Threading.Thread.Sleep(1000);
             //var T2 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job2", "adsdevsynspads", _funcAppLogger, "./");
             //System.Threading.Thread.Sleep(1000);
@@ -471,7 +472,8 @@ namespace FunctionApp.TestHarness
             //System.Threading.Thread.Sleep(1000);
             //var T4 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job4", "adsdevsynspads", _funcAppLogger, "./");
             //await Task.WhenAll(T1, T2, T3, T4);
-            await Task.WhenAll(T1);
+            //await Task.WhenAll(T1);
+            var t2 = await _azureSynapseService.CheckStatementExecution(JObject.Parse(T1));
 
         }
 

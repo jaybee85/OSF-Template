@@ -35,7 +35,7 @@ namespace FunctionApp.Functions
             _azureSynapseService = azureSynapseService;
         }
 
-        [FunctionName("AdfCheckSynapseStatementExecution")]
+        [FunctionName("CheckSynapseStatementExecution")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
@@ -60,15 +60,9 @@ namespace FunctionApp.Functions
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             JObject data = JObject.Parse(requestBody);
-            string SparkPoolName = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
-            string Endpoint = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
-            string JobName = $"TaskInstance_{data["TaskInstanceId"].ToString()}";
-            await _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, LogHelper, this.SessionFolder, data);            
+            var res = await _azureSynapseService.CheckStatementExecution(data);
 
-            return new JObject
-            {
-                ["Result"] = "Complete"
-            };
+            return new JObject(res);
         }
     }
 }
