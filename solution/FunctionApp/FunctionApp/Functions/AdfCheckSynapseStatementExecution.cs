@@ -60,9 +60,12 @@ namespace FunctionApp.Functions
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             JObject data = JObject.Parse(requestBody);
-            var res = await _azureSynapseService.CheckStatementExecution(data);
+            var res = await _azureSynapseService.CheckStatementExecution(data);            
 
-            return new JObject(res);
+            return new JObject
+            {
+                ["Result"] = res
+            };
         }
     }
 }
