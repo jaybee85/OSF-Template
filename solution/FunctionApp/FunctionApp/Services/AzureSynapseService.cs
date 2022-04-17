@@ -147,11 +147,13 @@ namespace FunctionApp.Services
             }
             if (success)
             {
-                return Newtonsoft.Json.JsonConvert.SerializeObject(res);
+                return Newtonsoft.Json.JsonConvert.SerializeObject(res); 
             }
             else
             {
-                throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
+                //throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
+                return Newtonsoft.Json.JsonConvert.SerializeObject(res);
+
             }
         }
 
@@ -279,6 +281,7 @@ namespace FunctionApp.Services
                     sso.ArtifactId = "test";
 
 
+
                     WriteSessionHeartBeat(folder, sessionCount.ToString(), guid, "cs");
                     await Task.Delay(1000);
                     files = folder.GetFiles();
@@ -404,6 +407,8 @@ namespace FunctionApp.Services
                         sso.Code = code;
 
                         SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
+                        sso.Code = sso.Code.Replace("-1000", "-1001");
+                        SparkStatementOperation statemento2 = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
                         foreach (var f in matchedFiles2)
                         {
                             f.Delete();
@@ -586,6 +591,14 @@ namespace FunctionApp.Services
         public string Endpoint { get; set; }
 
         public string PoolName { get; set; }
+
+        public string StatementResultString
+        {
+            get
+            {
+                return this.StatementResult.ToString();
+            }            
+        }
 
         public LivyStatementStates? StatementState { get; set; }
 
