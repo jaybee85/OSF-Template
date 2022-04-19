@@ -26,7 +26,7 @@ namespace FunctionApp.Functions
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly AzureSynapseService _azureSynapseService;
         public string SessionFolder { get; set; }
-
+        private Guid ExecutionId { get; set; }
 
         public AdfExecuteSynapseNotebook(IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, AzureSynapseService azureSynapseService)
         {
@@ -40,8 +40,8 @@ namespace FunctionApp.Functions
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
             ILogger log, ExecutionContext context)
         {
-            Guid executionId = context.InvocationId;
-            FrameworkRunner frp = new FrameworkRunner(log, executionId);
+            ExecutionId = context.InvocationId;
+            FrameworkRunner frp = new FrameworkRunner(log, ExecutionId);
             this.SessionFolder = context.FunctionAppDirectory;
             FrameworkRunnerWorkerWithHttpRequest worker = AdfExecuteSynapseNotebookCore;
             FrameworkRunnerResult result = await frp.Invoke(req, "ExecuteSynapseNotebook", worker);

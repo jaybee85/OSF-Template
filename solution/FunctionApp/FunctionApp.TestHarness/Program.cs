@@ -458,22 +458,48 @@ namespace FunctionApp.TestHarness
 
         public async Task DebugStartSynapseSessions()
         {
-            JObject TaskObject = JObject.Parse("{\"TaskInstanceId\":64,\"TaskMasterId\":-1000,\"TaskStatus\":\"InProgress\",\"TaskType\":\"Azure Storage to Azure Storage\",\"Enabled\":1,\"ExecutionUid\":\"08ecf972-1d2d-440a-a9a9-9f21babc78f7\",\"NumberOfRetries\":0,\"DegreeOfCopyParallelism\":1,\"KeyVaultBaseUrl\":\"https://ads-dev-kv-ads-yfm3.vault.azure.net/\",\"ScheduleMasterId\":\"-4\",\"TaskGroupConcurrency\":\"10\",\"TaskGroupPriority\":0,\"TaskExecutionType\":\"ADF\",\"ExecutionEngine\":{\"EngineId\":-2,\"EngineName\":\"adsdevsynwadsyfm3\",\"SystemType\":\"Synapse\",\"ResourceGroup\":\"gf5\",\"SubscriptionId\":\"035a1364-f00d-48e2-b582-4fe125905ee3\",\"ADFPipeline\":\"GPL_SparkNotebookExecution_Azure\",\"EngineJson\":\"{            \\\"endpoint\\\": \\\"https://adsdevsynwadsyfm3.dev.azuresynapse.net\\\", \\\"DeltaProcessingNotebook\\\": \\\"DeltaProcessingNotebook\\\", \\\"PurviewAccountName\\\": \\\"adsdevpurads\\\", \\\"DefaultSparkPoolName\\\": \\\"adsdevsynspads\\\"        }\",\"TaskDatafactoryIR\":\"Azure\",\"JsonProperties\":{\"endpoint\":\"https://adsdevsynwadsyfm3.dev.azuresynapse.net\",\"DeltaProcessingNotebook\":\"DeltaProcessingNotebook\",\"PurviewAccountName\":\"adsdevpurads\"}},\"Source\":{\"System\":{\"SystemId\":-4,\"SystemServer\":\"https://adsdevdlsadsyfm3adsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakeraw\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"/Tests/Azure Storage to Azure Storage/-1000/\"},\"DataFileName\":\"SalesLT.Customer*.parquet\",\"MaxConcurrentConnections\":0,\"RelativePath\":\"samples/\",\"SchemaFileName\":\"SalesLT.Customer*.json\",\"Type\":\"Parquet\",\"WriteSchemaToPurview\":\"Disabled\",\"DeleteAfterCompletion\":\"false\",\"Recursively\":\"false\"},\"Target\":{\"System\":{\"SystemId\":-4,\"SystemServer\":\"https://adsdevdlsadsyfm3adsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakeraw\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"/Tests/Azure Storage to Azure Storage/-1000/\"},\"DataFileName\":\"SalesLT.Customer\",\"MaxConcurrentConnections\":0,\"RelativePath\":\"/Tests/Azure Storage to Azure Storage/-1000/\",\"SchemaFileName\":\"SalesLT.Customer.json\",\"Type\":\"Delta\",\"WriteSchemaToPurview\":\"Disabled\",\"DeleteAfterCompletion\":\"false\",\"Recursively\":\"false\"},\"TMOptionals\":{\"CDCSource\":\"Disabled\",\"Purview\":\"Disabled\",\"QualifiedIDAssociation\":\"TaskMasterId\",\"SparkTableCreate\":\"Disabled\",\"SparkTableDBName\":\"\",\"SparkTableName\":\"\",\"SaveAsPersistentTable\":\"Disabled\"}}");
+            List<string> t = new List<string>();
+            t.Add("1000");
+            t.Add("1001");
+            t.Add("1002");
+            t.Add("1003");
+            t.Add("1004");
 
-            string SparkPoolName = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
-            string Endpoint = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
-            string JobName = $"TaskInstance_{TaskObject["TaskInstanceId"].ToString()}";
-            var T1 = await _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, _funcAppLogger, "./", TaskObject);
-            
-            //System.Threading.Thread.Sleep(1000);
-            //var T2 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job2", "adsdevsynspads", _funcAppLogger, "./");
-            //System.Threading.Thread.Sleep(1000);
-            //var T3 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job3", "adsdevsynspads", _funcAppLogger, "./");
-            //System.Threading.Thread.Sleep(1000);
-            //var T4 = _azureSynapseService.StartSparkSession(new Uri("https://adsdevsynwadsyfm3.dev.azuresynapse.net"), "job4", "adsdevsynspads", _funcAppLogger, "./");
-            //await Task.WhenAll(T1, T2, T3, T4);
-            //await Task.WhenAll(T1);
-            var t2 = await _azureSynapseService.CheckStatementExecution(JObject.Parse(T1));
+            string TaskObjectStr = "{\"TaskInstanceId\":@fld,\"TaskMasterId\":@fld,\"TaskStatus\":\"InProgress\",\"TaskType\":\"Azure Storage to Azure Storage\",\"Enabled\":1,\"ExecutionUid\":\"08ecf972-1d2d-440a-a9a9-9f21babc78f7\",\"NumberOfRetries\":0,\"DegreeOfCopyParallelism\":1,\"KeyVaultBaseUrl\":\"https://ads-dev-kv-ads-yfm3.vault.azure.net/\",\"ScheduleMasterId\":\"-4\",\"TaskGroupConcurrency\":\"10\",\"TaskGroupPriority\":0,\"TaskExecutionType\":\"ADF\",\"ExecutionEngine\":{\"EngineId\":-2,\"EngineName\":\"adsdevsynwadsyfm3\",\"SystemType\":\"Synapse\",\"ResourceGroup\":\"gf5\",\"SubscriptionId\":\"035a1364-f00d-48e2-b582-4fe125905ee3\",\"ADFPipeline\":\"GPL_SparkNotebookExecution_Azure\",\"EngineJson\":\"{            \\\"endpoint\\\": \\\"https://adsdevsynwadsyfm3.dev.azuresynapse.net\\\", \\\"DeltaProcessingNotebook\\\": \\\"DeltaProcessingNotebook\\\", \\\"PurviewAccountName\\\": \\\"adsdevpurads\\\", \\\"DefaultSparkPoolName\\\": \\\"adsdevsynspads\\\"        }\",\"TaskDatafactoryIR\":\"Azure\",\"JsonProperties\":{\"endpoint\":\"https://adsdevsynwadsyfm3.dev.azuresynapse.net\",\"DeltaProcessingNotebook\":\"DeltaProcessingNotebook\",\"PurviewAccountName\":\"adsdevpurads\"}},\"Source\":{\"System\":{\"SystemId\":-4,\"SystemServer\":\"https://adsdevdlsadsyfm3adsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakeraw\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"/Tests/Azure Storage to Azure Storage/-1000/\"},\"DataFileName\":\"SalesLT.Customer*.parquet\",\"MaxConcurrentConnections\":0,\"RelativePath\":\"samples/\",\"SchemaFileName\":\"SalesLT.Customer*.json\",\"Type\":\"Parquet\",\"WriteSchemaToPurview\":\"Disabled\",\"DeleteAfterCompletion\":\"false\",\"Recursively\":\"false\"},\"Target\":{\"System\":{\"SystemId\":-4,\"SystemServer\":\"https://adsdevdlsadsyfm3adsl.dfs.core.windows.net\",\"AuthenticationType\":\"MSI\",\"Type\":\"ADLS\",\"Username\":null,\"Container\":\"datalakeraw\"},\"Instance\":{\"SourceRelativePath\":\"samples/\",\"TargetRelativePath\":\"/Tests/Azure Storage to Azure Storage/@fld/\"},\"DataFileName\":\"SalesLT.Customer\",\"MaxConcurrentConnections\":0,\"RelativePath\":\"/Tests/Azure Storage to Azure Storage/@fld/\",\"SchemaFileName\":\"SalesLT.Customer.json\",\"Type\":\"Delta\",\"WriteSchemaToPurview\":\"Disabled\",\"DeleteAfterCompletion\":\"false\",\"Recursively\":\"false\"},\"TMOptionals\":{\"CDCSource\":\"Disabled\",\"Purview\":\"Disabled\",\"QualifiedIDAssociation\":\"TaskMasterId\",\"SparkTableCreate\":\"Disabled\",\"SparkTableDBName\":\"\",\"SparkTableName\":\"\",\"SaveAsPersistentTable\":\"Disabled\"}}";
+
+            List<Task<string>> Tasks = new List<Task<string>>();
+
+            foreach (string str in t)
+            { 
+                JObject TaskObject = JObject.Parse(TaskObjectStr.Replace("@fld",str));
+                string SparkPoolName = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
+                string Endpoint = JObject.Parse(TaskObject["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
+                string JobName = $"TaskInstance_{TaskObject["TaskInstanceId"].ToString()}";
+                Tasks.Add(_azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, _funcAppLogger, "./", TaskObject));
+                System.Threading.Thread.Sleep(1000);
+            }
+            await Task.WhenAll(Tasks.ToArray());
+
+            Parallel.ForEach(Tasks, task =>
+            {
+                bool taskComplete = false;
+                while (!taskComplete)
+                {
+                    var res = _azureSynapseService.CheckStatementExecution(JObject.Parse(task.Result), _funcAppLogger).Result;
+                    if (res == "available")
+                    {
+                        taskComplete = true;
+                        _funcAppLogger.LogInformation($"Task Complete");
+                    }
+                    else
+                    {
+                       Task.Delay(10000).Wait();
+                    }
+                }
+
+            });
+
+
 
         }
 

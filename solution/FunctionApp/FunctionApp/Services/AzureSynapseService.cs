@@ -131,328 +131,75 @@ namespace FunctionApp.Services
         {
             int tryCount = 0;
             bool success = false;
-            SparkNotebookExecutionResult res = new SparkNotebookExecutionResult();
-            while (tryCount < 10)
+            SparkNotebookExecutionResult sner = new SparkNotebookExecutionResult();
+            sner.Endpoint = endpoint.ToString();
+            sner.PoolName = poolName;
+            sner.TaskName = taskName;
+            sner.TaskObject = TaskObject;
+            sner.SessionFolder = sessionFolder + "/sessions/";
+            sner.TaskInstanceId = System.Convert.ToInt32(TaskObject["TaskInstanceId"]);
+            var ssc = GetSessionClient(new Uri(sner.Endpoint), sner.PoolName);
+            var sc = await GetSynapseClient();
+            var nc = GetNotebookClient(new Uri(sner.Endpoint));
+
+            SparkNotebookExecutionHelper sneh = new SparkNotebookExecutionHelper(sner, sc,ssc, nc, logging);
+
+            while (tryCount < 1)
             {
-                res = await ExecuteNotebookCore(endpoint, taskName, poolName, logging, sessionFolder, TaskObject);
-                if (res.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
+                sneh.Sner = await ExecuteNotebookCore(logging, sneh);
+                if (sneh.Sner.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
                 {
                     logging.LogInformation("Task Named " + taskName + " Succeeded. Attempts: " + tryCount.ToString());
                     success = true;
                     break;
                 }
-                logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{res.StatementResult}' Attempt Number {tryCount.ToString()}");
+                logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{sneh.Sner.StatementResult}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
                 await Task.Delay(1000);
             }
             if (success)
             {
-                return Newtonsoft.Json.JsonConvert.SerializeObject(res); 
+                return Newtonsoft.Json.JsonConvert.SerializeObject(sneh.Sner);
             }
             else
             {
                 //throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
-                return Newtonsoft.Json.JsonConvert.SerializeObject(res);
+                return Newtonsoft.Json.JsonConvert.SerializeObject(sneh.Sner);
 
             }
         }
 
-        public async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Uri endpoint, string taskName, string poolName, Logging.Logging logging, string sessionFolder, JObject TaskObject)
+        private async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Logging.Logging logging, SparkNotebookExecutionHelper sneh)
         {
-            SparkNotebookExecutionResult sner = new SparkNotebookExecutionResult();
-            sner.Endpoint = endpoint.ToString();
-            sner.PoolName = poolName;
 
             try
             {
-                var c = await GetSynapseClient();
-                SparkSessionClient ssc = GetSessionClient(endpoint, poolName);
-               
-                var guid = Guid.NewGuid();
+                //ToDo Delete Old Sessions waiting to Start                
                 //Get Sessions Waiting To Start
-                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(sessionFolder, "sessions"));
-                var files = folder.GetFiles();
-                var matchedFiles = files.Where(f => f.Name.StartsWith($"cs_"));
-                int sessionsWaitingToStart = 0;
-                List<int> snums = new List<int>();
-                if (matchedFiles.Any())
-                {
-                    foreach (var f in matchedFiles)
-                    {
-                        int s = System.Convert.ToInt16(f.Name.Split("_")[1]);
-                        snums.Add(s);
-                    }
+                sneh.GetSessionsWaitingToStartFromDisk();
+                await sneh.GetCandidateSessions();
+                await sneh.ProcessCandidateSessions();
+                await sneh.NewSessionCheck();
 
-                    var snumsd = snums.Distinct();
-                    sessionsWaitingToStart = snums.Max() + 1;
-                }
-
-                //TODO: Need to centralise this information so that multiple function executions do not pick up the same idle sesson.. for now will put into a static maybe
-                //Get Idle Sessions
-                JObject sessions = new JObject();
-                sessions["sessions"] = new JArray();
-                List<SparkSession> sscl = new List<SparkSession>();
-                int reqSessionCount = 20;
-                int reqFromSession = 0;
-                while (reqSessionCount >= 20)
-                {
-
-                    Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession, 20, false);
-                    foreach (SparkSession s in ss.Value.Sessions)
-                    {
-                        if (s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Killed && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Dead && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Error)
-                        {
-                            logging.LogInformation($"Viable Session Found Id:{s.Id}, State:{s.State}");
-                            sscl.Add(s);
-                        }
-                    }
-
-                    reqSessionCount = ss.Value.Total;
-                    if (reqSessionCount > 0)
-                    {
-                        reqFromSession += ss.Value.Total;
-                    }
-                }
-
-                int sessionCount = 0 + sessionsWaitingToStart;
-                string idleSessionId = "";
-
-                foreach (SparkSession s in sscl)
-                {
-                    //Session number for current loop iteration
-                    var loopSession = s.Id.ToString();
-                    double timeSinceStarted = 0;
-                    SparkSession sd = await ssc.GetSparkSessionAsync(s.Id, true);
-                    if (!string.IsNullOrEmpty(sd.LivyInfo.StartingAt.ToString()))
-                    {
-                        timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
-                    }
-
-                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle & timeSinceStarted > 180)
-                    {
-                        if (string.IsNullOrEmpty(idleSessionId))
-                        {
-
-                            //Check if heartbeat files exist
-                            files = folder.GetFiles();
-                            matchedFiles = files.Where(f => f.Name.StartsWith($"us_{loopSession.ToString()}_"));
-                            if (matchedFiles.Any())
-                            {
-                                //Skip this session and move on to the next
-                                //logging.LogInformation($"Processing Task {taskName}. Session {loopSession} for application AdsGoFast {sessionCount} is idle but marked for use.");
-                            }
-                            else
-                            {
-                                //Write a session heartbeat file
-                                logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {sessionCount}. Signaling intent to use...");
-                                WriteSessionHeartBeat(folder, loopSession, guid, "us");
-                                idleSessionId = loopSession;
-                            }
-                        }
-                        sessionCount += 1;
-                    }
-                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle & timeSinceStarted <= 180)
-                    {
-                        logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it has only just been created and will most likely be used by its creator.");
-                        sessionCount += 1;
-                    }
-                    if (sd.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Busy)
-                    {
-                        sessionCount += 1;
-                        logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
-                    }
-
-
-                }
-
-
-                //If no idle sessions then create new one
-                if (string.IsNullOrEmpty(idleSessionId) && (sessionCount <= 2))
-                {
-                    var startTimer = DateTime.Now;
-                    string sessionName = "AdsGoFast_" + (sessionCount + 1).ToString();
-                    //string jsonContent = "{\"tags\": null,\"Name\": \"" + sessionName + "\", \"driverMemory\": \"4g\",  \"driverCores\": 1,  \"executorMemory\": \"2g\", \"executorCores\": 2, \"numExecutors\": 2, \"artifactId\": \"dldj\"}";
-                    SparkSessionOptions sso = new SparkSessionOptions(sessionName);
-                    sso.DriverCores = 1;
-                    sso.DriverMemory = "4g";
-                    sso.ExecutorCores = 2;
-                    sso.ExecutorMemory = "2g";
-                    sso.ExecutorCount = 2;
-                    sso.ArtifactId = "test";
-
-
-
-                    WriteSessionHeartBeat(folder, sessionCount.ToString(), guid, "cs");
-                    await Task.Delay(1000);
-                    files = folder.GetFiles();
-                    matchedFiles = files.Where(f => f.Name.StartsWith($"cs_{sessionCount}_"));
-                    Guid minGuid = Guid.Empty;
-                    //If the runner is not idle check the heartbeat files to ensure it hasn't previously failed on start
-                    foreach (var f in matchedFiles)
-                    {
-                        Guid GuidInFileStr = Guid.Parse(f.Name.Replace($"cs_{sessionCount}_", "").Replace(".txt", ""));
-                        if (Guid.Empty.CompareTo(minGuid) == 0) { minGuid = GuidInFileStr; }
-                        if (minGuid.CompareTo(GuidInFileStr) == -1)
-                        { minGuid = GuidInFileStr; }
-                    }
-
-                    //If current thread has wrote the first heartbeat then allow it to continue
-                    if (minGuid == guid)
-                    {
-                        //JObject newSession = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions?detailed=True", jsonContent, logging));
-                        SparkSessionOperation ns = ssc.StartCreateSparkSession(sso, true);
-                        idleSessionId = ns.Id.ToString();
-                        SparkSession newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(ns.Id), true);
-
-                        WriteSessionHeartBeat(folder, idleSessionId, guid, "us");
-                        //Wait for session to start
-                        if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.NotStarted)
-                        {
-                            //Will Wait for up to 200 seconds
-                            for (int i = 0; i < 40; i++)
-                            {
-                                await Task.Delay(5000);
-                                var startUpTime = (DateTime.Now - startTimer).TotalSeconds;
-                                newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(newSession.Id), true);
-                                if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle)
-                                {
-                                    logging.LogInformation($"Processing Task {taskName}. Session {idleSessionId}. Started in {startUpTime.ToString()} seconds.");
-                                    //Wait a tiny bit longer just to make sure session is ready
-                                    await Task.Delay(1000);
-                                    foreach (var f in matchedFiles)
-                                    {
-                                        f.Delete();
-                                    }
-                                    break;
-                                }
-                                else
-                                {
-                                    logging.LogInformation($"Processing Task {taskName}. Waiting for Session {idleSessionId} for application {sessionName}. Current state is {newSession.State.ToString()}. Startup time has been {startUpTime.ToString()} seconds.");
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        logging.LogInformation($"Processing Task {taskName}. This thread has been aborted due to a session concurrency issue. Beginning Retry. Application: {sessionName}");
-                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.retry;
-                        return sner;
-                    }
-
-
-
-                }
-
-                //Run code
-                //TODO: Get the notebook and consolidate all cells into single statement
-                //Check to see if there is any session contention                              
-                var files2 = folder.GetFiles();
-                var matchedFiles2 = files2.Where(f => f.Name.StartsWith($"us_{idleSessionId.ToString()}_"));
-                if (matchedFiles2.Any())
-                {
-                    Guid minGuid = Guid.Empty;
-                    //If the runner is not idle check the heartbeat files to ensure it hasn't previously failed on start
-                    foreach (var f in matchedFiles2)
-                    {
-                        Guid GuidInFileStr = Guid.Parse(f.Name.Replace($"us_{idleSessionId}_", "").Replace(".txt", ""));
-                        if (Guid.Empty.CompareTo(minGuid) == 0) { minGuid = GuidInFileStr; }
-                        if (minGuid.CompareTo(GuidInFileStr) == -1)
-                        { minGuid = GuidInFileStr; }
-                    }
-
-                    //If current thread has wrote the first heartbeat then allow it to continue
-                    if (minGuid == guid)
-                    {
-                        SparkSession idleSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(idleSessionId), true);
-                        string code = "";
-                        //Get the Notebook 
-                        NotebookClient nc = GetNotebookClient(endpoint);
-                        NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");
-                        foreach (NotebookCell cell in Notebook.Properties.Cells)
-                        {
-                            bool cellIsParam = false;
-                            if (cell.CellType == "code")
-                            {
-                                Dictionary<string, object> metadata = (Dictionary<string, object>)cell.Metadata;
-                                if (metadata.ContainsKey("tags"))
-                                {
-                                    object[] tags = (object[])metadata["tags"];
-                                    if (!string.IsNullOrEmpty((string)Array.Find<object>(tags, t => t.ToString() == "parameters")))
-                                    {
-                                        cellIsParam = true;
-                                        //Insert the TaskObject as a Parameter
-                                        var t = TaskObject;
-                                        var t1 = JsonConvert.SerializeObject(t);
-                                        var t2 = t1.Replace("\\", "\\\\");
-                                        var t3 = t2.Replace(@"""", @"\""");
-                                        code += "TaskObject = " + "\"" + t3 + "\"";
-                                        code += System.Environment.NewLine;
-                                    }
-
-                                }
-
-                                if (!cellIsParam)
-                                {
-                                    foreach (var line in cell.Source)
-                                    {
-                                        code += line.ToString();
-                                    }
-                                    code += System.Environment.NewLine;
-                                }
-                            }
-                        }
-
-                        SparkStatementOptions sso = new SparkStatementOptions();
-                        sso.Kind = "pyspark";
-                        sso.Code = code;
-
-                        SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
-                        sso.Code = sso.Code.Replace("-1000", "-1001");
-                        SparkStatementOperation statemento2 = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
-                        foreach (var f in matchedFiles2)
-                        {
-                            f.Delete();
-                        }
-
-                        SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
-
-                        logging.LogInformation($"Processing Task {taskName}. PySpark Statement Created and Executed.");
-                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.succeeded;
-                        sner.SessionId = idleSession.Id;
-                        sner.StatementId = statement.Id;
-                        sner.StatementState= statement.State;
-                        return sner;
-                    }
-                    else
-                    {
-                        logging.LogInformation($"Processing Task {taskName}. This thread has been aborted due to a session concurrency issue. Beginning Retry.");
-                        sner.StatementResult = SparkNotebookExecutionResult.statementResult.retry;
-                        return sner;
-                    }
-                }
-                else
-                {
-                    logging.LogInformation($"Processing Task {taskName}. No existing idle sessions found and no available new session slots.");
-                    sner.StatementResult = SparkNotebookExecutionResult.statementResult.nosessions;
-                    return sner;
-                }
-
-
+                //Run code                
+                await sneh.RunCode();                
 
             }
             catch (Exception e)
             {
                 logging.LogErrors(e);
-                sner.StatementResult = SparkNotebookExecutionResult.statementResult.failed;
-                return sner;
+                sneh.Sner.StatementResult = SparkNotebookExecutionResult.statementResult.failed;                
             }
+
+            return sneh.Sner;
 
         }
 
-        public async Task<string> CheckStatementExecution(JObject Params)
+        public async Task<string> CheckStatementExecution(JObject Params, Logging.Logging logging)
         {
             SparkSessionClient ssc = GetSessionClient(new Uri(Params["Endpoint"].ToString()), Params["PoolName"].ToString());
             SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(Params["SessionId"]), System.Convert.ToInt32(Params["StatementId"]));
+            logging.LogInformation($"Statememt for task {Params["TaskName"].ToString()} is currently {statement.State.ToString()} on session {Params["SessionId"]}");
             return statement.State.ToString();
 
         }
@@ -562,45 +309,512 @@ namespace FunctionApp.Services
             return nc;
         }
 
-        private void WriteSessionHeartBeat(DirectoryInfo folder, string id, Guid guid, string prefix)
+       
+
+
+
+
+        private class SparkNotebookExecutionHelper
         {
-            //Write a session heartbeat file                                
-            string FileName = Path.Combine(folder.FullName, $"{prefix}_{id}_{guid.ToString()}.txt");
-            using (FileStream fs = File.Create(FileName))
+            private HttpClient c { get; set;}
+            private Logging.Logging _logging { get; set; }
+            private SparkSessionClient ssc { get; set; }
+            NotebookClient nc { get; set; }
+            private List<SparkSession> sscl = new List<SparkSession>();
+            private List<SparkSession> busySessions = new List<SparkSession>();
+            private int SessionsCurrentlyRunning { get; set; }
+            private string CandidateSessionId { get; set; }
+
+            private bool CandidateAllowedToRun { get; set; }
+
+            private Guid ProcessingGuid { get; set; }
+            private int SessionCount { get; set; }
+
+            public SparkNotebookExecutionHelper(SparkNotebookExecutionResult sner, HttpClient httpClient, SparkSessionClient sparkSessionClient, NotebookClient notebookClient, Logging.Logging logging)
             {
-                Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("");
-                fs.Write(info, 0, info.Length);
+                Sner = sner;
+                c = httpClient;
+                ssc = sparkSessionClient;
+                nc = notebookClient;
+                this.Sner.UsingBusySession = false;
+                this.Sner.Guid = Guid.NewGuid();
+                this.Sner.sessionsWaitingToStart = 0;
+                this.ProcessingGuid = Guid.NewGuid();
+                _logging = logging;
             }
+
+
+            public SparkNotebookExecutionResult Sner;
+
+            public void GetSessionsWaitingToStartFromDisk()
+            {
+                //Todo Remove very old Files
+
+                DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(Sner.SessionFolder));
+                var files = folder.GetFiles();
+                var matchedFiles = files.Where(f => f.Name.StartsWith($"cs_"));
+
+                List<int> snums = new List<int>();
+                if (matchedFiles.Any())
+                {
+                    foreach (var f in matchedFiles)
+                    {
+                        int s = System.Convert.ToInt16(f.Name.Split("_")[1]);
+                        snums.Add(s);
+                    }
+
+                    var snumsd = snums.Distinct();
+                    Sner.sessionsWaitingToStart = snums.Max() + 1;
+                }
+                SessionCount = 0 + Sner.sessionsWaitingToStart;                
+            }
+
+            public async Task GetCandidateSessions()
+            {                                
+                int reqSessionCount = 20;
+                int reqFromSession = 0;
+                while (reqSessionCount >= 20)
+                {
+
+                    Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession, 20, false);
+                    foreach (SparkSession s in ss.Value.Sessions)
+                    {
+                        if (s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Killed && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Dead && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.Error && s.State != Azure.Analytics.Synapse.Spark.Models.LivyStates.ShuttingDown)
+                        {
+                            //Azure.Analytics.Synapse.Spark.Models.LivyStates.Running;
+                            //Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle;
+                            //Azure.Analytics.Synapse.Spark.Models.LivyStates.Success;
+                            //Azure.Analytics.Synapse.Spark.Models.LivyStates.NotStarted;
+                            //Azure.Analytics.Synapse.Spark.Models.LivyStates.Recovering;
+                            sscl.Add(s);
+                        }
+                        
+                    }
+
+                    reqSessionCount = ss.Value.Total;
+                    if (reqSessionCount > 0)
+                    {
+                        reqFromSession += ss.Value.Total;
+                    }
+                }
+            }
+
+            public async Task ProcessCandidateSessions()
+            {
+
+                foreach (SparkSession s in sscl)
+                {
+                    //Session number for current loop iteration
+                    var loopSession = s.Id.ToString();
+                    double timeSinceStarted = 0;
+                    SparkSession sd = await ssc.GetSparkSessionAsync(s.Id, true);
+                    if (!string.IsNullOrEmpty(sd.LivyInfo.StartingAt.ToString()))
+                    {
+                        timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
+                    }
+
+
+                    switch (sd.State.ToString())
+                    {
+                        case "idle":
+                            if (timeSinceStarted > 180)
+                            {
+                                if (string.IsNullOrEmpty(CandidateSessionId))
+                                {
+                                    
+                                    if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession)))
+                                    {
+                                        //Write a session heartbeat file
+                                        _logging.LogInformation($"Processing Task {Sner.TaskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {SessionCount}. Signaling intent to use...");
+                                        WriteSessionHeartBeat(loopSession, ProcessingGuid, "us");
+                                        await Task.Delay(1000);
+                                        //Now Check again To Make sure that you locked the session first                                        
+                                        if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession), ProcessingGuid))
+                                        { CandidateSessionId = loopSession; }
+                                        else
+                                        {
+                                            //Consider this session busy
+                                            busySessions.Add(sd);
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        //Consider this session busy
+                                        busySessions.Add(sd);
+                                    }
+                                }
+                                SessionCount += 1;
+                            }
+                            else                             
+                            {
+                                //Consider this session busy
+                                busySessions.Add(sd);
+                                SessionCount += 1;
+                            }
+                            break;
+                        case "busy":
+                            SessionCount += 1;
+                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
+                            busySessions.Add(sd);
+                            break;
+                        default: 
+                            _logging.LogInformation("Unexpected Session State:" + sd.State.ToString());
+                            break ;
+
+                    }                   
+
+
+                }
+            }
+
+            public async Task RunCode()
+            {
+                if (!string.IsNullOrEmpty(CandidateSessionId))
+                {
+                    SparkSession idleSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(CandidateSessionId), true);
+                    string code = "";
+                    //Get the Notebook 
+                    NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");
+                    foreach (NotebookCell cell in Notebook.Properties.Cells)
+                    {
+                        bool cellIsParam = false;
+                        if (cell.CellType == "code")
+                        {
+                            Dictionary<string, object> metadata = (Dictionary<string, object>)cell.Metadata;
+                            if (metadata.ContainsKey("tags"))
+                            {
+                                object[] tags = (object[])metadata["tags"];
+                                if (!string.IsNullOrEmpty((string)Array.Find<object>(tags, t => t.ToString() == "parameters")))
+                                {
+                                    cellIsParam = true;
+                                    //Insert the TaskObject as a Parameter
+                                    var t = Sner.TaskObject;
+                                    var t1 = JsonConvert.SerializeObject(t);
+                                    var t2 = t1.Replace("\\", "\\\\");
+                                    var t3 = t2.Replace(@"""", @"\""");
+                                    code += "TaskObject = " + "\"" + t3 + "\"";
+                                    code += System.Environment.NewLine;
+                                }
+
+                            }
+
+                            if (!cellIsParam)
+                            {
+                                foreach (var line in cell.Source)
+                                {
+                                    code += line.ToString();
+                                }
+                                code += System.Environment.NewLine;
+                            }
+                        }
+                    }
+
+                    SparkStatementOptions sso = new SparkStatementOptions();
+                    sso.Kind = "pyspark";
+                    sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool1\")" + System.Environment.NewLine + code;
+
+                    SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
+                    //sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool2\")" + System.Environment.NewLine + code.Replace("-1000", "-1001");
+                    //sso.Code =  code.Replace("-1000", "-1001");
+                    //SparkStatementOperation statemento2 = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
+                    DeleteHeartBeatFiles("us", idleSession.Id);
+
+                    SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
+
+                    _logging.LogInformation($"Processing Task {Sner.TaskName}. PySpark Statement Created and Executing using Session {idleSession.Id}. 'UsingBusySession':{Sner.UsingBusySession}");
+                    Sner.StatementResult = SparkNotebookExecutionResult.statementResult.succeeded;
+                    Sner.SessionId = idleSession.Id;
+                    Sner.StatementId = statement.Id;
+                    Sner.StatementState = statement.State;
+                }
+                else
+                {
+                    _logging.LogErrors(new Exception($"No CandidateSession Found. Guid: {ProcessingGuid}, Task: {Sner.TaskName}"));
+                }
+            }
+            
+            public async Task NewSessionCheck()
+            {
+
+                for (int i = 0; i < 3; i++)
+                {
+
+                    switch (await StartNewSession())
+                    {
+                        case 0:
+                            _logging.LogErrors(new Exception("Start New Session Returned an Invalid Result"));
+                            i = 3;
+                            break;
+                        case 1:
+                            //Do Nothing as Idle Session Already Found
+                            i = 3;
+                            break;
+                        case 2:
+                            //Session Limit Hit.. Go To Busy Sessions 
+                            CheckBusySessions();
+                            i = 3;
+                            break;
+                        case 3:
+                            //Unable to Start Due to Concurrency Issues... Add One to SessionCount and try again
+                            SessionCount++;
+                            break;
+                        case 4:
+                            //Unable to Start Due to Startup Timeout... Go To Busy Sessions
+                            CheckBusySessions();
+                            i = 3;
+                            break;
+                        case 5:
+                            //Startup Succeeded
+                            i = 3;
+                            break;
+                        default:
+                            i = 3;
+                            break;
+
+                    }
+                }
+
+            }
+
+            public void CheckBusySessions() {
+
+                //If no idle sessions then create new one
+                if (string.IsNullOrEmpty(CandidateSessionId))
+                {
+                    //At this point we have not found an idle session AND we have no capacity to create additional sessions so now submit to existing BUSY sesson if available
+                    if (busySessions.Any())
+                    {
+                        List<SparkSession> bs = busySessions.Take(1).ToList();
+                        CandidateSessionId = bs[0].Id.ToString();
+                        Sner.UsingBusySession = true;
+                    }
+                    else
+                    {
+                        _logging.LogErrors(new Exception($"No Capacity for New Sessions and No Busy Sessions. Guid: {ProcessingGuid}, Task: {Sner.TaskName}"));
+                    }
+
+                }
+            }
+
+   
+            /// <summary>
+            /// Returns 0 should never occur 
+            /// Returns 1 if CandidateSessionId already set so no need to start new session
+            /// Returns 2 if session limit already hit
+            /// Returns 3 if unable to start session due to concurrency issue 
+            /// Returns 4 if unable to start due to timeout
+            /// Returns 5 if successfully started session
+            /// </summary>
+            /// <returns></returns>
+            public async Task<int> StartNewSession()
+            {
+                int ret = 0;
+
+                if (!string.IsNullOrEmpty(this.CandidateSessionId))
+                {
+                    return 1;
+                }
+
+
+                if (this.SessionCount <= 2)
+                {
+                    var startTimer = DateTime.Now;
+                    string sessionName = "AdsGoFast_" + (SessionCount + 1).ToString();
+                    //string jsonContent = "{\"tags\": null,\"Name\": \"" + sessionName + "\", \"driverMemory\": \"4g\",  \"driverCores\": 1,  \"executorMemory\": \"2g\", \"executorCores\": 2, \"numExecutors\": 2, \"artifactId\": \"dldj\"}";
+                    SparkSessionOptions sso = new SparkSessionOptions(sessionName);
+                    sso.DriverCores = 1;
+                    sso.DriverMemory = "4g";
+                    sso.ExecutorCores = 2;
+                    sso.ExecutorMemory = "2g";
+                    sso.ExecutorCount = 2;
+                    sso.ArtifactId = "test";
+
+
+                    if (CheckForHeartBeatFiles("cs", SessionCount))
+                    {
+                        WriteSessionHeartBeat(SessionCount.ToString(), ProcessingGuid, "cs");
+                        await Task.Delay(1000);
+                        if (CheckForHeartBeatFiles("cs", SessionCount, ProcessingGuid))
+                        {
+                            //JObject newSession = JObject.Parse(await PostToSynapseApi(endpoint, $"livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions?detailed=True", jsonContent, logging));
+                            SparkSessionOperation ns = ssc.StartCreateSparkSession(sso, true);
+                            CandidateSessionId = ns.Id.ToString();
+                            SparkSession newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(ns.Id), true);
+
+                            WriteSessionHeartBeat(CandidateSessionId, ProcessingGuid, "us");
+                            //Wait for session to start
+                            if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.NotStarted)
+                            {
+                                //Will Wait for up to 200 seconds
+                                for (int i = 0; i < 40; i++)
+                                {
+                                    await Task.Delay(5000);
+                                    var startUpTime = (DateTime.Now - startTimer).TotalSeconds;
+                                    newSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(newSession.Id), true);
+                                    if (newSession.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle)
+                                    {
+                                        _logging.LogInformation($"Processing Task {Sner.TaskName}. Session {CandidateSessionId}. Started in {startUpTime.ToString()} seconds.");
+                                        //Wait a tiny bit longer just to make sure session is ready
+                                        await Task.Delay(1000);
+                                        DeleteHeartBeatFiles("cs", SessionCount);
+                                        ret = 5;
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        _logging.LogInformation($"Processing Task {Sner.TaskName}. Waiting for Session {CandidateSessionId} for application {sessionName}. Current state is {newSession.State.ToString()}. Startup time has been {startUpTime.ToString()} seconds.");
+                                    }
+                                }
+                                //Failed to Start Session within time limit.
+                                ret = 4; //No Candidate Task and unable to start session;
+                            }
+                        }
+                        else
+                        {
+                            //Couldn;t Start Session due to concurrency issue on startup
+                            ret = 3; //No Candidate Task and unable to start session;
+                        }
+                    }
+                    else
+                    {
+                        //Couldn;t Start Session
+                        _logging.LogInformation($"Processing Task {Sner.TaskName}. This thread has not been allowed to start session {sessionName} due to concurrency issue. Attempting retry.");
+                        ret = 3; //No Candidate Task and unable to start session;
+                    }
+
+
+
+                }
+                else
+                {
+                    ret = 2; //No Candidate Task and no new sessions allowed;
+                }
+
+                return ret;
+
+            }
+
+
+            private void WriteSessionHeartBeat(string id, Guid guid, string prefix)
+            {
+                DirectoryInfo folder = new DirectoryInfo(Sner.SessionFolder);
+                //Write a session heartbeat file                                
+                string FileName = Path.Combine(folder.FullName, $"{prefix}_{id}_{guid.ToString()}.txt");
+                using (FileStream fs = File.Create(FileName))
+                {
+                    Byte[] info = new System.Text.UTF8Encoding(true).GetBytes("");
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+
+            private bool CheckForHeartBeatFiles(string prefix, int id)
+            {
+                return CheckForHeartBeatFiles(prefix, id, Guid.Empty);
+            }
+
+            private bool CheckForHeartBeatFiles(string prefix, int id, Guid guid)
+            {
+                bool ret = false;
+                DirectoryInfo folder = new DirectoryInfo(Sner.SessionFolder);
+                //Check if heartbeat files exist
+                var files = folder.GetFiles();
+                var matchedFiles = files.Where(f => f.Name.StartsWith($"{prefix}_{id.ToString()}_"));
+                if (matchedFiles.Any())
+                {
+                    //Skip this session and move on to the next
+                    //logging.LogInformation($"Processing Task {taskName}. Session {loopSession} for application AdsGoFast {sessionCount} is idle but marked for use.");
+                    if (Guid.Empty == guid)
+                    {
+                        ret = false;
+                    }
+                    else
+                    {
+                        Guid minGuid = Guid.Empty;
+                        //If the runner is not idle check the heartbeat files to ensure it hasn't previously failed on start
+                        foreach (var f in matchedFiles)
+                        {
+                            Guid GuidInFileStr = Guid.Parse(f.Name.Replace($"{prefix}_{id.ToString()}_", "").Replace(".txt", ""));
+                            if (Guid.Empty.CompareTo(minGuid) == 0) { minGuid = GuidInFileStr; }
+                            if (minGuid.CompareTo(GuidInFileStr) == -1)
+                            { minGuid = GuidInFileStr; }
+                        }
+
+                        //If current thread has wrote the first heartbeat then allow it to continue
+                        if (minGuid == guid)
+                        {
+                            ret = true;
+                        }
+                        else 
+                        {
+                            ret = false;
+                        }
+                    }
+                }
+                else
+                {
+                    ret = true;
+                }
+                return ret;
+            }
+
+            private void DeleteHeartBeatFiles(string prefix, int id)
+            {                
+                DirectoryInfo folder = new DirectoryInfo(Sner.SessionFolder);
+                //Check if heartbeat files exist
+                var files = folder.GetFiles();
+                var matchedFiles = files.Where(f => f.Name.StartsWith($"{prefix}_{id.ToString()}_"));
+                foreach (var f in matchedFiles)
+                {
+                    f.Delete();
+                }
+
+            }
+
         }
 
-
     }
-
     public class SparkNotebookExecutionResult
     {
         public SparkNotebookExecutionResult()
         { }
-        public enum statementResult {failed, retry, succeeded, nosessions }
 
-        public statementResult StatementResult { get; set; } 
+        public enum statementResult { failed, retry, succeeded, nosessions }
+
+        public statementResult StatementResult { get; set; }
 
         public int StatementId { get; set; }
 
-        public int SessionId { get; set; } 
+        public int SessionId { get; set; }
 
         public string Endpoint { get; set; }
 
         public string PoolName { get; set; }
+
+        public string TaskName { get; set; }
+
+        public string SessionFolder { get; set; }
+
+        public int TaskInstanceId { get; set; }
+
+        public JObject TaskObject { get; set; }
+
+        public Guid Guid { get; set; }
+
+        public bool UsingBusySession { get; set; }
+
+        public int sessionsWaitingToStart { get; set; }
 
         public string StatementResultString
         {
             get
             {
                 return this.StatementResult.ToString();
-            }            
+            }
         }
 
         public LivyStatementStates? StatementState { get; set; }
 
     }
+
 }
