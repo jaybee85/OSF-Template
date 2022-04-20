@@ -144,7 +144,8 @@ namespace FunctionApp.Services
 
             SparkNotebookExecutionHelper sneh = new SparkNotebookExecutionHelper(sner, sc,ssc, nc, logging);
 
-            while (tryCount < 1)
+            //Loop through to retry if fails
+            while (tryCount < 2)
             {
                 sneh.Sner = await ExecuteNotebookCore(logging, sneh);
                 if (sneh.Sner.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
@@ -458,6 +459,11 @@ namespace FunctionApp.Services
                             //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
                             busySessions.Add(sd);
                             break;
+                        case "not_started":
+                            SessionCount += 1;
+                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
+                            busySessions.Add(sd);
+                            break;
                         default: 
                             _logging.LogInformation("Unexpected Session State:" + sd.State.ToString());
                             break ;
@@ -585,8 +591,35 @@ namespace FunctionApp.Services
                     //At this point we have not found an idle session AND we have no capacity to create additional sessions so now submit to existing BUSY sesson if available
                     if (busySessions.Any())
                     {
-                        List<SparkSession> bs = busySessions.Take(1).ToList();
-                        CandidateSessionId = bs[0].Id.ToString();
+                        int? MinStatements = null;
+                        int MinStatementSessonId = -1;
+                        foreach (SparkSession session in busySessions)
+                        {
+                            var sss = this.ssc.GetSparkStatements(session.Id);
+                            Int64 RunningStatementCount = 0;
+                            foreach(var ss in sss.Value.Statements)
+                            {
+                                if (ss.State == LivyStatementStates.Running || ss.State == LivyStatementStates.Waiting || ss.State == LivyStatementStates.Cancelling)
+                                {
+                                    RunningStatementCount++;
+                                }
+                            }
+                            
+
+                            if (MinStatements == null)
+                            {
+                                MinStatements = (int?)RunningStatementCount;
+                                MinStatementSessonId = session.Id;
+                            }
+                            if (RunningStatementCount <= MinStatements)
+                            { 
+                                MinStatements = (int?)RunningStatementCount;
+                                MinStatementSessonId = session.Id;
+                            }
+
+                        }
+
+                        CandidateSessionId = MinStatementSessonId.ToString();
                         Sner.UsingBusySession = true;
                     }
                     else
