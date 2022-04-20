@@ -118,7 +118,8 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   name                 = "SLS_AzureKeyVault"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureKeyVault"
-  depends_on = [
+   depends_on = [
+    azurerm_synapse_firewall_rule.public_access,
     azurerm_synapse_firewall_rule.cicd
   ]
   type_properties_json = <<JSON
@@ -126,10 +127,7 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   "baseUrl": "${azurerm_key_vault.app_vault.vault_uri}"
 }
 JSON
-  depends_on = [
-    azurerm_synapse_firewall_rule.public_access,
-    azurerm_synapse_firewall_rule.cicd
-  ]
+ 
 }
 
 resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
