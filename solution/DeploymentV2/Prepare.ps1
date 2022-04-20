@@ -57,12 +57,14 @@ function Get-SelectionFromUser {
     return $Options.Get($Response - 1)
 } 
 
-$environmentName = Get-SelectionFromUser -Options ('Local','Staging') -Prompt "Select deployment environment"
+$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+
 if ($environmentName -eq "Quit")
 {
     Exit
 }
 
+[System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
 
 $environmentFile = "./EnvironmentTemplate_" + $environmentName + ".hcl"
 $environmentFileContents = Get-Content $environmentFile

@@ -230,7 +230,7 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkBigInt', 'name':'Watermark Value', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TaskMasterWaterMarkString', 'name':'Watermark String Value', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'TaskWaterMarkJson', 'name':'Json', 'autoWidth':true }"));
-            cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'Active', 'autoWidth':true, 'ads_format': 'bool' }"));
+            cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'Is Active', 'autoWidth':true, 'ads_format': 'bool' }"));
 
             HumanizeColumns(cols);
 

@@ -403,6 +403,8 @@ namespace WebApplication.Controllers
 
                 tm.TaskMasterId = 0;
                 tm.TaskMasterName = tm.TaskMasterName + " Copy";
+                tm.ActiveYn = false;
+                
                 _context.Add(tm);
             }
             await _context.SaveChangesAsync();
