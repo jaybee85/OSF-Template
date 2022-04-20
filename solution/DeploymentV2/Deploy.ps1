@@ -21,8 +21,9 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-Import-Module .\pwshmodules\GetSelectionFromUser.psm1 -force
-$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+$environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
+$skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
+
 if ($environmentName -eq "Quit")
 {
     Exit
@@ -31,7 +32,6 @@ if ($environmentName -eq "Quit")
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
 $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
-$skipTerraformDeployment = $false
 $deploymentFolderPath = (Get-Location).Path
 
 #----------------------------------------------------------------------------------------------------------------
@@ -46,12 +46,13 @@ $deploymentFolderPath = (Get-Location).Path
 Set-Location "./terraform"
 $env:TF_VAR_ip_address = $myIp
 
+terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+
 if ($skipTerraformDeployment) {
     Write-Host "Skipping Terraform Deployment"
 }
 else {
     Write-Host "Starting Terraform Deployment"
-    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
 }
 
@@ -224,7 +225,12 @@ else {
     dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --PurviewAccountName $purview_name
 
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
-    $SqlInstalled = Get-InstalledModule SqlServer
+    $SqlInstalled = false
+    try { 
+        $SqlInstalled = Get-InstalledModule SqlServer
+    }
+    catch { "SqlServer PowerShell module not installed." }
+    
     if($null -eq $SqlInstalled)
     {
         write-host "Installing SqlServer Module"

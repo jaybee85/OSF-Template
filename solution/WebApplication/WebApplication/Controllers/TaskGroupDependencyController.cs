@@ -249,6 +249,28 @@ namespace WebApplication.Controllers
                 // Getting all Customer data    
                 var modelDataAll = from dep in _context.TaskGroupDependency select dep;
 
+                //filter the list by permitted roles
+                if (!CanPerformCurrentActionGlobally())
+                {
+                    //TODO: Test that the change from GetPermittedRolesForCurrentAction didnt' break this
+                    var requiredRoles = GetPermittedGroupsForCurrentAction();
+
+                    var filteredTaskGroups =
+                        from tg in _context.TaskGroup
+                        join rm in _context.SubjectAreaRoleMapsFor(GetUserAdGroupUids(), requiredRoles)
+                            on tg.SubjectAreaId equals rm.SubjectAreaId
+                        select tg;
+
+                    //cross join + distinct to get all possiblities without a GroupJoin (which doesnt' work in EFCore)
+                    modelDataAll =
+                        (from md in modelDataAll
+                         from tg in filteredTaskGroups
+                         where
+                             tg.TaskGroupId == md.AncestorTaskGroupId
+                             || tg.TaskGroupId == md.DescendantTaskGroupId
+                         select md).Distinct();
+                }
+
                 modelDataAll = modelDataAll
                     .Include(t => t.AncestorTaskGroup)
                     .Include(t => t.DescendantTaskGroup).AsNoTracking();
@@ -291,13 +313,15 @@ namespace WebApplication.Controllers
         public async Task<IActionResult> DetailsPlus([FromQuery] long AncestorTaskGroupId, [FromQuery] long DescendantTaskGroupId)
         {
             var taskGroupDependency = await _context.TaskGroupDependency
+                .Include(m => m.AncestorTaskGroup)
+                .Include(m => m.DescendantTaskGroup)
                 .FirstOrDefaultAsync(m => m.AncestorTaskGroupId == AncestorTaskGroupId && m.DescendantTaskGroupId == DescendantTaskGroupId);
             if (taskGroupDependency == null)
             {
                 return NotFound();
             }
 
-            return View("Details", taskGroupDependency);
+            return View("DetailsPlus", taskGroupDependency);
         }
 
         // GET: TaskGroupDependency/Edit/5
@@ -308,7 +332,7 @@ namespace WebApplication.Controllers
             {
                 return NotFound();
             }
-            return View("Edit", taskGroupDependency);
+            return View("EditPlus", taskGroupDependency);
         }
 
         // POST: TaskGroupDependency/Edit/5

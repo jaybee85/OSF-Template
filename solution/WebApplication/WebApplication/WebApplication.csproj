@@ -8,13 +8,21 @@
 
 
 	<ItemGroup>
+		<Compile Remove="Components\**" />
 		<Compile Remove="Controllers\Enums\**" />
+		<Compile Remove="Models\Stats\**" />
 		<Compile Remove="Templates\**" />
+		<Content Remove="Components\**" />
 		<Content Remove="Controllers\Enums\**" />
+		<Content Remove="Models\Stats\**" />
 		<Content Remove="Templates\**" />
+		<EmbeddedResource Remove="Components\**" />
 		<EmbeddedResource Remove="Controllers\Enums\**" />
+		<EmbeddedResource Remove="Models\Stats\**" />
 		<EmbeddedResource Remove="Templates\**" />
+		<None Remove="Components\**" />
 		<None Remove="Controllers\Enums\**" />
+		<None Remove="Models\Stats\**" />
 		<None Remove="Templates\**" />
 	</ItemGroup>
 
@@ -52,6 +60,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Graph" Version="4.22.0" />
     <PackageReference Include="Microsoft.Identity.Web" Version="1.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
@@ -60,11 +69,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\Enums\" />
     <Folder Include="wwwroot\js\bswindow\" />
-    <Folder Include="Models\Stats\" />
     <Folder Include="wwwroot\fonts\" />
-    <Folder Include="Components\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\EditorTemplates\EditorForDataBreachImpactManagement.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForDataBreachPlan.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForDataModification.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForEnvironmentReconfigurations.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForProperties.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForSpecifications.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\EditorForStakeholderAssuranceProtection.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\ExternalUsers.cshtml" />
+    <None Include="Views\Shared\EditorTemplates\UserReference.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
