@@ -10,6 +10,46 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
     "type": "object",
     "title": "TaskMasterJson",
     "properties": {
+        "CDCSource": {
+            "type": "string",
+            "default": "Disabled",
+            "enum": [
+                "Enabled",
+                "Disabled"
+            ],
+            "options": {
+                "infoText": "Set this to enabled if your incoming data is from a CDC formatted database. This will modify how the default notebook interacts with the source data. Note: CDC specific columns will be removed from the sink."
+            }
+        },
+        "SparkTableCreate": {
+            "type": "string",
+            "default": "Disabled",
+            "enum": [
+                "Enabled",
+                "Disabled"
+            ],
+            "options": {
+                "infoText": "Set this to enabled if you want to save your output data as an external persistent table within synapse. Note: Currently persistent tables do not support delta format so we have to create a parquet of the latest version within the sink directory."
+            }
+        },
+        "SparkTableDBName": {
+            "type": "string",
+            "options": {
+                "inputAttributes": {
+                    "placeholder": "eg. AdventureWorks"
+                },
+                "infoText": "This is the database of the persistent table you want to save. Will create a DB if provided name does not already exist. Note: This relies on SaveAsPersistentTable being Enabled - otherwise does nothing."
+            }
+        },
+        "SparkTableName": {
+            "type": "string",
+            "options": {
+                "inputAttributes": {
+                    "placeholder": "eg. Customer"
+                },
+                "infoText": "This is the table name of the persistent table you want to save. Will create a table if provided name does not already exist. Note: This relies on SaveAsPersistentTable being Enabled - otherwise does nothing."
+            }
+        },
         "Purview": {
             "type": "string",
             "default": "Disabled",
@@ -36,6 +76,8 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
         "Target": partials[TargetFormat]()
     },
     "required": [
+        "CDCSource",
+        "SparkTableCreate",
         "Source",
         "Target",
         "Purview"

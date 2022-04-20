@@ -15,6 +15,7 @@ function(
     SourceMaxConcurrentConnections = 0,
     SourceRecursively = "false",
     SourceDeleteAfterCompletion = "",
+    SourceWriteSchemaToPurview = "Disabled",
     TargetFormat = "Azure SQL",
     TargetType = "Azure SQL",
     TargetDataFilename = "SalesLT.Customer.parquet",
@@ -26,11 +27,24 @@ function(
     TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
+    TargetWriteSchemaToPurview = "Disabled",
     TestDescription = "",
+    Purview = "Disabled",
+    QualifiedIDAssociation = "TaskMasterId",
+    CDCSource = "",
+    SparkTableCreate = "Disabled",
+    SparkTableName = "",
+    SparkTableDBName = ""
     )
 {
     local TaskMasterJson =     
     {
+        "Purview": Purview,
+        "QualifiedIDAssociation": QualifiedIDAssociation,
+        "CDCSource": CDCSource,
+        "SparkTableCreate": SparkTableCreate,
+        "SparkTableDBName": SparkTableDBName,
+        "SparkTableName": SparkTableName,
         "Source":{
             "Type": SourceFormat,                       
             "RelativePath": "samples/",
@@ -39,6 +53,7 @@ function(
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
+            "WriteSchemaToPurview": SourceWriteSchemaToPurview
             
         }
         + if (SourceFormat == "Excel") 
@@ -50,12 +65,13 @@ function(
 
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":"/Tests/Azure Storage to Azure Storage/",
+            "RelativePath":"/Tests/Azure Storage to Azure Storage/" + TestNumber + "/",
             "DataFileName": TargetDataFilename,
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
-            "DeleteAfterCompletion": TargetDeleteAfterCompletion
+            "DeleteAfterCompletion": TargetDeleteAfterCompletion,
+            "WriteSchemaToPurview": TargetWriteSchemaToPurview
         }
         + if (TargetFormat == "Excel") 
             then {"SkipLineCount": 0, "FirstRowAsHeader":TargetFirstRowAsHeader,  "SheetName":TargetSheetName}

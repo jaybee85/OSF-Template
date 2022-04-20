@@ -44,7 +44,7 @@ namespace FunctionApp.CustomFunctions
             FrameworkRunner fr = new FrameworkRunner(log, executionId);
 
             FrameworkRunnerWorkerWithHttpRequest worker = SendEmailSasUri;
-            var result = fr.Invoke(req, "GetSASUriSendEmailHttpTrigger", worker);
+            var result = await fr.Invoke(req, "GetSASUriSendEmailHttpTrigger", worker);
             if (result.Succeeded)
             {
                 return new OkObjectResult(JObject.Parse(result.ReturnObject));

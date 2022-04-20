@@ -23,8 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TaskMasterWaterMarkColumnType" class="control-label"></label>
-                <input asp-for="TaskMasterWaterMarkColumnType" class="form-control" />
-                <span asp-validation-for="TaskMasterWaterMarkColumnType" class="text-danger"></span>
+                <select asp-for="TaskMasterWaterMarkColumnType" class="form-control" asp-items="ViewBag.ColumnType"></select>
             </div>
             <div class="form-group">
                 <label asp-for="TaskMasterWaterMarkDateTime" class="control-label"></label>

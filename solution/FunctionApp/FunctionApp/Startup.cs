@@ -50,7 +50,9 @@ namespace FunctionApp
             var appOptions = config.GetSection("ApplicationOptions").Get<ApplicationOptions>();
             var downstreamAuthOptionsDirect = config.GetSection("AzureAdAzureServicesDirect").Get<DownstreamAuthOptionsDirect>();
             var downstreamAuthOptionsViaAppReg = config.GetSection("AzureAdAzureServicesViaAppReg").Get<DownstreamAuthOptionsViaAppReg>();
-            var downstreamAuthenticationProvider = new MicrosoftAzureServicesAppAuthenticationProvider(downstreamAuthOptionsDirect, appOptions.UseMSI);
+            //Used for Service Connections
+            var downstreamAuthenticationProvider = new AzureIdentityAuthenticationProvider(appOptions, downstreamAuthOptionsDirect);
+            //Only Used for Chained Function Calls
             var downstreamViaAppRegAuthenticationProvider = new MicrosoftAzureServicesAppAuthenticationProvider(downstreamAuthOptionsViaAppReg, appOptions.UseMSI);
 
             services.AddSingleton<TaskTypeMappingProvider>();

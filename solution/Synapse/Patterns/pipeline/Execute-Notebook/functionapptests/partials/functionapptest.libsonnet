@@ -15,6 +15,7 @@ function(
     SourceMaxConcurrentConnections = 0,
     SourceRecursively = "false",
     SourceDeleteAfterCompletion = "",
+    SourceWriteSchemaToPurview = "Disabled",
     TargetFormat = "N/A",
     TargetType = "Notebook-Optional",
     TargetDataFilename = "",
@@ -26,15 +27,20 @@ function(
     TargetMaxConcurrentConnections = 0,
     TargetRecursively = "false",
     TargetDeleteAfterCompletion = "",
+    TargetWriteSchemaToPurview = "Disabled",
     TestDescription = "",
     ExecuteNotebook = "Notebook 1",
-    CustomDefinitions = ""
+    CustomDefinitions = "",
+    Purview = "Disabled",
+    QualifiedIDAssociation = "TaskMasterId"
     )
 {
     local TaskMasterJson =     
     {
         "ExecuteNotebook": ExecuteNotebook,
         "CustomDefinitions": CustomDefinitions,
+        "Purview": Purview,
+        "QualifiedIDAssociation": QualifiedIDAssociation,
         "Source":{
             "Type": SourceFormat,                       
             "RelativePath": "",
@@ -43,6 +49,7 @@ function(
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,
             "Recursively": SourceRecursively,
             "DeleteAfterCompletion": SourceDeleteAfterCompletion,
+            "WriteSchemaToPurview": SourceWriteSchemaToPurview
             
         },
 
@@ -53,7 +60,9 @@ function(
             "SchemaFileName": TargetSchemaFileName,            
             "MaxConcurrentConnections": TargetMaxConcurrentConnections,
             "Recursively": TargetRecursively,
-            "DeleteAfterCompletion": TargetDeleteAfterCompletion
+            "DeleteAfterCompletion": TargetDeleteAfterCompletion,
+            "WriteSchemaToPurview": TargetWriteSchemaToPurview
+
         },
     },
 
@@ -98,7 +107,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test.",
+    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test. NOTE: Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",
     "DependencyChainTag": "" 
 }+commons
 
