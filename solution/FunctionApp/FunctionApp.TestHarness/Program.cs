@@ -417,8 +417,6 @@ namespace FunctionApp.TestHarness
 
         }
 
-
-
         public void DebugPrepareFrameworkTasks()
         {
             FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(_options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider);

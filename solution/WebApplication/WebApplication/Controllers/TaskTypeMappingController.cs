@@ -257,8 +257,7 @@ namespace WebApplication.Controllers
                 //Search    
                 if (!string.IsNullOrEmpty(searchValue))
                 {
-                    //TODO: Implement search
-                    //modelDataAll = modelDataAll.Where(m => m.TaskMasterName.Contains(searchValue));
+                    modelDataAll = modelDataAll.Where(m => m.MappingName.Contains(searchValue));
                 }
 
                 //Filter based on querystring params

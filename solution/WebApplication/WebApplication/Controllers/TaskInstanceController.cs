@@ -378,7 +378,7 @@ namespace WebApplication.Controllers
                 ti.NumberOfRetries = 0;
                 if (Status != "InProgress") { ti.TaskRunnerId = null; }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             //TODO: Add Error Handling
             return new OkObjectResult(new { });

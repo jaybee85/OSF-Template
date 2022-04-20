@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApplication.Models
@@ -129,6 +130,17 @@ namespace WebApplication.Models
                 entity.HasOne<TaskMaster>(ti => ti.TaskMaster).WithOne();
             });
 
+        }
+
+        public IQueryable<SubjectAreaRoleMap> SubjectAreaRoleMapsFor(Guid[] assignedAdGroups, string[] applicationRoles)
+        {
+            return
+                from r in this.SubjectAreaRoleMap
+                where assignedAdGroups.Contains(r.AadGroupUid)
+                    && applicationRoles.Contains(r.ApplicationRoleName)
+                    && r.ExpiryDate > DateTimeOffset.Now
+                      && r.ActiveYn
+                select r;
         }
     }
 }

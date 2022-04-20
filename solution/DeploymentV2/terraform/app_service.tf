@@ -28,6 +28,22 @@ resource "azuread_application" "web_reg" {
       id   = "b340eb25-3456-403f-be2f-af7a0d370277"
       type = "Scope"
     }
+    resource_access {
+      id   = "37f7f235-527c-4136-accd-4a02d197296e"
+      type = "Scope"
+    }
+    resource_access {
+      id   = "14dad69e-099b-42c9-810b-d002981feec1"
+      type = "Scope"
+    }
+    resource_access {
+      id   = "7ab1d382-f21e-4acd-a863-ba3e13f7da61"
+      type = "Role"
+    }
+    resource_access {
+      id   = "98830695-27a2-44f7-8c18-0c3ebc9698f6"
+      type = "Role"
+    }
   }
 }
 
