@@ -19,7 +19,7 @@
     <None Remove="1-0-0\A-Journaled\007-ManualInserts.sql" />
     <None Remove="1-0-0\A-Journaled\008-CreateMSILogins.sql" />
     <None Remove="1-0-0\A-Journaled\009-SubjectAreaForm-AddRevision.sql" />
-    
+    <None Remove="1-0-1\A-Journaled\001-dbo_GetFrameworkTaskRunnners.sql" />        
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +30,9 @@
     <EmbeddedResource Include="1-0-0\A-Journaled\005-Users.sql" />       
     <EmbeddedResource Include="1-0-0\A-Journaled\006-Data.sql" />       
     <EmbeddedResource Include="1-0-0\A-Journaled\007-ManualInserts.sql" />       
-    <EmbeddedResource Include="1-0-0\A-Journaled\008-CreateMSILogins.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\008-CreateMSILogins.sql" />            
     <EmbeddedResource Include="1-0-0\A-Journaled\009-SubjectAreaForm-AddRevision.sql" />    
+    <EmbeddedResource Include="1-0-1\A-Journaled\001-dbo_GetFrameworkTaskRunnners.sql" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +43,8 @@
 
   <ItemGroup>
     <Folder Include="1-0-0\B-Always\" />
+    <Folder Include="1-0-0\" />
+    <Folder Include="1-0-1\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,13 +7,13 @@ local typeProperties = import './partials/typeProperties/typeProperties.libsonne
 
 local parameterDefaultValue = import './partials/parameterDefaultValue.libsonnet';
 
-local name =  "GPL_SparkNotebookExecution_Primary_" + GFPIR;
+local name =  "GPL_SparkNotebookExecution_NotebookActivity_" + GFPIR;
 
 local ActivityName = "CallSynapseNotebook";
 
 local Folder =  if(GenerateArm=="false") 
-					then "ADS Go Fast/" + GFPIR + "/ErrorHandler/"
-					else "[concat('ADS Go Fast/', parameters('integrationRuntimeShortName'), '/ErrorHandler/')]";
+					then "ADS Go Fast/Data Movement/ExecuteNotebook/" + GFPIR +"/"
+					else "[concat('ADS Go Fast/Data Movement/ExecuteNotebook/', parameters('integrationRuntimeShortName'), '/')]";
 
 local pipeline = 
 {
@@ -174,7 +174,7 @@ local pipeline =
             }
         },
         "folder": {
-            "name": "ADS Go Fast/Azure/ErrorHandler/"
+            "name": Folder
         },
         "annotations": [],
         "lastPublishTime": "2022-03-24T05:32:33Z"

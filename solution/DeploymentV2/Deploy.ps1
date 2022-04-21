@@ -21,13 +21,60 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
+function Get-SelectionFromUser {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string[]]$Options,
+        [Parameter(Mandatory=$true)]
+        [string]$Prompt        
+    )
+    
+    [int]$Response = 0;
+    [bool]$ValidResponse = $false    
+
+    while (!($ValidResponse)) {            
+        [int]$OptionNo = 0
+
+        Write-Host $Prompt -ForegroundColor DarkYellow
+        Write-Host "[0]: Quit"
+
+        foreach ($Option in $Options) {
+            $OptionNo += 1
+            Write-Host ("[$OptionNo]: {0}" -f $Option)
+        }
+
+        if ([Int]::TryParse((Read-Host), [ref]$Response)) {
+            if ($Response -eq 0) {
+                return ''
+            }
+            elseif($Response -le $OptionNo) {
+                $ValidResponse = $true
+            }
+        }
+    }
+
+    return $Options.Get($Response - 1)
+} 
+
+#Only Prompt if Environment Variable has not been set
+if ($null -eq [System.Environment]::GetEnvironmentVariable('environmentName'))
+{
+    $environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+    [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
+}
+
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
+
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 
-if ($environmentName -eq "Quit")
+if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 {
+    write-host "environmentName is currently: $environmentName"
+    Write-Error "Environment is not set"
     Exit
 }
+
+
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
