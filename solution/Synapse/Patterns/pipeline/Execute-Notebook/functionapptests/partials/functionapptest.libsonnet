@@ -32,7 +32,8 @@ function(
     ExecuteNotebook = "Notebook 1",
     CustomDefinitions = "",
     Purview = "Disabled",
-    QualifiedIDAssociation = "TaskMasterId"
+    QualifiedIDAssociation = "TaskMasterId",
+    UseNotebookActivity = "Disabled"
     )
 {
     local TaskMasterJson =     
@@ -108,6 +109,7 @@ function(
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
     "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test. NOTE: Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",
-    "DependencyChainTag": "" 
+    "DependencyChainTag": "", 
+    "UseNotebookActivity": UseNotebookActivity
 }+commons
 
