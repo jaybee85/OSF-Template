@@ -50,11 +50,23 @@ function(SourceType = "", SourceFormat = "Notebook-Optional",TargetType = "", Ta
                 },
                 "infoText": "Use this field to create fields to use in your notebook from the TaskObject."
             }
+        },
+        "UseNotebookActivity": {
+            "type": "string",
+            "default": "Disabled",
+            "enum": [
+                "Enabled",
+                "Disabled"
+            ],
+            "options": {
+                "infoText": "This flag is used to control the method used to call the Synapse Notebook that carries out the processing. When Enabled the default notebook activity type within Synapse pipelines will be used. Note that this will force a new spark session for each job execution. By leaving this flag disabled an Azure Function is used to call the notebook and Spark Sessions will be reused if available."
+            }
         }
     },
     "required": [
         "ExecuteNotebook",
         "Purview",
-        "CustomDefinitions"
+        "CustomDefinitions",
+        "UseNotebookActivity"
     ]
 }
