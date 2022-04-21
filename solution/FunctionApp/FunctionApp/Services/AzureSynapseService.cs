@@ -481,7 +481,9 @@ namespace FunctionApp.Services
                     SparkSession idleSession = await ssc.GetSparkSessionAsync(System.Convert.ToInt16(CandidateSessionId), true);
                     string code = "";
                     //Get the Notebook 
-                    NotebookResource Notebook = await nc.GetNotebookAsync("DeltaProcessingNotebook");
+
+                    string Notebookname = this.Sner.TaskObject["TMOptionals"]["ExecuteNotebook"].ToString();
+                    NotebookResource Notebook = await nc.GetNotebookAsync(Notebookname);
                     foreach (NotebookCell cell in Notebook.Properties.Cells)
                     {
                         bool cellIsParam = false;
@@ -516,23 +518,32 @@ namespace FunctionApp.Services
                         }
                     }
 
-                    SparkStatementOptions sso = new SparkStatementOptions();
-                    sso.Kind = "pyspark";
-                    sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool1\")" + System.Environment.NewLine + code;
+                    if (string.IsNullOrEmpty(code))
+                    {
+                        _logging.LogInformation($"Processing Task {Sner.TaskName}. Failed!!!. The called Synapse Notebook appears to contain no code. Check that the notebook exists!");
+                        Sner.StatementResult = SparkNotebookExecutionResult.statementResult.failed;
+                    }
+                    else
+                    {
+                        SparkStatementOptions sso = new SparkStatementOptions();
+                        sso.Kind = "pyspark";
 
-                    SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
-                    //sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool2\")" + System.Environment.NewLine + code.Replace("-1000", "-1001");
-                    //sso.Code =  code.Replace("-1000", "-1001");
-                    //SparkStatementOperation statemento2 = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
-                    DeleteHeartBeatFiles("us", idleSession.Id);
+                        sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool1\")" + System.Environment.NewLine + code;
 
-                    SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
+                        SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
+                        //sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool2\")" + System.Environment.NewLine + code.Replace("-1000", "-1001");
+                        //sso.Code =  code.Replace("-1000", "-1001");
+                        //SparkStatementOperation statemento2 = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
+                        DeleteHeartBeatFiles("us", idleSession.Id);
 
-                    _logging.LogInformation($"Processing Task {Sner.TaskName}. PySpark Statement Created and Executing using Session {idleSession.Id}. 'UsingBusySession':{Sner.UsingBusySession}");
-                    Sner.StatementResult = SparkNotebookExecutionResult.statementResult.succeeded;
-                    Sner.SessionId = idleSession.Id;
-                    Sner.StatementId = statement.Id;
-                    Sner.StatementState = statement.State;
+                        SparkStatement statement = ssc.GetSparkStatement(System.Convert.ToInt32(idleSession.Id), System.Convert.ToInt32(statemento.Id));
+
+                        _logging.LogInformation($"Processing Task {Sner.TaskName}. PySpark Statement Created and Executing using Session {idleSession.Id}. 'UsingBusySession':{Sner.UsingBusySession}");
+                        Sner.StatementResult = SparkNotebookExecutionResult.statementResult.succeeded;
+                        Sner.SessionId = idleSession.Id;
+                        Sner.StatementId = statement.Id;
+                        Sner.StatementState = statement.State;
+                    }
                 }
                 else
                 {
