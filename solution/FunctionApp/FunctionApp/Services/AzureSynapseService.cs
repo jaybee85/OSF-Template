@@ -750,8 +750,20 @@ namespace FunctionApp.Services
             {
                 bool ret = false;
                 DirectoryInfo folder = new DirectoryInfo(Sner.SessionFolder);
+                
                 //Check if heartbeat files exist
                 var files = folder.GetFiles();
+                //Remove very old files 
+                foreach (var file in files)
+                {
+                    if (file.CreationTimeUtc > DateTime.UtcNow.AddHours(-48))
+                    {
+                        //Wrapping Delete in Try Catch in case another thread has already deleted the old files
+                        try { file.Delete(); } catch { }
+                    }
+                }
+
+                files = folder.GetFiles();
                 var matchedFiles = files.Where(f => f.Name.StartsWith($"{prefix}_{id.ToString()}_"));
                 if (matchedFiles.Any())
                 {
