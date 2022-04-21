@@ -34,7 +34,8 @@ function(
     CDCSource = "",
     SparkTableCreate = "Disabled",
     SparkTableName = "",
-    SparkTableDBName = ""
+    SparkTableDBName = "",
+    UseNotebookActivity = "Disabled"
     )
 {
     local TaskMasterJson =     
@@ -45,6 +46,7 @@ function(
         "SparkTableCreate": SparkTableCreate,
         "SparkTableDBName": SparkTableDBName,
         "SparkTableName": SparkTableName,
+        "UseNotebookActivity": UseNotebookActivity,
         "Source":{
             "Type": SourceFormat,                       
             "RelativePath": "samples/",

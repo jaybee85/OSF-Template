@@ -71,7 +71,18 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
             "options": {
                 "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the chosen ID. Note: If attached to the ExecutionId each indiviudal run of the pipeline will have a lineage."
             }
-        },      
+        },  
+        "UseNotebookActivity": {
+            "type": "string",
+            "default": "Disabled",
+            "enum": [
+                "Enabled",
+                "Disabled"
+            ],
+            "options": {
+                "infoText": "This flag is used to control the method used to call the Synapse Notebook that carries out the processing. When Enabled the default notebook activity type within Synapse pipelines will be used. Note that this will force a new spark session for each job execution. By leaving this flag disabled an Azure Function is used to call the notebook and Spark Sessions will be reused if available."
+            }
+        },    
         "Source": partials[SourceFormat](),
         "Target": partials[TargetFormat]()
     },
@@ -80,6 +91,7 @@ function(SourceType = "Parquet", SourceFormat = "Delta",TargetType = "AzureSqlTa
         "SparkTableCreate",
         "Source",
         "Target",
-        "Purview"
+        "Purview",
+        "UseNotebookActivity"
     ]
 }

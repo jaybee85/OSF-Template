@@ -44,7 +44,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": ""
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -89,7 +90,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Enabled",
         "SparkTableDBName": "TestDB",
-        "SparkTableName": "TestTable"
+        "SparkTableName": "TestTable",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -133,7 +135,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": ""
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -177,7 +180,8 @@ local tests =
         "CDCSource": "Enabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": ""
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -221,7 +225,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Enabled",
         "SparkTableDBName": "TestDB",
-        "SparkTableName": "TestTable2"
+        "SparkTableName": "TestTable2",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -265,7 +270,8 @@ local tests =
         "CDCSource": "Enabled",
         "SparkTableCreate": "Enabled",
         "SparkTableDBName": "TestDB",
-        "SparkTableName": "TestTable3"
+        "SparkTableName": "TestTable3",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -309,7 +315,8 @@ local tests =
         "CDCSource": "Enabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": ""
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -353,7 +360,8 @@ local tests =
         "CDCSource": "Enabled",
         "SparkTableCreate": "Enabled",
         "SparkTableDBName": "TestDB",
-        "SparkTableName": "TestTable4"
+        "SparkTableName": "TestTable4",
+        "UseNotebookActivity": "Disabled"
 
        
     },
@@ -399,7 +407,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": "" 
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled" 
        
     },
 
@@ -443,7 +452,8 @@ local tests =
         "CDCSource": "Disabled",
         "SparkTableCreate": "Disabled",
         "SparkTableDBName": "",
-        "SparkTableName": "" 
+        "SparkTableName": "",
+        "UseNotebookActivity": "Disabled"
        
     }
 
@@ -486,7 +496,8 @@ template(
     t.CDCSource,
     t.SparkTableCreate,
     t.SparkTableDBName,
-    t.SparkTableName
+    t.SparkTableName,
+    t.UseNotebookActivity
 );
 
 
