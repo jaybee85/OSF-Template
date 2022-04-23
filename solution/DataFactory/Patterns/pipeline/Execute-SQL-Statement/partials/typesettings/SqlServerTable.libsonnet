@@ -4,10 +4,10 @@ function(GenerateArm="false", GFPIR="Azure")
   "source": {
     "type": "SqlServerSource",
     "sqlReaderQuery": {
-      "value": "@activity('AF Get Information Schema SQL').output.InformationSchemaSQL",
+      "value": "@pipeline().parameters.TaskObject.TMOptionals.SQLStatement",
       "type": "Expression"
     },
-    "queryTimeout": "02:00:00",
+    "queryTimeout": "@pipeline().parameters.TaskObject.TMOptionals.QueryTimeout",
     "partitionOption": "None"
   },
   "dataset": {    

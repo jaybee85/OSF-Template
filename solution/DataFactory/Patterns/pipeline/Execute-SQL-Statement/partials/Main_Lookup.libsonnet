@@ -1,16 +1,11 @@
-function(GenerateArm="false", GFPIR="Azure", SourceType="AzureBlobFS")
+function(GenerateArm="false", GFPIR="Azure", SourceType="AzureSqlTable")
 {
 
-    local AzureSqlTable = import './typesettings/AzureSqlTable.libsonnet',
-    local SqlServerTable = import './typesettings/SqlServerTable.libsonnet',
-    local AzureSqlDWTable = import './typesettings/AzureSqlDWTable.libsonnet',
-
     local SourceType = {
-		"AzureSqlTable" : AzureSqlTable(GenerateArm, GFPIR),
-    "SqlServerTable" : SqlServerTable(GenerateArm, GFPIR),
-    "AzureSqlDWTable" : AzureSqlDWTable(GenerateArm, GFPIR)
+		"AzureSqlTable": import './typesettings/AzureSqlTable.libsonnet',
+    "SqlServerTable": import './typesettings/SqlServerTable.libsonnet',
+    "AzureSqlDWTable": import './typesettings/AzureSqlDWTable.libsonnet'
 	  },
     
-    
-    SourceType:SourceType   
+ "TypeProperties":SourceType["AzureSqlTable"](GenerateArm, GFPIR)
 }

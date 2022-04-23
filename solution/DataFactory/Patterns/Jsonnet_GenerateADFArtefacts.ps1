@@ -182,7 +182,7 @@ foreach ($patternFolder in $patternFolders)
         $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
         $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
-
+        
         #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 

@@ -6,25 +6,14 @@ function()
                 "Type": {
                     "type": "string",                    
                     "enum": [
-                        "Table"
+                        "NA"
                     ],
                     "options": {
                         "hidden":true,
                     },
-                    "default":"Table"
+                    "default":"NA"
 
-                },
-                "IncrementalType": {
-                    "type": "string",
-                    "description": "Full Extraction or Incremental based on a Watermark Column",
-                    "enum": [
-                        "Watermark"
-                    ],
-                    "options": {
-                        "hidden":true,
-                    },
-                    "default":"Watermark"
-                },
+                },               
                 "TableSchema": {
                     "type": "string",
                     "options": {
@@ -48,8 +37,7 @@ function()
                 },
             },
             "required": [
-                "Type",
-                "IncrementalType"
+                "Type"                
             ]
  
 }

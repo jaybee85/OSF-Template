@@ -6,12 +6,12 @@ local Wrapper = import '../static/partials/wrapper.libsonnet';
 local typePropertiesforlookup = import './partials/Main_Lookup.libsonnet';
 
 local name =  if(!generateArmAsBool) 
-			then "GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_CDC_" + "Primary_" + GFPIR 
-			else "[concat(parameters('dataFactoryName'), '/','GPL_"+SourceType+"_"+"NA"+"_"+TargetType+"_"+TargetFormat+"_CDC_Primary_" + "', parameters('integrationRuntimeShortName'))]";
+			then "GPL_"+SourceType+"_NA_"+TargetType+"_NA_ExecuteSql_Primary_" + GFPIR 
+			else "[concat(parameters('dataFactoryName'), '/','GPL_"+SourceType+"_NA_"+TargetType+"_NA_ExecuteSql_Primary_" + "', parameters('integrationRuntimeShortName'))]";
 
 local Folder =  if(GenerateArm=="false") 
-					then "ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC/" + GFPIR + "/"
-					else "[concat('ADS Go Fast/Data Movement/SQL-Database-to-Azure-Storage-CDC', parameters('integrationRuntimeShortName'), '/')]";
+					then "ADS Go Fast/Data Movement/Execute-SQL-Statement/" + GFPIR + "/"
+					else "[concat('ADS Go Fast/Data Movement/Execute-SQL-Statement/', parameters('integrationRuntimeShortName'), '/')]";
 
 
 local pipeline = 
@@ -31,7 +31,7 @@ local pipeline =
                     "secureInput": false
                 },
                 "userProperties": [],
-                "typeProperties": typePropertiesforlookup(GenerateArm, GFPIR,SourceType)
+                "typeProperties": typePropertiesforlookup(GenerateArm, GFPIR,SourceType)["TypeProperties"],
             }
         ],
         "parameters": {
