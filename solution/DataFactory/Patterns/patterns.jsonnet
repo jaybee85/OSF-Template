@@ -42,6 +42,17 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
         "TaskTypeId":-2,
         "Pipeline":"GPL_" + SourceType + "_" + SourceFormat + "_" + TargetType + "_" + TargetFormat  
 };
+local Template_Execute_SQL_Statement = function(SourceType, SourceFormat, TargetType, TargetFormat)
+{
+        "Folder": "Execute-SQL-Statement",
+        "GFPIR": "Azure",
+        "SourceType": SourceType,
+        "SourceFormat": "NA",
+        "TargetType": TargetType,
+        "TargetFormat": "NA",
+        "TaskTypeId":-8,
+        "Pipeline":"GPL_" +SourceType + "_NA_" + TargetType + "_NA_ExecuteSql" 
+};
 
 
 
@@ -200,4 +211,11 @@ local Template_Azure_Storage_to_Azure_Storage = function(SourceType, SourceForma
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","Parquet"),    
     Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","DelimitedText")
     #Template_Azure_Storage_to_Azure_Storage("AzureBlobStorage","Json","AzureBlobFS","Excel") -- Excel is not supported as a datafactory target!!!,
+]
++ 
+#Execute SQL Statement 
+[ 
+    Template_Execute_SQL_Statement("SqlServerTable","NA","SqlServerTable","NA"),
+    Template_Execute_SQL_Statement("AzureSqlTable","NA","AzureSqlTable","NA"),    
+    Template_Execute_SQL_Statement("AzureSqlDWTable","NA","AzureSqlDWTable","NA")        
 ]

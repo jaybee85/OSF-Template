@@ -738,5 +738,35 @@
       "TargetFormat": "DelimitedText",
       "TargetType": "AzureBlobFS",
       "TaskTypeId": -2
+   },
+   {
+      "Folder": "Execute-SQL-Statement",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SqlServerTable_NA_SqlServerTable_NA_ExecuteSql",
+      "SourceFormat": "NA",
+      "SourceType": "SqlServerTable",
+      "TargetFormat": "NA",
+      "TargetType": "SqlServerTable",
+      "TaskTypeId": -8
+   },
+   {
+      "Folder": "Execute-SQL-Statement",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlTable_NA_AzureSqlTable_NA_ExecuteSql",
+      "SourceFormat": "NA",
+      "SourceType": "AzureSqlTable",
+      "TargetFormat": "NA",
+      "TargetType": "AzureSqlTable",
+      "TaskTypeId": -8
+   },
+   {
+      "Folder": "Execute-SQL-Statement",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_AzureSqlDWTable_NA_AzureSqlDWTable_NA_ExecuteSql",
+      "SourceFormat": "NA",
+      "SourceType": "AzureSqlDWTable",
+      "TargetFormat": "NA",
+      "TargetType": "AzureSqlDWTable",
+      "TaskTypeId": -8
    }
 ]
