@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Cronos;
 using FunctionApp.DataAccess;
@@ -33,19 +34,27 @@ namespace FunctionApp.Functions
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly DataFactoryPipelineProvider _dataFactoryPipelineProvider;
         private readonly TaskTypeMappingProvider _taskTypeMappingProvider;
+        private readonly IHttpClientFactory _httpClientFactory;
+        public string HeartBeatFolder { get; set; }
+        public ILogger Log { get; set; }
 
-        public AdfPrepareFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider)
+
+        public AdfPrepareFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider, IHttpClientFactory httpClientFactory)
         {
             _appOptions = appOptions;
             _taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _taskTypeMappingProvider = taskTypeMappingProvider;
+            _httpClientFactory = httpClientFactory;
+
         }
 
         [FunctionName("PrepareFrameworkTasksTimerTrigger")]
         public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
         {
             Guid executionId = context.InvocationId;
+            this.HeartBeatFolder = context.FunctionAppDirectory;
+            this.Log = log;
             if (_appOptions.Value.TimerTriggers.EnablePrepareFrameworkTasks)
             {
                 FrameworkRunner fr = new FrameworkRunner(log, executionId);
@@ -56,16 +65,32 @@ namespace FunctionApp.Functions
 
         public async Task<dynamic> PrepareFrameworkTasksCore(Logging.Logging logging)
         {
-            await _taskMetaDataDatabase.ExecuteSql(
-                $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
-
-            short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
-
-            //Generate new task instances based on task master and schedules
-            await CreateScheduleAndTaskInstances(logging);
-
-            await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
-
+            try
+            {
+                await _taskMetaDataDatabase.ExecuteSql(
+                    $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
+                short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
+                //Generate new task instances based on task master and schedules
+                await CreateScheduleAndTaskInstances(logging);
+                await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
+            }
+            catch (Exception ex)
+            {
+                logging.LogErrors(new Exception("Prepare Framework Task Failed"));
+                logging.LogErrors(ex);
+            }
+            //Chain Straight into RunFramework Tasks
+            try
+            {
+                AdfRunFrameworkTasksTimerTrigger rfttt = new AdfRunFrameworkTasksTimerTrigger(_appOptions, _taskMetaDataDatabase, _httpClientFactory);
+                rfttt.HeartBeatFolder = this.HeartBeatFolder;
+                await rfttt.Core(Log);
+            }
+            catch (Exception ex1)
+            {
+                logging.LogErrors(new Exception("Run Framework Task Failed"));
+                logging.LogErrors(ex1);
+            }
             return new { };
         }
        

@@ -46,13 +46,13 @@ namespace FunctionApp.Functions
         /// <param name="myTimer"></param>
         /// <param name="log"></param>
         /// <param name="context"></param>
-        [FunctionName("RunFrameworkTasksTimerTrigger")]         
-        public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
-        {
-            log.LogInformation(context.FunctionAppDirectory);
-            this.HeartBeatFolder = context.FunctionAppDirectory;
-            await Core(log);        
-        }
+        //[FunctionName("RunFrameworkTasksTimerTrigger")]         
+        //public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        //{
+        //    log.LogInformation(context.FunctionAppDirectory);
+        //    this.HeartBeatFolder = context.FunctionAppDirectory;
+        //    await Core(log);        
+        //}
 
         public async Task Core(ILogger log)
         {            
