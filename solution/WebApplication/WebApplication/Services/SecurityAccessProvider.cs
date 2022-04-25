@@ -20,7 +20,7 @@ namespace WebApplication.Services
         {
             _options = options;
             _logger = logger;
-           // _graphService = graphService;
+            //_graphService = graphService;
         }
 
         public bool CanPerformOperation(string controllerName, string actionName, ClaimsIdentity identity)
