@@ -218,6 +218,7 @@ namespace WebApplication.Controllers
             JArray Navigations = new JArray();
             //Navigations.Add(JObject.Parse("{'Url':'/TaskInstanceExecution?&TaskInstanceId=','Description':'View Task Instance Executions', 'Icon':'bolt','ButtonClass':'btn-primary'}"));
             Navigations.Add(JObject.Parse("{'Url':'/TaskInstanceExecution/IndexDataTable?&TaskInstanceId=','Description':'View Task Instance Executions', 'Icon':'bolt','ButtonClass':'btn-primary'}"));
+            Navigations.Add(JObject.Parse("{'Url':'/TaskMaster/DetailsByTaskInstance?&TaskInstanceId=','Description':'View Task Master', 'Icon':'list','ButtonClass':'btn-primary'}"));            
 
             GridOptions["GridColumns"] = cols;
             GridOptions["ModelName"] = "TaskMaster";
