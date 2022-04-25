@@ -1,20 +1,20 @@
 local commons = import '../../../static/partials/functionapptest_commons.libsonnet';
 local vars = import '../../../static/partials/secrets.libsonnet';
 function(
-    ADFPipeline = "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet",
+    ADFPipeline = "",
     Pattern = "SQL Database to Azure Storage",
     TestNumber = "-1",
-    SourceFormat = "Azure SQL",
+    SourceFormat = "NA",
     SourceType = "Azure SQL",
-    ExtractionSQL = "",
-    DataFilename = "SalesLT.Customer.parquet",
-    SchemaFileName = "SalesLT.Customer.json",
+    SourceTableName = "",
+    SourceTableSchema = "",
+    SQLStatement = "",
+    QueryTimeout = "",    
     SourceSystemAuthType = "MSI",
-    TargetFormat = "Parquet",
-    TargetType = "Azure Blob", 
-    ChunkField = "",
-    ChunkSize = 0,
-    IncrementalType = "Full",
+    TargetFormat = "NA",
+    TargetType = "Azure Blob",    
+    TargetTableName = "",
+    TargetTableSchema = "",
     TestDescription = "",
     TaskDatafactoryIR = ""
     )
@@ -23,24 +23,19 @@ function(
     {
         "Source":{
             "Type": SourceFormat,
-            "IncrementalType": IncrementalType,
-            "TableSchema": "SalesLT",
-            "TableName": "Customer",
-            "ExtractionSQL": ExtractionSQL,                   
-            "ChunkField":ChunkField,
-            "ChunkSize":ChunkSize
+            "TableName": SourceTableName,
+            "TableSchema": SourceTableSchema
+
         },
         "Target":{
             "Type":TargetFormat,
-            "RelativePath":if TargetType == "FileServer" then "c:/Tests/"+Pattern+"/"+TestNumber else "/Tests/"+Pattern+"/"+TestNumber,
-            "DataFileName": DataFilename,
-            "SchemaFileName": SchemaFileName
+            "TableName": TargetTableName,
+            "TableSchema":TargetTableSchema
         }
     },
 
     local TaskInstanceJson =  
-    {
-        "TargetRelativePath": "/Tests/"+Pattern+"/"+TestNumber+"/"
+    {        
     },
 
     local SourceSystemJson = 
@@ -57,14 +52,14 @@ function(
              
     "TaskInstanceJson":std.manifestJson(TaskInstanceJson),
     "TaskType":Pattern,
-    "TaskTypeId":-4,
+    "TaskTypeId":-8,
     "EngineName":vars.datafactory_name,
     "EngineResourceGroup":vars.resource_group_name,
     "EngineSubscriptionId":vars.subscription_id,
     "EngineJson":  "{}",
     "TaskMasterJson":std.manifestJson(TaskMasterJson),       
     "TaskMasterId":TestNumber,
-    "SourceSystemId":if(SourceType == "Azure SQL") then -1 else if(SourceType == "SQL Server") then -14 else -6,
+    "SourceSystemId":if(SourceType == "Azure SQL") then -1 else if(SourceType == "Azure Synapse") then -10 else if(SourceType == "SQL Server") then -14 else -6,
     "SourceSystemJSON":std.manifestJson(SourceSystemJson),
     "SourceSystemType":SourceType,
     "SourceSystemServer":vars.sqlserver_name + ".database.windows.net",
@@ -72,16 +67,20 @@ function(
     "SourceSystemAuthType":SourceSystemAuthType,
     "SourceSystemSecretName":"",
     "SourceSystemUserName":"",   
-    "TargetSystemId":if(TargetType == "Azure Blob") then -3 else if(TargetType == "FileServer") then -15 else -4,
+    "TargetSystemId":if(TargetType == "Azure SQL") then -1 else if(TargetType == "Azure Synapse") then -10 else if(TargetType == "SQL Server") then -14 else -6,
     "TargetSystemJSON":std.manifestJson(TargetSystemJson),
     "TargetSystemType":TargetType,
-    "TargetSystemServer":if(TargetType == "Azure Blob") then "https://" + vars.blobstorage_name + ".blob.core.windows.net" else "https://" + vars.adlsstorage_name + ".dfs.core.windows.net",
+    "TargetSystemServer":vars.sqlserver_name + ".database.windows.net",
     "TargetKeyVaultBaseUrl":"https://" + vars.keyvault_name +".vault.azure.net",
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
-    "ADFPipeline": ADFPipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription + " of " + "SalesLT.Customer" + " (" + SourceFormat + ") from " + SourceType + " to " + DataFilename  + " in " + TargetType +  "(" + TargetFormat + ")",
+    "TMOptionals":{
+        "SQLStatement": SQLStatement,
+        "QueryTimeout": QueryTimeout,
+    },
+   "ADFPipeline": ADFPipeline,
+    "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription,
     "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR,
     "DependencyChainTag": ""
 }+commons

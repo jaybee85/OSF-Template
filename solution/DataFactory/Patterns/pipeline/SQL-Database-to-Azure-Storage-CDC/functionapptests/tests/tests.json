@@ -31,13 +31,13 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"TargetRelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-33/\"\n}",
-      "TaskMasterId": -33,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"ChunkField\": \"\",\n        \"ChunkSize\": 0,\n        \"ExtractionSQL\": \"\",\n        \"IncrementalType\": \"Watermark\",\n        \"TableName\": \"Customer\",\n        \"TableSchema\": \"SalesLT\",\n        \"Type\": \"Table\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"RelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-33\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"TargetRelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-34/\"\n}",
+      "TaskMasterId": -34,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"ChunkField\": \"\",\n        \"ChunkSize\": 0,\n        \"ExtractionSQL\": \"\",\n        \"IncrementalType\": \"Watermark\",\n        \"TableName\": \"Customer\",\n        \"TableSchema\": \"SalesLT\",\n        \"Type\": \"Table\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"RelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-34\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "SQL Database to Azure Storage CDC",
       "TaskTypeId": -4,
-      "TestDescription": "[-33]  WatermarkCDC of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)"
+      "TestDescription": "[-34]  WatermarkCDC of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in Azure Blob(Parquet)"
    },
    {
       "ADFPipeline": "GPL_SqlServerTable_NA_AzureBlobFS_Parquet_CDC",
@@ -71,12 +71,12 @@
       "TaskGroupConcurrency": "10",
       "TaskGroupPriority": 0,
       "TaskInstanceId": -1,
-      "TaskInstanceJson": "{\n    \"TargetRelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-34/\"\n}",
-      "TaskMasterId": -34,
-      "TaskMasterJson": "{\n    \"Source\": {\n        \"ChunkField\": \"\",\n        \"ChunkSize\": 0,\n        \"ExtractionSQL\": \"\",\n        \"IncrementalType\": \"Watermark\",\n        \"TableName\": \"Customer\",\n        \"TableSchema\": \"SalesLT\",\n        \"Type\": \"Table\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"RelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-34\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
+      "TaskInstanceJson": "{\n    \"TargetRelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-35/\"\n}",
+      "TaskMasterId": -35,
+      "TaskMasterJson": "{\n    \"Source\": {\n        \"ChunkField\": \"\",\n        \"ChunkSize\": 0,\n        \"ExtractionSQL\": \"\",\n        \"IncrementalType\": \"Watermark\",\n        \"TableName\": \"Customer\",\n        \"TableSchema\": \"SalesLT\",\n        \"Type\": \"Table\"\n    },\n    \"Target\": {\n        \"DataFileName\": \"SalesLT.Customer.parquet\",\n        \"RelativePath\": \"/Tests/SQL Database to Azure Storage CDC/-35\",\n        \"SchemaFileName\": \"SalesLT.Customer.json\",\n        \"Type\": \"Parquet\"\n    }\n}",
       "TaskStatus": "Untried",
       "TaskType": "SQL Database to Azure Storage CDC",
       "TaskTypeId": -4,
-      "TestDescription": "[-34]  WatermarkCDC of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)"
+      "TestDescription": "[-35]  WatermarkCDC of SalesLT.Customer (Table) from SQL Server to SalesLT.Customer.parquet in ADLS(Parquet)"
    }
 ]

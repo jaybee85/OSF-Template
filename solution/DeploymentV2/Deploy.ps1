@@ -242,6 +242,9 @@ else {
     Compress-Archive -Path '.\unzipped\functionapp\*' -DestinationPath $Path -force
     
     $result = az functionapp deployment source config-zip --resource-group $resource_group_name --name $functionapp_name --src $Path
+
+    #Make sure we are running V6.0
+    $result = az functionapp config set --net-framework-version v6.0 -n $functionapp_name -g $resource_group_name
 }
 
 #----------------------------------------------------------------------------------------------------------------

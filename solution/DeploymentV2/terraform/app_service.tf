@@ -85,7 +85,7 @@ resource "azurerm_app_service" "web" {
 
   site_config {
     always_on                = true
-    dotnet_framework_version = "v5.0"
+    dotnet_framework_version = "v6.0"
     min_tls_version          = "1.2"
     ftps_state               = "Disabled"
     http2_enabled            = true

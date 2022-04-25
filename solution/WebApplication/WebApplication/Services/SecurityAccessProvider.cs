@@ -16,7 +16,7 @@ namespace WebApplication.Services
         private readonly IOptions<SecurityModelOptions> _options;
         private const string WildCardString = "*";
 
-        public SecurityAccessProvider(IOptions<SecurityModelOptions> options, ILogger<SecurityAccessProvider> logger, IMicrosoftGraphService graphService)
+        public SecurityAccessProvider(IOptions<SecurityModelOptions> options, ILogger<SecurityAccessProvider> logger)//, IMicrosoftGraphService graphService)
         {
             _options = options;
             _logger = logger;
