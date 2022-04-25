@@ -115,7 +115,7 @@ resource "azurerm_function_app" "function_app" {
     WEBSITE_RUN_FROM_PACKAGE = 0
 
     FUNCTIONS_WORKER_RUNTIME                                                    = "dotnet"
-    FUNCTIONS_EXTENSION_VERSION                                                 = "~3"
+    FUNCTIONS_EXTENSION_VERSION                                                 = "~4"
     AzureWebJobsStorage                                                         = azurerm_storage_account.storage_acccount_security_logs.primary_connection_string
     APPINSIGHTS_INSTRUMENTATIONKEY                                              = azurerm_application_insights.app_insights[0].instrumentation_key
     ApplicationOptions__UseMSI                                                  = true
