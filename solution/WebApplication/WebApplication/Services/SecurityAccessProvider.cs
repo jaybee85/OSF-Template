@@ -12,7 +12,7 @@ namespace WebApplication.Services
     public class SecurityAccessProvider : ISecurityAccessProvider
     {
         private readonly ILogger _logger;
-        private readonly IMicrosoftGraphService _graphService;
+        //private readonly IMicrosoftGraphService _graphService;
         private readonly IOptions<SecurityModelOptions> _options;
         private const string WildCardString = "*";
 
@@ -20,7 +20,7 @@ namespace WebApplication.Services
         {
             _options = options;
             _logger = logger;
-            _graphService = graphService;
+            //_graphService = graphService;
         }
 
         public bool CanPerformOperation(string controllerName, string actionName, ClaimsIdentity identity)
