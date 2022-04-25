@@ -482,7 +482,35 @@ namespace FunctionApp.Services
                     string code = "";
                     //Get the Notebook 
 
-                    string Notebookname = this.Sner.TaskObject["TMOptionals"]["ExecuteNotebook"].ToString();
+                    string Notebookname = "";
+                    if (Helpers.JsonHelpers.CheckForJsonProperty("TMOptionals", this.Sner.TaskObject))
+                    {
+                        if (Helpers.JsonHelpers.CheckForJsonProperty("ExecuteNotebook", (JObject)this.Sner.TaskObject["TMOptionals"]))
+                        {
+                            Notebookname = this.Sner.TaskObject["TMOptionals"]["ExecuteNotebook"].ToString();                            
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(Notebookname))
+                    {
+                        if (Helpers.JsonHelpers.CheckForJsonProperty("ExecutionEngine", this.Sner.TaskObject))
+                        {
+                            if (Helpers.JsonHelpers.CheckForJsonProperty("JsonProperties", (JObject)this.Sner.TaskObject["ExecutionEngine"]))
+                            {
+                                if (Helpers.JsonHelpers.CheckForJsonProperty("DeltaProcessingNotebook", (JObject)(this.Sner.TaskObject["ExecutionEngine"]["JsonProperties"])))
+                                {
+                                    Notebookname = this.Sner.TaskObject["ExecutionEngine"]["JsonProperties"]["DeltaProcessingNotebook"].ToString();
+                                }
+                            }
+                        }
+
+                    }
+
+                    if (string.IsNullOrEmpty(Notebookname))
+                    {
+                        throw new Exception("Notebookname is null or empty");
+                    }
+
                     NotebookResource Notebook = await nc.GetNotebookAsync(Notebookname);
                     foreach (NotebookCell cell in Notebook.Properties.Cells)
                     {
