@@ -189,6 +189,7 @@ namespace FunctionApp.Functions
                     string sourceSystemId = row.SourceSystemId.ToString();
                     string sourceSystem = row.SourceSystemType.ToString();
                     string targetSystem = row.TargetSystemType.ToString();
+                    string targetSystemId = row.TargetSystemId.ToString();
                     string sourceType = taskMasterJson?.Source.Type.ToString();
                     string targetType = taskMasterJson?.Target.Type.ToString();
                     string integrationRuntime = row.TaskDatafactoryIR.ToString();
@@ -197,7 +198,7 @@ namespace FunctionApp.Functions
 
                     //Check whether our Source / IR mapping is valid
                     //If invalid we throw an error
-                    IntegrationRuntimeMappingProvider.CheckValidTaskMasterMapping(integrationRuntimeMappings, sourceSystemId, integrationRuntime);
+                    IntegrationRuntimeMappingProvider.CheckValidTaskMasterMapping(integrationRuntimeMappings, sourceSystemId, targetSystemId, integrationRuntime);
 
 
                     // Determine the pipeline that we need to call 
