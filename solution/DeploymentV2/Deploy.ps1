@@ -243,8 +243,9 @@ else {
     
     $result = az functionapp deployment source config-zip --resource-group $resource_group_name --name $functionapp_name --src $Path
 
-    #Make sure we are running V6.0
+    #Make sure we are running V6.0 --TODO: Move this to terraform if possible
     $result = az functionapp config set --net-framework-version v6.0 -n $functionapp_name -g $resource_group_name
+    $result = az functionapp config appsettings set --name $functionapp_name> --resource-group $resource_group_name --settings FUNCTIONS_EXTENSION_VERSION=~4
 }
 
 #----------------------------------------------------------------------------------------------------------------

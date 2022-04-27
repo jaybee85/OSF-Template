@@ -68,7 +68,7 @@ $irsql = @"
 $irsql | Set-Content "MergeIRs.sql"
 
 #Copy IR Specific Pipelines
-$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
+$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json -Depth 10
 foreach ($ir in $tout.integration_runtimes)
 {    
 
@@ -81,25 +81,43 @@ foreach ($ir in $tout.integration_runtimes)
     {        
         foreach ($pattern in $patterns)
         {    
-            $folder = "./pipeline/" + $pattern.Folder
-            $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet"  -Verbose)
-
-            Write-Host "_____________________________"
-            Write-Host $folder 
-            Write-Host "_____________________________"
-
-            foreach ($t in $templates) {        
-                #$GFPIR = $pattern.GFPIR
-                $SourceType = $pattern.SourceType
-                $SourceFormat = $pattern.SourceFormat
-                $TargetType = $pattern.TargetType
-                $TargetFormat = $pattern.TargetFormat
-
-                $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
-                Write-Host $newname        
-                (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR=$GFPIR --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
-
+            $valid = $false
+            foreach ($p2 in $ir.valid_pipeline_patterns)
+            {
+               #Write-Host ($p2) -BackgroundColor Yellow -ForegroundColor Black
+                if($p2.Folder -eq $pattern.Folder -or $p2.Folder -eq "*")
+                {
+                    $valid = $true
+                }
             }
+
+            if($valid)
+            {
+                $folder = "./pipeline/" + $pattern.Folder
+                $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet"  -Verbose)
+
+                Write-Host "_____________________________"
+                Write-Host $folder 
+                Write-Host "_____________________________"
+
+                foreach ($t in $templates) {        
+                    #$GFPIR = $pattern.GFPIR
+                    $SourceType = $pattern.SourceType
+                    $SourceFormat = $pattern.SourceFormat
+                    $TargetType = $pattern.TargetType
+                    $TargetFormat = $pattern.TargetFormat
+
+                    $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
+                    Write-Host $newname        
+                    (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR=$GFPIR --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
+
+                }
+            }
+            else 
+            {
+                Write-Host ("Pattern "+  $pattern.Folder + " Suppressed on " + $ir.name)  -ForegroundColor Blue
+            }
+
 
         }
     }

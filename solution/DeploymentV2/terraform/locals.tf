@@ -52,13 +52,60 @@ locals {
       name            = "Azure-Integration-Runtime"
       short_name      = "Azure"
       is_azure        = true
-      is_managed_vnet = true
+      is_managed_vnet = true 
+      valid_pipeline_patterns = [
+        {
+          Folder="*"                    
+          SourceFormat= "*"
+          SourceType= "*",
+          TargetFormat= "*"
+          TargetType= "*"
+          TaskTypeId= "*"
+        }
+      ]    
     },
     {
       name            = "Onprem-Integration-Runtime"
       short_name      = "OnPrem"
       is_azure        = false
-      is_managed_vnet = false
+      is_managed_vnet = false,
+      valid_pipeline_patterns = [
+        {
+          Folder="Azure-Storage-to-Azure-Storage"                    
+          SourceFormat= "*"
+          SourceType= "*",
+          TargetFormat= "*"
+          TargetType= "*"
+          TaskTypeId= "*"
+        },
+        {
+          Folder="Execute-SQL-Statement"                    
+          SourceFormat= "*"
+          SourceType= "*",
+          TargetFormat= "*"
+          TargetType= "*"
+          TaskTypeId= "*"
+        },
+        {
+          Folder="SQL-Database-to-Azure-Storage"                    
+          SourceFormat= "*"
+          SourceType= "*",
+          TargetFormat= "*"
+          TargetType= "*"
+          TaskTypeId= "*"
+        },
+        {
+          Folder="SQL-Database-to-Azure-Storage-CDC"                    
+          SourceFormat= "*"
+          SourceType= "*",
+          TargetFormat= "*"
+          TargetType= "*"
+          TaskTypeId= "*"
+        }
+
+      ]     
     }
   ]
 }
+
+

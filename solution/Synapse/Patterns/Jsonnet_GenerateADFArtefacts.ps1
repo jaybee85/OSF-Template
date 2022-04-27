@@ -33,7 +33,7 @@ foreach ($file in $templates)
 
 
 #Copy IR Specific Pipelines
-$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
+$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json -Depth 10
 foreach ($ir in $tout.integration_runtimes)
 {    
 

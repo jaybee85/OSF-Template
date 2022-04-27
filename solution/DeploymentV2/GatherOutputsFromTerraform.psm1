@@ -14,12 +14,12 @@ function GatherOutputsFromTerraform()
 
     $tout = New-Object PSObject
 
-    $tout0 = (terraform output -json | ConvertFrom-Json).PSObject.Properties 
+    $tout0 = (terraform output -json | ConvertFrom-Json -Depth 10).PSObject.Properties 
     $tout0 | Foreach-Object {                    
         $tout | Add-Member  -MemberType NoteProperty -Name $_.Name -Value $_.Value.value
     }
 
-    $rgid = (az group show -n $tout.resource_group_name | ConvertFrom-Json).id
+    $rgid = (az group show -n $tout.resource_group_name | ConvertFrom-Json -Depth 10).id
     $tout | Add-Member  -MemberType NoteProperty -Name "resource_group_id" -Value $rgid
 
     Set-Location $CurrentFolderPath

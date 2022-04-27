@@ -5,13 +5,19 @@
     "is_azure": true,
     "is_managed_vnet": true,
     "name": "Azure-Integration-Runtime",
-    "short_name": "Azure"
+    "short_name": "Azure",
+    "valid_pipeline_patterns": [
+      "@{Folder=*; SourceFormat=*; SourceType=*; TargetFormat=*; TargetType=*; TaskTypeId=*}"
+    ]
   },
   {
     "is_azure": false,
     "is_managed_vnet": false,
     "name": "Onprem-Integration-Runtime",
-    "short_name": "OnPrem"
+    "short_name": "OnPrem",
+    "valid_pipeline_patterns": [
+      "@{Folder=Azure-Storage-to-Azure-Storage; SourceFormat=*; SourceType=*; TargetFormat=*; TargetType=*; TaskTypeId=*}"
+    ]
   }
 ]') WITH 
             (

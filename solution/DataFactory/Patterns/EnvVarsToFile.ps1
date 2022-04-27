@@ -14,4 +14,4 @@ $obj | ConvertTo-Json | Set-Content ('./pipeline/static/partials/secrets.libsonn
 
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
-$tout | ConvertTo-Json | Set-Content "./pipeline/static/partials/secrets.libsonnet"
+$tout | ConvertTo-Json -Depth 10| Set-Content "./pipeline/static/partials/secrets.libsonnet"

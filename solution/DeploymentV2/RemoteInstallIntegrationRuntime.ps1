@@ -8,7 +8,7 @@ Write-Host "Reading Terraform Outputs"
 Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 
-$irKey1 = az datafactory integration-runtime list-auth-key --factory-name $tout.datafactory_name --name $tout.integration_runtimes[1].name --resource-group $tout.integration_runtimes[1].name --query authKey1 --out tsv
+$irKey1 = az datafactory integration-runtime list-auth-key --factory-name $tout.datafactory_name --name $tout.integration_runtimes[1].name --resource-group $tout.resource_group_name --query authKey1 --out tsv
 Write-Debug " irKey1 retrieved."
                
 $ScriptUri = "https://gist.githubusercontent.com/jrampono/09093e22a8da010b6e1a27a9232cbb9b/raw/Install_AzureIntegrationRuntime.ps1"
