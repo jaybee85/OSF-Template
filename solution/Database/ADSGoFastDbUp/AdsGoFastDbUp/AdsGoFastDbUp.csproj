@@ -21,7 +21,9 @@
     <None Remove="1-0-0\A-Journaled\009-SubjectAreaForm-AddRevision.sql" />
     <None Remove="1-0-1\A-Journaled\001-dbo_GetFrameworkTaskRunnners.sql" />     
     <None Remove="1-0-1\A-Journaled\002-AddNewTaskTypes.sql" />    
-    <None Remove="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />        
+    <None Remove="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />   
+    <None Remove="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" />   
+         
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +39,7 @@
     <EmbeddedResource Include="1-0-1\A-Journaled\001-dbo_GetFrameworkTaskRunnners.sql" />    
     <EmbeddedResource Include="1-0-1\A-Journaled\002-AddNewTaskTypes.sql" />
     <EmbeddedResource Include="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />    
+    <EmbeddedResource Include="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" /> 
     
   </ItemGroup>
 
