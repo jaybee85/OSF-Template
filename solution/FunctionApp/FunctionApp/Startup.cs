@@ -61,6 +61,7 @@ namespace FunctionApp
             services.AddSingleton<MicrosoftAzureManagementAuthenticationProvider>();
             services.AddSingleton<SourceAndTargetSystemJsonSchemasProvider>();
             services.AddSingleton<AzureSynapseService>();
+            services.AddSingleton<IntegrationRuntimeMappingProvider>();
 
             services.AddSingleton<DataFactoryPipelineProvider>();
             services.AddSingleton<IAzureAuthenticationProvider>(downstreamAuthenticationProvider);
