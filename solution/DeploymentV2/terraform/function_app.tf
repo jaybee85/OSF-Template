@@ -64,12 +64,13 @@ resource "azurerm_function_app" "function_app" {
   app_service_plan_id        = azurerm_app_service_plan.app_service_plan[0].id
   storage_account_name       = azurerm_storage_account.storage_acccount_security_logs.name
   storage_account_access_key = azurerm_storage_account.storage_acccount_security_logs.primary_access_key
-  version                    = "~3"
+  version                    = "~4"
 
   https_only = true
 
   site_config {
     always_on              = true
+    dotnet_framework_version = "v6.0"
     ftps_state             = "Disabled"
     vnet_route_all_enabled = var.is_vnet_isolated
     dynamic "ip_restriction" {

@@ -7,7 +7,17 @@
     "name": "Azure-Integration-Runtime",
     "short_name": "Azure",
     "valid_pipeline_patterns": [
-      "@{Folder=*; SourceFormat=*; SourceType=*; TargetFormat=*; TargetType=*; TaskTypeId=*}"
+      {
+        "Folder": "*",
+        "SourceFormat": "*",
+        "SourceType": "*",
+        "TargetFormat": "*",
+        "TargetType": "*",
+        "TaskTypeId": "*"
+      }
+    ],
+    "valid_source_systems": [
+      "*"
     ]
   },
   {
@@ -16,7 +26,43 @@
     "name": "Onprem-Integration-Runtime",
     "short_name": "OnPrem",
     "valid_pipeline_patterns": [
-      "@{Folder=Azure-Storage-to-Azure-Storage; SourceFormat=*; SourceType=*; TargetFormat=*; TargetType=*; TaskTypeId=*}"
+      {
+        "Folder": "Azure-Storage-to-Azure-Storage",
+        "SourceFormat": "*",
+        "SourceType": "*",
+        "TargetFormat": "*",
+        "TargetType": "*",
+        "TaskTypeId": "*"
+      },
+      {
+        "Folder": "Execute-SQL-Statement",
+        "SourceFormat": "*",
+        "SourceType": "*",
+        "TargetFormat": "*",
+        "TargetType": "*",
+        "TaskTypeId": "*"
+      },
+      {
+        "Folder": "SQL-Database-to-Azure-Storage",
+        "SourceFormat": "*",
+        "SourceType": "*",
+        "TargetFormat": "*",
+        "TargetType": "*",
+        "TaskTypeId": "*"
+      },
+      {
+        "Folder": "SQL-Database-to-Azure-Storage-CDC",
+        "SourceFormat": "*",
+        "SourceType": "*",
+        "TargetFormat": "*",
+        "TargetType": "*",
+        "TaskTypeId": "*"
+      }
+    ],
+    "valid_source_systems": [
+      "-14",
+      "-15",
+      "-9"
     ]
   }
 ]') WITH 

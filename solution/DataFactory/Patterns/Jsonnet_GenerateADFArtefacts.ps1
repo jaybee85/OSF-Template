@@ -46,7 +46,7 @@ foreach ($file in $templates)
     $content | Set-Content -Path $outfile 
 }
 
-$irsjson = ($tout.integration_runtimes | ConvertTo-Json)
+$irsjson = ($tout.integration_runtimes | ConvertTo-Json -Depth 10)
 
 
 $irsql = @"
@@ -63,6 +63,44 @@ $irsql = @"
             when NOT matched by TARGET then insert
             (IntegrationRuntimeName, EngineId, ActiveYN)
             VALUES (Src.short_name,1,1);
+
+
+            drop table if exists #tempIntegrationRuntimeMapping 
+            Select ir.IntegrationRuntimeId, a.short_name IntegrationRuntimeName, c.[value] SystemId
+            into #tempIntegrationRuntimeMapping
+            from 
+            (
+            Select IR.*, Patterns.[Value] from OPENJSON('$irsjson') A 
+           CROSS APPLY OPENJSON(A.[value]) Patterns 
+           CROSS APPLY OPENJSON(A.[value]) with (short_name varchar(max)) IR 
+           where Patterns.[key] = 'valid_source_systems'
+           ) A
+           OUTER APPLY OPENJSON(A.[Value])  C
+           join 
+           dbo.IntegrationRuntime ir on ir.IntegrationRuntimeName = a.short_name 
+           
+           drop table if exists #tempIntegrationRuntimeMapping2
+           Select * into #tempIntegrationRuntimeMapping2
+           from 
+           (
+           select a.IntegrationRuntimeId, a.IntegrationRuntimeName, b.SystemId from #tempIntegrationRuntimeMapping  a
+           cross join [dbo].[SourceAndTargetSystems] b 
+           where a.SystemId = '*'
+           union 
+           select a.IntegrationRuntimeId, a.IntegrationRuntimeName, a.SystemId from #tempIntegrationRuntimeMapping  a
+           where a.SystemId != '*'
+           ) a
+           
+           
+           Merge dbo.IntegrationRuntimeMapping tgt
+           using #tempIntegrationRuntimeMapping2 src on 
+           tgt.IntegrationRuntimeName = src.IntegrationRuntimeName 
+           when not matched by target then 
+           insert 
+           ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])
+           values 
+           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);
+           
 "@            
 
 $irsql | Set-Content "MergeIRs.sql"
