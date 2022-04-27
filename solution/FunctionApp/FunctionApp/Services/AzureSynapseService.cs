@@ -164,8 +164,8 @@ namespace FunctionApp.Services
             }
             else
             {
-                //throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
-                return Newtonsoft.Json.JsonConvert.SerializeObject(sneh.Sner);
+                throw new Exception("Task failed to get a spark session after waiting 10 seconds. Try increasing the number of allowed concurrent spark sessions.");
+                //return Newtonsoft.Json.JsonConvert.SerializeObject(sneh.Sner);
 
             }
         }
