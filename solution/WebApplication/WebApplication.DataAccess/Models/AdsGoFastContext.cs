@@ -43,6 +43,9 @@ namespace WebApplication.Models
         public virtual DbSet<TaskMasterWaterMark> TaskMasterWaterMark { get; set; }
         public virtual DbSet<TaskType> TaskType { get; set; }
         public virtual DbSet<TaskTypeMapping> TaskTypeMapping { get; set; }
+
+        public virtual DbSet<IntegrationRuntimeMapping> IntegrationRuntimeMapping { get; set; }
+
         public virtual DbSet<TaskGroupStats> TaskGroupStats { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -667,6 +670,27 @@ namespace WebApplication.Models
                 entity.Property(e => e.TaskInstanceJsonSchema).IsUnicode(false);
 
                 entity.Property(e => e.TaskMasterJsonSchema).IsUnicode(false);
+            });
+
+
+            modelBuilder.Entity<IntegrationRuntimeMapping>(entity =>
+            {
+                entity.HasKey(e => e.IntegrationRuntimeMappingId);
+
+                entity.Property(e => e.IntegrationRuntimeId)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(e => e.IntegrationRuntimeName)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.SystemId)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+
             });
 
             modelBuilder.Entity<SubjectArea>(entity =>

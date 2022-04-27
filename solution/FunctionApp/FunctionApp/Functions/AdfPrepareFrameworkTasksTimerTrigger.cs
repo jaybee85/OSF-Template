@@ -34,18 +34,20 @@ namespace FunctionApp.Functions
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly DataFactoryPipelineProvider _dataFactoryPipelineProvider;
         private readonly TaskTypeMappingProvider _taskTypeMappingProvider;
+        private readonly IntegrationRuntimeMappingProvider _integrationRuntimeMappingProvider;
         private readonly IHttpClientFactory _httpClientFactory;
         public string HeartBeatFolder { get; set; }
         public ILogger Log { get; set; }
 
 
-        public AdfPrepareFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider, IHttpClientFactory httpClientFactory)
+        public AdfPrepareFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider, IHttpClientFactory httpClientFactory, IntegrationRuntimeMappingProvider integrationRuntimeMappingProvider)
         {
             _appOptions = appOptions;
             _taskMetaDataDatabase = taskMetaDataDatabase;
             _dataFactoryPipelineProvider = dataFactoryPipelineProvider;
             _taskTypeMappingProvider = taskTypeMappingProvider;
             _httpClientFactory = httpClientFactory;
+            _integrationRuntimeMappingProvider = integrationRuntimeMappingProvider;
 
         }
 
@@ -174,7 +176,7 @@ namespace FunctionApp.Functions
             dynamic taskMasters = con.QueryWithRetry(@"Exec dbo.GetTaskMaster");
             // Get a list of Active task type mappings
             var taskTypeMappings = await _taskTypeMappingProvider.GetAllActive();
-
+            var integrationRuntimeMappings = await _integrationRuntimeMappingProvider.GetAllActive();
             foreach (dynamic row in taskMasters)
             {
                 DataRow drTaskInstance = dtTaskInstance.NewRow();
@@ -184,6 +186,7 @@ namespace FunctionApp.Functions
                 try
                {
                     dynamic taskMasterJson = JsonConvert.DeserializeObject(row.TaskMasterJSON);
+                    string sourceSystemId = row.SourceSystemId.ToString();
                     string sourceSystem = row.SourceSystemType.ToString();
                     string targetSystem = row.TargetSystemType.ToString();
                     string sourceType = taskMasterJson?.Source.Type.ToString();
@@ -191,6 +194,11 @@ namespace FunctionApp.Functions
                     string integrationRuntime = row.TaskDatafactoryIR.ToString();
                     string taskExecutionType = row.TaskExecutionType.ToString();
                     Int64 taskTypeId = row.TaskTypeId;
+
+                    //Check whether our Source / IR mapping is valid
+                    //If invalid we throw an error
+                    IntegrationRuntimeMappingProvider.CheckValidTaskMasterMapping(integrationRuntimeMappings, sourceSystemId, integrationRuntime);
+
 
                     // Determine the pipeline that we need to call 
                     var adfPipeline = TaskTypeMappingProvider.LookupMappingForTaskMaster(taskTypeMappings,
