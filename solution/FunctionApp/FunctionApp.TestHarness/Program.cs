@@ -51,6 +51,7 @@ namespace FunctionApp.TestHarness
     {
         private readonly ILogger<App> _logger;
         private readonly TaskTypeMappingProvider _taskTypeMappingProvider;
+        private readonly IntegrationRuntimeMappingProvider _integrationRuntimeMappingProvider;
         private readonly SourceAndTargetSystemJsonSchemasProvider _schemasProvider;
         private readonly IOptions<ApplicationOptions> _options;
         private readonly IAzureAuthenticationProvider _authProvider;
@@ -65,6 +66,7 @@ namespace FunctionApp.TestHarness
 
         public App(ILogger<App> logger,
             TaskTypeMappingProvider taskTypeMappingProvider,
+            IntegrationRuntimeMappingProvider integrationRuntimeMappingProvider,
             SourceAndTargetSystemJsonSchemasProvider schemasProvider,
             IOptions<ApplicationOptions> options, 
             IAzureAuthenticationProvider authProvider, 
@@ -79,6 +81,7 @@ namespace FunctionApp.TestHarness
         {
             _logger = logger;
             _taskTypeMappingProvider = taskTypeMappingProvider;
+            _integrationRuntimeMappingProvider = integrationRuntimeMappingProvider;
             _schemasProvider = schemasProvider;
             _options = options;
             _authProvider = authProvider;
@@ -419,7 +422,7 @@ namespace FunctionApp.TestHarness
 
         public void DebugPrepareFrameworkTasks()
         {
-            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(_options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory);
+            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(_options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory, _integrationRuntimeMappingProvider);
             c.PrepareFrameworkTasksCore(_funcAppLogger);
         }
 

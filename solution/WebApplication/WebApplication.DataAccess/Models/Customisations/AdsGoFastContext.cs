@@ -116,6 +116,13 @@ namespace WebApplication.Models
 
             });
 
+            modelBuilder.Entity<IntegrationRuntimeMapping>(entity =>
+            {
+
+                entity.HasOne<SourceAndTargetSystems>(ti => ti.SourceAndTargetSystem).WithMany(ie => ie.IntegrationRuntimeMappings).HasForeignKey(ti => ti.SystemId);
+
+            });
+
             modelBuilder.Entity<AdfpipelineStats1>(entity =>
             {
 
