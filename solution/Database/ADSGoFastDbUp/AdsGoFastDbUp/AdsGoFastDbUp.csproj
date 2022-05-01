@@ -23,6 +23,7 @@
     <None Remove="1-0-1\A-Journaled\002-AddNewTaskTypes.sql" />    
     <None Remove="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />   
     <None Remove="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" />   
+    <None Remove="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" />   
          
   </ItemGroup>
 
@@ -40,6 +41,7 @@
     <EmbeddedResource Include="1-0-1\A-Journaled\002-AddNewTaskTypes.sql" />
     <EmbeddedResource Include="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />    
     <EmbeddedResource Include="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" /> 
+    <EmbeddedResource Include="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" /> 
     
   </ItemGroup>
 

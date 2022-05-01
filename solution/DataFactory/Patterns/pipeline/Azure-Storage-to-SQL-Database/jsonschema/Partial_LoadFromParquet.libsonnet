@@ -24,9 +24,20 @@ function()
                     "type": "string",
                     "options": {
                         "inputAttributes": {
-                            "placeholder": "eg. Customer.xlsx"
+                            "placeholder": "eg. Customer.parquet"
                         },
                         "infoText": "Name of the file to be imported."
+                    }
+                },
+                "DataFileNameChunkPostfix": {
+                    "type": "string",
+                    "enum": [
+                        "Enabled",
+                        "Disabled"
+                    ],
+                    "default": "Enabled",
+                    "options": {                        
+                        "infoText": "When Enabled the import task will assume that the incoming file name has a chunk identifier at the end of the file name (eg. Customer.chunk1.parquet)"
                     }
                 },
                 "SchemaFileName": {
@@ -43,6 +54,7 @@ function()
                 "Type",
                 "RelativePath",
                 "DataFileName",
+                "DataFileNameChunkPostfix",
                 "SchemaFileName"
             ]
  
