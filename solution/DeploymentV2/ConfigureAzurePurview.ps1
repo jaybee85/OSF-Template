@@ -219,3 +219,6 @@ CallPurviewApi -Method "GET" -Url $uri  -Body $body
 
 $uri = "$purviewEndpoint/policystore/metadataPolicies?api-version=2021-07-01"
 $res = (CallPurviewApi -Method "GET" -Url $uri  -Body $body) 
+
+$res | Select-Object {$.values.properties.attributeRules.name -eq "purviewmetadatarole_builtin_data-curator:adsdevpurads"}
+$datac = ($res.values.properties.attributeRules | Where-Object {$_.name -eq "purviewmetadatarole_builtin_data-curator:adsdevpurads"})
