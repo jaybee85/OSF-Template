@@ -178,3 +178,4 @@
            ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])
            values 
            (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);
+           
