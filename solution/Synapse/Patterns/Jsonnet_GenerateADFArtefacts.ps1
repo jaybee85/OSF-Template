@@ -1,6 +1,7 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
-
+$newfolder = "./output/"
+$toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.json")
 
 #Generate Patterns.json
 (jsonnet "./patterns.jsonnet") | Set-Content("./Patterns.json")
@@ -251,3 +252,52 @@ if($GenerateArm -eq "true") {
     }
     Write-Host "Copied $($templates.Count) to Static Hosted Pipelines Module in Terraform folder"
 }
+
+
+if($($tout.toggle_synapse_git_integration)) {
+    $newfolder = "./output/"
+    #LINKED SERVICES
+    $folder = "./linkedService/"
+    $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    foreach ($file in $templates){
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "LS_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+    #NOTEBOOKS
+    $folder = "./notebook/"
+    $notebooks = (Get-ChildItem -Path $folder -Filter "*.ipynb" -Verbose)
+    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "*.libsonnet"  -Verbose)
+
+    foreach ($file in $notebooks){
+        $jsonobject = $file | Get-Content 
+        $newName = ($file.PSChildName).Replace(".ipynb",".json")
+        $newName = "NB_" + $newName
+        $jsonobject | Set-Content($newfolder + "cells.json") -Force
+        $jsonobject = (Get-ChildItem -Path ($newfolder) -Filter "cells.json" -Verbose)
+        $jsonobject = $jsonobject | Get-Content | ConvertFrom-Json -Depth 50
+        $cells = $jsonobject.cells
+        #write-host $cells
+        $notebookName = $file.BaseName
+        (jsonnet --tla-str notebookName="$notebookName" $schemafiletemplate | Set-Content($newfolder + $newName) -Force)
+
+    }
+    #delete cells temp file
+    Remove-Item "$($newfolder)/cells.json"
+
+    #INTEGRATED RUNTIMES
+
+    $folder = "./integrationRuntime/"
+    $IRS = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    foreach ($file in $IRS)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "IR_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+
+    }
+    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "*.libsonnet"  -Verbose)
+}
+

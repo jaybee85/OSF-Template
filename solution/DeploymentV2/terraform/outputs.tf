@@ -104,3 +104,31 @@ output "synapse_spark_pool_name" {
 output "selfhostedsqlvm_name" {
   value = local.selfhostedsqlvm_name
 }
+
+output "toggle_synapse_git_integration" {
+  value = var.toggle_synapse_git_integration 
+}
+output "synapse_git_integration_type" {
+    value = var.toggle_synapse_git_integration ? var.synapse_git_integration_type : ""
+}
+output "synapse_git_repository_root_folder" {
+  value = var.toggle_synapse_git_integration ? var.synapse_git_repository_root_folder : ""
+}
+output "synapse_git_account_name" {
+  value = var.toggle_synapse_git_integration ? var.synapse_git_account_name : ""
+}
+output "synapse_git_repository_name" {
+  value = var.toggle_synapse_git_integration ? var.synapse_git_repository_name : ""
+}
+output "synapse_git_repository_branch_name" {
+  value = var.toggle_synapse_git_integration ? var.synapse_git_repository_branch_name : ""
+} 
+output "functionapp_url" {
+  value = var.toggle_synapse_git_integration ? local.functionapp_url : ""
+}
+output "keyvault_url" {
+  value = var.toggle_synapse_git_integration ? azurerm_key_vault.app_vault.vault_uri : ""
+}
+output "synapse_git_devops_project_name" {
+  value = var.toggle_synapse_git_integration ? var.synapse_git_devops_project_name : ""
+}

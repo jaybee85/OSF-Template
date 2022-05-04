@@ -768,5 +768,85 @@
       "TargetFormat": "NA",
       "TargetType": "AzureSqlDWTable",
       "TaskTypeId": -8
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_Anonymous_AzureBlobStorage_Json",
+      "SourceFormat": "Anonymous",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_Anonymous_AzureBlobFS_Json",
+      "SourceFormat": "Anonymous",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_Basic_AzureBlobStorage_Json",
+      "SourceFormat": "Basic",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_Basic_AzureBlobFS_Json",
+      "SourceFormat": "Basic",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_OAuth2_AzureBlobStorage_Json",
+      "SourceFormat": "OAuth2",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_OAuth2_AzureBlobFS_Json",
+      "SourceFormat": "OAuth2",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_ServicePrincipal_AzureBlobStorage_Json",
+      "SourceFormat": "ServicePrincipal",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "REST-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_Rest_ServicePrincipal_AzureBlobFS_Json",
+      "SourceFormat": "ServicePrincipal",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -9
    }
 ]

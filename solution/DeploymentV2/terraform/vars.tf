@@ -234,6 +234,16 @@ variable "deploy_selfhostedsql" {
   type        = bool
 }
 
+variable "toggle_synapse_git_integration" {
+  description = "Feature toggle for enabling synapse github integration"
+  default     = false
+  type        = bool
+}
+variable "synapse_git_integration_type" {
+  description = "User must define whether they wish to use 'github' integration or 'devops'"
+  default     = "github"
+  type        = string
+}
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------
@@ -278,6 +288,8 @@ variable "publish_web_app_addcurrentuserasadmin" {
   default     = false
   type        = bool
 }
+
+
 
 #---------------------------------------------------------------
 # Naming Prefix Settings
@@ -450,7 +462,34 @@ variable "synapse_sppool_name" {
   type        = string
 }
 
+variable "synapse_git_account_name" {
+  description = "The name of the github account to be used for synapse"
+  default     = "h-sha"
+  type        = string
+}
 
+variable "synapse_git_repository_name" {
+  description = "The name of the github repository to be used for synapse"
+  default     = "https://github.com/h-sha/testLockbox"
+  type        = string
+}
+
+variable "synapse_git_repository_branch_name" {
+  description = "The name of the github branch to be used"
+  default     = "main"
+  type        = string
+}
+
+variable "synapse_git_repository_root_folder" {
+  description = "The name of the root folder to be used in the branch"
+  default     = "/"
+  type        = string
+}
+variable "synapse_git_devops_project_name" {
+  description = "The name of the project to be referenced within devops. Note: Not used for github."
+  default     = "/"
+  type        = string
+}
 #---------------------------------------------------------------
 # Scale settings
 #---------------------------------------------------------------

@@ -1,3 +1,5 @@
+Import-Module .\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform
 $CurrDir = $PWD
 Write-Host "Starting Adf Patterns" -ForegroundColor Yellow
 Set-Location ../DataFactory/Patterns/
@@ -9,9 +11,14 @@ Invoke-Expression  ./UploadTaskTypeMappings.ps1
 Write-Host "Starting Synapse Parts" -ForegroundColor Yellow
 Set-Location ../../Synapse/Patterns/ 
 Invoke-Expression  ./Jsonnet_GenerateADFArtefacts.ps1
-Invoke-Expression  ./UploadGeneratedPatternsToADF.ps1
+if (tout.toggle_synapse_git_integration) {
+    Invoke-Expression  ./UploadGeneratedPatternsToGit.ps1
+}
+else {
+    Invoke-Expression  ./UploadGeneratedPatternsToADF.ps1
+    Invoke-Expression  ./uploadNotebooks.ps1
+}
 Invoke-Expression  ./UploadTaskTypeMappings.ps1
-Invoke-Expression  ./uploadNotebooks.ps1
 
 
 Set-Location $CurrDir

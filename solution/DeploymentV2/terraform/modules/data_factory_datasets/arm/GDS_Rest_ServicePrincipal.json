@@ -30,17 +30,65 @@
 				"referenceName": "[parameters('linkedServiceName')]",
 				"type": "LinkedServiceReference",
 				"parameters": {
-					"BaseUrl": {
-                    "value": "@dataset().BaseUrl",
-                    "type": "Expression"
-                }
+					"BaseUrl": 
+					{
+                    	"value": "@dataset().BaseUrl",
+                    	"type": "Expression"
+					},
+					"ServicePrincipalId": 
+					{
+                    	"value": "@dataset().ServicePrincipalId",
+                    	"type": "Expression"
+					},
+					"KeyVaultBaseUrl": 
+					{
+                    	"value": "@dataset().KeyVaultBaseUrl",
+                    	"type": "Expression"
+					},
+					"PasswordSecret": 
+					{
+                    	"value": "@dataset().PasswordSecret",
+                    	"type": "Expression"
+					},
+					"TenantId": 
+					{
+                    	"value": "@dataset().TenantId",
+                    	"type": "Expression"
+					},
+					"AadResourceId": 
+					{
+                    	"value": "@dataset().AadResourceId",
+                    	"type": "Expression"
+					}
 				}
 			},
 			"parameters": {
-				"BaseUrl": {
-                "type": "string"
+				"BaseUrl": 
+				{
+            		"type": "string"
 				},
-				"RelativeUrl": {
+				"ServicePrincipalId": 
+				{
+            		"type": "string"
+				},
+				"KeyVaultBaseUrl": 
+				{
+            		"type": "string"
+				},
+				"PasswordSecret": 
+				{
+            		"type": "string"
+				},
+				"TenantId": 
+				{
+            		"type": "string"
+				},
+				"AadResourceId": 
+				{
+            		"type": "string"
+				},
+				"RelativeUrl": 
+				{
 					"type": "string"
 				},
 				"RequestMethod": 
@@ -51,7 +99,6 @@
 				{
 					"type": "string"
 				}
-
 			},
 			"folder": {
 				"name": "[concat('ADS Go Fast/Generic/', parameters('integrationRuntimeName'))]"
@@ -67,10 +114,7 @@
 					"value": "@dataset().RequestMethod",
 					"type": "Expression"
 				},
-				"requestBody": {
-					"value": "@dataset().RequestBody",
-					"type": "Expression"
-				}
+				"requestBody": "@dataset().RequestBody"
         	}
 		},
 		"type": "Microsoft.DataFactory/factories/datasets"

@@ -30,17 +30,47 @@
 				"referenceName": "[parameters('linkedServiceName')]",
 				"type": "LinkedServiceReference",
 				"parameters": {
-					"BaseUrl": {
-                    "value": "@dataset().BaseUrl",
-                    "type": "Expression"
-                }
+					"BaseUrl": 
+					{
+                    	"value": "@dataset().BaseUrl",
+                    	"type": "Expression"
+					},
+					"UserName": 
+					{
+                    	"value": "@dataset().UserName",
+                    	"type": "Expression"
+					},
+					"KeyVaultBaseUrl": 
+					{
+                    	"value": "@dataset().KeyVaultBaseUrl",
+                    	"type": "Expression"
+					},
+					"PasswordSecret": 
+					{
+                    	"value": "@dataset().PasswordSecret",
+                    	"type": "Expression"
+					}
 				}
 			},
 			"parameters": {
-				"BaseUrl": {
-                "type": "string"
+				"BaseUrl": 
+				{
+            		"type": "string"
 				},
-				"RelativeUrl": {
+				"UserName": 
+				{
+            		"type": "string"
+				},
+				"KeyVaultBaseUrl": 
+				{
+            		"type": "string"
+				},
+				"PasswordSecret": 
+				{
+            		"type": "string"
+				},
+				"RelativeUrl": 
+				{
 					"type": "string"
 				},
 				"RequestMethod": 
@@ -51,7 +81,6 @@
 				{
 					"type": "string"
 				}
-
 			},
 			"folder": {
 				"name": "[concat('ADS Go Fast/Generic/', parameters('integrationRuntimeName'))]"
@@ -67,10 +96,7 @@
 					"value": "@dataset().RequestMethod",
 					"type": "Expression"
 				},
-				"requestBody": {
-					"value": "@dataset().RequestBody",
-					"type": "Expression"
-				}
+				"requestBody": "@dataset().RequestBody"
         	}
 		},
 		"type": "Microsoft.DataFactory/factories/datasets"

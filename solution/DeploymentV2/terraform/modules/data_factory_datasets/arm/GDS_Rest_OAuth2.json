@@ -30,17 +30,74 @@
 				"referenceName": "[parameters('linkedServiceName')]",
 				"type": "LinkedServiceReference",
 				"parameters": {
-					"BaseUrl": {
-                    "value": "@dataset().BaseUrl",
-                    "type": "Expression"
-                }
+					"BaseUrl": 
+					{
+                    	"value": "@dataset().BaseUrl",
+                    	"type": "Expression"
+					},
+					"ClientId": 
+					{
+                    	"value": "@dataset().ClientId",
+                    	"type": "Expression"
+					},
+					"KeyVaultBaseUrl": 
+					{
+                    	"value": "@dataset().KeyVaultBaseUrl",
+                    	"type": "Expression"
+					},
+					"PasswordSecret": 
+					{
+                    	"value": "@dataset().PasswordSecret",
+                    	"type": "Expression"
+					},
+					"TokenEndpoint": 
+					{
+                    	"value": "@dataset().TokenEndpoint",
+                    	"type": "Expression"
+					},
+					"Scope": 
+					{
+                    	"value": "@dataset().Scope",
+                    	"type": "Expression"
+					},
+					"Resource": 
+					{
+                    	"value": "@dataset().Resource",
+                    	"type": "Expression"
+					}
 				}
 			},
 			"parameters": {
-				"BaseUrl": {
-                "type": "string"
+				"BaseUrl": 
+				{
+            		"type": "string"
 				},
-				"RelativeUrl": {
+				"ClientId": 
+				{
+            		"type": "string"
+				},
+				"KeyVaultBaseUrl": 
+				{
+            		"type": "string"
+				},
+				"PasswordSecret": 
+				{
+            		"type": "string"
+				},
+				"TokenEndpoint": 
+				{
+            		"type": "string"
+				},
+				"Scope": 
+				{
+            		"type": "string"
+				},
+				"Resource": 
+				{
+            		"type": "string"
+				},
+				"RelativeUrl": 
+				{
 					"type": "string"
 				},
 				"RequestMethod": 
@@ -51,7 +108,6 @@
 				{
 					"type": "string"
 				}
-
 			},
 			"folder": {
 				"name": "[concat('ADS Go Fast/Generic/', parameters('integrationRuntimeName'))]"
@@ -67,10 +123,7 @@
 					"value": "@dataset().RequestMethod",
 					"type": "Expression"
 				},
-				"requestBody": {
-					"value": "@dataset().RequestBody",
-					"type": "Expression"
-				}
+				"requestBody": "@dataset().RequestBody"
         	}
 		},
 		"type": "Microsoft.DataFactory/factories/datasets"

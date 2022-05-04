@@ -1,0 +1,31 @@
+{
+	"name": "SampleNotebook",
+	"properties": {
+		"folder": {
+			"name": "FrameworkNotebooks"
+		},
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"metadata": {
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "python"
+			},
+			"language_info": {
+				"name": "python"
+			}
+		},
+		"cells": [
+			{
+				"cell_type": "code",
+				"source": [
+					"#THIS NOTEBOOK IS USED FOR FUNCTIONAL TESTING -> Does not have any other purpose than to ensure that the execute notebook action is working properly\r\n",
+					"\r\n",
+					"print(\"I am working\")"
+				],
+				"attachments": null,
+				"execution_count": null
+			}
+		]
+	}
+}

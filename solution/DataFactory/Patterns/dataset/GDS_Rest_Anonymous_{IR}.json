@@ -1,8 +1,8 @@
 {
-    "name": "GDS_RestResource_Anonymous",
+    "name": "GDS_Rest_Anonymous",
     "properties": {
         "linkedServiceName": {
-            "referenceName": "GLS_RestService_Anonymous",
+            "referenceName": "GLS_RestService_AuthAnonymous_@GF{IR}",
             "type": "LinkedServiceReference",
             "parameters": {
                 "BaseUrl": {
