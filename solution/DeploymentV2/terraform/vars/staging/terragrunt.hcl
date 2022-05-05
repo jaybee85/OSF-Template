@@ -44,11 +44,14 @@ inputs = {
 
   purview_name = "dlzdev07purv"
 
-  toggle_synapse_git_integration = true
-  synapse_git_account_name = "h-sha"
-  synapse_git_repository_name = "testLockbox"
-  synapse_git_repository_base_url = "https://github.com/h-sha/testLockbox"
-  synapse_git_repository_branch_name = "managed-ark-stg-rg-ads-lfl9-synapse"
+  toggle_synapse_git_integration = false
+  synapse_git_account_name = "hugosharpe"
+  synapse_git_repository_name = "lockBoxProject"
+  synapse_git_repository_base_url = "https://dev.azure.com/hugosharpe/_git/lockBoxProject"
+  synapse_git_repository_branch_name = "dlzdev07"
   synapse_git_repository_root_folder = "/Synapse"
-  synapse_git_integration_type = "github"
+  synapse_git_integration_type = "devops"
+  synapse_git_devops_project_name = "lockBoxProject"
+  synapse_git_use_pat = true
+  synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
 } 

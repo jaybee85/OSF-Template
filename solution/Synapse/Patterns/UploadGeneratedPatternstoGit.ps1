@@ -68,19 +68,20 @@ function UploadADFItem ($items, $directory, $subFolder) {
 New-Item -Path "$($baseDirectory)" -Name "$($folderName)" -ItemType "directory"
 if($tout.synapse_git_integration_type -eq "devops") 
 {
-#https://dev.azure.com/microsoft/_git/lockBoxProject
-#https://microsoft@dev.azure.com/microsoft/lockBoxProject/_git/lockBoxProject
-#NOTE -> This may need to be changed to include tenant + owner (with if conditional)
-$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
-$owner = $owner.Matches.Groups[1].Value
-$GitURL = "$($owner)@dev.azure.com/$($owner)/$($tout.synapse_git_devops_project_name)/_git/$($tout.synapse_git_repository_name)"
+    #https://dev.azure.com/microsoft/_git/lockBoxProject
+    #https://microsoft@dev.azure.com/microsoft/lockBoxProject/_git/lockBoxProject
+    #https://dev.azure.com/hugosharpe/_git/lockBoxProject
+    #NOTE -> This may need to be changed to include tenant + owner (with if conditional)
+    $owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
+    $owner = $owner.Matches.Groups[1].Value
+    $GitURL = "dev.azure.com/$($owner)/$($tout.synapse_git_devops_project_name)/_git/$($tout.synapse_git_repository_name)"
 }
 else 
 {
-#https://github.com/microsoft/azure-data-services-go-fast-codebase
-$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
-$owner = $owner.Matches.Groups[1].Value
-$GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
+    #https://github.com/microsoft/azure-data-services-go-fast-codebase
+    $owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
+    $owner = $owner.Matches.Groups[1].Value
+    $GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
 
 
 }
@@ -95,7 +96,12 @@ Write-Host "$($tout.synapse_git_repository_branch_name)"
 #Clone Repo
 $FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
-git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
+if ($tout.synapse_git_use_pat) {
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
+    git -c http.extraHeader="Authorization: Basic $B64Pat" clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)"
+} else {
+    git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
+}
 $FolderPath = "$($FolderPath)/$($tout.synapse_git_repository_root_folder)/"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 
@@ -104,7 +110,7 @@ if (Test-Path -Path "$FolderPath") {
     "Root folder exists, skipping."
 } else {
     Write-Host "Creating Root folder in repo"
-    New-Item -Path $FolderPath -Name "pipeline" -ItemType "directory"
+    New-Item -Path $FolderPath -Name $tout.synapse_git_repository_root_folder -ItemType "directory"
 }
 
 if (Test-Path -Path "$FolderPath/pipeline") {
@@ -233,7 +239,7 @@ $items = (Get-ChildItem -Path "./output/" -Include ("MVN_*.json")  -Verbose -rec
 UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 
 Write-Host "_____________________________"
-Write-Host "Copying Managed Private Endpoints to Temporary Repo /managedPrivateEndpoint folder"
+Write-Host "Copying Managed Private Endpoints to Temporary Repo /managedVirtualNetwork/default/managedPrivateEndpoint folder"
 Write-Host "_____________________________"
 $subFolder = "managedVirtualNetwork/default/managedPrivateEndpoint/" 
 $items = (Get-ChildItem -Path "./output/" -Include ("MVN_default-managedPrivateEndpoint_*.json")  -Verbose -recurse)
@@ -243,6 +249,12 @@ UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
 git add .
 git commit -m "deployment commit"
-git push origin $($tout.synapse_git_repository_branch_name)
+
+if ($tout.synapse_git_use_pat) {
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
+    git -c http.extraHeader="Authorization: Basic $B64Pat" push origin $($tout.synapse_git_repository_branch_name)
+} else {
+    git push origin $($tout.synapse_git_repository_branch_name)
+}
 Set-Location $CurrentFolderPath
 Remove-Item $Directory -Recurse -Force

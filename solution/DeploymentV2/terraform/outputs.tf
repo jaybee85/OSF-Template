@@ -135,3 +135,9 @@ output "synapse_git_devops_project_name" {
 output "synapse_git_repository_base_url" {
   value = var.toggle_synapse_git_integration ? var.synapse_git_repository_base_url : ""
 }
+output "synapse_git_use_pat" {
+    value = var.toggle_synapse_git_integration ? var.synapse_git_use_pat : false
+}
+output "synapse_git_pat" {
+    value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
+}

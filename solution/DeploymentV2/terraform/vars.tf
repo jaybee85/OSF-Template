@@ -244,6 +244,12 @@ variable "synapse_git_integration_type" {
   default     = "github"
   type        = string
 }
+
+variable "synapse_git_use_pat" {
+  description = "Whether a pat is required for authentication (non public repo)."
+  default     = true
+  type        = bool
+}
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------
@@ -492,6 +498,12 @@ variable "synapse_git_repository_root_folder" {
 variable "synapse_git_devops_project_name" {
   description = "The name of the project to be referenced within devops. Note: Not used for github."
   default     = "/"
+  type        = string
+}
+
+variable "synapse_git_pat" {
+  description = "The personal access token used to authenticate the git account"
+  default     = ""
   type        = string
 }
 

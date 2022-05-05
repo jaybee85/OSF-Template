@@ -11,7 +11,7 @@ Invoke-Expression  ./UploadTaskTypeMappings.ps1
 Write-Host "Starting Synapse Parts" -ForegroundColor Yellow
 Set-Location ../../Synapse/Patterns/ 
 Invoke-Expression  ./Jsonnet_GenerateADFArtefacts.ps1
-if (tout.toggle_synapse_git_integration) {
+if ($tout.toggle_synapse_git_integration) {
     Invoke-Expression  ./UploadGeneratedPatternsToGit.ps1
 }
 else {
