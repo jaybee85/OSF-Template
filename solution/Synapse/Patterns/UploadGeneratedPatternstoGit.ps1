@@ -1,10 +1,17 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
+
+function RemoveRepetitiveChars ($string, $char) {
+    $string = $string.Split($char).where{$_} -join $char
+    return $string
+}
+
+
 $CurrentFolderPath = $PWD
 $baseDirectory = "../../../.." 
 $folderName = "TempRepo"
 $Directory = "$($baseDirectory)/$($folderName)"
-
+$Directory = RemoveRepetitiveChars -string $Directory -char "/"
 
 if($tout.datafactory_name -eq "") {
     $tout.datafactory_name = Read-Host "Enter the name of the data factory"
@@ -24,6 +31,7 @@ if($tout.functionapp_name -eq "") {
 
 
 function UploadADFItem ($items, $directory, $subFolder) {
+    
     if ($items.count -gt 0) {
         $items | Foreach-Object -Parallel {
             $_tout = $using:tout
@@ -33,19 +41,21 @@ function UploadADFItem ($items, $directory, $subFolder) {
             $lsName = $_.BaseName 
             $fileName = $_.FullName
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
+            $name = $jsonobject.name
+
             $dir = "$($_directory)/$($_tout.synapse_git_repository_name)"
             if ($($_tout.synapse_git_repository_root_folder) -ne "") {
                 $dir = $dir + "$($_tout.synapse_git_repository_root_folder)/"
             }
-            $dir = $dir + $_subFolder
-            
+            $dir = $dir + "/" +  $_subFolder + "/" + $name + ".json"
+            $dir = $dir.Split("/").where{$_} -join "/"
+
             #ParseOut the Name Attribute
-            $name = $jsonobject.name
             #Persist File Back
             $jsonobject | ConvertTo-Json  -Depth 100 | set-content $_
 
             #Make a copy of the file in the repo 
-            Copy-Item -Path $fileName -Destination "$($dir)$($name).json" -Force
+            Copy-Item -Path $fileName -Destination "$($dir)" -Force
             write-host ($lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             
@@ -54,35 +64,49 @@ function UploadADFItem ($items, $directory, $subFolder) {
 }
 
 
-$UploadGDS = $false
-$UploadGLS = $false
-
-if($UploadGLS -eq $true)
+#Set up Temp Repo space
+New-Item -Path "$($baseDirectory)" -Name "$($folderName)" -ItemType "directory"
+if($tout.synapse_git_integration_type -eq "devops") 
 {
-    $items = (Get-ChildItem -Path "./output/" -Include "GLS*.json" -Verbose -recurse)
-    UploadADFItem -items $items 
-    $items = (Get-ChildItem -Path "./output/" -Include "SLS*.json" -Verbose -recurse)
-    UploadADFItem -items $items 
+#https://dev.azure.com/microsoft/_git/lockBoxProject
+#https://microsoft@dev.azure.com/microsoft/lockBoxProject/_git/lockBoxProject
+#NOTE -> This may need to be changed to include tenant + owner (with if conditional)
+$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
+$owner = $owner.Matches.Groups[1].Value
+$GitURL = "$($owner)@dev.azure.com/$($owner)/$($tout.synapse_git_devops_project_name)/_git/$($tout.synapse_git_repository_name)"
 }
-
-if($UploadGDS -eq $true)
+else 
 {
-    $items = (Get-ChildItem -Path "./output/" -Include "GDS*.json" -Verbose -recurse)
-    UploadADFItem -items $items
+#https://github.com/microsoft/azure-data-services-go-fast-codebase
+$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
+$owner = $owner.Matches.Groups[1].Value
+$GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
+
+
 }
-$GitURL = "https://github.com/" + $($tout.synapse_git_account_name) + "/" + $($tout.synapse_git_repository_name)
+$GitURL = RemoveRepetitiveChars -string $GitURL -char "/"
+$GitURL = "https://" + $GitURL
+
+
 Write-Host $GitURL
 Write-Host "$($Directory)/$($tout.synapse_git_repository_name)"
 Write-Host "$($tout.synapse_git_repository_branch_name)"
 
-#Set up Repo space
-New-Item -Path "$($baseDirectory)" -Name "$($folderName)" -ItemType "directory"
-
 #Clone Repo
-git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($Directory)/$($tout.synapse_git_repository_name)" 
+$FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)"
+$FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
+git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
+$FolderPath = "$($FolderPath)/$($tout.synapse_git_repository_root_folder)/"
+$FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 
 #Check for Folders / Create
-$FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)$($tout.synapse_git_repository_root_folder)/"
+if (Test-Path -Path "$FolderPath") {
+    "Root folder exists, skipping."
+} else {
+    Write-Host "Creating Root folder in repo"
+    New-Item -Path $FolderPath -Name "pipeline" -ItemType "directory"
+}
+
 if (Test-Path -Path "$FolderPath/pipeline") {
     "pipeline folder exists, skipping."
 } else {
@@ -137,7 +161,7 @@ UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 Write-Host "_____________________________"
 Write-Host "Copying Integration Runtimes to Temporary Repo /integrationRuntime folder"
 Write-Host "_____________________________"
-$subFolder = "./integrationRuntime" 
+$subFolder = "integrationRuntime/" 
 $items = (Get-ChildItem -Path "./output/" -Include ("IR_*.json")  -Verbose -recurse)
 write-host $items
 UploadADFItem -items $items -directory $Directory -subFolder $subFolder
@@ -145,7 +169,7 @@ UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 Write-Host "_____________________________"
 Write-Host "Copying Linked Services to Temporary Repo /linkedService folder"
 Write-Host "_____________________________"
-$subFolder = "./linkedService/" 
+$subFolder = "linkedService/" 
 $items = (Get-ChildItem -Path "./output/" -Include ("LS_*.json")  -Verbose -recurse)
 UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 

@@ -1,0 +1,19 @@
+{
+  "name": "SLS_AzureFunctionApp",
+  "properties": {
+    "annotations": [],
+    "type": "AzureFunction",
+    "typeProperties": {
+      "functionAppUrl": "",
+      "functionKey": {
+        "secretName": "AdsGfCoreFunctionAppKey",
+        "store": {
+          "referenceName": "SLS_AzureKeyVault",
+          "type": "LinkedServiceReference"
+        },
+        "type": "AzureKeyVaultSecret"
+      }
+    }
+  },
+  "type": "Microsoft.Synapse/workspaces/linkedservices"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "AutoResolveIntegrationRuntime",
+  "properties": {
+    "managedVirtualNetwork": {
+      "referenceName": "default",
+      "type": "ManagedVirtualNetworkReference"
+    },
+    "type": "Managed",
+    "typeProperties": {
+      "computeProperties": {
+        "dataFlowProperties": {
+          "computeType": "General",
+          "coreCount": 8,
+          "timeToLive": 0
+        },
+        "location": "AutoResolve"
+      }
+    }
+  }
+}

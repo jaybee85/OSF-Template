@@ -464,16 +464,20 @@ variable "synapse_sppool_name" {
 
 variable "synapse_git_account_name" {
   description = "The name of the github account to be used for synapse"
-  default     = "h-sha"
+  default     = ""
   type        = string
 }
 
 variable "synapse_git_repository_name" {
   description = "The name of the github repository to be used for synapse"
-  default     = "https://github.com/h-sha/testLockbox"
+  default     = ""
   type        = string
 }
-
+variable "synapse_git_repository_base_url" {
+  description = "The base URL of the git repository you are using for synapse E.g - https://github.com/microsoft/azure-data-services-go-fast-codebase / https://dev.azure.com/microsoft/_git/lockBoxProject"
+  default = ""
+  type = string
+}
 variable "synapse_git_repository_branch_name" {
   description = "The name of the github branch to be used"
   default     = "main"
@@ -490,6 +494,7 @@ variable "synapse_git_devops_project_name" {
   default     = "/"
   type        = string
 }
+
 #---------------------------------------------------------------
 # Scale settings
 #---------------------------------------------------------------

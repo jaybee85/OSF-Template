@@ -1,0 +1,15 @@
+{
+  "name": "arkstgsynwadslfl9-WorkspaceDefaultStorage",
+  "properties": {
+    "annotations": [],
+    "connectVia": {
+      "referenceName": "AutoResolveIntegrationRuntime",
+      "type": "IntegrationRuntimeReference"
+    },
+    "type": "AzureBlobFS",
+    "typeProperties": {
+      "url": "https://arkstgdlsadslfl9adsl.dfs.core.windows.net"
+    }
+  },
+  "type": "Microsoft.Synapse/workspaces/linkedservices"
+}

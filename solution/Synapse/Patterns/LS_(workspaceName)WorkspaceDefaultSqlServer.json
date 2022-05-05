@@ -1,0 +1,20 @@
+{
+  "name": "arkstgsynwadslfl9-WorkspaceDefaultSqlServer",
+  "properties": {
+    "annotations": [],
+    "connectVia": {
+      "referenceName": "AutoResolveIntegrationRuntime",
+      "type": "IntegrationRuntimeReference"
+    },
+    "parameters": {
+      "DBName": {
+        "type": "String"
+      }
+    },
+    "type": "AzureSqlDW",
+    "typeProperties": {
+      "connectionString": "Data Source=tcp:arkstgsynwadslfl9.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+    }
+  },
+  "type": "Microsoft.Synapse/workspaces/linkedservices"
+}
