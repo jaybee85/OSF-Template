@@ -1,3 +1,4 @@
+function()
 {
 	"name": "default",
 	"type": "Microsoft.Synapse/workspaces/managedVirtualNetworks"

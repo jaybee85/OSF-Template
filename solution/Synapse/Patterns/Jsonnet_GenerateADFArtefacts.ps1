@@ -1,7 +1,7 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 $newfolder = "./output/"
-$toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.json")
+
 
 #Generate Patterns.json
 (jsonnet "./patterns.jsonnet") | Set-Content("./Patterns.json")
@@ -21,7 +21,8 @@ else
 Get-ChildItem ./output | foreach {
     Remove-item $_ -force
 }
-
+#create tout json to be used for git integration
+$toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.json")
 #Copy Static Pipelines
 $folder = "./pipeline/static"
 $templates = (Get-ChildItem -Path $folder -Filter "*.json"  -Verbose)
@@ -259,6 +260,9 @@ if($($tout.toggle_synapse_git_integration)) {
     #LINKED SERVICES
     $folder = "./linkedService/"
     $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse linked services for Git Integration: " 
+    Write-Host "_____________________________"
     foreach ($file in $templates){
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
         $newName = ($file.PSChildName).Replace(".libsonnet",".json")
@@ -269,7 +273,9 @@ if($($tout.toggle_synapse_git_integration)) {
     $folder = "./notebook/"
     $notebooks = (Get-ChildItem -Path $folder -Filter "*.ipynb" -Verbose)
     $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "*.libsonnet"  -Verbose)
-
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse notebooks for Git Integration: " 
+    Write-Host "_____________________________"
     foreach ($file in $notebooks){
         $jsonobject = $file | Get-Content 
         $newName = ($file.PSChildName).Replace(".ipynb",".json")
@@ -290,6 +296,9 @@ if($($tout.toggle_synapse_git_integration)) {
 
     $folder = "./integrationRuntime/"
     $IRS = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse integration runtimes for Git Integration: " 
+    Write-Host "_____________________________"
     foreach ($file in $IRS)
     {
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
@@ -298,6 +307,58 @@ if($($tout.toggle_synapse_git_integration)) {
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
 
     }
-    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "*.libsonnet"  -Verbose)
+
+    #CREDENTIAL
+    $folder = "./credential/"
+    $credentials = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse credentials for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $credentials)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "CR_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+
+    }
+    <# CURRENTLY DISABLED DUE TO UNKNOWN
+    #MANAGED VIRTUAL NETWORK
+
+    $folder = "./managedVirtualNetwork/"
+    $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse managed virtual networks for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $files)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "MVN_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #managedPrivateEndpoint/default folder within MANAGED VIRTUAL NETWORK
+    $folder = "./managedVirtualNetwork/default/managedPrivateEndpoint"
+    #if our vnet isolation isnt on, we only want the standard files
+    if (!$tout.is_vnet_isolated) {
+        $files = (Get-ChildItem -Path $folder -Exclude *is_vnet_isolated*)
+    } else {
+        $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+
+    }
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse managed private endpoints for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $files)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "MVN_default-managedPrivateEndpoint_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #>
+
 }
 

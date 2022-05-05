@@ -99,7 +99,7 @@ git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($Fold
 $FolderPath = "$($FolderPath)/$($tout.synapse_git_repository_root_folder)/"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 
-#Check for Folders / Create
+#Check for Folders / Creating Folders
 if (Test-Path -Path "$FolderPath") {
     "Root folder exists, skipping."
 } else {
@@ -142,6 +142,50 @@ if (Test-Path -Path "$FolderPath/managedVirtualNetwork") {
     New-Item -Path $FolderPath -Name "managedVirtualNetwork" -ItemType "directory"
 }
 
+if (Test-Path -Path "$FolderPath/managedVirtualNetwork/default") {
+    "/managedVirtualNetwork/default folder exists, skipping."
+} else {
+    Write-Host "Creating managedVirtualNetwork/default folder in repo"
+    New-Item -Path "$($FolderPath)/managedVirtualNetwork" -Name "default" -ItemType "directory"
+}
+
+if (Test-Path -Path "$FolderPath/managedVirtualNetwork/default/managedPrivateEndpoint") {
+    "/managedVirtualNetwork/default folder exists, skipping."
+} else {
+    Write-Host "Creating managedVirtualNetwork/default/managedPrivateEndpoint folder in repo"
+    New-Item -Path "$($FolderPath)/managedVirtualNetwork/default" -Name "managedPrivateEndpoint" -ItemType "directory"
+}
+
+
+if (Test-Path -Path "$FolderPath/credential") {
+    "credential folder exists, skipping."
+} else {
+    Write-Host "Creating credential folder in repo"
+    New-Item -Path $FolderPath -Name "credential" -ItemType "directory"
+}
+
+<# NOT USED YET
+if (Test-Path -Path "$FolderPath/dataset") {
+    "dataset folder exists, skipping."
+} else {
+    Write-Host "Creating dataset folder in repo"
+    New-Item -Path $FolderPath -Name "dataset" -ItemType "directory"
+}
+
+if (Test-Path -Path "$FolderPath/sqlscript") {
+    "sqlscript folder exists, skipping."
+} else {
+    Write-Host "Creating sqlscript folder in repo"
+    New-Item -Path $FolderPath -Name "sqlscript" -ItemType "directory"
+}
+
+if (Test-Path -Path "$FolderPath/trigger") {
+    "trigger folder exists, skipping."
+} else {
+    Write-Host "Creating trigger folder in repo"
+    New-Item -Path $FolderPath -Name "trigger" -ItemType "directory"
+}
+#>
 
 #Move Items into rep
 Write-Host "_____________________________"
@@ -173,6 +217,28 @@ $subFolder = "linkedService/"
 $items = (Get-ChildItem -Path "./output/" -Include ("LS_*.json")  -Verbose -recurse)
 UploadADFItem -items $items -directory $Directory -subFolder $subFolder
 
+Write-Host "_____________________________"
+Write-Host "Copying Credentials to Temporary Repo /credential folder"
+Write-Host "_____________________________"
+$subFolder = "credential/" 
+$items = (Get-ChildItem -Path "./output/" -Include ("CR_*.json")  -Verbose -recurse)
+UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+
+<# CURRENTLY DISABLED AS VIRTUAL NETWORK HAS UNKNOWN
+Write-Host "_____________________________"
+Write-Host "Copying Managed Virtual Network to Temporary Repo /managedVirtualNetwork folder"
+Write-Host "_____________________________"
+$subFolder = "managedVirtualNetwork/" 
+$items = (Get-ChildItem -Path "./output/" -Include ("MVN_*.json")  -Verbose -recurse)
+UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+
+Write-Host "_____________________________"
+Write-Host "Copying Managed Private Endpoints to Temporary Repo /managedPrivateEndpoint folder"
+Write-Host "_____________________________"
+$subFolder = "managedVirtualNetwork/default/managedPrivateEndpoint/" 
+$items = (Get-ChildItem -Path "./output/" -Include ("MVN_default-managedPrivateEndpoint_*.json")  -Verbose -recurse)
+UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+#>
 #Commit and remove
 Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
 git add .
