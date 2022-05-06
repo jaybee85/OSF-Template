@@ -360,7 +360,7 @@ if($($tout.toggle_synapse_git_integration)) {
     #REPLACING FQDNS grabbed from az synapse
     #REASON: FQDNS Contains a GUID on these files that I cannot identify where it is retrieved from otherwise
 
-    $files = (Get-ChildItem -Path $newFolder -Filter *r:fqdns*)
+    $files = (Get-ChildItem -Path $newFolder -Filter *fqdns*)
     foreach ($file in $files)
     {
         $fileSysObj = Get-Content $file -raw | ConvertFrom-Json

@@ -116,6 +116,12 @@ $repoDirectories = @(
     "/managedVirtualNetwork/default", 
     "/managedVirtualNetwork/default/managedPrivateEndpoint", 
     "/credential")
+<#unused:
+    /dataset
+    /sqlscript
+    /trigger
+    
+#>
 foreach($repoDirectory in $repoDirectories)
 {
     $fullDir = "$($FolderPath)$($repoDirectory)"
@@ -128,28 +134,7 @@ foreach($repoDirectory in $repoDirectories)
 }
 
 
-<# NOT USED YET
-if (Test-Path -Path "$FolderPath/dataset") {
-    "dataset folder exists, skipping."
-} else {
-    Write-Host "Creating dataset folder in repo"
-    New-Item -Path $FolderPath -Name "dataset" -ItemType "directory"
-}
 
-if (Test-Path -Path "$FolderPath/sqlscript") {
-    "sqlscript folder exists, skipping."
-} else {
-    Write-Host "Creating sqlscript folder in repo"
-    New-Item -Path $FolderPath -Name "sqlscript" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/trigger") {
-    "trigger folder exists, skipping."
-} else {
-    Write-Host "Creating trigger folder in repo"
-    New-Item -Path $FolderPath -Name "trigger" -ItemType "directory"
-}
-#>
 
 #Move Items into rep
 #NOTE: USE '_' to represent '/' in directories (this will be needed for virtual network)
@@ -170,23 +155,6 @@ foreach($child in $children.GetEnumerator()) {
     Write-Host "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
     UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
 }
-
-<# CURRENTLY DISABLED AS VIRTUAL NETWORK HAS UNKNOWN
-Write-Host "_____________________________"
-Write-Host "Copying Managed Virtual Network to Temporary Repo /managedVirtualNetwork folder"
-Write-Host "_____________________________"
-$subFolder = "managedVirtualNetwork/" 
-$items = (Get-ChildItem -Path "./output/" -Include ("MVN_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
-
-Write-Host "_____________________________" 
-Write-Host "Copying Managed Private Endpoints to Temporary Repo /managedVirtualNetwork/default/managedPrivateEndpoint folder"
-Write-Host "_____________________________"
-$subFolder = "managedVirtualNetwork/default/managedPrivateEndpoint/" 
-$items = (Get-ChildItem -Path "./output/" -Include ("MVN_default-managedPrivateEndpoint_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
-#>
-
 
 #Commit and remove
 Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
