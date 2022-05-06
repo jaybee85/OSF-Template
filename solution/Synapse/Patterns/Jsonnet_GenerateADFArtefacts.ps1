@@ -322,7 +322,6 @@ if($($tout.toggle_synapse_git_integration)) {
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
 
     }
-    <# CURRENTLY DISABLED DUE TO UNKNOWN
     #MANAGED VIRTUAL NETWORK
 
     $folder = "./managedVirtualNetwork/"
@@ -358,7 +357,19 @@ if($($tout.toggle_synapse_git_integration)) {
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
     }
 
-    #>
+    #REPLACING FQDNS grabbed from az synapse
+    #REASON: FQDNS Contains a GUID on these files that I cannot identify where it is retrieved from otherwise
+
+    $files = (Get-ChildItem -Path $newFolder -Filter *r:fqdns*)
+    foreach ($file in $files)
+    {
+        $fileSysObj = Get-Content $file -raw | ConvertFrom-Json
+        $fileAZ = az synapse managed-private-endpoints show --workspace-name $($tout.synapse_workspace_name) --pe-name $fileSysObj.name
+        $fileAZ = $fileAZ | ConvertFrom-Json
+        $fileSysObj.properties.fqdns = $fileAZ.properties.fqdns
+        $fileSysObj | ConvertTo-Json -depth 32| Set-Content($($newfolder) + $($file.PSChildName))
+    }
+
 
 }
 

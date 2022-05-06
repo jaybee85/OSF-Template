@@ -43,11 +43,11 @@ function UploadADFItem ($items, $directory, $subFolder) {
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
             $name = $jsonobject.name
 
-            $dir = "$($_directory)/$($_tout.synapse_git_repository_name)"
+            <#$dir = "$($_directory)/$($_tout.synapse_git_repository_name)"
             if ($($_tout.synapse_git_repository_root_folder) -ne "") {
                 $dir = $dir + "$($_tout.synapse_git_repository_root_folder)/"
-            }
-            $dir = $dir + "/" +  $_subFolder + "/" + $name + ".json"
+            }#>
+            $dir = $_directory + "/" +  $_subFolder + "/" + $name + ".json"
             $dir = $dir.Split("/").where{$_} -join "/"
 
             #ParseOut the Name Attribute
@@ -56,7 +56,7 @@ function UploadADFItem ($items, $directory, $subFolder) {
 
             #Make a copy of the file in the repo 
             Copy-Item -Path $fileName -Destination "$($dir)" -Force
-            write-host ($lsName) -ForegroundColor Yellow -BackgroundColor DarkGreen
+            write-host ($name) -ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             
         }
@@ -106,69 +106,27 @@ $FolderPath = "$($FolderPath)/$($tout.synapse_git_repository_root_folder)/"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 
 #Check for Folders / Creating Folders
-if (Test-Path -Path "$FolderPath") {
-    "Root folder exists, skipping."
-} else {
-    Write-Host "Creating Root folder in repo"
-    New-Item -Path $FolderPath -Name $tout.synapse_git_repository_root_folder -ItemType "directory"
+$repoDirectories = @(
+    "", 
+    "/pipeline",
+    "/notebook", 
+    "/linkedService", 
+    "/integrationRuntime", 
+    "/managedVirtualNetwork",
+    "/managedVirtualNetwork/default", 
+    "/managedVirtualNetwork/default/managedPrivateEndpoint", 
+    "/credential")
+foreach($repoDirectory in $repoDirectories)
+{
+    $fullDir = "$($FolderPath)$($repoDirectory)"
+    if (Test-Path -Path $fullDir) {
+        "$($fullDir) directory exists, skipping."
+    } else {
+        Write-Host "Creating $($fullDir) directory in repo"
+        New-Item -Path $($fullDir) -ItemType "directory"
+    }
 }
 
-if (Test-Path -Path "$FolderPath/pipeline") {
-    "pipeline folder exists, skipping."
-} else {
-    Write-Host "Creating pipeline folder in repo"
-    New-Item -Path $FolderPath -Name "pipeline" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/notebook") {
-    "notebook folder exists, skipping."
-} else {
-    Write-Host "Creating notebook folder in repo"
-    New-Item -Path $FolderPath -Name "notebook" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/linkedService") {
-    "linkedService folder exists, skipping."
-} else {
-    Write-Host "Creating linkedService folder in repo"
-    New-Item -Path $FolderPath -Name "linkedService" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/integrationRuntime") {
-    "integrationRuntime folder exists, skipping."
-} else {
-    Write-Host "Creating integrationRuntime folder in repo"
-    New-Item -Path $FolderPath -Name "integrationRuntime" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/managedVirtualNetwork") {
-    "managedVirtualNetwork folder exists, skipping."
-} else {
-    Write-Host "Creating managedVirtualNetwork folder in repo"
-    New-Item -Path $FolderPath -Name "managedVirtualNetwork" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/managedVirtualNetwork/default") {
-    "/managedVirtualNetwork/default folder exists, skipping."
-} else {
-    Write-Host "Creating managedVirtualNetwork/default folder in repo"
-    New-Item -Path "$($FolderPath)/managedVirtualNetwork" -Name "default" -ItemType "directory"
-}
-
-if (Test-Path -Path "$FolderPath/managedVirtualNetwork/default/managedPrivateEndpoint") {
-    "/managedVirtualNetwork/default folder exists, skipping."
-} else {
-    Write-Host "Creating managedVirtualNetwork/default/managedPrivateEndpoint folder in repo"
-    New-Item -Path "$($FolderPath)/managedVirtualNetwork/default" -Name "managedPrivateEndpoint" -ItemType "directory"
-}
-
-
-if (Test-Path -Path "$FolderPath/credential") {
-    "credential folder exists, skipping."
-} else {
-    Write-Host "Creating credential folder in repo"
-    New-Item -Path $FolderPath -Name "credential" -ItemType "directory"
-}
 
 <# NOT USED YET
 if (Test-Path -Path "$FolderPath/dataset") {
@@ -194,41 +152,24 @@ if (Test-Path -Path "$FolderPath/trigger") {
 #>
 
 #Move Items into rep
-Write-Host "_____________________________"
-Write-Host "Copying Pipelines to Temporary Repo /pipeline folder"
-Write-Host "_____________________________"
-$subFolder = "pipeline/"
-$items = (Get-ChildItem -Path "./output/" -Include ("SPL_*.json", "GPL0_*.json","GPL1_*.json", "GPL2_*.json", "GPL-1_*.json", "GPL_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
-
-Write-Host "_____________________________"
-Write-Host "Copying Notebooks to Temporary Repo /notebook folder"
-Write-Host "_____________________________"
-$subFolder = "notebook/"
-$items = (Get-ChildItem -Path "./output/" -Include ("NB_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
-
-Write-Host "_____________________________"
-Write-Host "Copying Integration Runtimes to Temporary Repo /integrationRuntime folder"
-Write-Host "_____________________________"
-$subFolder = "integrationRuntime/" 
-$items = (Get-ChildItem -Path "./output/" -Include ("IR_*.json")  -Verbose -recurse)
-write-host $items
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
-
-Write-Host "_____________________________"
-Write-Host "Copying Linked Services to Temporary Repo /linkedService folder"
-Write-Host "_____________________________"
-$subFolder = "linkedService/" 
-$items = (Get-ChildItem -Path "./output/" -Include ("LS_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
-
-Write-Host "_____________________________"
-Write-Host "Copying Credentials to Temporary Repo /credential folder"
-Write-Host "_____________________________"
-$subFolder = "credential/" 
-$items = (Get-ChildItem -Path "./output/" -Include ("CR_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+#NOTE: USE '_' to represent '/' in directories (this will be needed for virtual network)
+$children = [ordered]@{
+    pipeline = @("SPL_*.json", "GPL0_*.json","GPL1_*.json", "GPL2_*.json", "GPL-1_*.json", "GPL_*.json"); 
+    notebook = @("NB_*.json");
+    linkedService = @("LS_*.json");
+    integrationRuntime = @("IR_*.json");
+    credential = @("CR_*.json");
+    managedVirtualNetwork = @("MVN_*.json");
+    managedVirtualNetwork_default_managedPrivateEndpoint = @("MVN_default-managedPrivateEndpoint_*.json");
+}
+foreach($child in $children.GetEnumerator()) {
+    $subFolder = $child.Name + "/"
+    $subFolder = $subFolder -replace "_", "/"
+    $inclusions = $child.Value
+    $items = (Get-ChildItem -Path "./output/" -Include ($inclusions) -Verbose -recurse)
+    Write-Host "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
+    UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
+}
 
 <# CURRENTLY DISABLED AS VIRTUAL NETWORK HAS UNKNOWN
 Write-Host "_____________________________"
@@ -236,19 +177,21 @@ Write-Host "Copying Managed Virtual Network to Temporary Repo /managedVirtualNet
 Write-Host "_____________________________"
 $subFolder = "managedVirtualNetwork/" 
 $items = (Get-ChildItem -Path "./output/" -Include ("MVN_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
 
-Write-Host "_____________________________"
+Write-Host "_____________________________" 
 Write-Host "Copying Managed Private Endpoints to Temporary Repo /managedVirtualNetwork/default/managedPrivateEndpoint folder"
 Write-Host "_____________________________"
 $subFolder = "managedVirtualNetwork/default/managedPrivateEndpoint/" 
 $items = (Get-ChildItem -Path "./output/" -Include ("MVN_default-managedPrivateEndpoint_*.json")  -Verbose -recurse)
-UploadADFItem -items $items -directory $Directory -subFolder $subFolder
+UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
 #>
+
+
 #Commit and remove
 Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
 git add .
-git commit -m "deployment commit"
+git commit -m "Deployment commit"
 
 if ($tout.synapse_git_use_pat) {
     $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
@@ -257,4 +200,6 @@ if ($tout.synapse_git_use_pat) {
     git push origin $($tout.synapse_git_repository_branch_name)
 }
 Set-Location $CurrentFolderPath
+Write-Host "Deleting Temporary Repo"
 Remove-Item $Directory -Recurse -Force
+Write-Host "Complete!"
