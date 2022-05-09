@@ -96,7 +96,10 @@
 					"value": "@dataset().RequestMethod",
 					"type": "Expression"
 				},
-				"requestBody": "@dataset().RequestBody"
+				"requestBody": {
+					"value": "@dataset().RequestBody",
+					"type": "Expression"
+				}
         	}
 		},
 		"type": "Microsoft.DataFactory/factories/datasets"

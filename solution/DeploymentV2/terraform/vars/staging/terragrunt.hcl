@@ -44,10 +44,10 @@ inputs = {
 
   purview_name = "dlzdev07purv"
 
-  toggle_synapse_git_integration = true
+  synapse_toggle_git_integration = true
   synapse_git_account_name = "hugosharpe"
   synapse_git_repository_name = "lockBoxProject"
-  synapse_git_repository_base_url = "https://dev.azure.com/hugosharpe/_git/lockBoxProject"
+ // NOT USED - synapse_git_repository_base_url = "https://dev.azure.com/hugosharpe/_git/lockBoxProject"
   synapse_git_repository_branch_name = "dlzdev07"
   synapse_git_repository_root_folder = "/Synapse"
   synapse_git_integration_type = "devops"

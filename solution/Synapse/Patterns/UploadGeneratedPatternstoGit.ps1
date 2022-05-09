@@ -72,15 +72,18 @@ if($tout.synapse_git_integration_type -eq "devops")
     #https://microsoft@dev.azure.com/microsoft/lockBoxProject/_git/lockBoxProject
     #https://dev.azure.com/hugosharpe/_git/lockBoxProject
     #NOTE -> This may need to be changed to include tenant + owner (with if conditional)
-    $owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
-    $owner = $owner.Matches.Groups[1].Value
+    #$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
+    #$owner = $owner.Matches.Groups[1].Value
+    $owner = $tout.synapse_git_repository_owner
     $GitURL = "dev.azure.com/$($owner)/$($tout.synapse_git_devops_project_name)/_git/$($tout.synapse_git_repository_name)"
 }
 else 
 {
     #https://github.com/microsoft/azure-data-services-go-fast-codebase
-    $owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
-    $owner = $owner.Matches.Groups[1].Value
+    #$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
+    #$owner = $owner.Matches.Groups[1].Value
+    $owner = $tout.synapse_git_repository_owner
+
     $GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
 
 

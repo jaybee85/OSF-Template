@@ -234,7 +234,7 @@ variable "deploy_selfhostedsql" {
   type        = bool
 }
 
-variable "toggle_synapse_git_integration" {
+variable "synapse_toggle_git_integration" {
   description = "Feature toggle for enabling synapse github integration"
   default     = false
   type        = bool
@@ -246,6 +246,18 @@ variable "synapse_git_integration_type" {
 }
 
 variable "synapse_git_use_pat" {
+  description = "Whether a pat is required for authentication (non public repo)."
+  default     = true
+  type        = bool
+}
+
+variable "adf_toggle_git_integration" {
+  description = "Feature toggle for enabling adf github integration"
+  default     = false
+  type        = bool
+}
+
+variable "adf_git_use_pat" {
   description = "Whether a pat is required for authentication (non public repo)."
   default     = true
   type        = bool
@@ -468,8 +480,8 @@ variable "synapse_sppool_name" {
   type        = string
 }
 
-variable "synapse_git_account_name" {
-  description = "The name of the github account to be used for synapse"
+variable "synapse_git_repository_owner" {
+  description = "The owner of the github repository to be used for synapse. Eg. for the repository https://github.com/contoso/ads, the owner is contoso"
   default     = ""
   type        = string
 }
@@ -479,11 +491,12 @@ variable "synapse_git_repository_name" {
   default     = ""
   type        = string
 }
+/*NOT CURRENLTY USED
 variable "synapse_git_repository_base_url" {
   description = "The base URL of the git repository you are using for synapse E.g - https://github.com/microsoft/azure-data-services-go-fast-codebase / https://dev.azure.com/microsoft/_git/lockBoxProject"
   default = ""
   type = string
-}
+}*/
 variable "synapse_git_repository_branch_name" {
   description = "The name of the github branch to be used"
   default     = "main"
@@ -502,6 +515,41 @@ variable "synapse_git_devops_project_name" {
 }
 
 variable "synapse_git_pat" {
+  description = "The personal access token used to authenticate the git account"
+  default     = ""
+  type        = string
+}
+
+variable "adf_git_repository_owner" {
+  description = "The owner of the github repository to be used for adf. Eg. for the repository https://github.com/contoso/ads, the owner is contoso"
+  default     = ""
+  type        = string
+}
+
+variable "adf_git_repository_name" {
+  description = "The name of the github repository to be used for synapse"
+  default     = ""
+  type        = string
+}
+variable "adf_git_repository_branch_name" {
+  description = "The name of the github branch to be used"
+  default     = "main"
+  type        = string
+}
+
+variable "adf_git_repository_root_folder" {
+  description = "The name of the root folder to be used in the branch"
+  default     = "/"
+  type        = string
+}
+
+variable "adf_git_host_url" {
+  description = "Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com. Use https://github.com for open source repositories."
+  default     = "https://github.com"
+  type        = string
+}
+
+variable "adf_git_pat" {
   description = "The personal access token used to authenticate the git account"
   default     = ""
   type        = string

@@ -31,9 +31,9 @@ resource "azurerm_synapse_workspace" "synapse" {
   #}
 
   dynamic "github_repo" {
-      for_each = ((var.toggle_synapse_git_integration && var.synapse_git_integration_type == "github") ? [true] : [])
+      for_each = ((var.synapse_toggle_git_integration && var.synapse_git_integration_type == "github") ? [true] : [])
       content {
-        account_name = var.synapse_git_account_name
+        account_name = var.synapse_git_repository_owner
         branch_name = var.synapse_git_repository_branch_name
         repository_name = var.synapse_git_repository_name
         root_folder = var.synapse_git_repository_root_folder
@@ -42,9 +42,9 @@ resource "azurerm_synapse_workspace" "synapse" {
   }
 
     dynamic "azure_devops_repo" {
-      for_each = ((var.toggle_synapse_git_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
+      for_each = ((var.synapse_toggle_git_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
       content {
-        account_name = var.synapse_git_account_name
+        account_name = var.synapse_git_repository_owner
         branch_name = var.synapse_git_repository_branch_name
         repository_name = var.synapse_git_repository_name
         root_folder = var.synapse_git_repository_root_folder
@@ -147,7 +147,7 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
 }
 
 resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
-  count                = var.deploy_synapse && !var.toggle_synapse_git_integration ? 1 : 0
+  count                = var.deploy_synapse && !var.synapse_toggle_git_integration ? 1 : 0
   name                 = "SLS_AzureKeyVault"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureKeyVault"
@@ -164,7 +164,7 @@ JSON
 }
 
 resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
-  count                = var.deploy_synapse && !var.toggle_synapse_git_integration ? 1 : 0
+  count                = var.deploy_synapse && !var.synapse_toggle_git_integration ? 1 : 0
   name                 = "SLS_AzureFunctionApp"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureFunction"

@@ -255,7 +255,7 @@ if($GenerateArm -eq "true") {
 }
 
 
-if($($tout.toggle_synapse_git_integration)) {
+if($($tout.synapse_toggle_git_integration)) {
     $newfolder = "./output/"
     #LINKED SERVICES
     $folder = "./linkedService/"
@@ -267,6 +267,7 @@ if($($tout.toggle_synapse_git_integration)) {
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
         $newName = ($file.PSChildName).Replace(".libsonnet",".json")
         $newName = "LS_" + $newName
+        $newName = $newName.Replace("(workspaceName)", $($tout.synapse_workspace_name))
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
     }
     #NOTEBOOKS
@@ -354,6 +355,8 @@ if($($tout.toggle_synapse_git_integration)) {
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
         $newName = ($file.PSChildName).Replace(".libsonnet",".json")
         $newName = "MVN_default-managedPrivateEndpoint_" + $newName
+        $newName = $newName.Replace("[is_vnet_isolated]", "")
+        $newName = $newName.Replace("(workspaceName)", $($tout.synapse_workspace_name))
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
     }
 
@@ -367,7 +370,8 @@ if($($tout.toggle_synapse_git_integration)) {
         $fileAZ = az synapse managed-private-endpoints show --workspace-name $($tout.synapse_workspace_name) --pe-name $fileSysObj.name
         $fileAZ = $fileAZ | ConvertFrom-Json
         $fileSysObj.properties.fqdns = $fileAZ.properties.fqdns
-        $fileSysObj | ConvertTo-Json -depth 32| Set-Content($($newfolder) + $($file.PSChildName))
+        $newName = $($file.PSChildName).Replace("{fqdns}", "")
+        $fileSysObj | ConvertTo-Json -depth 32| Set-Content($($newfolder) + $($newName))
     }
 
 

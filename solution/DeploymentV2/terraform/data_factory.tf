@@ -4,6 +4,18 @@ resource "azurerm_data_factory" "data_factory" {
   resource_group_name             = var.resource_group_name
   public_network_enabled          = var.is_vnet_isolated == false || var.delay_private_access
   managed_virtual_network_enabled = true
+  dynamic "github_configuration" {
+      for_each = ((var.toggle_adf_git_integration) ? [true] : [])
+      content {
+        account_name = var.adf_git_repository_owner
+        branch_name = var.adf_git_repository_branch_name
+        repository_name = var.adf_git_repository_name
+        root_folder = var.adf_git_repository_root_folder
+        git_url = var.adf_git_host_url
+      }
+  }
+  
+  
   identity {
     type = "SystemAssigned"
   }
