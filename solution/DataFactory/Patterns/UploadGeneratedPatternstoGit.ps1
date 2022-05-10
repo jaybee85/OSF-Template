@@ -43,10 +43,6 @@ function UploadADFItem ($items, $directory, $subFolder) {
             $jsonobject = $_ | Get-Content | ConvertFrom-Json
             $name = $jsonobject.name
 
-            <#$dir = "$($_directory)/$($_tout.synapse_git_repository_name)"
-            if ($($_tout.synapse_git_repository_root_folder) -ne "") {
-                $dir = $dir + "$($_tout.synapse_git_repository_root_folder)/"
-            }#>
             $dir = $_directory + "/" +  $_subFolder + "/" + $name + ".json"
             $dir = $dir.Split("/").where{$_} -join "/"
 
@@ -66,71 +62,41 @@ function UploadADFItem ($items, $directory, $subFolder) {
 
 #Set up Temp Repo space
 New-Item -Path "$($baseDirectory)" -Name "$($folderName)" -ItemType "directory"
-if($tout.synapse_git_integration_type -eq "devops") 
-{
-    #https://dev.azure.com/microsoft/_git/lockBoxProject
-    #https://microsoft@dev.azure.com/microsoft/lockBoxProject/_git/lockBoxProject
-    #https://dev.azure.com/hugosharpe/_git/lockBoxProject
-    #NOTE -> This may need to be changed to include tenant + owner (with if conditional)
-    #$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "dev.azure.com/(.*?)/"
-    #$owner = $owner.Matches.Groups[1].Value
-    $owner = $tout.synapse_git_repository_owner
-    $GitURL = "dev.azure.com/$($owner)/$($tout.synapse_git_devops_project_name)/_git/$($tout.synapse_git_repository_name)"
-}
-else 
-{
-    #https://github.com/microsoft/azure-data-services-go-fast-codebase
-    #$owner = $tout.synapse_git_repository_base_url | Select-String -Pattern "github.com/(.*?)/"
-    #$owner = $owner.Matches.Groups[1].Value
-    $owner = $tout.synapse_git_repository_owner
-    if ($tout.synapse_git_github_host_url -eq "https://github.com")
-    {
-        $GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
-    }
-    else
-    {
-        $GitURL = "github.com/$($owner)/$($tout.synapse_git_repository_name)"
-    }
 
-
-}
+$owner = $tout.adf_git_repository_owner
+$GitURL = "github.com/$($owner)/$($tout.adf_git_repository_name)"
 $GitURL = RemoveRepetitiveChars -string $GitURL -char "/"
 $GitURL = "https://" + $GitURL
 
 
 Write-Host $GitURL
-Write-Host "$($Directory)/$($tout.synapse_git_repository_name)"
-Write-Host "$($tout.synapse_git_repository_branch_name)"
+Write-Host "$($Directory)/$($tout.adf_git_repository_name)"
+Write-Host "$($tout.adf_git_repository_branch_name)"
 
 #Clone Repo
-$FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)"
+$FolderPath = "$($Directory)/$($tout.adf_git_repository_name)"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
-if ($tout.synapse_git_use_pat) {
-    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
-    git -c http.extraHeader="Authorization: Basic $B64Pat" clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)"
+if ($tout.adf_git_use_pat) {
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.adf_git_pat)"))
+    git -c http.extraHeader="Authorization: Basic $B64Pat" clone -b "$($tout.adf_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)"
 } else {
-    git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
+    git clone -b "$($tout.adf_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
 }
-$FolderPath = "$($FolderPath)/$($tout.synapse_git_repository_root_folder)/"
+$FolderPath = "$($FolderPath)/$($tout.adf_git_repository_root_folder)/"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 
 #Check for Folders / Creating Folders
 $repoDirectories = @(
     "", 
-    "/pipeline",
-    "/notebook", 
+    "/pipeline", 
     "/linkedService", 
     "/integrationRuntime", 
     "/managedVirtualNetwork",
     "/managedVirtualNetwork/default", 
     "/managedVirtualNetwork/default/managedPrivateEndpoint", 
-    "/credential")
-<#unused:
-    /dataset
-    /sqlscript
-    /trigger
+    "/factory",
+    "/dataset")
     
-#>
 foreach($repoDirectory in $repoDirectories)
 {
     $fullDir = "$($FolderPath)$($repoDirectory)"
@@ -149,15 +115,14 @@ foreach($repoDirectory in $repoDirectories)
 #NOTE: USE '_' to represent '/' in directories (this will be needed for virtual network)
 $children = [ordered]@{
     pipeline = @("SPL_*.json", "GPL0_*.json","GPL1_*.json", "GPL2_*.json", "GPL-1_*.json", "GPL_*.json"); 
-    notebook = @("NB_*.json");
     linkedService = @("LS_*.json");
     integrationRuntime = @("IR_*.json");
-    credential = @("CR_*.json");
+    dataset = @("GDS_*.json");
+    factory = @("FA_*.json");
     managedVirtualNetwork = @("MVN_*.json");
     managedVirtualNetwork_default_managedPrivateEndpoint = @("MVN_default-managedPrivateEndpoint_*.json");
 }
 #Name = Directory in repo, Value = files to be placed in that directory
-
 foreach($child in $children.GetEnumerator()) {
     $subFolder = $child.Name + "/"
     $subFolder = $subFolder -replace "_", "/"
@@ -168,15 +133,15 @@ foreach($child in $children.GetEnumerator()) {
 }
 
 #Commit and remove
-Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
+Set-Location "$($Directory)/$($tout.adf_git_repository_name)"
 git add .
 Write-Host ("Committing to " + $tout.adf_git_repository_name + "/" + $tout.adf_git_repository_branch_name)
 git commit -m "Deployment commit" --quiet
-if ($tout.synapse_git_use_pat) {
-    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
-    git -c http.extraHeader="Authorization: Basic $B64Pat" push origin $($tout.synapse_git_repository_branch_name)
+if ($tout.adf_git_use_pat) {
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.adf_git_pat)"))
+    git -c http.extraHeader="Authorization: Basic $B64Pat" push origin $($tout.adf_git_repository_branch_name)
 } else {
-    git push origin $($tout.synapse_git_repository_branch_name)
+    git push origin $($tout.adf_git_repository_branch_name)  
 }
 Set-Location $CurrentFolderPath
 Write-Host "Deleting Temporary Repo"

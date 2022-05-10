@@ -255,7 +255,7 @@ if($GenerateArm -eq "true") {
 }
 
 
-if($($tout.synapse_toggle_git_integration)) {
+if($($tout.synapse_git_toggle_integration)) {
     $newfolder = "./output/"
     #LINKED SERVICES
     $folder = "./linkedService/"

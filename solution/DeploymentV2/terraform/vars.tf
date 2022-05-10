@@ -234,7 +234,7 @@ variable "deploy_selfhostedsql" {
   type        = bool
 }
 
-variable "synapse_toggle_git_integration" {
+variable "synapse_git_toggle_integration" {
   description = "Feature toggle for enabling synapse github integration"
   default     = false
   type        = bool
@@ -251,7 +251,7 @@ variable "synapse_git_use_pat" {
   type        = bool
 }
 
-variable "adf_toggle_git_integration" {
+variable "adf_git_toggle_integration" {
   description = "Feature toggle for enabling adf github integration"
   default     = false
   type        = bool
@@ -508,9 +508,20 @@ variable "synapse_git_repository_root_folder" {
   default     = "/"
   type        = string
 }
+variable "synapse_git_github_host_url" {
+  description = "Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com. Use https://github.com for open source repositories. Note: Not used for devops"
+  default     = "https://github.com"
+  type        = string
+}
 variable "synapse_git_devops_project_name" {
   description = "The name of the project to be referenced within devops. Note: Not used for github."
   default     = "/"
+  type        = string
+}
+
+variable "synapse_git_devops_tenant_id" {
+  description = "The tenant id of the devops project. By default it will be valued as your tenant_id. Note: Not used for github."
+  default     = ""
   type        = string
 }
 

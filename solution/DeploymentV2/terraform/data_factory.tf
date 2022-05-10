@@ -5,7 +5,7 @@ resource "azurerm_data_factory" "data_factory" {
   public_network_enabled          = var.is_vnet_isolated == false || var.delay_private_access
   managed_virtual_network_enabled = true
   dynamic "github_configuration" {
-      for_each = ((var.toggle_adf_git_integration) ? [true] : [])
+      for_each = ((var.adf_git_toggle_integration) ? [true] : [])
       content {
         account_name = var.adf_git_repository_owner
         branch_name = var.adf_git_repository_branch_name

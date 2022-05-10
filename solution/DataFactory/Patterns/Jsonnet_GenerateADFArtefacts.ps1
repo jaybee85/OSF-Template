@@ -321,7 +321,8 @@ if($GenerateArm -eq "true") {
 
 #ADF GIT INTEGRATION
 
-if($($tout.synapse_toggle_git_integration)) {
+
+if($($tout.adf_git_toggle_integration)) {
     #LINKED SERVICES
     $folder = "./linkedService/"
     Write-Host "_____________________________"
@@ -346,6 +347,7 @@ if($($tout.synapse_toggle_git_integration)) {
     foreach ($file in $files){
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
         $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "LS_" + $newName
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
     }
     #DATASETS
@@ -449,7 +451,6 @@ if($($tout.synapse_toggle_git_integration)) {
         $newName = ($file.PSChildName).Replace(".libsonnet",".json")
         $newName = $newName.Replace("(DatafactoryName)", $($tout.datafactory_name))
         $newName = "FA_" + $newName
-        write-host $newName
         (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
     }
 
@@ -467,4 +468,6 @@ if($($tout.synapse_toggle_git_integration)) {
     }
    
 }
+
+
 

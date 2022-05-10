@@ -44,14 +44,30 @@ inputs = {
 
   purview_name = "dlzdev07purv"
 
-  synapse_toggle_git_integration = true
-  synapse_git_account_name = "hugosharpe"
+  synapse_git_toggle_integration = true
+  synapse_git_integration_type = "devops"
+  synapse_git_repository_owner = "hugosharpe"
   synapse_git_repository_name = "lockBoxProject"
  // NOT USED - synapse_git_repository_base_url = "https://dev.azure.com/hugosharpe/_git/lockBoxProject"
   synapse_git_repository_branch_name = "dlzdev07"
   synapse_git_repository_root_folder = "/Synapse"
-  synapse_git_integration_type = "devops"
   synapse_git_devops_project_name = "lockBoxProject"
   synapse_git_use_pat = true
   synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
+
+  /*synapse_git_toggle_integration = true
+  synapse_git_repository_owner = "h-sha"
+  synapse_git_repository_name = "testLockbox"
+  synapse_git_repository_branch_name = "dlz07Test"
+  synapse_git_repository_root_folder = "/Synapse"
+  synapse_git_use_pat = false
+  synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"*/
+
+  adf_git_toggle_integration = true
+  adf_git_repository_owner = "h-sha"
+  adf_git_repository_name = "testLockbox"
+  adf_git_repository_branch_name = "dlz07Test"
+  adf_git_repository_root_folder = "/ADF"
+  adf_git_use_pat = false
+  adf_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
 } 
