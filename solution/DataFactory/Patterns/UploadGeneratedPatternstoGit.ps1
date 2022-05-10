@@ -64,9 +64,8 @@ function UploadADFItem ($items, $directory, $subFolder) {
 New-Item -Path "$($baseDirectory)" -Name "$($folderName)" -ItemType "directory"
 
 $owner = $tout.adf_git_repository_owner
-$GitURL = "github.com/$($owner)/$($tout.adf_git_repository_name)"
-$GitURL = RemoveRepetitiveChars -string $GitURL -char "/"
-$GitURL = "https://" + $GitURL
+$GitURL = "$($tout.adf_git_host_url)/$($owner)/$($tout.adf_git_repository_name)"
+
 
 
 Write-Host $GitURL
