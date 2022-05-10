@@ -29,15 +29,26 @@ if($($tout.adf_git_toggle_integration)) {
     $files = (Get-ChildItem -Path $folder -Filter "GLS*" -Verbose)
     foreach ($ir in $tout.integration_runtimes)
     {    
-        $shortName = $ir.short_name
-        $fullName = $ir.name
-        foreach ($file in $files){
-            $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
-            $newName = ($file.PSChildName).Replace(".libsonnet",".json")
-            $newName = "LS_" + $newName
-            $newName = $newname.Replace("(IRName)", $shortName)
-            (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+
+
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+        {
+            #we dont want to generate anything for an on-prem IR if they are not registered
+
         }
+        else {
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            foreach ($file in $files){
+                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                $newName = "LS_" + $newName
+                $newName = $newname.Replace("(IRName)", $shortName)
+                (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+            }
+        }
+
+
     }
     #SLS
     $files = (Get-ChildItem -Path $folder -Filter "SLS*" -Verbose)
@@ -55,15 +66,22 @@ if($($tout.adf_git_toggle_integration)) {
     #GDS
     $files = (Get-ChildItem -Path $folder -Filter "GDS*" -Verbose)
     foreach ($ir in $tout.integration_runtimes)
-    {    
-        $shortName = $ir.short_name
-        $fullName = $ir.name
-        foreach ($file in $files){
-            $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
-            $newName = ($file.PSChildName).Replace(".libsonnet",".json")
-            $newName = $newname.Replace("(IRName)", $shortName)
-            (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+    {
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+        {
+            #we dont want to generate anything for an on-prem IR if they are not registered
         }
+        else {    
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            foreach ($file in $files){
+                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                $newName = $newname.Replace("(IRName)", $shortName)
+                (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+            }
+        }
+
     }
 
     #MANAGED VIRTUAL NETWORK
@@ -107,34 +125,41 @@ if($($tout.adf_git_toggle_integration)) {
     Write-Host "_____________________________"
     #IR
     foreach ($ir in $tout.integration_runtimes)
-    {    
-        $shortName = $ir.short_name
-        $fullName = $ir.name
-        if($ir.is_azure)
+    {
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
         {
-            $files = (Get-ChildItem -Path $folder -Filter *is_azure*)
-            foreach ($file in $files)
+            #we dont want to generate anything for an on-prem IR if they are not registered
+        }
+        else {   
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            if($ir.is_azure)
             {
-                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
-                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
-                $newName = $newName.Replace("[is_azure]", "")
-                $newName = $newName.Replace("(IRName)", $shortName)
-                $newName = "IR_" + $newName
-                (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+                $files = (Get-ChildItem -Path $folder -Filter *is_azure*)
+                foreach ($file in $files)
+                {
+                    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                    $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                    $newName = $newName.Replace("[is_azure]", "")
+                    $newName = $newName.Replace("(IRName)", $shortName)
+                    $newName = "IR_" + $newName
+                    (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+                }
+            }
+            else
+            { 
+                $files = (Get-ChildItem -Path $folder -Exclude *is_azure*)
+                foreach ($file in $files)
+                {
+                    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                    $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                    $newName = $newName.Replace("(IRName)", $shortName)
+                    $newName = "IR_" + $newName
+                    (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+                }
             }
         }
-        else
-        { 
-            $files = (Get-ChildItem -Path $folder -Exclude *is_azure*)
-            foreach ($file in $files)
-            {
-                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
-                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
-                $newName = $newName.Replace("(IRName)", $shortName)
-                $newName = "IR_" + $newName
-                (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
-            }
-        }
+
 
     }
     $folder = "./factory/"

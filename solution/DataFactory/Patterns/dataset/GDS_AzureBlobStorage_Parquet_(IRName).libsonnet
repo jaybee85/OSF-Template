@@ -2,7 +2,7 @@ function(shortIRName = "", fullIRName = "") {
 	"name": "GDS_AzureBlobStorage_Parquet_" + shortIRName,
     "properties": {
         "linkedServiceName": {
-            "referenceName": "GenericBlobStorage_" + shortIRName,
+            "referenceName": "GLS_AzureBlobStorage_" + shortIRName,
             "type": "LinkedServiceReference",
             "parameters": {
                 "StorageAccountEndpoint": {
