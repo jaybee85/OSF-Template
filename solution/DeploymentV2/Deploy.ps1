@@ -75,6 +75,11 @@ if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 }
 
 
+#accept custom image terms
+#https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
+
+#az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest
+
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 

@@ -289,4 +289,6 @@ if ($PersistEnv -eq "Yes")
     
     
     $environmentFileContents | Set-Content $environmentFileTarget
+
+
 }

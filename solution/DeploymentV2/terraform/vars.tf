@@ -234,6 +234,12 @@ variable "deploy_selfhostedsql" {
   type        = bool
 }
 
+variable "deploy_h2o-ai" {
+  description = "Feature toggle for deploying H2O-AI VM"
+  default     = false
+  type        = bool
+}
+
 variable "synapse_git_toggle_integration" {
   description = "Feature toggle for enabling synapse github integration"
   default     = false

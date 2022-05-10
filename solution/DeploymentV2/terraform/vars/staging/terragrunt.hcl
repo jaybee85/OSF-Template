@@ -41,6 +41,7 @@ inputs = {
   deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = false
   is_onprem_datafactory_ir_registered   = false
+  deploy_h2o-ai = false
 
   purview_name = "dlzdev07purv"
 
