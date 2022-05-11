@@ -1,0 +1,113 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "australiaeast"
+    },
+    "environment": {
+      "value": "dev"
+    },
+    "prefix": {
+      "value": "dlz01"
+    },
+    "tags": {
+      "value": {}
+    },
+    "vnetAddressPrefix": {
+      "value": "10.1.0.0/16"
+    },
+    "servicesSubnetAddressPrefix": {
+      "value": "10.1.0.0/24"
+    },
+    "databricksIntegrationPublicSubnetAddressPrefix": {
+      "value": "10.1.1.0/24"
+    },
+    "databricksIntegrationPrivateSubnetAddressPrefix": {
+      "value": "10.1.2.0/24"
+    },
+    "databricksProductPublicSubnetAddressPrefix": {
+      "value": "10.1.3.0/24"
+    },
+    "databricksProductPrivateSubnetAddressPrefix": {
+      "value": "10.1.4.0/24"
+    },
+    "powerBiGatewaySubnetAddressPrefix": {
+      "value": "10.1.5.0/24"
+    },
+    "dataIntegration001SubnetAddressPrefix": {
+      "value": "10.1.6.0/24"
+    },
+    "dataIntegration002SubnetAddressPrefix": {
+      "value": "10.1.7.0/24"
+    },
+    "dataProduct001SubnetAddressPrefix": {
+      "value": "10.1.8.0/24"
+    },
+    "dataProduct002SubnetAddressPrefix": {
+      "value": "10.1.9.0/24"
+    },
+    "dataManagementZoneVnetId": {
+      "value": ""
+    },
+    "firewallPrivateIp": {
+      "value": "10.0.0.4"
+    },
+    "dnsServerAdresses": {
+      "value": [
+        "10.0.0.4"
+      ]
+    },
+    "administratorPassword": {
+      "value": "<your-secure-password>"
+    },
+    "purviewId": {
+      "value": "/subscriptions/035a1364-f00d-48e2-b582-4fe125905ee3/resourceGroups/dmz99-dev-governance/providers/Microsoft.Purview/accounts/dmz99-dev-purview001"
+    },
+    "purviewManagedStorageId": {
+      "value": "/subscriptions/035a1364-f00d-48e2-b582-4fe125905ee3/resourceGroups/dmz99-dev-purview001/providers/Microsoft.Storage/storageAccounts/scanaustraliaeastsvlhblh"
+    },
+    "purviewManagedEventHubId": {
+      "value": "/subscriptions/035a1364-f00d-48e2-b582-4fe125905ee3/resourceGroups/dmz99-dev-purview001/providers/Microsoft.EventHub/namespaces/Atlas-4d0800fa-41f3-4ea1-b05a-32e20bd758ed"
+    },
+    "purviewSelfHostedIntegrationRuntimeAuthKey": {
+      "value": ""
+    },
+    "deploySelfHostedIntegrationRuntimes": {
+      "value": true
+    },
+    "dataLandingZoneSubscriptionIds": {
+      "value": []
+    },
+    "privateDnsZoneIdKeyVault": {
+      "value": ""
+    },
+    "privateDnsZoneIdDataFactory": {
+      "value": ""
+    },
+    "privateDnsZoneIdDataFactoryPortal": {
+      "value": ""
+    },
+    "privateDnsZoneIdBlob": {
+      "value": ""
+    },
+    "privateDnsZoneIdDfs": {
+      "value": ""
+    },
+    "privateDnsZoneIdSqlServer": {
+      "value": ""
+    },
+    "privateDnsZoneIdMySqlServer": {
+      "value": ""
+    },
+    "privateDnsZoneIdEventhubNamespace": {
+      "value": ""
+    },
+    "privateDnsZoneIdSynapseDev": {
+      "value": ""
+    },
+    "privateDnsZoneIdSynapseSql": {
+      "value": ""
+    }
+  }
+}
