@@ -229,7 +229,7 @@ local Template_REST_API_to_Azure_Storage = function(SourceType, SourceFormat, Ta
     Template_Execute_SQL_Statement("AzureSqlTable","NA","AzureSqlTable","NA"),    
     Template_Execute_SQL_Statement("AzureSqlDWTable","NA","AzureSqlDWTable","NA")        
 ]
-
+/*
 + 
 #REST API to Azure Storage 
 [ 
@@ -242,3 +242,4 @@ local Template_REST_API_to_Azure_Storage = function(SourceType, SourceFormat, Ta
     Template_REST_API_to_Azure_Storage("Rest","ServicePrincipal","AzureBlobStorage","Json"),
     Template_REST_API_to_Azure_Storage("Rest","ServicePrincipal","AzureBlobFS","Json")
 ]
+*/

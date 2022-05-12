@@ -45,7 +45,7 @@ inputs = {
 
   purview_name = "dlzdev07purv"
 
-  synapse_git_toggle_integration = true
+  synapse_git_toggle_integration = false
   synapse_git_integration_type = "devops"
   synapse_git_repository_owner = "hugosharpe"
   synapse_git_repository_name = "lockBoxProject"
@@ -64,7 +64,7 @@ inputs = {
   synapse_git_use_pat = false
   synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"*/
 
-  adf_git_toggle_integration = true
+  adf_git_toggle_integration = false
   adf_git_repository_owner = "h-sha"
   adf_git_repository_name = "testLockbox"
   adf_git_repository_branch_name = "dlz07Test"

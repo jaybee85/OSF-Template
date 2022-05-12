@@ -148,7 +148,7 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
 }
 
 resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
-  count                = var.deploy_synapse && !var.synapse_git_toggle_integration ? 1 : 0
+  count                = var.deploy_synapse ? 1 : 0
   name                 = "SLS_AzureKeyVault"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureKeyVault"
@@ -165,7 +165,7 @@ JSON
 }
 
 resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
-  count                = var.deploy_synapse && !var.synapse_git_toggle_integration ? 1 : 0
+  count                = var.deploy_synapse ? 1 : 0
   name                 = "SLS_AzureFunctionApp"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureFunction"
