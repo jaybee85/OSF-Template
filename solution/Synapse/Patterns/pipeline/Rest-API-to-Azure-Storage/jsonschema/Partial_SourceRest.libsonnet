@@ -5,12 +5,12 @@ function()
         "Type": {
             "type": "string",                    
             "enum": [
-                "RestAPI"
+                "Rest"
             ],
             "options": {
                 "hidden":true,
             },
-            "default":"RestAPI"
+            "default":"Rest"
         },
         "RelativeUrl": {
             "type": "string",

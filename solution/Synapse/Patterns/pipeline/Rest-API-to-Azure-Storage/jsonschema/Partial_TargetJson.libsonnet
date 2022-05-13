@@ -30,6 +30,17 @@ function()
                 },
                 "infoText": "Name of the file that will hold the extracted data"
             }
+        },
+        "PartitionSize": {
+            "type": "string",
+            "default": "Multiple",
+            "enum": [
+                "Single",
+                "Multiple"
+            ],
+            "options": {
+                "infoText": "This is used to decide whether the spark cluster will save the file as multiple parts or use a single partition to save them as a single part. WARNING: This can affect performance on larger sets of data."
+            }
         }
     },
     "required": [
