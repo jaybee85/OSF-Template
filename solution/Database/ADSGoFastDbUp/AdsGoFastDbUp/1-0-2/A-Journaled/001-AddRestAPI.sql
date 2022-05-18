@@ -12,7 +12,7 @@ INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [
 GO
 */
 
-INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-17, N'Sample - REST API No Auth', N'Rest', N'Sample REST API catfacts', N'(baseurl?)', N'MSI', NULL, NULL, N'https://$KeyVaultName$.vault.azure.net/', N'{         "BaseUrl" : "https://catfact.ninja"  , "headers" : "{}"    }', 1, 1, NULL)
+INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-17, N'Sample - REST API No Auth', N'Rest', N'Sample REST API catfacts', N'(baseurl?)', N'MSI', NULL, NULL, N'https://$KeyVaultName$.vault.azure.net/', N'{         "BaseUrl" : "https://catfact.ninja"  , "headers" : "{}", "NextPageUrlKey" : "next_page_url"    }', 1, 1, NULL)
 GO
 INSERT [dbo].[SourceAndTargetSystems] ([SystemId], [SystemName], [SystemType], [SystemDescription], [SystemServer], [SystemAuthType], [SystemUserName], [SystemSecretName], [SystemKeyVaultBaseUrl], [SystemJSON], [ActiveYN], [IsExternal], [DataFactoryIR]) VALUES (-18, N'Sample - REST API Twitter with Auth', N'Rest', N'Sample REST API twitter', N'(baseurl?)', N'MSI', NULL, NULL, N'https://$KeyVaultName$.vault.azure.net/', N'{         "BaseUrl" : "https://api.twitter.com/2"  , "headers" : "{        \"Authorization\": \"Bearer $InsertSecret($KeyVault(ark-stg-kv-ads-xjp4).$SecretName(bearerToken).$LinkedServiceName(SLS_AzureKeyVault))$END\"}"    }', 1, 1, NULL)
 GO
@@ -27,7 +27,7 @@ GO
 /* OLD (ADF)
 INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Rest', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "BaseUrl": {      "type": "string",     }, "UserName": {      "type": "string",     },  "ClientId": {      "type": "string",     }, "AadResourceId": {      "type": "string",     }, "ServicePrincipalId": {      "type": "string",     },  "TenantId": {      "type": "string",     }, "TokenEndpoint": {      "type": "string",     }, "PasswordKeyVaultSecretName": {      "type": "string",     }  },  "required": [    "BaseUrl"  ]}')
 */
-INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Rest', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "BaseUrl": {      "type": "string"     }, "headers": {      "type": "string"     }  },  "required": [    "BaseUrl", "headers"  ]}')
+INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Rest', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "BaseUrl": {      "type": "string"     }, "NextPageUrlKey": {      "type": "string"     }, "headers": {      "type": "string"     }  },  "required": [    "BaseUrl", "headers"  ]}')
 GO
 /* TASK TYPE FOR REST API (Rest) */
 SET IDENTITY_INSERT [dbo].[TaskType] ON 
@@ -44,6 +44,8 @@ GO
 INSERT [dbo].[IntegrationRuntimeMapping] ([IntegrationRuntimeMappingId], [IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN]) VALUES (13, 1, 'Azure', -18, 1)
 GO
 INSERT [dbo].[IntegrationRuntimeMapping] ([IntegrationRuntimeMappingId], [IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN]) VALUES (14, 1, 'Azure', -19, 1)
-
+GO
+INSERT [dbo].[IntegrationRuntimeMapping] ([IntegrationRuntimeMappingId], [IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN]) VALUES (15, 1, 'Azure', -20, 1)
+GO
 SET IDENTITY_INSERT [dbo].[IntegrationRuntimeMapping] OFF
 GO

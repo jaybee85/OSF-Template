@@ -35,9 +35,9 @@ local tests =
         "TargetDeleteAfterCompletion":"false",
         "TargetWriteSchemaToPurview": "Disabled",
 
-        "ExecuteNotebook": "Notebook1",
+        "ExecuteNotebook": "SampleNotebook",
         "CustomDefinitions": "",
-        "Description": "Execute Notebook test - by default this execute the Notebook1 provided within the synapse deployment.",  
+        "Description": "Execute Notebook test - by default this execute the SampleNotebook provided within the synapse deployment.",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
         "Purview": "Disabled",
         "QualifiedIDAssociation": "TaskMasterId", 

@@ -2,26 +2,26 @@ local commons = import '../../../static/partials/functionapptest_commons.libsonn
 local vars = import '../../../static/partials/secrets.libsonnet';
 function(
     SynapsePipeline = "GPL_SparkNotebookExecution_Azure",
+    TestDescription = "",
     Pattern = "REST API to Azure Storage",
     TestNumber = "-1",
     SourceFormat = "Rest",
+    SourceSystemId = 0,
     SourceType = "Rest",
+    SourceSystemAuthType = "MSI",
     SourceRelativeUrl = "", 
     SourceRequestBody = "",
     SourceRequestMethod = "GET",
-    SourceSystemAuthType = "MSI",
-    SourceMaxConcurrentConnections = 0,
+    TargetSystemAuthType = "MSI",
     TargetFormat = "Json",
     TargetType = "Json",
     TargetDataFilename = "Test.Json",
     TargetRelativePath = "",
-    TargetSystemAuthType = "MSI",
-    TestDescription = "",
+    ExecuteNotebook = "RestAPINotebook",
     Purview = "Disabled",
     QualifiedIDAssociation = "TaskMasterId",
     UseNotebookActivity = "Enabled",
-    PartitionSize = "Single",
-    ExecuteNotebook = "RestAPINotebook"
+    PartitionSize = "Single"
     )
 {
     local TaskMasterJson =     
@@ -87,7 +87,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test. NOTE: Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",
+    "TestDescription": "[" + TestNumber + "] " + TestDescription,
     "DependencyChainTag": "", 
     "UseNotebookActivity": UseNotebookActivity
 }+commons
