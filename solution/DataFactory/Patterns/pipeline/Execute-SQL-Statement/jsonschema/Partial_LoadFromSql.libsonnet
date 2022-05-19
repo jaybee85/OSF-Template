@@ -20,7 +20,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. dbo"
                         }, 
-                        "infoText": "The schema of the table to extract."
+                        "infoText": "(optional) The schema of the table to extract."
                     },
                     "default":""
 
@@ -31,7 +31,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Customer"
                         }, 
-                        "infoText": "The name of the table to extract."
+                        "infoText": "(optional) The name of the table to extract."
                     },
                     "default":""
                 },

@@ -12,24 +12,8 @@ GO
 
 ALTER TABLE TaskMaster
     SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskMaster));
+GO
 	
-ALTER TABLE TaskMasterDependency
-   DROP COLUMN ValidFrom;
-GO
-ALTER TABLE TaskMasterDependency
-   DROP COLUMN ValidTo;
-GO
-ALTER TABLE TaskMasterDependency
-    ADD
-        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
-            CONSTRAINT DF_TaskMasterDependency_ValidFrom DEFAULT SYSUTCDATETIME()
-      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
-            CONSTRAINT DF_TaskMasterDependency_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
-      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
-GO
-
-ALTER TABLE TaskMasterDependency
-    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskMasterDependency));
 
 ALTER TABLE TaskGroup
     ADD
@@ -42,6 +26,7 @@ GO
 
 ALTER TABLE TaskGroup
     SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskGroup));
+GO
 
 ALTER TABLE SourceAndTargetSystems
     ADD
@@ -54,6 +39,7 @@ GO
 
 ALTER TABLE SourceAndTargetSystems
     SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.SourceAndTargetSystems));
+GO
 	
 ALTER TABLE TaskInstance
     ADD
@@ -66,4 +52,69 @@ GO
 
 ALTER TABLE TaskInstance
     SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskInstance));
-	
+GO
+
+ALTER TABLE TaskMasterWaterMark
+    ADD
+        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
+            CONSTRAINT DF_TaskMasterWaterMark_ValidFrom DEFAULT SYSUTCDATETIME()
+      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
+            CONSTRAINT DF_TaskMasterWaterMark_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
+      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+GO
+
+ALTER TABLE TaskMasterWaterMark
+    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskMasterWaterMark));
+GO
+
+ALTER TABLE TaskMasterDependency
+    ADD
+        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
+            CONSTRAINT DF_TaskMasterDependency_ValidFrom DEFAULT SYSUTCDATETIME()
+      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
+            CONSTRAINT DF_TaskMasterDependency_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
+      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+GO
+
+ALTER TABLE TaskMasterDependency
+    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.TaskMasterDependency));
+GO
+
+ALTER TABLE ScheduleMaster
+    ADD
+        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
+            CONSTRAINT DF_ScheduleMaster_ValidFrom DEFAULT SYSUTCDATETIME()
+      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
+            CONSTRAINT DF_ScheduleMaster_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
+      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+GO
+
+ALTER TABLE ScheduleMaster
+    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.ScheduleMaster));
+GO
+
+ALTER TABLE ExecutionEngine
+    ADD
+        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
+            CONSTRAINT DF_ExecutionEngine_ValidFrom DEFAULT SYSUTCDATETIME()
+      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
+            CONSTRAINT DF_ExecutionEngine_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
+      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+GO
+
+ALTER TABLE ExecutionEngine
+    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.ExecutionEngine));
+GO
+
+ALTER TABLE IntegrationRuntime
+    ADD
+        ValidFrom DATETIME2 GENERATED ALWAYS AS ROW START HIDDEN
+            CONSTRAINT DF_IntegrationRuntime_ValidFrom DEFAULT SYSUTCDATETIME()
+      , ValidTo DATETIME2 GENERATED ALWAYS AS ROW END HIDDEN
+            CONSTRAINT DF_IntegrationRuntime_ValidTo DEFAULT CONVERT(DATETIME2, '9999-12-31 23:59:59.9999999')
+      , PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+GO
+
+ALTER TABLE IntegrationRuntime
+    SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = History.IntegrationRuntime));
+GO

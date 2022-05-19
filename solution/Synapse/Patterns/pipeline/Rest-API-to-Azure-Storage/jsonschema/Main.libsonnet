@@ -18,7 +18,7 @@ function(SourceType = "", SourceFormat = "Rest",TargetType = "", TargetFormat = 
                 "Disabled"
             ],
             "options": {
-                "infoText": "Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine."
+                "infoText": "(required) Use this to enable the pipeline to be written to purview. Note: This will not work if Purview is not enabled and configured with the ExecutionEngine."
             }
         },
         "QualifiedIDAssociation": {
@@ -29,7 +29,7 @@ function(SourceType = "", SourceFormat = "Rest",TargetType = "", TargetFormat = 
                 "TaskMasterId"
             ],
             "options": {
-                "infoText": "This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage."
+                "infoText": "(optional) This is used to enable Purview to direct the QualifiedID (UID) to attach itself to the relevant ID. Note: If attached to the ExecutionID each indiviudal run of the pipeline with have a lineage."
             }
         }, 
         "ExecuteNotebook": {
@@ -38,7 +38,7 @@ function(SourceType = "", SourceFormat = "Rest",TargetType = "", TargetFormat = 
                 "inputAttributes": {
                     "placeholder": "RestAPINotebook"
                 },
-                "infoText": "WARNING: Only change this if you wish to use a custom notebook for the REST API procedure."
+                "infoText": "(required) WARNING: Only change this if you wish to use a custom notebook for the REST API procedure."
             },
             "default":"RestAPINotebook"
         },
@@ -52,7 +52,7 @@ function(SourceType = "", SourceFormat = "Rest",TargetType = "", TargetFormat = 
                 "Disabled"
             ],
             "options": {
-                "infoText": "This flag is used to control the method used to call the Synapse Notebook that carries out the processing. When Enabled the default notebook activity type within Synapse pipelines will be used. Note that this will force a new spark session for each job execution. By leaving this flag disabled an Azure Function is used to call the notebook and Spark Sessions will be reused if available."
+                "infoText": "(required) This flag is used to control the method used to call the Synapse Notebook that carries out the processing. When Enabled the default notebook activity type within Synapse pipelines will be used. Note that this will force a new spark session for each job execution. By leaving this flag disabled an Azure Function is used to call the notebook and Spark Sessions will be reused if available."
             }
         }
     },
