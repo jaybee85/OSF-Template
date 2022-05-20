@@ -8,7 +8,7 @@
 SynapseIntegrationPipelineRuns
 | where Status in ("Succeeded", "Failed", "Cancelled")
         and TimeGenerated > datetime({MaxPipelineTimeGenerated})
-        and ResourceId == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}"
+        and _ResourceId == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}"
 | extend        TaskInstanceId =    coalesce(toint(parse_json(tostring(parse_json(Parameters).Body)).TaskInstanceId),
                                         coalesce(toint(parse_json(tostring(parse_json(Parameters).TaskObject)).TaskInstanceId),
                                              toint( parse_json(tostring(parse_json(Parameters))).TaskInstanceId)
