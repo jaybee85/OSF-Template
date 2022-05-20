@@ -226,7 +226,7 @@ if ($PersistEnv -eq "Yes")
     # Templated Configurations
     #------------------------------------------------------------------------------------------------------------
 
-    $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS') -Prompt "Select deployment fast start template"
+    $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS', 'Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines', 'Lockbox Light Including Vnet & Networking') -Prompt "Select deployment fast start template"
     if ($templateName -eq "Quit")
     {
         Exit
@@ -247,7 +247,8 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
         $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
 
     if ($templateName -eq "Minimal-NoVNET,No Purview, No Synapse")
@@ -265,7 +266,8 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
         $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
 
     if ($templateName -eq "FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS")
@@ -283,9 +285,47 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","true")
         $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
-    
+
+        if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
+    {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
+    } 
+
+            if ($templateName -eq "Lockbox Light Including Vnet & Networking")
+    {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
+    } 
     
     
     $environmentFileContents | Set-Content $environmentFileTarget

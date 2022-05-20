@@ -139,7 +139,7 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
   count                = var.deploy_synapse ? 1 : 0
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
-  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+  principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     azurerm_synapse_firewall_rule.cicd

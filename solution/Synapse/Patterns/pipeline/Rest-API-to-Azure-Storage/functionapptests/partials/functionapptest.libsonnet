@@ -21,7 +21,8 @@ function(
     Purview = "Disabled",
     QualifiedIDAssociation = "TaskMasterId",
     UseNotebookActivity = "Enabled",
-    PartitionSize = "Single"
+    PartitionSize = "Single",
+    Pagination = "Disabled"
     )
 {
     local TaskMasterJson =     
@@ -30,6 +31,7 @@ function(
         "Purview": Purview,
         "QualifiedIDAssociation": QualifiedIDAssociation,
         "PartitionSize": PartitionSize,
+        "Pagination": Pagination,
         "Source":{
             "Type": SourceFormat,
             "RelativeUrl": SourceRelativeUrl,
