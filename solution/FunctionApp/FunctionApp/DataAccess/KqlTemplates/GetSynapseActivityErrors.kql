@@ -6,5 +6,49 @@
 //-----------------------------------------------------------------------*/
 
 SynapseIntegrationActivityRuns
-        | where TimeGenerated >  datetime({MaxActivityTimeGenerated}) and Status in ("Failed")  
-            and _ResourceId  == "/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}"
+| where TimeGenerated >  datetime({MaxActivityTimeGenerated}) and Status in ("Failed")  
+  and tolower(_ResourceId)  == tolower("/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/{ResourceGroupName}/PROVIDERS/MICROSOFT.SYNAPSE/WORKSPACES/{EngineName}")           
+| extend  SourceSystem = "Azure",
+          ResourceId = _ResourceId, 
+          ActivityIterationCount = 1, 
+          LinkedServiceName="N/A",
+          FailureType="N/A", 
+          Input="N/A", 
+          Output="N/A", 
+          ErrorCode="",
+          ErrorMessage="N/A Synapse does not provide error in logs", 
+          Error="",
+          EventMessage=""
+| project 
+    //EngineId
+    TenantId,    
+    SourceSystem,
+    TimeGenerated,
+    ResourceId, 
+    OperationName,
+    Category,
+    CorrelationId,
+    Level,
+    Location,
+    Tags,
+    Status, 
+    UserProperties,
+    Annotations,
+    EventMessage, 
+    Start, 
+    ActivityName,
+    ActivityRunId,
+    PipelineRunId,
+    EffectiveIntegrationRuntime,
+    ActivityType,
+    ActivityIterationCount,
+    LinkedServiceName,
+    End,
+    FailureType,
+    PipelineName,
+    Input,
+    Output,
+    ErrorCode,
+    ErrorMessage,
+    Error,
+    Type    
