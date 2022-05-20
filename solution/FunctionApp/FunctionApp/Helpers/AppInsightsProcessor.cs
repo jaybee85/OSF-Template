@@ -33,7 +33,13 @@ namespace FunctionApp.Helpers
         private bool OKtoSend(ITelemetry item)
         {
             var dependency = item as DependencyTelemetry;
-            if (dependency.ResultCode == "Canceled" && dependency.Name == "GET /api/RunFrameworkTasksHttpTrigger") return false;
+            if (dependency != null)
+            {
+                if (dependency.ResultCode == "Canceled" &&  dependency.Name == "GET //api/RunFrameworkTasksHttpTrigger" || dependency.Name == "GET /api/RunFrameworkTasksHttpTrigger")
+                { 
+                    return false; 
+                }
+            }
 
             return true;
         }

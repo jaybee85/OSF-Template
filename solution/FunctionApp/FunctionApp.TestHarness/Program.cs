@@ -441,8 +441,8 @@ namespace FunctionApp.TestHarness
 
         public async Task DebugPrepareFrameworkTasks()
         {
-            TelemetryConfiguration tc = new TelemetryConfiguration();
-            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(tc, _options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory, _integrationRuntimeMappingProvider);
+
+            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger( _options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory, _integrationRuntimeMappingProvider);
             c.HeartBeatFolder = "./heartbeats/";
             await c.PrepareFrameworkTasksCore(_funcAppLogger);
         }
@@ -473,9 +473,8 @@ namespace FunctionApp.TestHarness
         }
 
         public async Task DebugRunFrameworkTasksTimerTrigger()
-        {
-            TelemetryConfiguration tc = new TelemetryConfiguration();
-            FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger(tc,_options, _taskMetaDataDatabase, _httpClientFactory);
+        {            
+            FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger( _options, _taskMetaDataDatabase, _httpClientFactory);
             c.HeartBeatFolder = "./";
             await c.Core(_logger);
         }
