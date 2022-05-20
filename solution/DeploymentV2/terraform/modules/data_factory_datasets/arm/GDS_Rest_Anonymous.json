@@ -40,9 +40,18 @@
 				"BaseUrl": {
                 "type": "string"
 				},
-				"RelativePath": {
+				"RelativeUrl": {
+					"type": "string"
+				},
+				"RequestMethod": 
+				{
+					"type": "string"
+				},
+				"RequestBody": 
+				{
 					"type": "string"
 				}
+
 			},
 			"folder": {
 				"name": "[concat('ADS Go Fast/Generic/', parameters('integrationRuntimeName'))]"
@@ -51,9 +60,17 @@
 			"type": "RestResource",
 			"typeProperties": {
             	"relativeUrl": {
-					"value": "@dataset().RelativePath",
+					"value": "@dataset().RelativeUrl",
 					"type": "Expression"
-            	}
+            	},
+				"requestMethod": {
+					"value": "@dataset().RequestMethod",
+					"type": "Expression"
+				},
+				"requestBody": {
+					"value": "@dataset().RequestBody",
+					"type": "Expression"
+				}
         	}
 		},
 		"type": "Microsoft.DataFactory/factories/datasets"

@@ -1,5 +1,6 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
+$newfolder = "./output/"
 
 
 #Generate Patterns.json
@@ -20,7 +21,8 @@ else
 Get-ChildItem ./output | foreach {
     Remove-item $_ -force
 }
-
+#create tout json to be used for git integration
+$toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.json")
 #Copy Static Pipelines
 $folder = "./pipeline/static"
 $templates = (Get-ChildItem -Path $folder -Filter "*.json"  -Verbose)
@@ -251,3 +253,127 @@ if($GenerateArm -eq "true") {
     }
     Write-Host "Copied $($templates.Count) to Static Hosted Pipelines Module in Terraform folder"
 }
+
+
+if($($tout.synapse_git_toggle_integration)) {
+    $newfolder = "./output/"
+    #LINKED SERVICES
+    $folder = "./linkedService/"
+    $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse linked services for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $templates){
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "LS_" + $newName
+        $newName = $newName.Replace("(workspaceName)", $($tout.synapse_workspace_name))
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+    #NOTEBOOKS
+    $folder = "./notebook/"
+    $notebooks = (Get-ChildItem -Path $folder -Filter "*.ipynb" -Verbose)
+    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "*.libsonnet"  -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse notebooks for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $notebooks){
+        $jsonobject = $file | Get-Content 
+        $newName = ($file.PSChildName).Replace(".ipynb",".json")
+        $newName = "NB_" + $newName
+        $jsonobject | Set-Content($newfolder + "cells.json") -Force
+        $jsonobject = (Get-ChildItem -Path ($newfolder) -Filter "cells.json" -Verbose)
+        $jsonobject = $jsonobject | Get-Content | ConvertFrom-Json -Depth 50
+        $cells = $jsonobject.cells
+        #write-host $cells
+        $notebookName = $file.BaseName
+        (jsonnet --tla-str notebookName="$notebookName" $schemafiletemplate | Set-Content($newfolder + $newName) -Force)
+
+    }
+    #delete cells temp file
+    Remove-Item "$($newfolder)/cells.json"
+
+    #INTEGRATED RUNTIMES
+
+    $folder = "./integrationRuntime/"
+    $IRS = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse integration runtimes for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $IRS)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "IR_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+
+    }
+
+    #CREDENTIAL
+    $folder = "./credential/"
+    $credentials = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse credentials for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $credentials)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "CR_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+
+    }
+    #MANAGED VIRTUAL NETWORK
+
+    $folder = "./managedVirtualNetwork/"
+    $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse managed virtual networks for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $files)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "MVN_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #managedPrivateEndpoint/default folder within MANAGED VIRTUAL NETWORK
+    $folder = "./managedVirtualNetwork/default/managedPrivateEndpoint"
+    #if our vnet isolation isnt on, we only want the standard files
+    if (!$tout.is_vnet_isolated) {
+        $files = (Get-ChildItem -Path $folder -Exclude *is_vnet_isolated*)
+    } else {
+        $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+
+    }
+    Write-Host "_____________________________"
+    Write-Host "Generating Synapse managed private endpoints for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $files)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "MVN_default-managedPrivateEndpoint_" + $newName
+        $newName = $newName.Replace("[is_vnet_isolated]", "")
+        $newName = $newName.Replace("(workspaceName)", $($tout.synapse_workspace_name))
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #REPLACING FQDNS grabbed from az synapse
+    #REASON: FQDNS Contains a GUID on these files that I cannot identify where it is retrieved from otherwise
+
+    $files = (Get-ChildItem -Path $newFolder -Filter *fqdns*)
+    foreach ($file in $files)
+    {
+        $fileSysObj = Get-Content $file -raw | ConvertFrom-Json
+        $fileAZ = az synapse managed-private-endpoints show --workspace-name $($tout.synapse_workspace_name) --pe-name $fileSysObj.name
+        $fileAZ = $fileAZ | ConvertFrom-Json
+        $fileSysObj.properties.fqdns = $fileAZ.properties.fqdns
+        $newName = $($file.PSChildName).Replace("{fqdns}", "")
+        $fileSysObj | ConvertTo-Json -depth 32| Set-Content($($newfolder) + $($newName))
+    }
+
+
+}
+

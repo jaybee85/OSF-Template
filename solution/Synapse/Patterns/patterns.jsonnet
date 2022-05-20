@@ -24,6 +24,20 @@ local Template_Execute_Notebook = function(SourceType, SourceFormat, TargetType,
 
 };
 
+local Template_Rest_API_to_Azure_Storage = function(SourceType, SourceFormat, TargetType, TargetFormat)
+{
+        "Folder": "Rest-API-to-Azure-Storage",
+        "GFPIR": "Azure",
+        "SourceType": SourceType,
+        "SourceFormat": SourceFormat,
+        "TargetType": TargetType,
+        "TargetFormat": TargetFormat,
+        "TaskTypeId":-9,
+        "Pipeline":"GPL_SparkNotebookExecution"
+
+
+};
+
 local Template_Synapse_SQLPool_StartStop = function(SourceType, SourceFormat, TargetType, TargetFormat)
 {
         "Folder": "Synapse-SQLPool-Start-Stop",
@@ -162,5 +176,13 @@ local Template_Synapse_SQLPool_StartStop = function(SourceType, SourceFormat, Ta
 #Synapse-SQLPool-Start-Stop
 [
     Template_Synapse_SQLPool_StartStop("N/A","Not-Applicable","Azure Synapse","Not-Applicable")
+
+]
+
++
+#Rest-API-to-Azure-Storage
+[
+    Template_Rest_API_to_Azure_Storage("Rest","Rest","AzureBlobStorage","Json"),
+    Template_Rest_API_to_Azure_Storage("Rest","Rest","AzureBlobFS","Json")
 
 ]

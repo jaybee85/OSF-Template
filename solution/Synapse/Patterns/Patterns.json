@@ -488,5 +488,25 @@
       "TargetFormat": "Not-Applicable",
       "TargetType": "Azure Synapse",
       "TaskTypeId": -6
+   },
+   {
+      "Folder": "Rest-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Rest",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobStorage",
+      "TaskTypeId": -9
+   },
+   {
+      "Folder": "Rest-API-to-Azure-Storage",
+      "GFPIR": "Azure",
+      "Pipeline": "GPL_SparkNotebookExecution",
+      "SourceFormat": "Rest",
+      "SourceType": "Rest",
+      "TargetFormat": "Json",
+      "TargetType": "AzureBlobFS",
+      "TaskTypeId": -9
    }
 ]

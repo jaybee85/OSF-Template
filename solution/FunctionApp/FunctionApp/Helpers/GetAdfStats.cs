@@ -13,7 +13,8 @@ namespace FunctionApp.Helpers
             { "real", typeof(double) },
             { "long", typeof(long) },
             { "datetime", typeof(DateTime) },
-            { "guid", typeof(Guid) }
+            { "guid", typeof(Guid) },
+            { "dynamic", typeof(string) }
         };
     }
 }

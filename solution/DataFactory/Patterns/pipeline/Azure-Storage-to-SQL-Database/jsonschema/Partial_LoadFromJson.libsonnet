@@ -17,7 +17,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                         },
-                        "infoText": "Path of the file to be imported."
+                        "infoText": "(required) Path of the file to be imported."
                     }
                 },
                 "DataFileName": {
@@ -26,7 +26,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Customer.xlsx"
                         },
-                        "infoText": "Name of the file to be imported."
+                        "infoText": "(required) Name of the file to be imported."
                     }
                 },
                 "SchemaFileName": {
@@ -35,7 +35,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "eg. Customer_Schema.json"
                         },
-                        "infoText": "Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data."
+                        "infoText": "(required) Name of the schema file to use when generating the target table. *Note that if you do not provide a schema file then the schema will be automatically inferred based on the source data."
                     }
                 },
                 "JsonTranslator": {
@@ -60,7 +60,7 @@ function()
                                                 "type":"string",
                                                 "default":"",
                                                 "options": {                        
-                                                    "infoText": "The json path that points to this column"
+                                                    "infoText": "(required) The json path that points to this column"
                                                 } 
                                             } 
                                         },
@@ -75,14 +75,14 @@ function()
                                                 "type":"string",
                                                 "default":"",
                                                 "options": {                        
-                                                    "infoText": "The type of the column that data will be loaded into."
+                                                    "infoText": "(required) The type of the column that data will be loaded into."
                                                 } 
                                             },
                                             "type": {
                                                 "type":"string",
                                                 "default":"",
                                                 "options": {                        
-                                                    "infoText": "The name of the column that data will be loaded into"
+                                                    "infoText": "(required) The name of the column that data will be loaded into"
                                                 } 
                                             }  
                                         },
@@ -102,7 +102,7 @@ function()
                             "type": "string",                                                                               
                             "default": "",                    
                             "options": {                        
-                                "infoText": "The json path that represents the array to be imported / processed."
+                                "infoText": "(required) The json path that represents the array to be imported / processed."
                             }   
                         },
                         "mapComplexValuesToString": {

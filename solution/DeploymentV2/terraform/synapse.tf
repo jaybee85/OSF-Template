@@ -21,6 +21,40 @@ resource "azurerm_synapse_workspace" "synapse" {
   managed_resource_group_name          = local.synapse_resource_group_name
   purview_id                           = var.deploy_purview ? azurerm_purview_account.purview[0].id : null
 
+  #github_repo {
+  #  account_name = var.synapse_git_account_name
+  #  branch_name = var.synapse_git_repository_branch_name
+  #  repository_name = var.synapse_git_repository_name
+  #  root_folder = var.synapse_git_repository_root_folder
+    # git_url = (Optional) Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com.
+  
+  #}
+
+  dynamic "github_repo" {
+      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "github") ? [true] : [])
+      content {
+        account_name = var.synapse_git_repository_owner
+        branch_name = var.synapse_git_repository_branch_name
+        repository_name = var.synapse_git_repository_name
+        root_folder = var.synapse_git_repository_root_folder
+        git_url = var.synapse_git_github_host_url
+      }
+  }
+
+    dynamic "azure_devops_repo" {
+      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
+      content {
+        account_name = var.synapse_git_repository_owner
+        branch_name = var.synapse_git_repository_branch_name
+        repository_name = var.synapse_git_repository_name
+        root_folder = var.synapse_git_repository_root_folder
+        project_name = var.synapse_git_devops_project_name
+        #if a custom tenant id isnt assigned, will use the terraform tenant_id
+        tenant_id = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id: var.tenant_id
+      }
+  }
+
+
   tags = local.tags
   lifecycle {
     ignore_changes = [
@@ -105,7 +139,7 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
   count                = var.deploy_synapse ? 1 : 0
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
-  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+  principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     azurerm_synapse_firewall_rule.cicd
