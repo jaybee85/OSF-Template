@@ -99,9 +99,15 @@ namespace FunctionApp.Functions
                             //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
                             var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
 
+
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            log.LogInformation($"Framework runner {taskRunnerId} request cancelled... this is expected behaviour.");
                         }
                         catch (Exception)
                         {
+                            log.LogError($"Framework runner {taskRunnerId} failed to launch.");
                             con.ExecuteWithRetry($"[dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
                             throw;
                         }

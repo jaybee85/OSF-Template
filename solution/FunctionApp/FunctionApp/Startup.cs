@@ -19,6 +19,9 @@ using FunctionApp.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -40,6 +43,10 @@ namespace FunctionApp
 
         public static void ConfigureServices(IServiceCollection services, IConfigurationRoot config)
         {
+            // The following line enables Application Insights telemetry collection.
+            services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetryProcessor<SuccessfulDependencyFilter>();
+
             //Configure Dapper
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -102,7 +109,12 @@ namespace FunctionApp
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));  //Set lifetime to five minutes
 
             services.AddSingleton<PurviewService>();
+
+            
+            
         }
     }
+
+    
 }
 
