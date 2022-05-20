@@ -18,6 +18,8 @@ using FunctionApp.Helpers;
 using FunctionApp.Models;
 using FunctionApp.Models.Options;
 using FunctionApp.Services;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -36,11 +38,14 @@ namespace FunctionApp.Functions
         private readonly TaskTypeMappingProvider _taskTypeMappingProvider;
         private readonly IntegrationRuntimeMappingProvider _integrationRuntimeMappingProvider;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly TelemetryClient _telemetryClient;
+        private readonly TelemetryConfiguration _telemetryConfiguration;
+
         public string HeartBeatFolder { get; set; }
         public ILogger Log { get; set; }
 
 
-        public AdfPrepareFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider, IHttpClientFactory httpClientFactory, IntegrationRuntimeMappingProvider integrationRuntimeMappingProvider)
+        public AdfPrepareFrameworkTasksTimerTrigger(TelemetryConfiguration telemetryConfiguration, IOptions<ApplicationOptions> appOptions, TaskMetaDataDatabase taskMetaDataDatabase, DataFactoryPipelineProvider dataFactoryPipelineProvider, TaskTypeMappingProvider taskTypeMappingProvider, IHttpClientFactory httpClientFactory, IntegrationRuntimeMappingProvider integrationRuntimeMappingProvider)
         {
             _appOptions = appOptions;
             _taskMetaDataDatabase = taskMetaDataDatabase;
@@ -48,7 +53,8 @@ namespace FunctionApp.Functions
             _taskTypeMappingProvider = taskTypeMappingProvider;
             _httpClientFactory = httpClientFactory;
             _integrationRuntimeMappingProvider = integrationRuntimeMappingProvider;
-
+            _telemetryConfiguration = telemetryConfiguration;
+            _telemetryClient = new TelemetryClient(telemetryConfiguration);
         }
 
         [FunctionName("PrepareFrameworkTasksTimerTrigger")]
@@ -73,8 +79,8 @@ namespace FunctionApp.Functions
                     $"Insert into Execution values ('{logging.DefaultActivityLogItem.ExecutionUid}', '{DateTimeOffset.Now:u}', '{DateTimeOffset.Now.AddYears(999):u}')");
                 short frameworkWideMaxConcurrency = _appOptions.Value.FrameworkWideMaxConcurrency;
                 //Generate new task instances based on task master and schedules
-                await CreateScheduleAndTaskInstances(logging);
-                await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
+                //await CreateScheduleAndTaskInstances(logging);
+                //await _taskMetaDataDatabase.ExecuteSql("exec dbo.DistributeTasksToRunnners " + frameworkWideMaxConcurrency.ToString());
             }
             catch (Exception ex)
             {
@@ -84,8 +90,8 @@ namespace FunctionApp.Functions
             //Chain Straight into RunFramework Tasks
             try
             {
-                AdfRunFrameworkTasksTimerTrigger rfttt = new AdfRunFrameworkTasksTimerTrigger(_appOptions, _taskMetaDataDatabase, _httpClientFactory);
-                rfttt.HeartBeatFolder = this.HeartBeatFolder;
+                AdfRunFrameworkTasksTimerTrigger rfttt = new AdfRunFrameworkTasksTimerTrigger(_telemetryConfiguration, _appOptions, _taskMetaDataDatabase, _httpClientFactory);
+                rfttt.HeartBeatFolder = this.HeartBeatFolder;                
                 await rfttt.Core(Log);
             }
             catch (Exception ex1)

@@ -10,7 +10,14 @@
     <Compile Remove="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="ApplicationInsights.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationInsights.config" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Microsoft.ApplicationInsights.WorkerService" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />

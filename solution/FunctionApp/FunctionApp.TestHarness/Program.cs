@@ -20,6 +20,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http;
+using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights;
 
 namespace FunctionApp.TestHarness
 {
@@ -40,6 +42,13 @@ namespace FunctionApp.TestHarness
             services.AddTransient<App>();
 
             services.AddLogging(builder => builder.AddConsole().AddFilter(level => level >= LogLevel.Information));
+            //services.AddApplicationInsightsTelemetry(config["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+            //services.AddSingleton(provider =>
+            //{                                               
+            //        var newConfig = new TelemetryConfiguration(config["APPINSIGHTS_INSTRUMENTATIONKEY"]);
+            //        return newConfig;             
+            //});
+            //services.AddApplicationInsightsTelemetry(config["APPINSIGHTS_INSTRUMENTATIONKEY"]);
             using ServiceProvider serviceProvider = services.BuildServiceProvider();
             var app = serviceProvider.GetService<App>();
             await app.Run();            
@@ -63,6 +72,8 @@ namespace FunctionApp.TestHarness
         private readonly AzureSynapseService _azureSynapseService;
         private readonly PurviewService _purviewService;
         private readonly IHttpClientFactory _httpClientFactory;
+        //private readonly TelemetryClient _telemetryClient;
+        //private readonly TelemetryConfiguration _telemetryConfiguration;
 
         public App(ILogger<App> logger,
             TaskTypeMappingProvider taskTypeMappingProvider,
@@ -77,6 +88,7 @@ namespace FunctionApp.TestHarness
             AzureSynapseService azureSynapseService, 
             PurviewService purviewService,
             IHttpClientFactory httpClientFactory
+            //TelemetryConfiguration telemetryConfiguration
             )
         {
             _logger = logger;
@@ -92,6 +104,8 @@ namespace FunctionApp.TestHarness
             _azureSynapseService = azureSynapseService;
             _purviewService = purviewService;
             _httpClientFactory = httpClientFactory;
+           // _telemetryConfiguration = telemetryConfiguration;
+           // _telemetryClient = new TelemetryClient(telemetryConfiguration);
         }
 
         public async Task Run()
@@ -124,8 +138,8 @@ namespace FunctionApp.TestHarness
             //DebugSynapsePipeline();
             //await DebugStartSynapseSessions();
 
-            Functions.AdfGetActivityErrorsTimerTrigger a = new Functions.AdfGetActivityErrorsTimerTrigger(_options, _taskMetaDataDatabase, _httpClientFactory);
-            await a.GetAdfActivityErrors(_funcAppLogger);
+            //Functions.AdfGetActivityErrorsTimerTrigger a = new Functions.AdfGetActivityErrorsTimerTrigger(_options, _taskMetaDataDatabase, _httpClientFactory);
+            //await a.GetAdfActivityErrors(_funcAppLogger);
 
             //var body = JObject.Parse("{\"SourceHttpPath\": \"https://datalakeraw/arkstgdlsadsirudadsl.dfs.core.windows.net/samples/SalesLT.Customer.chunk_1.parquet\", \"TargetHttpPath\": \"https://datalakelanding/arkstgdlsadsirudadsl.dfs.core.windows.net/TesstDelta\", \"SourceColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TargetColumns\": [{\"name\": \"CustomerID\", \"type\": \"int\"}, {\"name\": \"NameStyle\", \"type\": \"boolean\"}, {\"name\": \"Title\", \"type\": \"string\"}, {\"name\": \"FirstName\", \"type\": \"string\"}, {\"name\": \"MiddleName\", \"type\": \"string\"}, {\"name\": \"LastName\", \"type\": \"string\"}, {\"name\": \"Suffix\", \"type\": \"string\"}, {\"name\": \"CompanyName\", \"type\": \"string\"}, {\"name\": \"SalesPerson\", \"type\": \"string\"}, {\"name\": \"EmailAddress\", \"type\": \"string\"}, {\"name\": \"Phone\", \"type\": \"string\"}, {\"name\": \"PasswordHash\", \"type\": \"string\"}, {\"name\": \"PasswordSalt\", \"type\": \"string\"}, {\"name\": \"rowguid\", \"type\": \"string\"}, {\"name\": \"ModifiedDate\", \"type\": \"timestamp\"}], \"TaskObject\": {\"TaskInstanceId\": 5, \"TaskMasterId\": 4, \"TaskStatus\": \"InProgress\", \"TaskType\": \"Azure Storage to Azure Storage\", \"Enabled\": 1, \"ExecutionUid\": \"6b9769c0-cfd0-462a-aeda-c75b842f56db\", \"NumberOfRetries\": 0, \"DegreeOfCopyParallelism\": 1, \"KeyVaultBaseUrl\": \"https://ark-stg-kv-ads-irud.vault.azure.net/\", \"ScheduleMasterId\": \"-4\", \"TaskGroupConcurrency\": \"10\", \"TaskGroupPriority\": 0, \"TaskExecutionType\": \"ADF\", \"ExecutionEngine\": {\"EngineId\": -2, \"EngineName\": \"arkstgsynwadsirud\", \"SystemType\": \"Synapse\", \"ResourceGroup\": \"dlzdev04\", \"SubscriptionId\": \"ed1206e0-17c7-4bc2-ad4b-f8d4dab9284f\", \"ADFPipeline\": \"GPL_SparkNotebookExecution_Azure\", \"EngineJson\": \"{\\r\\n             \\\"endpoint\\\": \\\"https://arkstgsynwadsirud.dev.azuresynapse.net\\\", \\\"DeltaProcessingNotebook\\\": \\\"DeltaProcessingNotebook\\\", \\\"PurviewAccountNameName\\\": \\\"dlzdev04purv\\\"\\r\\n        }\", \"TaskDatafactoryIR\": \"Azure\", \"JsonProperties\": {\"endpoint\": \"https://arkstgsynwadsirud.dev.azuresynapse.net\", \"DeltaProcessingNotebook\": \"DeltaProcessingNotebook\", \"PurviewAccountNameName\": \"dlzdev04purv\"}}, \"Source\": {\"System\": {\"SystemId\": -4, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakeraw\"}, \"Instance\": {\"SourceRelativePath\": \"samples/\", \"TargetRelativePath\": \"\"}, \"DataFileName\": \"yooyoyo.parquet\", \"MaxConcurrentConnections\": 100, \"RelativePath\": \"samples/\", \"SchemaFileName\": \"SalesLT.Customer.json\", \"Type\": \"Parquet\", \"WriteSchemaToPurview\": \"Enabled\"}, \"Target\": {\"System\": {\"SystemId\": -8, \"SystemServer\": \"https://arkstgdlsadsirudadsl.dfs.core.windows.net\", \"AuthenticationType\": \"MSI\", \"Type\": \"ADLS\", \"Username\": null, \"Container\": \"datalakelanding\"}, \"Instance\": {\"SourceRelativePath\": \"samples/\", \"TargetRelativePath\": \"\"}, \"DataFileName\": \"Iwork\", \"MaxConcurrentConnections\": 100, \"RelativePath\": \"\", \"SchemaFileName\": \"\", \"Type\": \"Delta\", \"WriteSchemaToPurview\": \"Enabled\"}, \"TMOptionals\": {\"Purview\": \"Enabled\", \"QualifiedIDAssociation\": \"TaskMasterID\"}}}");
 
@@ -427,7 +441,9 @@ namespace FunctionApp.TestHarness
 
         public async Task DebugPrepareFrameworkTasks()
         {
-            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(_options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory, _integrationRuntimeMappingProvider);
+            TelemetryConfiguration tc = new TelemetryConfiguration();
+            FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfPrepareFrameworkTasksTimerTrigger(tc, _options, _taskMetaDataDatabase, _dataFactoryPipelineProvider, _taskTypeMappingProvider, _httpClientFactory, _integrationRuntimeMappingProvider);
+            c.HeartBeatFolder = "./heartbeats/";
             await c.PrepareFrameworkTasksCore(_funcAppLogger);
         }
 
@@ -441,6 +457,7 @@ namespace FunctionApp.TestHarness
 
         public void DebugRunFrameworkTasks()
         {
+            
             FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksHttpTrigger(_sap,_taskMetaDataDatabase, _options, _authProvider, _dataFactoryClientFactory, _azureSynapseService);
             c.HeartBeatFolder = "./";
             c.RunFrameworkTasksCore(1, _funcAppLogger);            
@@ -457,7 +474,8 @@ namespace FunctionApp.TestHarness
 
         public async Task DebugRunFrameworkTasksTimerTrigger()
         {
-            FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger(_options, _taskMetaDataDatabase, _httpClientFactory);
+            TelemetryConfiguration tc = new TelemetryConfiguration();
+            FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger c = new FunctionApp.Functions.AdfRunFrameworkTasksTimerTrigger(tc,_options, _taskMetaDataDatabase, _httpClientFactory);
             c.HeartBeatFolder = "./";
             await c.Core(_logger);
         }

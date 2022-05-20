@@ -22,7 +22,9 @@ namespace FunctionApp.Helpers
         public void Process(ITelemetry item)
         {
             // To filter out an item, return without calling the next processor.
-            if (!OKtoSend(item)) { return; }
+            if (!OKtoSend(item)) { 
+                return; 
+            }
 
             this.Next.Process(item);
         }
@@ -31,9 +33,9 @@ namespace FunctionApp.Helpers
         private bool OKtoSend(ITelemetry item)
         {
             var dependency = item as DependencyTelemetry;
-            if (dependency.ResultCode == "Canceled" && dependency.Name == "GET /api/RunFrameworkTasksHttpTrigger") return true;
+            if (dependency.ResultCode == "Canceled" && dependency.Name == "GET /api/RunFrameworkTasksHttpTrigger") return false;
 
-            return dependency.Success != true;
+            return true;
         }
     }
 }

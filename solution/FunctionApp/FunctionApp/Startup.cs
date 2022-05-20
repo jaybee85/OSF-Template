@@ -43,9 +43,9 @@ namespace FunctionApp
 
         public static void ConfigureServices(IServiceCollection services, IConfigurationRoot config)
         {
-            // The following line enables Application Insights telemetry collection.
-            services.AddApplicationInsightsTelemetry();
-            services.AddApplicationInsightsTelemetryProcessor<SuccessfulDependencyFilter>();
+            //Application Insights
+            //services.AddApplicationInsightsTelemetry();
+            //services.AddApplicationInsightsTelemetryProcessor<SuccessfulDependencyFilter>();            
 
             //Configure Dapper
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;

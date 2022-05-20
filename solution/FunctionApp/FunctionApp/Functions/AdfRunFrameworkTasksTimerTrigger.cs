@@ -7,6 +7,9 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FunctionApp.DataAccess;
 using FunctionApp.Models.Options;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -24,13 +27,18 @@ namespace FunctionApp.Functions
         private readonly IOptions<ApplicationOptions> _options;
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly TelemetryClient _telemetryClient;
         public string HeartBeatFolder { get; set; }
 
-        public AdfRunFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, IHttpClientFactory httpClientFactory)
+        public AdfRunFrameworkTasksTimerTrigger(TelemetryConfiguration telemetryConfiguration, IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, IHttpClientFactory httpClientFactory)
         {
             _options = options;
             _taskMetaDataDatabase = taskMetaDataDatabase;
             _httpClientFactory = httpClientFactory;
+            var tpb = telemetryConfiguration.TelemetryProcessorChainBuilder;
+            tpb.Use(next => new Helpers.SuccessfulDependencyFilter(next));
+            tpb.Build();
+            _telemetryClient = new TelemetryClient(telemetryConfiguration);
         }
 
         /// <summary>
@@ -85,31 +93,45 @@ namespace FunctionApp.Functions
                             fs.Write(info, 0, info.Length);
                         }
 
-                        try
+                        var dependency = new DependencyTelemetry
                         {
-                            // Trigger the Http triggered function
-                            var secureFunctionApiurl = $"{_options.Value.ServiceConnections.CoreFunctionsURL}/api/RunFrameworkTasksHttpTrigger?TaskRunnerId={taskRunnerId}";
+                            Type = "HTTP",
+                            Name = "GET /api/RunFrameworkTasksHttpTrigger"
+                        };
 
-                            using HttpRequestMessage httpRequestMessage = new HttpRequestMessage
+                        
+                        using (this._telemetryClient.StartOperation(dependency))
+                        {
+                            try
                             {
-                                Method = HttpMethod.Get,
-                                RequestUri = new Uri(secureFunctionApiurl)
-                            };
-
-                            //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
-                            var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
+                                // Trigger the Http triggered function
+                                var secureFunctionApiurl = $"{_options.Value.ServiceConnections.CoreFunctionsURL}/api/RunFrameworkTasksHttpTrigger?TaskRunnerId={taskRunnerId}";
 
 
-                        }
-                        catch (TaskCanceledException)
-                        {
-                            log.LogInformation($"Framework runner {taskRunnerId} request cancelled... this is expected behaviour.");
-                        }
-                        catch (Exception)
-                        {
-                            log.LogError($"Framework runner {taskRunnerId} failed to launch.");
-                            con.ExecuteWithRetry($"[dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
-                            throw;
+
+                                using HttpRequestMessage httpRequestMessage = new HttpRequestMessage
+                                {
+                                    Method = HttpMethod.Get,
+                                    RequestUri = new Uri(secureFunctionApiurl)
+                                };
+
+                                //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
+                                var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
+                                dependency.Success = true;
+
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                dependency.Success = true;
+                                log.LogInformation($"Framework runner {taskRunnerId} request cancelled... this is expected behaviour.");
+                            }
+                            catch (Exception)
+                            {
+                                dependency.Success = true;
+                                log.LogError($"Framework runner {taskRunnerId} failed to launch.");
+                                con.ExecuteWithRetry($"[dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
+                                throw;
+                            }
                         }
                     }
 
