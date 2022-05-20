@@ -8,8 +8,7 @@ namespace FunctionApp.Helpers
         public static Dictionary<string, Type> GetKustoDataTypeMapper => new Dictionary<string, Type>
         {
             { "int", typeof(int) },
-            { "string", typeof(string) },
-            { "dynamic", typeof(string) },
+            { "string", typeof(string) },            
             { "real", typeof(double) },
             { "long", typeof(long) },
             { "datetime", typeof(DateTime) },
