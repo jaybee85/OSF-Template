@@ -1,6 +1,11 @@
-Import-Module .\GatherOutputsFromTerraform.psm1 -force
+$CurrDir = Get-Location
+
+Write-Host "Reading Terraform Outputs"
+Set-Location "./terraform"
+Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
-$CurrDir = $PWD
+Set-Location $CurrDir
+
 Write-Host "Starting Adf Patterns" -ForegroundColor Yellow
 Set-Location ../DataFactory/Patterns/
 Invoke-Expression  ./Jsonnet_GenerateADFArtefacts.ps1

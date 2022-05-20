@@ -1,6 +1,10 @@
 # --------------------------------------------------------------------------------------------------------------------
 # Workspace
 # --------------------------------------------------------------------------------------------------------------------
+
+
+
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "dlfs" {
   count              = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name               = local.synapse_data_lake_name
@@ -132,6 +136,11 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
   end_ip_address       = "255.255.255.255"
 }
 
+resource "time_sleep" "azurerm_synapse_firewall_rule_wait_30_seconds_cicd" {
+  depends_on = [azurerm_synapse_firewall_rule.cicd]
+  create_duration = "30s"
+}
+
 # --------------------------------------------------------------------------------------------------------------------
 # Synapse Workspace Roles and Linked Services
 # --------------------------------------------------------------------------------------------------------------------
@@ -142,7 +151,7 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 
 }
@@ -154,7 +163,7 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   type                 = "AzureKeyVault"
    depends_on = [
     azurerm_synapse_firewall_rule.public_access,
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
   type_properties_json = <<JSON
 {
@@ -170,7 +179,7 @@ resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureFunction"
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
   type_properties_json = <<JSON
 {
@@ -215,7 +224,7 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
     ignore_changes = all
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -283,7 +292,7 @@ resource "azurerm_private_endpoint" "synapse_dev" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -313,7 +322,7 @@ resource "azurerm_private_endpoint" "synapse_sql" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -343,7 +352,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
