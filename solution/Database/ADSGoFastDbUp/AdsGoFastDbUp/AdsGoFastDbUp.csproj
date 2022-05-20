@@ -25,7 +25,7 @@
     <None Remove="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" />   
     <None Remove="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" />   
     <None Remove="1-0-2\A-Journaled\001-AddRestAPI.sql" />   
-    <None Remove="1-0-2\A-Journaled\001-AddTemporalTables.sql" />   
+    <None Remove="1-0-2\A-Journaled\002-AddTemporalTables.sql" />   
 
 
          
