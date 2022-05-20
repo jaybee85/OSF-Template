@@ -7,8 +7,8 @@ remote_state {
   config = {
     # You need to update the resource group and storage account here. 
     # You should have created these with the Prepare.ps1 script.
-    resource_group_name  = "dlzdev06"
-    storage_account_name = "dlzdev06state"
+    resource_group_name  = "dlzdev08lite"
+    storage_account_name = "dlzdev08litestate"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
@@ -21,14 +21,14 @@ inputs = {
   prefix                                = "ark"              # All azure resources will be prefixed with this
   domain                                = "arkahna.io"              # Used when configuring AAD config for Azure functions 
   tenant_id                             = "0fee3d31-b963-4a1c-8f4a-ca367205aa65"           # This is the Azure AD tenant ID
-  subscription_id                       = "63cbc080-0220-46aa-a9c4-a50b36f1ff43"     # The azure subscription id to deploy to
+  subscription_id                       = "14f299e1-be54-43e9-bf5e-696840f86fc4"     # The azure subscription id to deploy to
   resource_location                     = "Australia East"        # The location of the resources
-  resource_group_name                   = "dlzdev06"          # The resource group all resources will be deployed to
+  resource_group_name                   = "dlzdev08lite"          # The resource group all resources will be deployed to
   owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "stg"                   # This is used on Azure tags as well as all resource names
-  ip_address                            = "60.227.87.73"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  ip_address                            = "101.179.193.89"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_sentinel                       = false
-  deploy_purview                        = true  
+  deploy_purview                        = false  
   deploy_synapse                        = true
   is_vnet_isolated                      = false
   publish_web_app                       = true
@@ -39,8 +39,34 @@ inputs = {
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
   deploy_synapse_sqlpool                = false
-  deploy_selfhostedsql                  = true
-  is_onprem_datafactory_ir_registered   = true
+  deploy_selfhostedsql                  = false
+  is_onprem_datafactory_ir_registered   = false
+  deploy_h2o-ai = false
 
-  purview_name = "dlzdev06purv"
+  /*synapse_git_toggle_integration = true
+  synapse_git_integration_type = "devops"
+  synapse_git_repository_owner = "hugosharpe"
+  synapse_git_repository_name = "lockBoxProject"
+ // NOT USED - synapse_git_repository_base_url = "https://dev.azure.com/hugosharpe/_git/lockBoxProject"
+  synapse_git_repository_branch_name = "dlzdev08"
+  synapse_git_repository_root_folder = "/Synapse"
+  synapse_git_devops_project_name = "lockBoxProject"
+  synapse_git_use_pat = true
+  synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
+*/
+  synapse_git_toggle_integration = true
+  synapse_git_repository_owner = "h-sha"
+  synapse_git_repository_name = "testLockbox"
+  synapse_git_repository_branch_name = "dlz08Test"
+  synapse_git_repository_root_folder = "/Synapse"
+  synapse_git_use_pat = false
+  synapse_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
+
+  adf_git_toggle_integration = false
+  adf_git_repository_owner = "h-sha"
+  adf_git_repository_name = "testLockbox"
+  adf_git_repository_branch_name = "dlz07Test"
+  adf_git_repository_root_folder = "/ADF"
+  adf_git_use_pat = false
+  adf_git_pat = "iukwy7dntnpicwndxq4g3xcni355i2gxitm4pcushzgbsxon5x3q"
 } 

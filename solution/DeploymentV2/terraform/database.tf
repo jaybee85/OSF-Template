@@ -44,7 +44,7 @@ resource "azurerm_mssql_server" "sqlserver" {
 }
 
 resource "azurerm_mssql_database" "web_db" {
-  count     = var.deploy_sql_server ? 1 : 0
+  count     = var.deploy_sql_server && var.publish_database ? 1 : 0
   name      = local.metadata_database_name
   server_id = azurerm_mssql_server.sqlserver[0].id
   sku_name  = "S0"

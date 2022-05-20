@@ -108,7 +108,7 @@ function(
     "TargetSystemSecretName":"",
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
-    "TestDescription": "[" + TestNumber + "] " +  " Notebook execution test. NOTE: Please create a notebook in Synapse called Notebook1 to execute otherwise this wont work - the notebook can be blank.",
+    "TestDescription": "[" + TestNumber + "] " +  " Execute Notebook test - by default this execute the SampleNotebook provided within the synapse deployment.",
     "DependencyChainTag": "", 
     "UseNotebookActivity": UseNotebookActivity
 }+commons

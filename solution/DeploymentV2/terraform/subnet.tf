@@ -17,7 +17,7 @@ resource "azurerm_subnet" "bastion_subnet" {
 }
 
 resource "azurerm_subnet" "vm_subnet" {
-  count                                          = (var.is_vnet_isolated || var.deploy_selfhostedsql ? 1 : 0)
+  count                                          = (var.is_vnet_isolated || var.deploy_selfhostedsql || var.deploy_h2o-ai ? 1 : 0)
   name                                           = local.vm_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name

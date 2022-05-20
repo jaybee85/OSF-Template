@@ -16,7 +16,7 @@ function(SourceType = "AzureSqlTable", SourceFormat = "",TargetType = "", Target
         "SQLStatement": {
             "type": "string",            
             "options": {
-                "infoText": "SQL Statement/s to Execute. NOTE the last statement MUST return at least one row.",
+                "infoText": "(required) SQL Statement/s to Execute. NOTE the last statement MUST return at least one row.",
                 "inputAttributes": {
                     "placeholder": "eg. Exec StoredProcedure1; Select 1;"
                 }               
@@ -25,7 +25,7 @@ function(SourceType = "AzureSqlTable", SourceFormat = "",TargetType = "", Target
         "QueryTimeout": {
             "type": "string",            
             "options": {
-                "infoText": "Timeout in the form hh:MM:ss. Eg. 2 hours would be 02:00:00",
+                "infoText": "(required) Timeout in the form hh:MM:ss. Eg. 2 hours would be 02:00:00",
                 "inputAttributes": {
                     "placeholder": "eg. 02:00:00"
                 }  

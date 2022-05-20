@@ -9,10 +9,12 @@ namespace FunctionApp.Helpers
         {
             { "int", typeof(int) },
             { "string", typeof(string) },
+            { "dynamic", typeof(string) },
             { "real", typeof(double) },
             { "long", typeof(long) },
             { "datetime", typeof(DateTime) },
-            { "guid", typeof(Guid) }
+            { "guid", typeof(Guid) },
+            { "dynamic", typeof(string) }
         };
     }
 }

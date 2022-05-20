@@ -24,6 +24,10 @@
     <None Remove="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />   
     <None Remove="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" />   
     <None Remove="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" />   
+    <None Remove="1-0-2\A-Journaled\001-AddRestAPI.sql" />   
+    <None Remove="1-0-2\A-Journaled\002-AddTemporalTables.sql" />   
+
+
          
   </ItemGroup>
 
@@ -40,9 +44,12 @@
     <EmbeddedResource Include="1-0-1\A-Journaled\001-dbo_GetFrameworkTaskRunnners.sql" />    
     <EmbeddedResource Include="1-0-1\A-Journaled\002-AddNewTaskTypes.sql" />
     <EmbeddedResource Include="1-0-1\A-Journaled\003-CreateIntegrationRuntimeMapping.sql" />    
-    <EmbeddedResource Include="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" /> 
+    <EmbeddedResource Include="1-0-1\A-Journaled\004-Alter_dbo_GetTaskMaster.sql" />
     <EmbeddedResource Include="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" /> 
-    
+    <EmbeddedResource Include="1-0-2\A-Journaled\001-AddRestAPI.sql" /> 
+    <EmbeddedResource Include="1-0-2\A-Journaled\002-AddTemporalTables.sql" /> 
+
+
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +62,9 @@
     <Folder Include="1-0-0\B-Always\" />
     <Folder Include="1-0-0\" />
     <Folder Include="1-0-1\" />
+    <Folder Include="1-0-2\" />
+
+
   </ItemGroup>
 
   <ItemGroup>
