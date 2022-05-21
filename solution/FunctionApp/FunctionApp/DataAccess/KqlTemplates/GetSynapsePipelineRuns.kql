@@ -20,7 +20,7 @@ SynapseIntegrationPipelineRuns
                                         )
                                     )
 | where isnotnull(TaskInstanceId) and isnotnull(ExecutionUid)
-| project  TaskInstanceId, ExecutionUid, PipelineStatus = Status, RunId, Start, End, TimeGenerated, _ResourceId, _PipelineName
+| project  TaskInstanceId, ExecutionUid, PipelineStatus = Status, RunId, Start, End, TimeGenerated, _ResourceId, PipelineName
 | summarize        
         Start = max(Start), 
         End = max(End),        
