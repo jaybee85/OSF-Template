@@ -59,7 +59,7 @@ function Get-SelectionFromUser {
 #Only Prompt if Environment Variable has not been set
 if ($null -eq [System.Environment]::GetEnvironmentVariable('environmentName'))
 {
-    $environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+    $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
     [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
 }
 

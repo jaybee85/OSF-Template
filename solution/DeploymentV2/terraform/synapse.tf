@@ -231,8 +231,12 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
 # --------------------------------------------------------------------------------------------------------------------
 # Network Settings to allow inbound private link traffic to the Synapse studio
 # https://docs.microsoft.com/en-us/azure/synapse-analytics/security/how-to-connect-to-workspace-from-restricted-network
+locals {
+  synapse_private_link_hub_id = (var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated && var.existing_synapse_private_link_hub_id ==  "" ? azurerm_synapse_private_link_hub.hub[0].id : var.existing_synapse_private_link_hub_id)
+}
+
 resource "azurerm_synapse_private_link_hub" "hub" {
-  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated ? 1 : 0
+  count               = var.deploy_adls && var.deploy_synapse && var.is_vnet_isolated && var.existing_synapse_private_link_hub_id ==  ""  ? 1 : 0
   name                = "${local.synapse_workspace_name}plink"
   resource_group_name = var.resource_group_name
   location            = var.resource_location
@@ -248,14 +252,14 @@ resource "azurerm_private_endpoint" "synapse_web" {
 
   private_service_connection {
     name                           = "${local.synapse_workspace_name}-web-plink-conn"
-    private_connection_resource_id = azurerm_synapse_private_link_hub.hub[0].id
+    private_connection_resource_id = local.synapse_private_link_hub_id
     is_manual_connection           = false
     subresource_names              = ["Web"]
   }
 
   private_dns_zone_group {
     name                 = "privatednszonegroupweb"
-    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_gateway[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_synapse_gateway_id]
   }
 
   tags = local.tags
@@ -282,7 +286,7 @@ resource "azurerm_private_endpoint" "synapse_dev" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupdev"
-    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_studio[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_synapse_studio_id]
   }
 
   tags = local.tags
@@ -312,7 +316,7 @@ resource "azurerm_private_endpoint" "synapse_sql" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupsql"
-    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_sql[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_synapse_sql_id]
   }
 
   tags = local.tags
@@ -342,7 +346,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupsqld"
-    private_dns_zone_ids = [azurerm_private_dns_zone.synapse_sql[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_synapse_sql_id]
   }
 
   tags = local.tags

@@ -94,7 +94,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupstorage"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_blob[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_blob_id]
   }
 
   depends_on = [

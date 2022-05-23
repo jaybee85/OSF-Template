@@ -656,3 +656,69 @@ variable "existing_private_dns_zone_db_id" {
   default     = ""
   type        = string
 }
+
+variable "existing_private_dns_zone_kv_id" {
+  description = "An existing private DNS zone for privatelink.vaultcore.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_blob_id" {
+  description = "An existing private DNS zone for privatelink.blob.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_queue_id" {
+  description = "An existing private DNS zone for privatelink.queue.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_dfs_id" {
+  description = "An existing private DNS zone for privatelink.dfs.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_purview_id" {
+  description = "An existing private DNS zone for privatelink.purview.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_purview_studio_id" {
+  description = "An existing private DNS zone for privatelink.purviewstudio.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_servicebus_id" {
+  description = "An existing private DNS zone for privatelink.servicebus.windows.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_gateway_id" {
+  description = "An existing private DNS zone for privatelink.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_studio_id" {
+  description = "An existing private DNS zone for privatelink.dev.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_sql_id" {
+  description = "An existing private DNS zone for privatelink.sql.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_synapse_private_link_hub_id" {
+  description = "An existing private link hub for synapse studio."
+  default     = ""
+  type        = string
+}

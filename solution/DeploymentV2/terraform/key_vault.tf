@@ -159,7 +159,7 @@ resource "azurerm_private_endpoint" "app_vault_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroup"
-    private_dns_zone_ids = [local.private_dns_zone_db_id]
+    private_dns_zone_ids = [local.private_dns_zone_kv_id]
   }
 
   depends_on = [

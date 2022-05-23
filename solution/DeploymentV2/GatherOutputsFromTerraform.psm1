@@ -1,9 +1,11 @@
 function GatherOutputsFromTerraform()
 {
     $environmentName = $env:TFenvironmentName
+    #$environmentName = "local" # currently supports (local, staging)
     $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 
     $CurrentFolderPath = $PWD
+    Set-Location "$($PWD)/terraform"
     $env:TF_VAR_ip_address = $myIp
 
     #------------------------------------------------------------------------------------------------------------

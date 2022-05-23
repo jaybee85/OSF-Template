@@ -30,6 +30,30 @@ inputs = {
   deploy_selfhostedsql                  = false
   deploy_h2o-ai                         = false
   is_onprem_datafactory_ir_registered   = false
-  existing_log_analytics_workspace_id   = "WORKSPACE ID"
-  
+
+  #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.
+  #Please ensure that you enter everything that is relevant otherwise deployed resources may not work properly.
+  existing_log_analytics_workspace_id   = "LOG ANALYTICS WORKSPACE ID"
+  existing_synapse_private_link_hub_id  = "SYNAPSE PRIVATE LINK HUB ID"
+
+  #Please assign subnet id's for the following - you may end up using the same subnet id for all of these resources depending on your already deployed assets.
+  existing_plink_subnet_id              = "PRIVATE LINK SUBNET ID"
+  existing_bastion_subnet_id            = "BASTION SUBNET ID"
+  existing_app_service_subnet_id        = "APP SERVICE SUBNET ID"
+  existing_vm_subnet_id                 = "VM SUBNET ID"
+
+  #assign the private DNS zone id's for the following.
+
+  existing_private_dns_zone_db_id       = "DB PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_kv_id       = "KEYVAULT PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_blob_id     = "BLOB PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_queue_id    = "QUEUE PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_dfs_id      = "DFS PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_purview_id  = "PURVIEW PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_purview_studio_id = "PURVIEW STUDIO PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_servicebus_id = "SERVICEBUS PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_synapse_gateway_id = "SYNAPSE GATEWAY PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_synapse_studio_id = "SYNAPSE STUDIO PRIVATE DNS ZONE ID"
+  existing_private_dns_zone_synapse_sql_id = "SYNAPSE SQL PRIVATE DNS ZONE ID"
+
 } 

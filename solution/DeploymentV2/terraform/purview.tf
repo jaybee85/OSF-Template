@@ -30,7 +30,7 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
 
   private_dns_zone_group {
     name                 = "privatednszonegroup"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_purview[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_purview_id]
   }
 
   depends_on = [
@@ -61,7 +61,7 @@ resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroup"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_purview_studio[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_purview_studio_id]
   }
 
   depends_on = [
@@ -86,9 +86,9 @@ module "purview_ingestion_private_endpoints" {
   queue_privatelink_name      = "${local.purview_name}-queue-plink"
   storage_privatelink_name    = "${local.purview_name}-storage-plink"
   eventhub_privatelink_name   = "${local.purview_name}-event-plink"
-  blob_private_dns_id         = azurerm_private_dns_zone.private_dns_zone_blob[0].id
-  queue_private_dns_id        = azurerm_private_dns_zone.private_dns_zone_queue[0].id
-  servicebus_private_dns_id   = azurerm_private_dns_zone.private_dns_zone_servicebus[0].id
+  blob_private_dns_id         = local.private_dns_zone_blob_id
+  queue_private_dns_id        = local.private_dns_zone_queue_id
+  servicebus_private_dns_id   = local.private_dns_zone_servicebus_id
   subnet_id                   = local.plink_subnet_id
   managed_resource_group_name = local.purview_resource_group_name
   name_suffix                 = random_id.rg_deployment_unique.id
