@@ -1,4 +1,4 @@
-output tenant_id {
+output "tenant_id" {
   value = var.tenant_id
 }
 
@@ -46,7 +46,7 @@ output "metadatadb_name" {
   value = local.metadata_database_name
 }
 output "loganalyticsworkspace_id" {
-  value = azurerm_log_analytics_workspace.log_analytics_workspace.workspace_id
+  value = local.log_analytics_workspace_id
 }
 output "subscription_id" {
   value = var.subscription_id
@@ -67,7 +67,7 @@ output "aad_funcreg_id" {
   value = var.publish_function_app ? azuread_application.function_app_reg[0].application_id : ""
 }
 output "purview_sp_id" {
-  value = var.deploy_purview && var.is_vnet_isolated ?   azuread_application.purview_ir[0].application_id : "0"
+  value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].application_id : "0"
 }
 output "integration_runtimes" {
   value = local.integration_runtimes
@@ -97,23 +97,23 @@ output "publish_web_app_addcurrentuserasadmin" {
   value = var.publish_web_app_addcurrentuserasadmin
 }
 output "synapse_workspace_name" {
-  value = var.deploy_synapse ?   azurerm_synapse_workspace.synapse[0].name : ""
+  value = var.deploy_synapse ? azurerm_synapse_workspace.synapse[0].name : ""
 }
 output "synapse_sql_pool_name" {
-  value = var.deploy_synapse && var.deploy_synapse_sqlpool ?   azurerm_synapse_sql_pool.synapse_sql_pool[0].name : ""
+  value = var.deploy_synapse && var.deploy_synapse_sqlpool ? azurerm_synapse_sql_pool.synapse_sql_pool[0].name : ""
 }
 output "synapse_spark_pool_name" {
-  value = var.deploy_synapse && var.deploy_synapse_sparkpool ?   azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
+  value = var.deploy_synapse && var.deploy_synapse_sparkpool ? azurerm_synapse_spark_pool.synapse_spark_pool[0].name : ""
 }
 output "selfhostedsqlvm_name" {
   value = local.selfhostedsqlvm_name
 }
 
 output "synapse_git_toggle_integration" {
-  value = var.synapse_git_toggle_integration 
+  value = var.synapse_git_toggle_integration
 }
 output "synapse_git_integration_type" {
-    value = var.synapse_git_toggle_integration ? var.synapse_git_integration_type : ""
+  value = var.synapse_git_toggle_integration ? var.synapse_git_integration_type : ""
 }
 output "synapse_git_repository_root_folder" {
   value = var.synapse_git_toggle_integration ? var.synapse_git_repository_root_folder : ""
@@ -126,7 +126,7 @@ output "synapse_git_repository_name" {
 }
 output "synapse_git_repository_branch_name" {
   value = var.synapse_git_toggle_integration ? var.synapse_git_repository_branch_name : ""
-} 
+}
 output "functionapp_url" {
   value = var.synapse_git_toggle_integration ? local.functionapp_url : ""
 }
@@ -141,19 +141,19 @@ output "synapse_git_repository_base_url" {
   value = var.synapse_git_toggle_integration ? var.synapse_git_repository_base_url : ""
 } */
 output "synapse_git_use_pat" {
-    value = var.synapse_git_toggle_integration ? var.synapse_git_use_pat : false
+  value = var.synapse_git_toggle_integration ? var.synapse_git_use_pat : false
 }
 output "synapse_git_pat" {
-    value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
+  value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
 }
 output "synapse_git_github_host_url" {
-    value = var.synapse_git_toggle_integration ? var.synapse_git_github_host_url : "" 
+  value = var.synapse_git_toggle_integration ? var.synapse_git_github_host_url : ""
 }
 output "synapse_git_devops_tenant_id" {
-    value = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id: var.tenant_id
+  value = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id : var.tenant_id
 }
 output "adf_git_toggle_integration" {
-  value = var.adf_git_toggle_integration 
+  value = var.adf_git_toggle_integration
 }
 output "adf_git_repository_root_folder" {
   value = var.adf_git_toggle_integration ? var.adf_git_repository_root_folder : ""
@@ -166,13 +166,13 @@ output "adf_git_repository_name" {
 }
 output "adf_git_repository_branch_name" {
   value = var.adf_git_toggle_integration ? var.adf_git_repository_branch_name : ""
-} 
+}
 output "adf_git_use_pat" {
-    value = var.adf_git_toggle_integration ? var.adf_git_use_pat : false
+  value = var.adf_git_toggle_integration ? var.adf_git_use_pat : false
 }
 output "adf_git_pat" {
-    value = var.adf_git_use_pat ? var.adf_git_pat : ""
+  value = var.adf_git_use_pat ? var.adf_git_pat : ""
 }
 output "adf_git_host_url" {
-    value = var.adf_git_toggle_integration ? var.adf_git_host_url : "" 
+  value = var.adf_git_toggle_integration ? var.adf_git_host_url : ""
 }

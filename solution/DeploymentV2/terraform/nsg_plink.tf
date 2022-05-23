@@ -40,7 +40,7 @@ resource "azurerm_network_security_rule" "plink_out_deny_all" {
 
 resource "azurerm_subnet_network_security_group_association" "plink_nsg" {
   count                     = (var.is_vnet_isolated ? 1 : 0)
-  subnet_id                 = azurerm_subnet.plink_subnet[0].id
+  subnet_id                 = local.plink_subnet_id
   network_security_group_id = azurerm_network_security_group.plink_nsg[0].id
 
   # The subnet will refuse to accept the NSG if it's not this exact

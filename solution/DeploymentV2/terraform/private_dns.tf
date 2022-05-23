@@ -1,15 +1,19 @@
 resource "azurerm_private_dns_zone" "private_dns_zone_db" {
-  count               = (var.is_vnet_isolated ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.existing_private_dns_zone_db_id ==  "" ? 1 : 0)
   name                = "privatelink.database.windows.net"
   resource_group_name = var.resource_group_name
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "database" {
-  count                 = (var.is_vnet_isolated ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.existing_private_dns_zone_db_id ==  "" ? 1 : 0)
   name                  = "${local.vnet_name}-database"
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.private_dns_zone_db[0].name
   virtual_network_id    = azurerm_virtual_network.vnet[0].id
+}
+
+locals {
+  private_dns_zone_db_id = (var.is_vnet_isolated && var.existing_private_dns_zone_db_id ==  "" ? azurerm_private_dns_zone.private_dns_zone_db[0] : var.existing_private_dns_zone_db_id)
 }
 
 

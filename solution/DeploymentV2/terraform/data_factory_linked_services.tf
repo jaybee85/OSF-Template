@@ -42,7 +42,7 @@ resource "azurerm_data_factory_linked_custom_service" "generic_kv" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name                 = "${local.linkedservice_generic_kv_prefix}${each.value.short_name}"
   data_factory_id      = azurerm_data_factory.data_factory[0].id
@@ -69,7 +69,7 @@ resource "azurerm_data_factory_linked_custom_service" "data_lake" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name                 = "${local.linkedservice_generic_adls_prefix}${each.value.short_name}"
   data_factory_id      = azurerm_data_factory.data_factory[0].id
@@ -96,7 +96,7 @@ resource "azurerm_data_factory_linked_custom_service" "blob" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name                 = "${local.linkedservice_generic_blob_prefix}${each.value.short_name}"
   data_factory_id      = azurerm_data_factory.data_factory[0].id
@@ -123,7 +123,7 @@ resource "azurerm_data_factory_linked_custom_service" "database" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_azuresql_prefix}${each.value.short_name}"
   description     = "Generic Azure SQL Server"
@@ -151,7 +151,7 @@ resource "azurerm_data_factory_linked_custom_service" "mssqldatabase" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_mssql_prefix}${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -201,7 +201,7 @@ resource "azurerm_data_factory_linked_custom_service" "mssqldatabase_sqlauth" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_mssql_prefix}sqlauth_${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -251,7 +251,7 @@ resource "azurerm_data_factory_linked_custom_service" "file" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_file_prefix}${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -300,7 +300,7 @@ resource "azurerm_data_factory_linked_custom_service" "synapse" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_synapse_prefix}${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -309,7 +309,7 @@ resource "azurerm_data_factory_linked_custom_service" "synapse" {
   integration_runtime {
     name = each.value.name
   }
-type_properties_json = <<JSON
+  type_properties_json = <<JSON
     {
 			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=@{linkedService().Server};Initial Catalog=@{linkedService().Database}"
 		}
@@ -330,7 +330,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_anonymous" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_rest_prefix}Anonymous_${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -339,7 +339,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_anonymous" {
   integration_runtime {
     name = each.value.name
   }
-type_properties_json = <<JSON
+  type_properties_json = <<JSON
     {			
       "url": "@{linkedService().BaseUrl}",
       "enableServerCertificateValidation": true,
@@ -347,7 +347,7 @@ type_properties_json = <<JSON
 		}
 JSON
   parameters = {
-    BaseUrl   = ""    
+    BaseUrl = ""
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,
@@ -360,7 +360,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_basic" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_rest_prefix}Basic_${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -369,7 +369,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_basic" {
   integration_runtime {
     name = each.value.name
   }
-type_properties_json = <<JSON
+  type_properties_json = <<JSON
     {			
       "url": "@{linkedService().BaseUrl}",
       "enableServerCertificateValidation": true,
@@ -392,10 +392,10 @@ type_properties_json = <<JSON
 		}
 JSON
   parameters = {
-    BaseUrl   = ""  
-    UserName  = ""
+    BaseUrl         = ""
+    UserName        = ""
     KeyVaultBaseUrl = ""
-    PasswordSecret = ""  
+    PasswordSecret  = ""
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,
@@ -408,7 +408,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_serviceprincipal" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_rest_prefix}ServicePrincipal_${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -417,7 +417,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_serviceprincipal" {
   integration_runtime {
     name = each.value.name
   }
-type_properties_json = <<JSON
+  type_properties_json = <<JSON
     {			
       "url": "@{linkedService().BaseUrl}",
       "enableServerCertificateValidation": true,
@@ -442,12 +442,12 @@ type_properties_json = <<JSON
 		}
 JSON
   parameters = {
-    BaseUrl   = ""  
-    ServicePrincipalId  = ""
-    KeyVaultBaseUrl = ""
-    PasswordSecret = ""
-    TenantId = ""
-    AadResourceId = ""  
+    BaseUrl            = ""
+    ServicePrincipalId = ""
+    KeyVaultBaseUrl    = ""
+    PasswordSecret     = ""
+    TenantId           = ""
+    AadResourceId      = ""
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,
@@ -461,7 +461,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_oauth2" {
   for_each = {
     for ir in local.integration_runtimes :
     ir.short_name => ir
-    if (var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
   name            = "${local.linkedservice_generic_rest_prefix}OAuth2_${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
@@ -470,7 +470,7 @@ resource "azurerm_data_factory_linked_custom_service" "rest_oauth2" {
   integration_runtime {
     name = each.value.name
   }
-type_properties_json = <<JSON
+  type_properties_json = <<JSON
 {
   "url": "@{linkedService().BaseUrl}",
   "enableServerCertificateValidation": true,
@@ -499,13 +499,13 @@ type_properties_json = <<JSON
 }
 JSON
   parameters = {
-    BaseUrl   = ""  
-    ClientId  = ""
+    BaseUrl         = ""
+    ClientId        = ""
     KeyVaultBaseUrl = ""
-    PasswordSecret = ""
-    TokenEndpoint = ""
-    Scope = ""
-    Resource = ""  
+    PasswordSecret  = ""
+    TokenEndpoint   = ""
+    Scope           = ""
+    Resource        = ""
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,

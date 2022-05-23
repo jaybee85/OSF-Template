@@ -87,7 +87,7 @@ resource "azurerm_private_endpoint" "db_private_endpoint_with_dns" {
   name                = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink-conn"

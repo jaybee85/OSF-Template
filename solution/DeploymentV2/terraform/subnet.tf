@@ -1,5 +1,5 @@
 resource "azurerm_subnet" "plink_subnet" {
-  count                                          = (var.is_vnet_isolated ? 1 : 0)
+  count                                          = (var.is_vnet_isolated && var.existing_plink_subnet_id == "" ? 1 : 0)
   name                                           = local.plink_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -7,8 +7,12 @@ resource "azurerm_subnet" "plink_subnet" {
   enforce_private_link_endpoint_network_policies = true
 }
 
+locals {
+  plink_subnet_id = (var.existing_plink_subnet_id == "" && (var.is_vnet_isolated) ? azurerm_subnet.plink_subnet[0].id : var.existing_plink_subnet_id)
+}
+
 resource "azurerm_subnet" "bastion_subnet" {
-  count                                          = (var.is_vnet_isolated ? 1 : 0)
+  count                                          = (var.is_vnet_isolated && var.deploy_bastion ? 1 : 0)
   name                                           = "AzureBastionSubnet"
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -16,8 +20,12 @@ resource "azurerm_subnet" "bastion_subnet" {
   enforce_private_link_endpoint_network_policies = true
 }
 
+locals {
+  bastion_subnet_id = (var.existing_bastion_subnet_id == "" && (var.is_vnet_isolated) ? azurerm_subnet.bastion_subnet[0].id : var.existing_bastion_subnet_id)
+}
+
 resource "azurerm_subnet" "vm_subnet" {
-  count                                          = (var.is_vnet_isolated || var.deploy_selfhostedsql || var.deploy_h2o-ai ? 1 : 0)
+  count                                          = (var.is_vnet_isolated && (var.deploy_selfhostedsql || var.deploy_h2o-ai) ? 1 : 0)
   name                                           = local.vm_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -25,8 +33,13 @@ resource "azurerm_subnet" "vm_subnet" {
   enforce_private_link_endpoint_network_policies = true
 }
 
+locals {
+  vm_subnet_id = (var.existing_vm_subnet_id == "" && (var.is_vnet_isolated) ? azurerm_subnet.vm_subnet[0].id : var.existing_vm_subnet_id)
+}
+
+
 resource "azurerm_subnet" "app_service_subnet" {
-  count                                          = (var.is_vnet_isolated ? 1 : 0)
+  count                                          = (var.is_vnet_isolated && var.deploy_app_service_plan? 1 : 0)
   name                                           = local.app_service_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -44,4 +57,7 @@ resource "azurerm_subnet" "app_service_subnet" {
       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
     }
   }
+}
+locals {
+  app_service_subnet_id = (var.existing_app_service_subnet_id == "" && (var.is_vnet_isolated) ? azurerm_subnet.app_service_subnet[0].id : var.existing_app_service_subnet_id)
 }

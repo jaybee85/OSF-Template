@@ -150,6 +150,11 @@ variable "deploy_app_insights" {
   default     = true
   type        = bool
 }
+variable "deploy_bastion" {
+  description = "Feature toggle for deploying bastion"
+  default     = true
+  type        = bool
+}
 variable "deploy_app_service_plan" {
   description = "Feature toggle for deploying the App Service"
   default     = true
@@ -614,3 +619,40 @@ variable "synapse_spark_max_node_count" {
 
 
 
+#---------------------------------------------------------------
+# Parameters for specifying existing resources for reuse/
+#---------------------------------------------------------------
+variable "existing_log_analytics_workspace_id" {
+  description = "An existing log analytics workspace id for reuse"
+  default     = ""
+  type        = string
+}
+
+variable "existing_plink_subnet_id" {
+  description = "An existing subnet id for reuse for the Private link resources"
+  default     = ""
+  type        = string
+}
+
+
+variable "existing_bastion_subnet_id" {
+  description = "An existing subnet id for reuse for the Bastion host"
+  default     = ""
+  type        = string
+}
+variable "existing_app_service_subnet_id" {
+  description = "An existing subnet id for reuse for the App Service delegation"
+  default     = ""
+  type        = string
+}
+variable "existing_vm_subnet_id" {
+  description = "An existing subnet id for reuse for the Agent VMs"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_db_id" {
+  description = "An existing private DNS zone for privatelink.database.windows.net"
+  default     = ""
+  type        = string
+}

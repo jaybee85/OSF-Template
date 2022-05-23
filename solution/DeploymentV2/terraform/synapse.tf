@@ -30,32 +30,32 @@ resource "azurerm_synapse_workspace" "synapse" {
   #  branch_name = var.synapse_git_repository_branch_name
   #  repository_name = var.synapse_git_repository_name
   #  root_folder = var.synapse_git_repository_root_folder
-    # git_url = (Optional) Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com.
-  
+  # git_url = (Optional) Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com.
+
   #}
 
   dynamic "github_repo" {
-      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "github") ? [true] : [])
-      content {
-        account_name = var.synapse_git_repository_owner
-        branch_name = var.synapse_git_repository_branch_name
-        repository_name = var.synapse_git_repository_name
-        root_folder = var.synapse_git_repository_root_folder
-        git_url = var.synapse_git_github_host_url
-      }
+    for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "github") ? [true] : [])
+    content {
+      account_name    = var.synapse_git_repository_owner
+      branch_name     = var.synapse_git_repository_branch_name
+      repository_name = var.synapse_git_repository_name
+      root_folder     = var.synapse_git_repository_root_folder
+      git_url         = var.synapse_git_github_host_url
+    }
   }
 
-    dynamic "azure_devops_repo" {
-      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
-      content {
-        account_name = var.synapse_git_repository_owner
-        branch_name = var.synapse_git_repository_branch_name
-        repository_name = var.synapse_git_repository_name
-        root_folder = var.synapse_git_repository_root_folder
-        project_name = var.synapse_git_devops_project_name
-        #if a custom tenant id isnt assigned, will use the terraform tenant_id
-        tenant_id = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id: var.tenant_id
-      }
+  dynamic "azure_devops_repo" {
+    for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
+    content {
+      account_name    = var.synapse_git_repository_owner
+      branch_name     = var.synapse_git_repository_branch_name
+      repository_name = var.synapse_git_repository_name
+      root_folder     = var.synapse_git_repository_root_folder
+      project_name    = var.synapse_git_devops_project_name
+      #if a custom tenant id isnt assigned, will use the terraform tenant_id
+      tenant_id = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id : var.tenant_id
+    }
   }
 
 
@@ -137,7 +137,7 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
 }
 
 resource "time_sleep" "azurerm_synapse_firewall_rule_wait_30_seconds_cicd" {
-  depends_on = [azurerm_synapse_firewall_rule.cicd]
+  depends_on      = [azurerm_synapse_firewall_rule.cicd]
   create_duration = "30s"
 }
 
@@ -161,7 +161,7 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   name                 = "SLS_AzureKeyVault"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureKeyVault"
-   depends_on = [
+  depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
@@ -170,7 +170,7 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   "baseUrl": "${azurerm_key_vault.app_vault.vault_uri}"
 }
 JSON
- 
+
 }
 
 resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
@@ -244,7 +244,7 @@ resource "azurerm_private_endpoint" "synapse_web" {
   name                = "${local.synapse_workspace_name}-web-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.synapse_workspace_name}-web-plink-conn"
@@ -271,7 +271,7 @@ resource "azurerm_private_endpoint" "synapse_dev" {
   name                = "${local.synapse_workspace_name}-dev-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.synapse_workspace_name}-dev-plink-conn"
@@ -301,7 +301,7 @@ resource "azurerm_private_endpoint" "synapse_sql" {
   name                = "${local.synapse_workspace_name}-sql-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.synapse_workspace_name}-sql-plink-conn"
@@ -331,7 +331,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
   name                = "${local.synapse_workspace_name}-sqld-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.synapse_workspace_name}-sqld-plink-conn"
@@ -370,7 +370,7 @@ resource "azurerm_monitor_diagnostic_setting" "synapse_diagnostic_logs" {
     ignore_changes = [log, metric]
   }
   target_resource_id         = azurerm_synapse_workspace.synapse[0].id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id = local.log_analytics_workspace_id
 
   log {
     category = "SynapseRbacOperations"

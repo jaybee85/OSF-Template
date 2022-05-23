@@ -10,7 +10,7 @@ resource "azurerm_network_interface" "jumphost_nic" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.vm_subnet[0].id
+    subnet_id                     = local.vm_subnet_id
     private_ip_address_allocation = "Dynamic"
   }
 }
@@ -38,7 +38,7 @@ resource "azurerm_windows_virtual_machine" "jumphost" {
     sku       = "2016-Datacenter"
     version   = "latest"
   }
-   lifecycle {
+  lifecycle {
     ignore_changes = [
       admin_password
     ]
@@ -50,7 +50,7 @@ resource "azurerm_windows_virtual_machine" "jumphost" {
 #---------------------------------------------------------------
 
 resource "random_password" "selfhostedsql" {
-  count               = var.deploy_selfhostedsql ? 1 : 0
+  count       = var.deploy_selfhostedsql ? 1 : 0
   length      = 32
   min_numeric = 1
   min_upper   = 1
@@ -66,7 +66,7 @@ resource "azurerm_public_ip" "selfhostedsql" {
   count               = var.deploy_selfhostedsql ? 1 : 0
   name                = "selfhostedsqlip"
   location            = var.resource_location
-  allocation_method = "Dynamic"
+  allocation_method   = "Dynamic"
   resource_group_name = var.resource_group_name
 }
 
@@ -77,10 +77,10 @@ resource "azurerm_network_interface" "selfhostedsql_nic" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                 = "external"    
+    name                          = "external"
     private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.vm_subnet[0].id
-    public_ip_address_id = azurerm_public_ip.selfhostedsql[0].id
+    subnet_id                     = local.vm_subnet_id
+    public_ip_address_id          = azurerm_public_ip.selfhostedsql[0].id
   }
 }
 
@@ -88,14 +88,14 @@ resource "azurerm_network_interface" "selfhostedsql_nic" {
 
 
 resource "azurerm_windows_virtual_machine" "selfhostedsqlvm" {
-  count                              = var.deploy_selfhostedsql ? 1 : 0
-  name                               = local.selfhostedsqlvm_name
-  location                           = var.resource_location
-  resource_group_name                = var.resource_group_name
-  size                               = "Standard_D4_v3"
-  admin_username                     = "adminuser"
-  admin_password                     = random_password.selfhostedsql[0].result
-  network_interface_ids              = [
+  count               = var.deploy_selfhostedsql ? 1 : 0
+  name                = local.selfhostedsqlvm_name
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+  size                = "Standard_D4_v3"
+  admin_username      = "adminuser"
+  admin_password      = random_password.selfhostedsql[0].result
+  network_interface_ids = [
     azurerm_network_interface.selfhostedsql_nic[0].id,
   ]
 
@@ -111,7 +111,7 @@ resource "azurerm_windows_virtual_machine" "selfhostedsqlvm" {
     sku       = "sqldev"
     version   = "latest"
   }
-   lifecycle {
+  lifecycle {
     ignore_changes = [
       admin_password
     ]
@@ -126,7 +126,7 @@ resource "azurerm_public_ip" "h2o-ai" {
   count               = var.deploy_h2o-ai ? 1 : 0
   name                = "h2oaiip"
   location            = var.resource_location
-  allocation_method = "Dynamic"
+  allocation_method   = "Dynamic"
   resource_group_name = var.resource_group_name
 }
 
@@ -137,31 +137,31 @@ resource "azurerm_network_interface" "h2o-ai_nic" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                 = "external"    
+    name                          = "external"
     private_ip_address_allocation = "Dynamic"
-    subnet_id                     = azurerm_subnet.vm_subnet[0].id
-    public_ip_address_id = azurerm_public_ip.h2o-ai[0].id
+    subnet_id                     = local.vm_subnet_id
+    public_ip_address_id          = azurerm_public_ip.h2o-ai[0].id
   }
 }
 
 
 resource "azurerm_linux_virtual_machine" "h2o-ai" {
-  count                              = var.deploy_h2o-ai ? 1 : 0
-  name                               = local.h2o-ai_name
-  location                           = var.resource_location
-  resource_group_name                = var.resource_group_name
-  size                               = "Standard_D4_v3"
-  admin_username                     = "adminuser"
-  disable_password_authentication    = false
-  admin_password                     = "Testyboy5329!?"
-  network_interface_ids              = [
+  count                           = var.deploy_h2o-ai ? 1 : 0
+  name                            = local.h2o-ai_name
+  location                        = var.resource_location
+  resource_group_name             = var.resource_group_name
+  size                            = "Standard_D4_v3"
+  admin_username                  = "adminuser"
+  disable_password_authentication = false
+  admin_password                  = "Testyboy5329!?"
+  network_interface_ids = [
     azurerm_network_interface.h2o-ai_nic[0].id,
   ]
 
   plan {
-    name = "h2o-dai-lts"
+    name      = "h2o-dai-lts"
     publisher = "h2o-ai"
-    product = "h2o-driverles-ai"
+    product   = "h2o-driverles-ai"
   }
   os_disk {
     caching              = "ReadWrite"
@@ -174,7 +174,7 @@ resource "azurerm_linux_virtual_machine" "h2o-ai" {
     sku       = "h2o-dai-lts"
     version   = "latest"
   }
-   lifecycle {
+  lifecycle {
     ignore_changes = [
       admin_password
     ]

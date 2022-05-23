@@ -1,5 +1,6 @@
 
 resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
+  count               = (var.existing_log_analytics_workspace_id == "" ? 1 : 0)
   name                = local.log_analytics_workspace_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -12,14 +13,17 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
   }
 }
 
+locals {
+  log_analytics_workspace_id = (var.existing_log_analytics_workspace_id == "" ? azurerm_log_analytics_workspace.log_analytics_workspace[0].id : var.existing_log_analytics_workspace_id)
+}
+
 resource "azurerm_log_analytics_solution" "sentinel" {
   count                 = var.deploy_sentinel ? 1 : 0
   solution_name         = "SecurityInsights"
   location              = var.resource_location
   resource_group_name   = var.resource_group_name
-  workspace_resource_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
-  workspace_name        = azurerm_log_analytics_workspace.log_analytics_workspace.name
-
+  workspace_resource_id = local.log_analytics_workspace_id
+  workspace_name        = local.log_analytics_workspace_name
   plan {
     publisher = "Microsoft"
     product   = "OMSGallery/SecurityInsights"
@@ -27,20 +31,20 @@ resource "azurerm_log_analytics_solution" "sentinel" {
 }
 
 resource "azurerm_role_assignment" "loganalytics_function_app" {
-  count = var.publish_function_app ? 1 : 0
-  scope                = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  count                = var.publish_function_app ? 1 : 0
+  scope                = local.log_analytics_workspace_id
   role_definition_name = "Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "loganalytics_web_app" {
-  count = var.publish_web_app ? 1 : 0
-  scope                = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  count                = var.publish_web_app ? 1 : 0
+  scope                = local.log_analytics_workspace_id
   role_definition_name = "Contributor"
   principal_id         = azurerm_app_service.web[0].identity[0].principal_id
 }
 
-resource "azurerm_storage_account" "storage_acccount_security_logs" {  
+resource "azurerm_storage_account" "storage_acccount_security_logs" {
   name                     = local.logs_storage_account_name
   resource_group_name      = var.resource_group_name
   location                 = var.resource_location
@@ -68,7 +72,7 @@ resource "azurerm_storage_account" "storage_acccount_security_logs" {
 }
 
 resource "azurerm_role_assignment" "blob_function_app_sec" {
-  count = var.publish_function_app ? 1 : 0
+  count                = var.publish_function_app ? 1 : 0
   scope                = azurerm_storage_account.storage_acccount_security_logs.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -79,7 +83,7 @@ resource "azurerm_private_endpoint" "storage_private_endpoint_with_dns" {
   name                = "${azurerm_storage_account.storage_acccount_security_logs.name}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${azurerm_storage_account.storage_acccount_security_logs.name}-plink-conn"

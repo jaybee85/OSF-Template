@@ -187,7 +187,7 @@ resource "azurerm_network_security_rule" "bastion_outbound_internet" {
 
 resource "azurerm_subnet_network_security_group_association" "bastion_nsg" {
   count                     = (var.is_vnet_isolated ? 1 : 0)
-  subnet_id                 = azurerm_subnet.bastion_subnet[0].id
+  subnet_id                 = local.bastion_subnet_id
   network_security_group_id = azurerm_network_security_group.bastion_nsg[0].id
 
   # The subnet will refuse to accept the NSG if it's not this exact

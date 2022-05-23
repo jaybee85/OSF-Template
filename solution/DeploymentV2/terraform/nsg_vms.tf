@@ -39,7 +39,7 @@ resource "azurerm_network_security_rule" "vm_inbound_bastion" {
 
 resource "azurerm_subnet_network_security_group_association" "vm_nsg" {
   count                     = (var.is_vnet_isolated ? 1 : 0)
-  subnet_id                 = azurerm_subnet.vm_subnet[0].id
+  subnet_id                 = local.vm_subnet_id
   network_security_group_id = azurerm_network_security_group.vm_nsg[0].id
 
   # The subnet will refuse to accept the NSG if it's not this exact
