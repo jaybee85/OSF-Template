@@ -31,6 +31,7 @@ locals {
   purview_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-purview"
   purview_ir_app_reg_name      = (var.purview_ir_app_reg_name != "" ? var.purview_ir_app_reg_name : "ADS GoFast Purview Integration Runtime (${var.environment_tag})")
   jumphost_vm_name             = module.naming.virtual_machine.name
+  jumphost_nic_name            = "${module.naming.virtual_machine.name}-jumphost_nic"
   jumphost_password            = ((var.is_vnet_isolated && var.jumphost_password == null) ? "" : var.jumphost_password)
   synapse_data_lake_name       = (var.synapse_data_lake_name != "" ? var.synapse_data_lake_name : module.naming.data_lake_store.name_unique)
   synapse_workspace_name       = (var.synapse_workspace_name != "" ? var.synapse_workspace_name : "${var.prefix}${var.environment_tag}synw${var.app_name}${element(split("-", module.naming.data_factory.name_unique), length(split("-", module.naming.data_factory.name_unique)) - 1)}")

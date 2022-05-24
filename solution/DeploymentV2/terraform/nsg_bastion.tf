@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "bastion_nsg" {
-  count               = (var.is_vnet_isolated ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name                = local.bastion_nsg_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -13,7 +13,7 @@ resource "azurerm_network_security_group" "bastion_nsg" {
 
 # Inbound Rules
 resource "azurerm_network_security_rule" "bastion_inbound_internet" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "inbound_internet_allow"
   priority  = 100
   direction = "Inbound"
@@ -34,7 +34,7 @@ resource "azurerm_network_security_rule" "bastion_inbound_internet" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_inbound_control_plane" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "inbound_control_plane_allow"
   priority  = 110
   direction = "Inbound"
@@ -55,7 +55,7 @@ resource "azurerm_network_security_rule" "bastion_inbound_control_plane" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_inbound_data_plane" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "inbound_data_plane_allow"
   priority  = 120
   direction = "Inbound"
@@ -76,7 +76,7 @@ resource "azurerm_network_security_rule" "bastion_inbound_data_plane" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_inbound_load_balancer" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "inbound_load_balancer_allow"
   priority  = 130
   direction = "Inbound"
@@ -99,7 +99,7 @@ resource "azurerm_network_security_rule" "bastion_inbound_load_balancer" {
 #--------------------------------------------------------------------------------------------------------
 # Outbound Rules
 resource "azurerm_network_security_rule" "bastion_outbound_bastion_vms" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "outbound_bastion_vnet_allow"
   priority  = 110
   direction = "Outbound"
@@ -120,7 +120,7 @@ resource "azurerm_network_security_rule" "bastion_outbound_bastion_vms" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_outbound_dataplane" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "bastion_outbound_dataplane_allow"
   priority  = 120
   direction = "Outbound"
@@ -141,7 +141,7 @@ resource "azurerm_network_security_rule" "bastion_outbound_dataplane" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_outbound_azure" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "bastion_outbound_azure_allow"
   priority  = 130
   direction = "Outbound"
@@ -162,7 +162,7 @@ resource "azurerm_network_security_rule" "bastion_outbound_azure" {
   ]
 }
 resource "azurerm_network_security_rule" "bastion_outbound_internet" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name      = "bastion_outbound_internet_allow"
   priority  = 140
   direction = "Outbound"
@@ -186,7 +186,7 @@ resource "azurerm_network_security_rule" "bastion_outbound_internet" {
 # Associate NSG with subnet
 
 resource "azurerm_subnet_network_security_group_association" "bastion_nsg" {
-  count                     = (var.is_vnet_isolated ? 1 : 0)
+  count                     = (var.is_vnet_isolated && var.existing_bastion_subnet_id == "" ? 1 : 0)
   subnet_id                 = local.bastion_subnet_id
   network_security_group_id = azurerm_network_security_group.bastion_nsg[0].id
 

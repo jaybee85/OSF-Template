@@ -12,7 +12,7 @@ locals {
 }
 
 resource "azurerm_subnet" "bastion_subnet" {
-  count                                          = (var.is_vnet_isolated && var.deploy_bastion ? 1 : 0)
+  count                                          = (var.is_vnet_isolated && var.deploy_bastion && var.existing_bastion_subnet_id == "" ? 1 : 0)
   name                                           = "AzureBastionSubnet"
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -25,7 +25,7 @@ locals {
 }
 
 resource "azurerm_subnet" "vm_subnet" {
-  count                                          = (var.is_vnet_isolated || (var.deploy_selfhostedsql || var.deploy_h2o-ai) ? 1 : 0)
+  count                                          = (var.is_vnet_isolated || (var.deploy_selfhostedsql || var.deploy_h2o-ai) && var.existing_vm_subnet_id == "" ? 1 : 0)
   name                                           = local.vm_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name
@@ -39,7 +39,7 @@ locals {
 
 
 resource "azurerm_subnet" "app_service_subnet" {
-  count                                          = (var.is_vnet_isolated && var.deploy_app_service_plan? 1 : 0)
+  count                                          = (var.is_vnet_isolated && var.deploy_app_service_plan && var.existing_app_service_subnet_id == "" ? 1 : 0)
   name                                           = local.app_service_subnet_name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet[0].name

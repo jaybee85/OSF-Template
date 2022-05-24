@@ -4,7 +4,7 @@
 
 resource "azurerm_network_interface" "jumphost_nic" {
   count               = var.is_vnet_isolated ? 1 : 0
-  name                = "jumphost_nic"
+  name                = local.jumphost_nic_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
 

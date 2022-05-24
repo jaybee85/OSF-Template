@@ -47,17 +47,22 @@ inputs = {
 
   #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.
   #Please ensure that you enter everything that is relevant otherwise deployed resources may not work properly.
+  #log anayltics id can be found under the properties of the log analytics resource NOTE: This is the full URI not the workspaceID (ResourceID)
   existing_log_analytics_workspace_id   = "LOG ANALYTICS WORKSPACE ID"
+  #synapse private link hub id can be found under the properties of the synapse private link NOTE: This is the full URI (ResourceID)
   existing_synapse_private_link_hub_id  = "SYNAPSE PRIVATE LINK HUB ID"
 
   #Please assign subnet id's for the following - you may end up using the same subnet id for all of these resources depending on your already deployed assets.
+    #command used to get subnet ids:
+  # az network vnet subnet show -g MyResourceGroup -n MySubnet --vnet-name MyVNet
   existing_plink_subnet_id              = "PRIVATE LINK SUBNET ID"
   existing_bastion_subnet_id            = "BASTION SUBNET ID"
   existing_app_service_subnet_id        = "APP SERVICE SUBNET ID"
   existing_vm_subnet_id                 = "VM SUBNET ID"
 
   #assign the private DNS zone id's for the following.
-
+  #command used to get existing private-dns zones:
+  #az network private-dns zone list -g MyResourceGroup
   existing_private_dns_zone_db_id       = "DB PRIVATE DNS ZONE ID"
   existing_private_dns_zone_kv_id       = "KEYVAULT PRIVATE DNS ZONE ID"
   existing_private_dns_zone_blob_id     = "BLOB PRIVATE DNS ZONE ID"

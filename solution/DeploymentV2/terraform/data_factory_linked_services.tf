@@ -522,7 +522,7 @@ resource "azurerm_data_factory_linked_custom_service" "oracledb" {
     ir.short_name => ir
     if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
   }
-  name            = "${local.linkedservice_generic_rest_prefix}${each.value.short_name}"
+  name            = "${local.linkedservice_generic_oracledb_prefix}${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
   type            = "Oracle"
   description     = "Generic Service Principal Oracle DB Connection"
