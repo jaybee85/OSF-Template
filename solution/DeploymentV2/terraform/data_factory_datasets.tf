@@ -36,7 +36,7 @@ module "data_factory_datasets" {
     azurerm_data_factory_linked_custom_service.rest_anonymous,
     azurerm_data_factory_linked_custom_service.rest_basic,
     azurerm_data_factory_linked_custom_service.rest_serviceprincipal,
-    azurerm_data_factory_linked_custom_service.rest_oauth2
+    azurerm_data_factory_linked_custom_service.rest_oauth2,
     azurerm_data_factory_linked_custom_service.oracledb
 
   ]
