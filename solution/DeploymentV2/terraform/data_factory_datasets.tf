@@ -21,6 +21,8 @@ module "data_factory_datasets" {
   rest_basic_linkedservice_name            = "${local.linkedservice_generic_rest_prefix}Basic_${each.value.short_name}"
   rest_serviceprincipal_linkedservice_name = "${local.linkedservice_generic_rest_prefix}ServicePrincipal_${each.value.short_name}"
   rest_oauth2_linkedservice_name           = "${local.linkedservice_generic_rest_prefix}OAuth2_${each.value.short_name}"
+  oracledb_linkedservice_name              = "${local.linkedservice_generic_oracledb_prefix}${each.value.short_name}"
+
 
   name_suffix = random_id.rg_deployment_unique.id
   depends_on = [
@@ -35,6 +37,7 @@ module "data_factory_datasets" {
     azurerm_data_factory_linked_custom_service.rest_basic,
     azurerm_data_factory_linked_custom_service.rest_serviceprincipal,
     azurerm_data_factory_linked_custom_service.rest_oauth2
+    azurerm_data_factory_linked_custom_service.oracledb
 
   ]
 }

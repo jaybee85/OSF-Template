@@ -31,13 +31,13 @@ function(
         "Purview": Purview,
         "QualifiedIDAssociation": QualifiedIDAssociation,
         "PartitionSize": PartitionSize,
-        "Pagination": Pagination,
         "Source":{
             "Type": SourceFormat,
             "RelativeUrl": SourceRelativeUrl,
             "RequestBody": SourceRequestBody,
-            "RequestMethod": SourceRequestMethod                       
-            
+            "RequestMethod": SourceRequestMethod,                       
+            "Pagination": Pagination,
+
         },
 
         "Target":{

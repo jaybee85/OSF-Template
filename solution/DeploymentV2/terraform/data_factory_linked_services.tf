@@ -9,6 +9,8 @@ locals {
   linkedservice_generic_mssql_prefix    = "GLS_SqlServerDatabase_"
   linkedservice_generic_file_prefix     = "GLS_FileServer_"
   linkedservice_generic_rest_prefix     = "GLS_RestService_Auth"
+  linkedservice_generic_oracledb_prefix = "GLS_OracleDB_"
+
 }
 
 #Azure KeyVault - Non Generic
@@ -506,6 +508,56 @@ JSON
     TokenEndpoint   = ""
     Scope           = ""
     Resource        = ""
+  }
+  depends_on = [
+    azurerm_data_factory_linked_custom_service.generic_kv,
+    azurerm_data_factory_integration_runtime_azure.azure_ir,
+    azurerm_data_factory_integration_runtime_self_hosted.self_hosted_ir
+  ]
+}
+
+resource "azurerm_data_factory_linked_custom_service" "oracledb" {
+  for_each = {
+    for ir in local.integration_runtimes :
+    ir.short_name => ir
+    if(var.deploy_data_factory == true) && ((ir.is_azure == true) || (ir.is_azure == false && var.is_onprem_datafactory_ir_registered == true))
+  }
+  name            = "${local.linkedservice_generic_rest_prefix}${each.value.short_name}"
+  data_factory_id = azurerm_data_factory.data_factory[0].id
+  type            = "Oracle"
+  description     = "Generic Service Principal Oracle DB Connection"
+  integration_runtime {
+    name = each.value.name
+  }
+  type_properties_json = <<JSON
+    {			
+      "connectionString": "host=@{linkedService().Host};port=@{linkedService().Port};sid=@{linkedService().SID};user id=@{linkedService().UserName}",
+      "password": {
+          "type": "AzureKeyVaultSecret",
+          "store": {
+              "referenceName": "${local.linkedservice_generic_kv_prefix}${each.value.short_name}",
+              "type": "LinkedServiceReference",
+              "parameters": {
+                  "KeyVaultBaseUrl": {
+                      "value": "@linkedService().KeyVaultBaseUrl",
+                      "type": "Expression"
+                  }
+              }
+          },
+          "secretName": {
+              "value": "@linkedService().Secret",
+              "type": "Expression"
+          }
+      }
+		}
+JSON
+  parameters = {
+    Host            = ""
+    Port            = ""
+    SID             = ""
+    UserName          = ""
+    KeyVaultBaseUrl = ""
+    Secret          = ""
   }
   depends_on = [
     azurerm_data_factory_linked_custom_service.generic_kv,
