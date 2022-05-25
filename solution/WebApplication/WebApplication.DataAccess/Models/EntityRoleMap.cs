@@ -3,9 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Models
 {
-    public partial class SubjectAreaRoleMap
+    public partial class EntityRoleMap
     {
-        public int SubjectAreaId { get; set; }
+        public const string SubjectAreaTypeName = "SubjectArea";
+
+        public string EntityTypeName { get; set; }
+        public int EntityId { get; set; }
         public Guid AadGroupUid { get; set; }
         public string ApplicationRoleName { get; set; }
         public DateTime ExpiryDate { get; set; }

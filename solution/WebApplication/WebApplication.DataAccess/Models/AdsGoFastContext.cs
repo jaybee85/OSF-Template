@@ -746,11 +746,14 @@ namespace WebApplication.Models
 
             });
 
-            modelBuilder.Entity<SubjectAreaRoleMap>(entity =>
+            modelBuilder.Entity<EntityRoleMap>(entity =>
             {
-                entity.HasKey(e => new { e.SubjectAreaId, e.AadGroupUid, e.ApplicationRoleName })
-                    .HasName("PK__SubjectA__3C9282E08CDE0A8F");
+                entity.HasKey(e => new { e.EntityTypeName, e.EntityId, e.AadGroupUid, e.ApplicationRoleName })
+                    .HasName("EntityRoleMap_PK");
 
+                entity.Property(e => e.EntityTypeName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false); 
                 entity.Property(e => e.ApplicationRoleName)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -763,9 +766,6 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ValidFrom).HasColumnType("datetime2(0)");
-
-                entity.Property(e => e.ValidTo).HasColumnType("datetime2(0)");
             });
 
             OnModelCreatingPartial(modelBuilder);
@@ -776,7 +776,7 @@ namespace WebApplication.Models
         public DbSet<WebApplication.Models.SubjectArea> SubjectArea { get; set; }
 
         public DbSet<WebApplication.Models.SubjectAreaForm> SubjectAreaForm { get; set; }
-        public DbSet<WebApplication.Models.SubjectAreaRoleMap> SubjectAreaRoleMap { get; set; }
+        public DbSet<WebApplication.Models.EntityRoleMap> EntityRoleMap { get; set; }
 
     }
 }

@@ -269,8 +269,8 @@ namespace WebApplication.Controllers
                         (from md in modelDataAll
                          join sa in _context.SubjectArea
                             on md.SubjectAreaFormId equals sa.SubjectAreaFormId
-                         join rm in _context.SubjectAreaRoleMapsFor(GetUserAdGroupUids(), permittedRoles)
-                            on sa.SubjectAreaId equals rm.SubjectAreaId
+                         join rm in _context.GetEntityRoleMapsFor(EntityRoleMap.SubjectAreaTypeName,GetUserAdGroupUids(), permittedRoles)
+                            on sa.SubjectAreaId equals rm.EntityId
                          select md).Distinct();
                 }
 

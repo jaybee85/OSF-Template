@@ -58,15 +58,17 @@ namespace WebApplication.Services
                 join tg in _context.TaskGroup
                     on tm.TaskGroupId equals tg.TaskGroupId
                 join rm in ActiveRoleMaps(groups)
-                    on tg.SubjectAreaId equals rm.SubjectAreaId
+                    on tg.SubjectAreaId equals rm.EntityId
                 where tr.TaskRunnerId == taskRunnerId
+                && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                 select rm.ApplicationRoleName
             ).ToArrayAsync();
 
         private Task<string[]> LoadSubjectAreaRoles(long subjectAreaId, Guid[] groups) =>
             (
                 from rm in ActiveRoleMaps(groups)
-                where rm.SubjectAreaId == subjectAreaId
+                where rm.EntityId == subjectAreaId
+                      && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                 select rm.ApplicationRoleName
             ).ToArrayAsync();
 
@@ -74,8 +76,9 @@ namespace WebApplication.Services
             (
                 from rm in ActiveRoleMaps(groups)
                 join sa in _context.SubjectArea
-                    on rm.SubjectAreaId equals sa.SubjectAreaId
+                    on rm.EntityId equals sa.SubjectAreaId
                 where sa.SubjectAreaFormId == subjectAreaFormId
+                      && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                 select rm.ApplicationRoleName
             ).ToArrayAsync();
 
@@ -87,8 +90,9 @@ namespace WebApplication.Services
                 join tg in _context.TaskGroup
                    on tm.TaskGroupId equals tg.TaskGroupId
                 join rm in ActiveRoleMaps(groups)
-                   on tg.SubjectAreaId equals rm.SubjectAreaId
+                   on tg.SubjectAreaId equals rm.EntityId
                 where ti.TaskInstanceId == taskInstanceId
+                      && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                 select rm.ApplicationRoleName
             ).ToArrayAsync();
 
@@ -98,14 +102,15 @@ namespace WebApplication.Services
                 join tg in _context.TaskGroup
                    on tm.TaskGroupId equals tg.TaskGroupId
                 join rm in ActiveRoleMaps(groups)
-                   on tg.SubjectAreaId equals rm.SubjectAreaId
+                   on tg.SubjectAreaId equals rm.EntityId
                 where tm.TaskMasterId == taskMasterId
+                      && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                 select rm.ApplicationRoleName
             ).ToArrayAsync();
 
 
 
-        IQueryable<SubjectAreaRoleMap> ActiveRoleMaps(Guid[] groups) =>
-            _context.SubjectAreaRoleMap.Where(rm => groups.Contains(rm.AadGroupUid) && rm.ActiveYn && rm.ExpiryDate > DateTimeOffset.Now);
+        IQueryable<EntityRoleMap> ActiveRoleMaps(Guid[] groups) =>
+            _context.EntityRoleMap.Where(rm => groups.Contains(rm.AadGroupUid) && rm.ActiveYn && rm.ExpiryDate > DateTimeOffset.Now);
     }
 }
