@@ -8,7 +8,7 @@ namespace WebApplication.Models
         public const string SubjectAreaTypeName = "SubjectArea";
         public const string ExecutionEngineTypeName = "ExecutionEngine";
         public const string ScheduleMasterTypeName = "ScheduleMaster";
-        public const string SourceAndTargetTypeName = "SourceAndTargetSystem";
+        public const string SourceAndTargetTypeName = "SourceAndTargetSystems";
 
         public int EntityRoleMapId { get; set; }
         public string EntityTypeName { get; set; }
@@ -16,7 +16,7 @@ namespace WebApplication.Models
         public Guid AadGroupUid { get; set; }
         public string ApplicationRoleName { get; set; }
         public DateTime ExpiryDate { get; set; }
-        public bool ActiveYn { get; set; }
+        public bool ActiveYN { get; set; }
         public string UpdatedBy { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime ValidFrom { get; set; }

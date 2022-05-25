@@ -26,6 +26,8 @@ namespace WebApplication.Models
         public virtual DbSet<AzureStorageListing> AzureStorageListing { get; set; }
 // public virtual DbSet<DataFactory> DataFactory { get; set; }
         public virtual DbSet<ExecutionEngine> ExecutionEngine { get; set; }
+        public virtual DbSet<EntityRoleMap> EntityRoleMap { get; set; }
+
         public virtual DbSet<IntegrationRuntime> IntegrationRuntime { get; set; }
         public virtual DbSet<Execution> Execution { get; set; }
         public virtual DbSet<FrameworkTaskRunner> FrameworkTaskRunner { get; set; }
@@ -758,7 +760,7 @@ namespace WebApplication.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYN).HasColumnName("ActiveYN");
 
                 entity.Property(e => e.ExpiryDate).HasColumnType("date");
 
@@ -776,7 +778,6 @@ namespace WebApplication.Models
         public DbSet<WebApplication.Models.SubjectArea> SubjectArea { get; set; }
 
         public DbSet<WebApplication.Models.SubjectAreaForm> SubjectAreaForm { get; set; }
-        public DbSet<WebApplication.Models.EntityRoleMap> EntityRoleMap { get; set; }
 
     }
 }

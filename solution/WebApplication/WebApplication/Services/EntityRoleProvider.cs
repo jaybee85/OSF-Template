@@ -150,6 +150,6 @@ namespace WebApplication.Services
 
 
         IQueryable<EntityRoleMap> ActiveRoleMaps(Guid[] groups) =>
-            _context.EntityRoleMap.Where(rm => groups.Contains(rm.AadGroupUid) && rm.ActiveYn && rm.ExpiryDate > DateTimeOffset.Now);
+            _context.EntityRoleMap.Where(rm => groups.Contains(rm.AadGroupUid) && rm.ActiveYN && rm.ExpiryDate > DateTimeOffset.Now);
     }
 }

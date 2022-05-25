@@ -296,7 +296,7 @@ namespace WebApplication.Controllers
                              && permittedRoles.Contains(rm.ApplicationRoleName)
                              && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                              && rm.ExpiryDate > DateTimeOffset.Now
-                             && rm.ActiveYn
+                             && rm.ActiveYN
                          select md).Distinct();
                 }
 

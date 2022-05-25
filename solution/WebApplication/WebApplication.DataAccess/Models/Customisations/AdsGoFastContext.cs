@@ -146,7 +146,7 @@ namespace WebApplication.Models
                     && applicationRoles.Contains(r.ApplicationRoleName)
                     && r.EntityTypeName == entityTypeName
                     && r.ExpiryDate > DateTimeOffset.Now
-                      && r.ActiveYn
+                      && r.ActiveYN
                 select r;
         }
     }

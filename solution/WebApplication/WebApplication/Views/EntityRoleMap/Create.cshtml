@@ -1,45 +1,53 @@
 @using Humanizer;
-@model WebApplication.Models.SubjectArea
+@model WebApplication.Models.EntityRoleMap
 
 @{
-    ViewData["Title"] = "Create - " + "SubjectArea".Humanize(LetterCasing.Title);
+    ViewData["Title"] = "Create - " + "EntityRoleMap".Humanize(LetterCasing.Title);
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
 
-<h4> @("SubjectArea".Humanize(LetterCasing.Title))</h4>
+<h4> @("EntityRoleMap".Humanize(LetterCasing.Title))</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="SubjectAreaName" class="control-label"></label>
-                <input asp-for="SubjectAreaName" class="form-control" />
-                <span asp-validation-for="SubjectAreaName" class="text-danger"></span>
+                <label asp-for="EntityId" class="control-label"></label>
+                <input asp-for="EntityId" class="form-control" />
+                <span asp-validation-for="EntityId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ShortCode" class="control-label"></label>
-                <input asp-for="ShortCode" class="form-control" />
-                <span asp-validation-for="ShortCode" class="text-danger"></span>
+                <label asp-for="EntityTypeName" class="control-label"></label>
+                <select asp-for="EntityTypeName" class="form-control" asp-items="ViewBag.EntityTypes"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="AadGroupUid" class="control-label"></label>
+                <input asp-for="AadGroupUid" class="form-control" />
+                <span asp-validation-for="AadGroupUid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationRoleName" class="control-label"></label>
+                <input asp-for="ApplicationRoleName" class="form-control" />
+                <span asp-validation-for="ApplicationRoleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpiryDate" class="control-label"></label>
+                <input asp-for="ExpiryDate" class="form-control" />
+                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ActiveYn" /> @Html.DisplayNameFor(model => model.ActiveYn)
+                    <input class="form-check-input" asp-for="ActiveYN" /> @Html.DisplayNameFor(model => model.ActiveYN)
                 </label>
             </div>
-            @*<div class="form-group">
-                <label asp-for="SubjectAreaFormId" class="control-label"></label>
-                <input asp-for="SubjectAreaFormId" class="form-control" />
-                <span asp-validation-for="SubjectAreaFormId" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
-                <label asp-for="DefaultTargetSchema" class="control-label"></label>
-                <input asp-for="DefaultTargetSchema" class="form-control" />
-                <span asp-validation-for="DefaultTargetSchema" class="text-danger"></span>
+                <label asp-for="UpdatedBy" class="control-label"></label>
+                <input asp-for="UpdatedBy" class="form-control" />
+                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
             </div>
-
             <div class="form-group">
                 <a href="javascript:history.go(-1)" title="Back to List" class="btn btn-secondary"><i class="fa fa-arrow-circle-left"></i> Back</a>
                 <input type="submit" value="Create" class="btn btn-primary" />
