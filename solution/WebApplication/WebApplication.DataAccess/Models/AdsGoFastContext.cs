@@ -377,7 +377,7 @@ namespace WebApplication.Models
 
                 entity.Property(e => e.TaskRunnerId).ValueGeneratedNever();
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(25)
@@ -393,14 +393,14 @@ namespace WebApplication.Models
                 entity.HasIndex(e => new { e.ScheduledDateTimeOffset, e.ActiveYn, e.ScheduleMasterId })
                     .HasName("nci_wi_ScheduleInstance_AEC2B5B6860722A20293725FC7779B6F");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.ScheduledDateUtc).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<ScheduleMaster>(entity =>
             {
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
                 
                 entity.Property(e => e.ScheduleDesciption)
                     .IsRequired()
@@ -418,7 +418,7 @@ namespace WebApplication.Models
                 entity.HasKey(e => e.SystemId)
                     .HasName("PK__SourceAn__9394F68A96690655");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.SystemName)
                     .IsRequired()
@@ -470,7 +470,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<TaskGroup>(entity =>
             {
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.TaskGroupJson)
                     .HasColumnName("TaskGroupJSON")
@@ -505,7 +505,7 @@ namespace WebApplication.Models
                 entity.HasIndex(e => new { e.ScheduleInstanceId, e.TaskMasterId, e.ActiveYn, e.TaskRunnerId, e.LastExecutionStatus })
                     .HasName("nci_wi_TaskInstance_0EEF2CCAE417C39EAA3C6FFC345D5787");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.Adfpipeline)
                     .IsRequired()
@@ -529,7 +529,7 @@ namespace WebApplication.Models
 
                 entity.ToView("TaskInstanceAndScheduleInstance", "Pbi");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.Adfpipeline)
                     .IsRequired()
@@ -570,7 +570,7 @@ namespace WebApplication.Models
                 entity.HasIndex(e => new { e.SourceSystemId, e.TargetSystemId, e.TaskGroupId, e.DependencyChainTag })
                     .HasName("nci_wi_TaskMaster_D7BDAE69478BDFB67BBA9E4F9BB3DD7F");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.DegreeOfCopyParallelism).HasDefaultValueSql("((1))");
 
@@ -604,7 +604,7 @@ namespace WebApplication.Models
 
                 entity.Property(e => e.TaskMasterId).ValueGeneratedNever();
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.TaskMasterWaterMarkBigInt).HasColumnName("TaskMasterWaterMark_BigInt");
 
@@ -630,7 +630,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<TaskType>(entity =>
             {
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.TaskExecutionType)
                     .IsRequired()
@@ -643,7 +643,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<TaskTypeMapping>(entity =>
             {
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.MappingName)
                     .IsRequired()
@@ -691,13 +691,13 @@ namespace WebApplication.Models
                     .IsRequired()
                     .HasMaxLength(200);
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
             });
 
             modelBuilder.Entity<SubjectArea>(entity =>
             {
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.DefaultTargetSchema)
                     .HasMaxLength(255)
@@ -732,7 +732,7 @@ namespace WebApplication.Models
                 entity.HasKey(e => new { e.SubjectAreaId, e.SystemId, e.MappingType })
                     .HasName("PK__SubjectA__11271F966209195F");
 
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.AllowedSchemas)
                     .IsRequired()

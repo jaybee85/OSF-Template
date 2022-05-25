@@ -126,7 +126,7 @@ namespace WebApplication.Controllers
 
         // GET: SubjectArea/Edit/5
         [ChecksUserAccess()]
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -159,6 +159,7 @@ namespace WebApplication.Controllers
             {
                 try
                 {
+                    entityRoleMap.UpdatedBy = User.Identity.Name;
                     _context.Update(entityRoleMap);
 
                     if (!await CanPerformCurrentActionOnRecord(entityRoleMap))
@@ -239,7 +240,7 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'AadGroupUid', 'name':'AadGroupUid', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ApplicationRoleName', 'name':'ApplicationRoleName', 'autoWidth':true }"));
             cols.Add(JObject.Parse("{ 'data':'ExpiryDate', 'name':'ExpiryDate', 'autoWidth':true, 'ads_format': 'DateTime' }"));
-            cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'ActiveYn', 'autoWidth':true, 'ads_format':'bool'}"));
+            cols.Add(JObject.Parse("{ 'data':'ActiveYN', 'name':'ActiveYN', 'autoWidth':true, 'ads_format':'bool'}"));
             cols.Add(JObject.Parse("{ 'data':'UpdatedBy', 'name':'UpdatedBy', 'autoWidth':true }"));
 
             HumanizeColumns(cols);
@@ -311,6 +312,7 @@ namespace WebApplication.Controllers
             }
 
         }
+
 
     }
 }

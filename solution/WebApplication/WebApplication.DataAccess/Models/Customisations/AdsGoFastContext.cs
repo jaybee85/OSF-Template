@@ -20,7 +20,7 @@ namespace WebApplication.Models
             modelBuilder.Entity<ScheduleMaster>(entity =>
             {
                 entity.HasAnnotation("DisplayColumn", "ScheduleDesciption");
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.ScheduleDesciption)
                     .IsRequired()
