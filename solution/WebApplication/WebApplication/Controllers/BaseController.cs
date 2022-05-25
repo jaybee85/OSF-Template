@@ -54,8 +54,8 @@ namespace WebApplication.Controllers
             if (actionName is null)
                 throw new ArgumentNullException(nameof(actionName));
 
-            //if (CanPerformCurrentActionGlobally(actionName))
-             //   return true;
+            if (CanPerformCurrentActionGlobally(actionName))
+                return true;
 
             var entityRoles = await _roleProvider.GetUserRoles(record, GetUserAdGroupUids());
             return _securityAccessProvider.CanPerformOperation(Name, actionName, entityRoles);
