@@ -42,7 +42,11 @@ namespace WebApplication.Services
                 case SourceAndTargetSystems x:
                     return await LoadSourceAndTargetSystemRoles(x.SystemId, groups);
                 case ScheduleInstance x:
-                    return await LoadScheduleMasterRoles(x.ScheduleMasterId, groups);
+                    if (!x.ScheduleMasterId.HasValue)
+                    {
+                        return new string[0];
+                    }
+                    return await LoadScheduleMasterRoles(x.ScheduleMasterId.Value, groups);
                 case ScheduleMaster x:
                     return await LoadScheduleMasterRoles(x.ScheduleMasterId, groups);
                 case ExecutionEngine x:
@@ -58,29 +62,30 @@ namespace WebApplication.Services
             join rm in ActiveRoleMaps(groups)
                 on tr.EngineId equals rm.EntityId
             where rm.EntityTypeName == EntityRoleMap.ExecutionEngineTypeName
-            && rm.EntityId == xEngineId
+                  && rm.EntityId == xEngineId
             select rm.ApplicationRoleName
         ).ToArrayAsync();
 
-        private Task<string[]> LoadScheduleMasterRoles(long systemId, Guid[] groups) =>
-        (
-            from tr in _context.ScheduleMaster
-            join rm in ActiveRoleMaps(groups)
+        private Task<string[]> LoadScheduleMasterRoles(long systemId, Guid[] groups)
+        {
+            return (from tr in _context.ScheduleMaster
+                    join rm in ActiveRoleMaps(groups)
                 on tr.ScheduleMasterId equals rm.EntityId
-            where rm.EntityTypeName == EntityRoleMap.ScheduleMasterTypeName
-                  && rm.EntityId == systemId
-            select rm.ApplicationRoleName
-        ).ToArrayAsync();
+                    where rm.EntityTypeName == EntityRoleMap.ScheduleMasterTypeName
+                    && rm.EntityId == systemId
+                    select rm.ApplicationRoleName
+            ).ToArrayAsync();
+        }
 
         private Task<string[]> LoadSourceAndTargetSystemRoles(long systemId, Guid[] groups) =>
-        (
-            from tr in _context.SourceAndTargetSystems
-            join rm in ActiveRoleMaps(groups)
-                on tr.SystemId equals rm.EntityId
-            where rm.EntityTypeName == EntityRoleMap.SourceAndTargetTypeName
-                  && rm.EntityId == systemId
-            select rm.ApplicationRoleName
-        ).ToArrayAsync();
+            (
+                from tr in _context.SourceAndTargetSystems
+                join rm in ActiveRoleMaps(groups)
+                    on tr.SystemId equals rm.EntityId
+                where rm.EntityTypeName == EntityRoleMap.SourceAndTargetTypeName
+                      && rm.EntityId == systemId
+                select rm.ApplicationRoleName
+            ).ToArrayAsync();
 
         private Task<string[]> LoadFrameworkTaskRunnerRoles(long taskRunnerId, Guid[] groups) =>
             (
