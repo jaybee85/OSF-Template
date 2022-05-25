@@ -748,7 +748,7 @@ namespace WebApplication.Models
 
             modelBuilder.Entity<EntityRoleMap>(entity =>
             {
-                entity.HasKey(e => new { e.EntityTypeName, e.EntityId, e.AadGroupUid, e.ApplicationRoleName })
+                entity.HasKey(e => new { e.EntityRoleMapId })
                     .HasName("EntityRoleMap_PK");
 
                 entity.Property(e => e.EntityTypeName)

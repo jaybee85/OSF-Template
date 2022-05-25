@@ -4,6 +4,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EntityRoleMapHistory](
+	[EntityRoleMapId] [int] IDENTITY,
 	[EntityId] [int] NOT NULL,
 	[EntityTypeName] [varchar](255) NOT NULL,
 	[AadGroupUid] [uniqueidentifier] NOT NULL,
@@ -23,6 +24,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[EntityRoleMap](
+	[EntityRoleMapId] [int] IDENTITY,
 	[EntityId] [int] NOT NULL,
 	[EntityTypeName] [varchar](255) NOT NULL,
 	[AadGroupUid] [uniqueidentifier] NOT NULL,
@@ -32,7 +34,11 @@ CREATE TABLE [dbo].[EntityRoleMap](
 	[UpdatedBy] [varchar](255) NULL,
 	[ValidFrom] [datetime2](0) NOT NULL,
 	[ValidTo] [datetime2](0) NOT NULL
-CONSTRAINT [EntityRoleMap_PK] PRIMARY KEY CLUSTERED 
+CONSTRAINT [EntityRoleMap_PK] PRIMARY KEY CLUSTERED
+(
+	[EntityRoleMapId]
+)
+CONSTRAINT [EntityRoleMap_UK] UNIQUE CLUSTERED 
 (
 	[EntityTypeName] ASC,
 	[EntityId] ASC,

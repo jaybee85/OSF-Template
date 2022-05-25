@@ -3,10 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApplication.Models
 {
-    public partial class EntityRoleMap
+    public class EntityRoleMap
     {
         public const string SubjectAreaTypeName = "SubjectArea";
+        public const string ExecutionEngineTypeName = "ExecutionEngine";
+        public const string ScheduleMasterTypeName = "ScheduleMaster";
+        public const string SourceAndTargetTypeName = "SourceAndTargetSystem";
 
+        public int EntityRoleMapId { get; set; }
         public string EntityTypeName { get; set; }
         public int EntityId { get; set; }
         public Guid AadGroupUid { get; set; }
