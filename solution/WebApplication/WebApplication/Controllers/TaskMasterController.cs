@@ -121,7 +121,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
+        public async Task<IActionResult> Create(string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId,InsertIntoCurrentSchedule")] TaskMaster taskMaster)
         {
             if (ModelState.IsValid)
             {
@@ -174,7 +174,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> Edit(long id, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
+        public async Task<IActionResult> Edit(long id, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId,InsertIntoCurrentSchedule")] TaskMaster taskMaster)
         {
             if (id != taskMaster.TaskMasterId)
             {
@@ -281,6 +281,7 @@ namespace WebApplication.Controllers
             cols.Add(JObject.Parse("{ 'data':'TargetSystem.SystemName', 'name':'Target' }"));
             cols.Add(JObject.Parse("{ 'data':'TaskDatafactoryIr', 'name':'Data Factory IR'}"));
             cols.Add(JObject.Parse("{ 'data':'ActiveYn', 'name':'ActiveYn', 'autoWidth':true, 'ads_format': 'bool' }"));
+            cols.Add(JObject.Parse("{ 'data':'InsertIntoCurrentSchedule', 'name':'InsertIntoCurrentSchedule', 'autoWidth':true, 'ads_format': 'bool' }"));
 
             HumanizeColumns(cols);
 
@@ -494,7 +495,7 @@ namespace WebApplication.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ChecksUserAccess]
-        public async Task<IActionResult> EditPlus(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId")] TaskMaster taskMaster)
+        public async Task<IActionResult> EditPlus(long id, string returnUrl, [Bind("TaskMasterId,TaskMasterName,TaskTypeId,TaskGroupId,ScheduleMasterId,SourceSystemId,TargetSystemId,DegreeOfCopyParallelism,AllowMultipleActiveInstances,TaskDatafactoryIr,TaskMasterJson,ActiveYn,DependencyChainTag,EngineId,InsertIntoCurrentSchedule")] TaskMaster taskMaster)
         {
             if (id != taskMaster.TaskMasterId)
                 return NotFound();
