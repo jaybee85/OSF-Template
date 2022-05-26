@@ -16,13 +16,13 @@ resource "azurerm_purview_account" "purview" {
 
 resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
-  name                = "${var.prefix}-${var.environment_tag}-pura-${lower(var.app_name)}-plink"
+  name                = local.purview_account_plink
   location            = var.resource_location
   resource_group_name = var.resource_group_name
   subnet_id           = azurerm_subnet.plink_subnet[0].id
 
   private_service_connection {
-    name                           = "${var.prefix}-${var.environment_tag}-pura-${lower(var.app_name)}-plink-conn"
+    name                           = "${local.purview_account_plink}-conn"
     private_connection_resource_id = azurerm_purview_account.purview[0].id
     is_manual_connection           = false
     subresource_names              = ["account"]
@@ -47,13 +47,13 @@ resource "azurerm_private_endpoint" "purview_account_private_endpoint_with_dns" 
 
 resource "azurerm_private_endpoint" "purview_portal_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated && var.deploy_purview ? 1 : 0
-  name                = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink"
+  name                = local.purview_portal_plink
   location            = var.resource_location
   resource_group_name = var.resource_group_name
   subnet_id           = azurerm_subnet.plink_subnet[0].id
 
   private_service_connection {
-    name                           = "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink-conn"
+    name                           = "${local.purview_portal_plink}-conn"
     private_connection_resource_id = azurerm_purview_account.purview[0].id
     is_manual_connection           = false
     subresource_names              = ["portal"]

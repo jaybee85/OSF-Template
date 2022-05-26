@@ -62,6 +62,7 @@ namespace FunctionApp.Functions
             JObject data = JObject.Parse(requestBody);
             string SparkPoolName = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["DefaultSparkPoolName"].ToString();
             string Endpoint = JObject.Parse(data["ExecutionEngine"]["EngineJson"].ToString())["endpoint"].ToString();
+            LogHelper.LogInformation($"SparkPoolName: {SparkPoolName}; Endpoint: {Endpoint}");
             string JobName = $"TaskInstance_{data["TaskInstanceId"].ToString()}";
             string res = await _azureSynapseService.ExecuteNotebook(new Uri(Endpoint), JobName, SparkPoolName, LogHelper, this.SessionFolder, data);
 

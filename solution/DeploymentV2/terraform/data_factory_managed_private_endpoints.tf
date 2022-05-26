@@ -50,6 +50,19 @@ resource "azurerm_data_factory_managed_private_endpoint" "sqlserver" {
   }
 }
 
+resource "azurerm_data_factory_managed_private_endpoint" "synapse" {
+  count              = var.deploy_synapse && var.is_vnet_isolated && var.deploy_data_factory ? 1 : 0
+  name               = "SynapseSql_PrivateEndpoint"
+  data_factory_id    = azurerm_data_factory.data_factory[0].id
+  target_resource_id = azurerm_synapse_workspace.synapse[0].id
+  subresource_name   = "Sql"
+  lifecycle {
+    ignore_changes = [
+      fqdns
+    ]
+  }
+}
+
 
 // Synapse
 # resource "azurerm_data_factory_managed_private_endpoint" "synapse" {
