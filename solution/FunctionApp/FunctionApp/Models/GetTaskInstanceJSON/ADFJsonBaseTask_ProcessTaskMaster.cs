@@ -33,7 +33,8 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
 
                 if (TaskType == "Execute SQL Statement")
                 {
-                    ProcessTaskMaster_Mapping_AZ_SQL_StoredProcedure();
+                    //ProcessTaskMaster_Mapping_AZ_SQL_StoredProcedure();
+                    ProcessTaskMaster_Default();
                     goto ProcessTaskMasterEnd;
                 }
 

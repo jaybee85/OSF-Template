@@ -40,7 +40,8 @@ local tests =
         "Description": "Execute Notebook test - by default this execute the SampleNotebook provided within the synapse deployment.",  
         "SynapsePipeline": "GPL_SparkNotebookExecution_Primary_Azure",
         "Purview": "Disabled",
-        "QualifiedIDAssociation": "TaskMasterId"   
+        "QualifiedIDAssociation": "TaskMasterId", 
+        "UseNotebookActivity": "Disabled" 
        
     }
 
@@ -81,7 +82,8 @@ template(
     t.ExecuteNotebook,
     t.CustomDefinitions,
     t.Purview,
-    t.QualifiedIDAssociation
+    t.QualifiedIDAssociation, 
+    t.UseNotebookActivity
 );
 
 

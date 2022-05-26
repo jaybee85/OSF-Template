@@ -19,6 +19,8 @@ using FunctionApp.Services;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using Microsoft.ApplicationInsights.Extensibility;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -36,10 +38,42 @@ namespace FunctionApp
                 .Build();
 
             ConfigureServices(builder.Services, config);
+
+            //Add a custom telemetry processor
+            var configDescriptor = builder.Services.SingleOrDefault(tc => tc.ServiceType == typeof(TelemetryConfiguration));
+            if (configDescriptor?.ImplementationFactory != null)
+            {
+                var implFactory = configDescriptor.ImplementationFactory;
+                builder.Services.Remove(configDescriptor);
+                builder.Services.AddSingleton(provider =>
+                {
+                    if (implFactory.Invoke(provider) is TelemetryConfiguration config)
+                    {
+                        var newConfig = config;
+                        newConfig.ApplicationIdProvider = config.ApplicationIdProvider;
+                        newConfig.InstrumentationKey = config.InstrumentationKey;
+                        newConfig.TelemetryProcessorChainBuilder.Use(next => new SuccessfulDependencyFilter(next));
+                        /*foreach (var processor in config.TelemetryProcessors)
+                        {
+                            newConfig.TelemetryProcessorChainBuilder.Use(next => processor);
+                        }*/                        
+                        newConfig.TelemetryProcessorChainBuilder.Build();
+                        newConfig.TelemetryProcessors.OfType<ITelemetryModule>().ToList().ForEach(module => module.Initialize(newConfig));
+                        return newConfig;
+                    }
+                    return null;
+                });
+            }
+
         }
 
         public static void ConfigureServices(IServiceCollection services, IConfigurationRoot config)
         {
+            //Application Insights
+            //services.AddApplicationInsightsTelemetry();
+            //services.AddApplicationInsightsTelemetryProcessor<SuccessfulDependencyFilter>();
+            
+            
             //Configure Dapper
             Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -61,6 +95,7 @@ namespace FunctionApp
             services.AddSingleton<MicrosoftAzureManagementAuthenticationProvider>();
             services.AddSingleton<SourceAndTargetSystemJsonSchemasProvider>();
             services.AddSingleton<AzureSynapseService>();
+            services.AddSingleton<IntegrationRuntimeMappingProvider>();
 
             services.AddSingleton<DataFactoryPipelineProvider>();
             services.AddSingleton<IAzureAuthenticationProvider>(downstreamAuthenticationProvider);
@@ -101,7 +136,12 @@ namespace FunctionApp
             }).SetHandlerLifetime(TimeSpan.FromMinutes(5));  //Set lifetime to five minutes
 
             services.AddSingleton<PurviewService>();
+
+            
+            
         }
     }
+
+    
 }
 

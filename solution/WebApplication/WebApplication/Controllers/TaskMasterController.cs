@@ -57,6 +57,35 @@ namespace WebApplication.Controllers
             return View(taskMaster);
         }
 
+
+        [ChecksUserAccess]
+        public async Task<IActionResult> DetailsByTaskInstance(long? TaskInstanceId)
+        {
+            if (TaskInstanceId == null)
+            {
+                return NotFound();
+            }
+
+            var taskInstance= await _context.TaskInstance
+               .Include(t => t.TaskMaster)               
+               .FirstOrDefaultAsync(m => m.TaskInstanceId == TaskInstanceId);
+
+            var taskMaster = await _context.TaskMaster
+                .Include(t => t.ScheduleMaster)
+                .Include(t => t.SourceSystem)
+                .Include(t => t.TargetSystem)
+                .Include(t => t.TaskGroup)
+                .Include(t => t.TaskType)
+                .FirstOrDefaultAsync(m => m.TaskMasterId == taskInstance.TaskMasterId);
+            if (taskMaster == null)
+                return NotFound();
+            if (!await CanPerformCurrentActionOnRecord(taskMaster))
+                return new ForbidResult();
+
+            return View("Details",taskMaster);
+        }
+
+
         // GET: TaskMaster/Create
         public IActionResult Create(int? TaskGroupId)
         {

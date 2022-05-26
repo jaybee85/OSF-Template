@@ -5,7 +5,7 @@ Write-Host "_____________________________"
 Write-Host " Uploading Synapse Notebooks " 
 Write-Host "_____________________________"
 
-$tests = (Get-ChildItem -Path ("../../Synapse/Notebooks/") -Verbose -recurse)
+$tests = (Get-ChildItem -Path ("../../Synapse/Patterns/notebook") -Verbose -Filter "*.ipynb" -recurse)
 foreach ($test in $tests)
 {
     ($test | Get-Content) | Set-Content('FileForUpload.json')

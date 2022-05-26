@@ -1,6 +1,10 @@
 # --------------------------------------------------------------------------------------------------------------------
 # Workspace
 # --------------------------------------------------------------------------------------------------------------------
+
+
+
+
 resource "azurerm_storage_data_lake_gen2_filesystem" "dlfs" {
   count              = var.deploy_adls && var.deploy_synapse ? 1 : 0
   name               = local.synapse_data_lake_name
@@ -20,6 +24,40 @@ resource "azurerm_synapse_workspace" "synapse" {
   managed_virtual_network_enabled      = true
   managed_resource_group_name          = local.synapse_resource_group_name
   purview_id                           = var.deploy_purview ? azurerm_purview_account.purview[0].id : null
+
+  #github_repo {
+  #  account_name = var.synapse_git_account_name
+  #  branch_name = var.synapse_git_repository_branch_name
+  #  repository_name = var.synapse_git_repository_name
+  #  root_folder = var.synapse_git_repository_root_folder
+    # git_url = (Optional) Specifies the GitHub Enterprise host name. For example: https://github.mydomain.com.
+  
+  #}
+
+  dynamic "github_repo" {
+      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "github") ? [true] : [])
+      content {
+        account_name = var.synapse_git_repository_owner
+        branch_name = var.synapse_git_repository_branch_name
+        repository_name = var.synapse_git_repository_name
+        root_folder = var.synapse_git_repository_root_folder
+        git_url = var.synapse_git_github_host_url
+      }
+  }
+
+    dynamic "azure_devops_repo" {
+      for_each = ((var.synapse_git_toggle_integration && var.synapse_git_integration_type == "devops") ? [true] : [])
+      content {
+        account_name = var.synapse_git_repository_owner
+        branch_name = var.synapse_git_repository_branch_name
+        repository_name = var.synapse_git_repository_name
+        root_folder = var.synapse_git_repository_root_folder
+        project_name = var.synapse_git_devops_project_name
+        #if a custom tenant id isnt assigned, will use the terraform tenant_id
+        tenant_id = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id: var.tenant_id
+      }
+  }
+
 
   tags = local.tags
   lifecycle {
@@ -98,6 +136,11 @@ resource "azurerm_synapse_firewall_rule" "public_access" {
   end_ip_address       = "255.255.255.255"
 }
 
+resource "time_sleep" "azurerm_synapse_firewall_rule_wait_30_seconds_cicd" {
+  depends_on = [azurerm_synapse_firewall_rule.cicd]
+  create_duration = "30s"
+}
+
 # --------------------------------------------------------------------------------------------------------------------
 # Synapse Workspace Roles and Linked Services
 # --------------------------------------------------------------------------------------------------------------------
@@ -105,10 +148,10 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
   count                = var.deploy_synapse ? 1 : 0
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
-  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+  principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 
 }
@@ -120,7 +163,7 @@ resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   type                 = "AzureKeyVault"
    depends_on = [
     azurerm_synapse_firewall_rule.public_access,
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
   type_properties_json = <<JSON
 {
@@ -136,7 +179,7 @@ resource "azurerm_synapse_linked_service" "synapse_functionapp_linkedservice" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   type                 = "AzureFunction"
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
   type_properties_json = <<JSON
 {
@@ -181,7 +224,7 @@ resource "azurerm_synapse_managed_private_endpoint" "adls" {
     ignore_changes = all
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -249,7 +292,7 @@ resource "azurerm_private_endpoint" "synapse_dev" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -279,7 +322,7 @@ resource "azurerm_private_endpoint" "synapse_sql" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 
@@ -309,7 +352,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
     ]
   }
   depends_on = [
-    azurerm_synapse_firewall_rule.cicd
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
   ]
 }
 

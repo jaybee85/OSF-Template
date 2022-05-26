@@ -75,6 +75,11 @@ if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 }
 
 
+#accept custom image terms
+#https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
+
+#az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest
+
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
@@ -129,6 +134,7 @@ $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 $purview_sp_name=$outputs.purview_sp_name.value
 $synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
 $synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
+$synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
 
 $skipWebApp = if($tout.publish_web_app) {$false} else {$true}
 $skipFunctionApp = if($tout.publish_function_app) {$false} else {$true}
@@ -162,6 +168,16 @@ else {
             $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $sqlserver_name --type Microsoft.Sql/servers --description "Approved by Deploy.ps1"
         }
     }
+    
+    $links = az network private-endpoint-connection list -g $resource_group_name -n $synapse_workspace_name --type 'Microsoft.Synapse/workspaces' |  ConvertFrom-Json
+    foreach($link in $links){
+        if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
+            $id_parts = $link.id.Split("/");
+            Write-Host "- " + $id_parts[$id_parts.length-1]
+            $result = az network private-endpoint-connection approve -g $resource_group_name -n $id_parts[$id_parts.length-1] --resource-name $synapse_workspace_name --type Microsoft.Synapse/workspaces --description "Approved by Deploy.ps1"
+        }
+    }
+
     $links = az network private-endpoint-connection list -g $resource_group_name -n $blobstorage_name --type 'Microsoft.Storage/storageAccounts' |  ConvertFrom-Json
     foreach($link in $links){
         if($link.properties.privateLinkServiceConnectionState.status -eq  "Pending"){
@@ -242,6 +258,10 @@ else {
     Compress-Archive -Path '.\unzipped\functionapp\*' -DestinationPath $Path -force
     
     $result = az functionapp deployment source config-zip --resource-group $resource_group_name --name $functionapp_name --src $Path
+
+    #Make sure we are running V6.0 --TODO: Move this to terraform if possible -- This is now done!
+    $result = az functionapp config set --net-framework-version v6.0 -n $functionapp_name -g $resource_group_name
+    $result = az functionapp config appsettings set --name $functionapp_name --resource-group $resource_group_name --settings FUNCTIONS_EXTENSION_VERSION=~4
 }
 
 #----------------------------------------------------------------------------------------------------------------
@@ -269,7 +289,7 @@ else {
     Set-Location ".\bin\publish\unzipped\database\"
 
     # This has been updated to use the Azure CLI cred
-    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --PurviewAccountName $purview_name
+    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name
 
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
     $SqlInstalled = false
@@ -437,7 +457,7 @@ else
     if ($tout.is_vnet_isolated -eq $true)
     {
         $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
-}
+    }
 
 }
 

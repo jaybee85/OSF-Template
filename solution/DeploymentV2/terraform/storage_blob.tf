@@ -26,17 +26,17 @@ resource "azurerm_storage_account" "blob" {
 }
 
 resource "azurerm_role_assignment" "blob_function_app" {
-  count                = var.deploy_storage_account ? 1 : 0
+  count                = var.deploy_storage_account && var.publish_function_app ? 1 : 0
   scope                = azurerm_storage_account.blob[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_function_app.function_app.identity[0].principal_id
+  principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "blob_data_factory" {
-  count                = var.deploy_storage_account ? 1 : 0
+  count                = var.deploy_storage_account && var.deploy_data_factory ? 1 : 0
   scope                = azurerm_storage_account.blob[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azurerm_data_factory.data_factory.identity[0].principal_id
+  principal_id         = azurerm_data_factory.data_factory[0].identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "blob_purview_sp" {

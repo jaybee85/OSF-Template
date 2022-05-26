@@ -24,13 +24,14 @@ namespace FunctionApp.Functions
         private readonly IOptions<ApplicationOptions> _options;
         private readonly TaskMetaDataDatabase _taskMetaDataDatabase;
         private readonly IHttpClientFactory _httpClientFactory;
+        
         public string HeartBeatFolder { get; set; }
 
         public AdfRunFrameworkTasksTimerTrigger(IOptions<ApplicationOptions> options, TaskMetaDataDatabase taskMetaDataDatabase, IHttpClientFactory httpClientFactory)
         {
             _options = options;
             _taskMetaDataDatabase = taskMetaDataDatabase;
-            _httpClientFactory = httpClientFactory;
+            _httpClientFactory = httpClientFactory;            
         }
 
         /// <summary>
@@ -46,13 +47,13 @@ namespace FunctionApp.Functions
         /// <param name="myTimer"></param>
         /// <param name="log"></param>
         /// <param name="context"></param>
-        [FunctionName("RunFrameworkTasksTimerTrigger")]         
-        public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
-        {
-            log.LogInformation(context.FunctionAppDirectory);
-            this.HeartBeatFolder = context.FunctionAppDirectory;
-            await Core(log);        
-        }
+        //[FunctionName("RunFrameworkTasksTimerTrigger")]         
+        //public async Task Run([TimerTrigger("0 */2 * * * *")] TimerInfo myTimer, ILogger log, ExecutionContext context)
+        //{
+        //    log.LogInformation(context.FunctionAppDirectory);
+        //    this.HeartBeatFolder = context.FunctionAppDirectory;
+        //    await Core(log);        
+        //}
 
         public async Task Core(ILogger log)
         {            
@@ -85,11 +86,12 @@ namespace FunctionApp.Functions
                             fs.Write(info, 0, info.Length);
                         }
 
+                       
+                        
                         try
                         {
                             // Trigger the Http triggered function
                             var secureFunctionApiurl = $"{_options.Value.ServiceConnections.CoreFunctionsURL}/api/RunFrameworkTasksHttpTrigger?TaskRunnerId={taskRunnerId}";
-
                             using HttpRequestMessage httpRequestMessage = new HttpRequestMessage
                             {
                                 Method = HttpMethod.Get,
@@ -98,13 +100,23 @@ namespace FunctionApp.Functions
 
                             //Todo Add some error handling in case function cannot be reached. Note Wait time is there to provide sufficient time to complete post before the HttpClientFactory is disposed.
                             var httpTask = client.SendAsync(httpRequestMessage).Wait(3000);
+                           
 
+                        }
+                        catch (TaskCanceledException)
+                        {
+                                                           
+                            log.LogInformation($"Framework runner {taskRunnerId} request cancelled... this is expected behaviour.");
                         }
                         catch (Exception)
                         {
+                                                           
+                            log.LogError($"Framework runner {taskRunnerId} failed to launch.");
                             con.ExecuteWithRetry($"[dbo].[UpdFrameworkTaskRunner] {taskRunnerId}");
                             throw;
                         }
+                           
+                        
                     }
 
                     if (((dynamic)runner).Status == "Running" && ((dynamic)runner).RunNow == "N")

@@ -1,3 +1,7 @@
+output tenant_id {
+  value = var.tenant_id
+}
+
 output "resource_group_name" {
   value = var.resource_group_name
 }
@@ -57,10 +61,10 @@ output "is_vnet_isolated" {
   value = var.is_vnet_isolated
 }
 output "aad_webreg_id" {
-  value = azuread_application.web_reg[0].application_id
+  value = var.publish_web_app ? azuread_application.web_reg[0].application_id : ""
 }
 output "aad_funcreg_id" {
-  value = azuread_application.function_app_reg[0].application_id
+  value = var.publish_function_app ? azuread_application.function_app_reg[0].application_id : ""
 }
 output "purview_sp_id" {
   value = var.deploy_purview && var.is_vnet_isolated ?   azuread_application.purview_ir[0].application_id : "0"
@@ -103,4 +107,72 @@ output "synapse_spark_pool_name" {
 }
 output "selfhostedsqlvm_name" {
   value = local.selfhostedsqlvm_name
+}
+
+output "synapse_git_toggle_integration" {
+  value = var.synapse_git_toggle_integration 
+}
+output "synapse_git_integration_type" {
+    value = var.synapse_git_toggle_integration ? var.synapse_git_integration_type : ""
+}
+output "synapse_git_repository_root_folder" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_repository_root_folder : ""
+}
+output "synapse_git_repository_owner" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_repository_owner : ""
+}
+output "synapse_git_repository_name" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_repository_name : ""
+}
+output "synapse_git_repository_branch_name" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_repository_branch_name : ""
+} 
+output "functionapp_url" {
+  value = var.synapse_git_toggle_integration ? local.functionapp_url : ""
+}
+output "keyvault_url" {
+  value = var.synapse_git_toggle_integration ? azurerm_key_vault.app_vault.vault_uri : ""
+}
+output "synapse_git_devops_project_name" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_devops_project_name : ""
+}
+/* NOT CURRENTLY USED
+output "synapse_git_repository_base_url" {
+  value = var.synapse_git_toggle_integration ? var.synapse_git_repository_base_url : ""
+} */
+output "synapse_git_use_pat" {
+    value = var.synapse_git_toggle_integration ? var.synapse_git_use_pat : false
+}
+output "synapse_git_pat" {
+    value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
+}
+output "synapse_git_github_host_url" {
+    value = var.synapse_git_toggle_integration ? var.synapse_git_github_host_url : "" 
+}
+output "synapse_git_devops_tenant_id" {
+    value = var.synapse_git_devops_tenant_id != "" ? var.synapse_git_devops_tenant_id: var.tenant_id
+}
+output "adf_git_toggle_integration" {
+  value = var.adf_git_toggle_integration 
+}
+output "adf_git_repository_root_folder" {
+  value = var.adf_git_toggle_integration ? var.adf_git_repository_root_folder : ""
+}
+output "adf_git_repository_owner" {
+  value = var.adf_git_toggle_integration ? var.adf_git_repository_owner : ""
+}
+output "adf_git_repository_name" {
+  value = var.adf_git_toggle_integration ? var.adf_git_repository_name : ""
+}
+output "adf_git_repository_branch_name" {
+  value = var.adf_git_toggle_integration ? var.adf_git_repository_branch_name : ""
+} 
+output "adf_git_use_pat" {
+    value = var.adf_git_toggle_integration ? var.adf_git_use_pat : false
+}
+output "adf_git_pat" {
+    value = var.adf_git_use_pat ? var.adf_git_pat : ""
+}
+output "adf_git_host_url" {
+    value = var.adf_git_toggle_integration ? var.adf_git_host_url : "" 
 }

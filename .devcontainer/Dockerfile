@@ -24,6 +24,7 @@ RUN bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "$
     && sudo apt-get install -y powershell  \
     && rm ./packages-microsoft-prod.deb  \
     && sudo apt install -y dotnet-sdk-3.1  \
+    && sudo apt install -y dotnet-sdk-6.0  \
     && curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -  \
     && apt-get install -y nodejs \
     && wget https://github.com/google/go-jsonnet/releases/download/v0.17.0/jsonnet-go_0.17.0_linux_amd64.deb  \

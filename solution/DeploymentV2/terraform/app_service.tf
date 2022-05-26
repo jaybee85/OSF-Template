@@ -2,7 +2,7 @@
 resource "random_uuid" "app_reg_role_id" {}
 
 resource "azuread_application" "web_reg" {
-  count        = var.deploy_azure_ad_web_app_registration ? 1 : 0
+  count        = var.publish_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
   display_name = local.aad_webapp_name
   owners       = [data.azurerm_client_config.current.object_id]
   web {
@@ -53,7 +53,7 @@ resource "time_sleep" "wait_30_seconds" {
 }
 
 resource "azuread_service_principal" "web_sp" {
-  count          = var.deploy_azure_ad_web_app_registration ? 1 : 0
+  count          = var.publish_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
   application_id = azuread_application.web_reg[0].application_id
   owners         = [data.azurerm_client_config.current.object_id]
   depends_on = [time_sleep.wait_30_seconds]
@@ -61,7 +61,7 @@ resource "azuread_service_principal" "web_sp" {
 
 
 resource "azurerm_app_service" "web" {
-  count               = var.deploy_web_app ? 1 : 0
+  count               = var.deploy_app_service_plan && var.publish_web_app ? 1 : 0
   name                = local.webapp_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -72,8 +72,8 @@ resource "azurerm_app_service" "web" {
     WEBSITE_RUN_FROM_PACKAGE = 1
 
     ApplicationOptions__UseMSI                              = true
-    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseServer = "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net"
-    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = azurerm_mssql_database.web_db[0].name
+    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseServer = var.publish_database ? "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net" : null
+    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = var.publish_database ? azurerm_mssql_database.web_db[0].name : null
 
     ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
     ApplicationOptions__LogAnalyticsWorkspaceId = azurerm_log_analytics_workspace.log_analytics_workspace.id
@@ -85,7 +85,7 @@ resource "azurerm_app_service" "web" {
 
   site_config {
     always_on                = true
-    dotnet_framework_version = "v5.0"
+    dotnet_framework_version = "v6.0"
     min_tls_version          = "1.2"
     ftps_state               = "Disabled"
     http2_enabled            = true
@@ -108,7 +108,7 @@ resource "azurerm_app_service" "web" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration" {
-  count          = var.is_vnet_isolated ? 1 : 0
+  count          = var.is_vnet_isolated && var.publish_web_app ? 1 : 0
   app_service_id = azurerm_app_service.web[0].id
   subnet_id      = azurerm_subnet.app_service_subnet[0].id
 }
@@ -117,7 +117,7 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integratio
 # // Diagnostic logs--------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "app_service_diagnostic_logs" {
   name = "diagnosticlogs"
-
+  count                      = var.publish_web_app ? 1 : 0
   target_resource_id         = azurerm_app_service.web[0].id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388

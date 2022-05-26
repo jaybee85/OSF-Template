@@ -3,7 +3,7 @@ function GatherOutputsFromTerraform()
     $environmentName = $env:TFenvironmentName
     $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 
-    $CurrentFolderPath = $PWD
+    #$CurrentFolderPath = $PWD
     $env:TF_VAR_ip_address = $myIp
 
     #------------------------------------------------------------------------------------------------------------
@@ -14,15 +14,15 @@ function GatherOutputsFromTerraform()
 
     $tout = New-Object PSObject
 
-    $tout0 = (terraform output -json | ConvertFrom-Json).PSObject.Properties 
+    $tout0 = (terraform output -json | ConvertFrom-Json -Depth 10).PSObject.Properties 
     $tout0 | Foreach-Object {                    
         $tout | Add-Member  -MemberType NoteProperty -Name $_.Name -Value $_.Value.value
     }
 
-    $rgid = (az group show -n $tout.resource_group_name | ConvertFrom-Json).id
+    $rgid = (az group show -n $tout.resource_group_name | ConvertFrom-Json -Depth 10).id
     $tout | Add-Member  -MemberType NoteProperty -Name "resource_group_id" -Value $rgid
 
-    Set-Location $CurrentFolderPath
+    #Set-Location $CurrentFolderPath
     Write-Host "Reading Terraform Outputs - Finished"
     Write-Host "-------------------------------------------------------------------------------------------------"
     return $tout

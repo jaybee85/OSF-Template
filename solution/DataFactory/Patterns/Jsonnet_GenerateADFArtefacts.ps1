@@ -1,5 +1,6 @@
 Import-Module .\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
+$newfolder = "./output/"
 
 
 #Generate Patterns.json
@@ -36,6 +37,9 @@ Get-ChildItem ./output | foreach {
     Remove-item $_ -force
 }
 
+#create tout json to be used for git integration
+$toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.json")
+
 #Copy Static Pipelines
 $folder = "./pipeline/static"
 $templates = (Get-ChildItem -Path $folder -Filter "*.json"  -Verbose)
@@ -46,7 +50,7 @@ foreach ($file in $templates)
     $content | Set-Content -Path $outfile 
 }
 
-$irsjson = ($tout.integration_runtimes | ConvertTo-Json)
+$irsjson = ($tout.integration_runtimes | ConvertTo-Json -Depth 10)
 
 
 $irsql = @"
@@ -63,12 +67,50 @@ $irsql = @"
             when NOT matched by TARGET then insert
             (IntegrationRuntimeName, EngineId, ActiveYN)
             VALUES (Src.short_name,1,1);
+
+
+            drop table if exists #tempIntegrationRuntimeMapping 
+            Select ir.IntegrationRuntimeId, a.short_name IntegrationRuntimeName, c.[value] SystemId
+            into #tempIntegrationRuntimeMapping
+            from 
+            (
+            Select IR.*, Patterns.[Value] from OPENJSON('$irsjson') A 
+           CROSS APPLY OPENJSON(A.[value]) Patterns 
+           CROSS APPLY OPENJSON(A.[value]) with (short_name varchar(max)) IR 
+           where Patterns.[key] = 'valid_source_systems'
+           ) A
+           OUTER APPLY OPENJSON(A.[Value])  C
+           join 
+           dbo.IntegrationRuntime ir on ir.IntegrationRuntimeName = a.short_name 
+           
+           drop table if exists #tempIntegrationRuntimeMapping2
+           Select * into #tempIntegrationRuntimeMapping2
+           from 
+           (
+           select a.IntegrationRuntimeId, a.IntegrationRuntimeName, b.SystemId from #tempIntegrationRuntimeMapping  a
+           cross join [dbo].[SourceAndTargetSystems] b 
+           where a.SystemId = '*'
+           union 
+           select a.IntegrationRuntimeId, a.IntegrationRuntimeName, a.SystemId from #tempIntegrationRuntimeMapping  a
+           where a.SystemId != '*'
+           ) a
+           
+           
+           Merge dbo.IntegrationRuntimeMapping tgt
+           using #tempIntegrationRuntimeMapping2 src on 
+           tgt.IntegrationRuntimeName = src.IntegrationRuntimeName and tgt.SystemId = src.SystemId
+           when not matched by target then 
+           insert 
+           ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])
+           values 
+           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);
+           
 "@            
 
 $irsql | Set-Content "MergeIRs.sql"
 
 #Copy IR Specific Pipelines
-$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
+$patterns = (Get-Content "Patterns.json") | ConvertFrom-Json -Depth 10
 foreach ($ir in $tout.integration_runtimes)
 {    
 
@@ -81,25 +123,43 @@ foreach ($ir in $tout.integration_runtimes)
     {        
         foreach ($pattern in $patterns)
         {    
-            $folder = "./pipeline/" + $pattern.Folder
-            $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet"  -Verbose)
-
-            Write-Host "_____________________________"
-            Write-Host $folder 
-            Write-Host "_____________________________"
-
-            foreach ($t in $templates) {        
-                #$GFPIR = $pattern.GFPIR
-                $SourceType = $pattern.SourceType
-                $SourceFormat = $pattern.SourceFormat
-                $TargetType = $pattern.TargetType
-                $TargetFormat = $pattern.TargetFormat
-
-                $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
-                Write-Host $newname        
-                (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR=$GFPIR --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
-
+            $valid = $false
+            foreach ($p2 in $ir.valid_pipeline_patterns)
+            {
+               #Write-Host ($p2) -BackgroundColor Yellow -ForegroundColor Black
+                if($p2.Folder -eq $pattern.Folder -or $p2.Folder -eq "*")
+                {
+                    $valid = $true
+                }
             }
+
+            if($valid)
+            {
+                $folder = "./pipeline/" + $pattern.Folder
+                $templates = (Get-ChildItem -Path $folder -Filter "*.libsonnet"  -Verbose)
+
+                Write-Host "_____________________________"
+                Write-Host $folder 
+                Write-Host "_____________________________"
+
+                foreach ($t in $templates) {        
+                    #$GFPIR = $pattern.GFPIR
+                    $SourceType = $pattern.SourceType
+                    $SourceFormat = $pattern.SourceFormat
+                    $TargetType = $pattern.TargetType
+                    $TargetFormat = $pattern.TargetFormat
+
+                    $newname = (CoreReplacements -string $t.PSChildName -GFPIR $GFPIR -SourceType $SourceType -SourceFormat $SourceFormat -TargetType $TargetType -TargetFormat $TargetFormat).Replace(".libsonnet",".json")        
+                    Write-Host $newname        
+                    (jsonnet --tla-str GenerateArm=$GenerateArm --tla-str GFPIR=$GFPIR --tla-str SourceType="$SourceType" --tla-str SourceFormat="$SourceFormat" --tla-str TargetType="$TargetType" --tla-str TargetFormat="$TargetFormat" $t.FullName) | Set-Content('./output/' + $newname)
+
+                }
+            }
+            else 
+            {
+                Write-Host ("Pattern "+  $pattern.Folder + " Suppressed on " + $ir.name)  -ForegroundColor Blue
+            }
+
 
         }
     }
@@ -182,7 +242,7 @@ foreach ($patternFolder in $patternFolders)
         $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
         $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
-
+        
         #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 
@@ -258,3 +318,180 @@ if($GenerateArm -eq "true") {
     }
     Write-Host "Copied $($templates.Count) to Static Hosted Pipelines Module in Terraform folder"
 }
+
+#ADF GIT INTEGRATION
+
+
+if($($tout.adf_git_toggle_integration)) {
+    #LINKED SERVICES
+    $folder = "./linkedService/"
+    Write-Host "_____________________________"
+    Write-Host "Generating ADF linked services for Git Integration: " 
+    Write-Host "_____________________________"
+    #GLS
+    $files = (Get-ChildItem -Path $folder -Filter "GLS*" -Verbose)
+    foreach ($ir in $tout.integration_runtimes)
+    {    
+
+
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+        {
+            #we dont want to generate anything for an on-prem IR if they are not registered
+
+        }
+        else {
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            foreach ($file in $files){
+                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                $newName = "LS_" + $newName
+                $newName = $newname.Replace("(IRName)", $shortName)
+                (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+            }
+        }
+
+
+    }
+    #SLS
+    $files = (Get-ChildItem -Path $folder -Filter "SLS*" -Verbose)
+    foreach ($file in $files){
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "LS_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+    #DATASETS
+    $folder = "./dataset/"
+    Write-Host "_____________________________"
+    Write-Host "Generating ADF datasets for Git Integration: " 
+    Write-Host "_____________________________"
+    #GDS
+    $files = (Get-ChildItem -Path $folder -Filter "GDS*" -Verbose)
+    foreach ($ir in $tout.integration_runtimes)
+    {
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+        {
+            #we dont want to generate anything for an on-prem IR if they are not registered
+        }
+        else {    
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            foreach ($file in $files){
+                $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                $newName = $newname.Replace("(IRName)", $shortName)
+                (jsonnet --tla-str shortIRName="$shortName" --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+            }
+        }
+
+    }
+
+    #MANAGED VIRTUAL NETWORK
+
+    $folder = "./managedVirtualNetwork/"
+    $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    Write-Host "_____________________________"
+    Write-Host "Generating ADF managed virtual networks for Git Integration: " 
+    Write-Host "_____________________________"
+    foreach ($file in $files)
+    {
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = "MVN_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #managedPrivateEndpoint/default folder within MANAGED VIRTUAL NETWORK
+    $folder = "./managedVirtualNetwork/default/managedPrivateEndpoint"
+    #if our vnet isolation isnt on, we only want the standard files
+    if ($tout.is_vnet_isolated) {
+        $files = (Get-ChildItem -Path $folder -Filter *is_vnet_isolated*)
+        Write-Host "_____________________________"
+        Write-Host "Generating ADF managed private endpoints for Git Integration: " 
+        Write-Host "_____________________________"
+        foreach ($file in $files)
+        {
+            $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+            $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+            $newName = "MVN_default-managedPrivateEndpoint_" + $newName
+            $newName = $newname.Replace("[is_vnet_isolated]", "")
+
+            (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+        }
+    }
+
+    #INTEGRATION RUNTIMES
+    $folder = "./integrationRuntime/"
+    Write-Host "_____________________________"
+    Write-Host "Generating ADF integration runtimes for Git Integration: " 
+    Write-Host "_____________________________"
+    #IR
+    foreach ($ir in $tout.integration_runtimes)
+    {
+        if (($ir.is_azure -eq $false) -and ($tout.is_onprem_datafactory_ir_registered -eq $false))
+        {
+            #we dont want to generate anything for an on-prem IR if they are not registered
+        }
+        else {   
+            $shortName = $ir.short_name
+            $fullName = $ir.name
+            if($ir.is_azure)
+            {
+                $files = (Get-ChildItem -Path $folder -Filter *is_azure*)
+                foreach ($file in $files)
+                {
+                    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                    $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                    $newName = $newName.Replace("[is_azure]", "")
+                    $newName = $newName.Replace("(IRName)", $shortName)
+                    $newName = "IR_" + $newName
+                    (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+                }
+            }
+            else
+            { 
+                $files = (Get-ChildItem -Path $folder -Exclude *is_azure*)
+                foreach ($file in $files)
+                {
+                    $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+                    $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+                    $newName = $newName.Replace("(IRName)", $shortName)
+                    $newName = "IR_" + $newName
+                    (jsonnet --tla-str fullIRName="$fullName" $schemafiletemplate | Set-Content($newfolder + $newName))
+                }
+            }
+        }
+
+
+    }
+    $folder = "./factory/"
+    Write-Host "_____________________________"
+    Write-Host "Generating ADF factories for Git Integration: " 
+    Write-Host "_____________________________"
+    #FA
+    $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
+    foreach ($file in $files){
+        $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
+        $newName = ($file.PSChildName).Replace(".libsonnet",".json")
+        $newName = $newName.Replace("(DatafactoryName)", $($tout.datafactory_name))
+        $newName = "FA_" + $newName
+        (jsonnet $schemafiletemplate | Set-Content($newfolder + $newName))
+    }
+
+    #REPLACING PRINCIPALID grabbed from az datafactory
+    #REASON: PRINCIPALID Contains a GUID on these files that I cannot identify where it is retrieved from otherwise
+
+    $files = (Get-ChildItem -Path $newFolder -Filter FA*)
+    foreach ($file in $files)
+    {
+        $fileSysObj = Get-Content $file -raw | ConvertFrom-Json
+        $fileAZ = az datafactory show --name $fileSysObj.name --resource-group $($tout.resource_group_name)
+        $fileAZ = $fileAZ | ConvertFrom-Json
+        $fileSysObj.identity.principalId = $fileAZ.identity.principalId
+        $fileSysObj | ConvertTo-Json -depth 32| Set-Content($($newfolder) + $($file.PSChildName))
+    }
+   
+}
+
+

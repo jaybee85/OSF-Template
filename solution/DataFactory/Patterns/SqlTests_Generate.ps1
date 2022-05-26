@@ -36,7 +36,7 @@ delete from [dbo].[TaskInstance] where taskmasterid <=0;
 
 "@
 
-$tests = (Get-Content -Path  ($PWD.ToString() + '../../../FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json') | ConvertFrom-Json)
+$tests = (Get-Content -Path  ($PWD.ToString() + '../../../FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json') | ConvertFrom-Json -Depth 10)
 
 $i = 0
 foreach ($t in $tests)
