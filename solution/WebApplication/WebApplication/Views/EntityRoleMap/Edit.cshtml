@@ -32,8 +32,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ApplicationRoleName" class="control-label"></label>
-                <input asp-for="ApplicationRoleName" class="form-control" />
-                <span asp-validation-for="ApplicationRoleName" class="text-danger"></span>
+                <select asp-for="ApplicationRoleName" class="form-control" asp-items="ViewBag.ApplicationRoles"></select>
             </div>
             <div class="form-group">
                 <label asp-for="ExpiryDate" class="control-label"></label>

@@ -35,6 +35,12 @@ namespace WebApplication.Controllers
 
         };
 
+
+        List<SelectListItem> roles = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Administrator", Value = "Administrator"},
+        };
+
         public EntityRoleMapController(AdsGoFastContext context, ISecurityAccessProvider securityAccessProvider, IEntityRoleProvider roleProvider, IOptions<ApplicationOptions> options) : base(securityAccessProvider, roleProvider)
         {
             Name = "EntityRoleMap";
@@ -78,6 +84,8 @@ namespace WebApplication.Controllers
             }
             //TODO: Create the correct drop downs
             ViewData["EntityTypes"] = new SelectList(entityType, "Value", "Text");
+            ViewData["ApplicationRoles"] = new SelectList(roles, "Value", "Text");
+
             EntityRoleMap entity = new EntityRoleMap();
             entity.ActiveYN = true;
             return View(entity);
@@ -137,6 +145,7 @@ namespace WebApplication.Controllers
             if (entityRoleMap == null)
                 return NotFound();
             ViewData["EntityTypes"] = new SelectList(entityType, "Value", "Text");
+            ViewData["ApplicationRoles"] = new SelectList(roles, "Value", "Text");
             if (!await CanPerformCurrentActionOnRecord(entityRoleMap))
                 return new ForbidResult();
             return View(entityRoleMap);
