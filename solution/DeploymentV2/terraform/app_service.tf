@@ -1,5 +1,6 @@
 
 resource "random_uuid" "app_reg_role_id" {}
+resource "random_uuid" "app_reg_role_id2" {}
 
 resource "azuread_application" "web_reg" {
   count        = var.publish_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
@@ -21,6 +22,16 @@ resource "azuread_application" "web_reg" {
     enabled              = true
     value                = "Administrator"
   }
+
+  app_role {
+    allowed_member_types = ["User"]
+    id                   = random_uuid.app_reg_role_id2.result
+    description          = "Reader features of the application"
+    display_name         = "Reader"
+    enabled              = true
+    value                = "Reader"
+  }
+
   required_resource_access {
     resource_app_id = "00000003-0000-0000-c000-000000000000"
 

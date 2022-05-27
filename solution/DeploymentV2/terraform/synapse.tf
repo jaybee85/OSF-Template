@@ -360,7 +360,19 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
   ]
 }
 
+# --------------------------------------------------------------------------------------------------------------------
+# // IAM role assignment
+# --------------------------------------------------------------------------------------------------------------------
 
+resource "azurerm_role_assignment" "synapse_function_app" {
+  count                = var.deploy_synapse && var.publish_function_app ? 1 : 0
+  scope                = azurerm_synapse_workspace.synapse[0].id
+  role_definition_name = "Contributor"
+  principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
+  depends_on = [
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
+  ]
+}
 
 
 # --------------------------------------------------------------------------------------------------------------------
