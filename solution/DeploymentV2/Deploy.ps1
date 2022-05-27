@@ -144,6 +144,24 @@ $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
+#------------------------------------------------------------------------------------------------------------
+# Deploy the customisation terraform layer
+#------------------------------------------------------------------------------------------------------------
+Set-Location $deploymentFolderPath
+Set-Location "./terraform_custom"
+
+terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+
+if ($skipTerraformDeployment) {
+    Write-Host "Skipping Custom Terraform Deployment"
+}
+else {
+    Write-Host "Starting Custom Terraform Deployment"
+    terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
+}
+#------------------------------------------------------------------------------------------------------------
+
+
 if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    
 }
