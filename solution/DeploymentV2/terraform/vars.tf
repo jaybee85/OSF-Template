@@ -273,6 +273,11 @@ variable "adf_git_use_pat" {
   default     = true
   type        = bool
 }
+variable "deploy_custom_terraform" {
+  description = "Whether the platform deploys the infrastructure located in the terraform_custom folder"
+  default     = false
+  type        = bool
+}
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------

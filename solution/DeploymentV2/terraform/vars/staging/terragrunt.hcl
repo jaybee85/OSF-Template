@@ -27,6 +27,7 @@ inputs = {
   owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "stg"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "101.179.193.89"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  deploy_custom_terraform               = false # This is whether the infrastructure located in the terraform_custom folder is deployed or not.
   deploy_sentinel                       = false
   deploy_purview                        = false  
   deploy_synapse                        = true

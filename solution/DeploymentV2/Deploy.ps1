@@ -135,7 +135,7 @@ $purview_sp_name=$outputs.purview_sp_name.value
 $synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
 $synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
 $synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
-
+$skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
 $skipWebApp = if($tout.publish_web_app) {$false} else {$true}
 $skipFunctionApp = if($tout.publish_function_app) {$false} else {$true}
 $skipDatabase = if($tout.publish_database) {$false} else {$true}
@@ -145,19 +145,24 @@ $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} els
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 #------------------------------------------------------------------------------------------------------------
-# Deploy the customisation terraform layer
+# Deploy the customisable terraform layer
 #------------------------------------------------------------------------------------------------------------
-Set-Location $deploymentFolderPath
-Set-Location "./terraform_custom"
-
-terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
-
-if ($skipTerraformDeployment) {
-    Write-Host "Skipping Custom Terraform Deployment"
+if ($skipCustomTerraform) {
+    Write-Host "Skipping Custom Terraform Layer"    
 }
 else {
-    Write-Host "Starting Custom Terraform Deployment"
-    terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
+    Set-Location $deploymentFolderPath
+    Set-Location "./terraform_custom"
+
+    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+
+    if ($skipTerraformDeployment) {
+        Write-Host "Skipping Custom Terraform Deployment"
+    }
+    else {
+        Write-Host "Starting Custom Terraform Deployment"
+        terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
+    }
 }
 #------------------------------------------------------------------------------------------------------------
 

@@ -81,6 +81,9 @@ output "publish_web_app" {
 output "publish_function_app" {
   value = var.publish_function_app
 }
+output "deploy_custom_terraform" {
+  value = var.deploy_custom_terraform
+}
 output "publish_sample_files" {
   value = var.publish_sample_files
 }
