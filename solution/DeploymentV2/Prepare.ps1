@@ -205,7 +205,9 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 $PersistEnv = Get-SelectionFromUser -Options ('Yes','No') -Prompt "Do you want to automatically persist the configuration information into your environment file? WARNING this will overwrite your existing hcl file."
 if ($PersistEnv -eq "Quit")
 {
-    Exit
+    ## Changed so the prepare does not close if you do not wish to persist.
+    #this means you can still get a template even if you do not persist
+    ##Exit
 }
 
 if ($PersistEnv -eq "Yes")
