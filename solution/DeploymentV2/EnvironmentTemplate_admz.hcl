@@ -48,7 +48,8 @@ inputs = {
   #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.
   #Please ensure that you enter everything that is relevant otherwise deployed resources may not work properly.
   
-  #log anayltics id can be found under the properties of the log analytics resource NOTE: This is the full URI not the workspaceID (ResourceID)
+  #log anayltics resource id can be found under the properties of the log analytics resource NOTE: This is the full URI not the workspaceID
+  existing_log_analytics_resource_id    = "LOG ANALYTICS RESOURCE ID"
   existing_log_analytics_workspace_id   = "LOG ANALYTICS WORKSPACE ID"
   #synapse private link hub id can be found under the properties of the synapse private link NOTE: This is the full URI (ResourceID)
   existing_synapse_private_link_hub_id  = "SYNAPSE PRIVATE LINK HUB ID"

@@ -14,7 +14,9 @@ resource "azurerm_log_analytics_workspace" "log_analytics_workspace" {
 }
 
 locals {
-  log_analytics_workspace_id = (var.existing_log_analytics_workspace_id == "" ? azurerm_log_analytics_workspace.log_analytics_workspace[0].id : var.existing_log_analytics_workspace_id)
+  log_analytics_resource_id = (var.existing_log_analytics_resource_id == "" ? azurerm_log_analytics_workspace.log_analytics_workspace[0].id : var.existing_log_analytics_resource_id)
+  log_analytics_workspace_id = (var.existing_log_analytics_workspace_id == "" ? azurerm_log_analytics_workspace.log_analytics_workspace[0].workspace_id : var.existing_log_analytics_workspace_id)
+
 }
 
 resource "azurerm_log_analytics_solution" "sentinel" {
@@ -22,7 +24,7 @@ resource "azurerm_log_analytics_solution" "sentinel" {
   solution_name         = "SecurityInsights"
   location              = var.resource_location
   resource_group_name   = var.resource_group_name
-  workspace_resource_id = local.log_analytics_workspace_id
+  workspace_resource_id = local.log_analytics_resource_id
   workspace_name        = local.log_analytics_workspace_name
   plan {
     publisher = "Microsoft"
@@ -32,14 +34,14 @@ resource "azurerm_log_analytics_solution" "sentinel" {
 
 resource "azurerm_role_assignment" "loganalytics_function_app" {
   count                = var.publish_function_app ? 1 : 0
-  scope                = local.log_analytics_workspace_id
+  scope                = local.log_analytics_resource_id
   role_definition_name = "Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
 }
 
 resource "azurerm_role_assignment" "loganalytics_web_app" {
   count                = var.publish_web_app ? 1 : 0
-  scope                = local.log_analytics_workspace_id
+  scope                = local.log_analytics_resource_id
   role_definition_name = "Contributor"
   principal_id         = azurerm_app_service.web[0].identity[0].principal_id
 }

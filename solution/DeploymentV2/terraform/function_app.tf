@@ -167,7 +167,7 @@ resource "azurerm_monitor_diagnostic_setting" "function_diagnostic_logs" {
     ignore_changes = [log, metric]
   }
   target_resource_id         = azurerm_function_app.function_app[0].id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
 
   log {
     category = "FunctionAppLogs"

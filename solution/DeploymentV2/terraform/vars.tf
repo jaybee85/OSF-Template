@@ -632,7 +632,11 @@ variable "existing_log_analytics_workspace_id" {
   default     = ""
   type        = string
 }
-
+variable "existing_log_analytics_resource_id" {
+  description = "An existing log analytics resource id for reuse"
+  default     = ""
+  type        = string
+}
 variable "existing_plink_subnet_id" {
   description = "An existing subnet id for reuse for the Private link resources"
   default     = ""

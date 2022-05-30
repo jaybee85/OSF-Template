@@ -87,7 +87,7 @@ resource "azurerm_app_service" "web" {
     ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = var.publish_database ? azurerm_mssql_database.web_db[0].name : null
 
     ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
-    ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_workspace_id
+    ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_resource_id
 
     AzureAdAuth__Domain   = var.domain
     AzureAdAuth__TenantId = var.tenant_id
@@ -130,7 +130,7 @@ resource "azurerm_monitor_diagnostic_setting" "app_service_diagnostic_logs" {
   name                       = "diagnosticlogs"
   count                      = var.publish_web_app ? 1 : 0
   target_resource_id         = azurerm_app_service.web[0].id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

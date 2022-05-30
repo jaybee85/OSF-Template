@@ -44,7 +44,7 @@ resource "azurerm_monitor_diagnostic_setting" "data_factory_diagnostic_logs" {
     ignore_changes = [log, metric]
   }
   target_resource_id             = azurerm_data_factory.data_factory[0].id
-  log_analytics_workspace_id     = local.log_analytics_workspace_id
+  log_analytics_workspace_id     = local.log_analytics_resource_id
   log_analytics_destination_type = "Dedicated"
 
   log {

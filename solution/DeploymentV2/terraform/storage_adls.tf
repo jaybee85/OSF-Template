@@ -119,7 +119,7 @@ resource "azurerm_monitor_diagnostic_setting" "adls_storage_diagnostic_logs" {
   count                      = var.deploy_adls ? 1 : 0
   name                       = "diagnosticlogs"
   target_resource_id         = "${azurerm_storage_account.adls[0].id}/blobServices/default/"
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

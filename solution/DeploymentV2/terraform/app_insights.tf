@@ -3,7 +3,7 @@ resource "azurerm_application_insights" "app_insights" {
   name                = local.app_insights_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  workspace_id        = local.log_analytics_workspace_id
+  workspace_id        = local.log_analytics_resource_id
   application_type    = "web"
   tags                = local.tags
   lifecycle {

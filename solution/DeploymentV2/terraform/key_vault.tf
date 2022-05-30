@@ -179,7 +179,7 @@ resource "azurerm_monitor_diagnostic_setting" "app_vault_diagnostic_logs" {
   name = "diagnosticlogs"
 
   target_resource_id         = azurerm_key_vault.app_vault.id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]
