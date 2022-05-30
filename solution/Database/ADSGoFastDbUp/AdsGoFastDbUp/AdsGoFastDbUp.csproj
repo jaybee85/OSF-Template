@@ -26,7 +26,7 @@
     <None Remove="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" />   
     <None Remove="1-0-2\A-Journaled\001-AddRestAPI.sql" />   
     <None Remove="1-0-2\A-Journaled\002-AddTemporalTables.sql" />   
-
+    <None Remove="1-0-2\A-Journaled\004-AddSynapseContainerAsSource.sql" />  
 
          
   </ItemGroup>
@@ -48,6 +48,8 @@
     <EmbeddedResource Include="1-0-1\A-Journaled\005-UpdateSynapseEngine.sql" /> 
     <EmbeddedResource Include="1-0-2\A-Journaled\001-AddRestAPI.sql" /> 
     <EmbeddedResource Include="1-0-2\A-Journaled\002-AddTemporalTables.sql" /> 
+    <EmbeddedResource Include="1-0-2\A-Journaled\004-AddSynapseContainerAsSource.sql" /> 
+    
 
 
   </ItemGroup>

@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "vm_nsg" {
-  count               = (var.is_vnet_isolated ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.existing_vm_subnet_id == "" ? 1 : 0)
   name                = local.vm_nsg_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -13,7 +13,7 @@ resource "azurerm_network_security_group" "vm_nsg" {
 
 # Inbound Rules
 resource "azurerm_network_security_rule" "vm_inbound_bastion" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_vm_subnet_id == "" ? 1 : 0)
   name      = "inbound_bastion_allow"
   priority  = 110
   direction = "Inbound"
@@ -38,8 +38,8 @@ resource "azurerm_network_security_rule" "vm_inbound_bastion" {
 # Associate NSG with subnet
 
 resource "azurerm_subnet_network_security_group_association" "vm_nsg" {
-  count                     = (var.is_vnet_isolated ? 1 : 0)
-  subnet_id                 = azurerm_subnet.vm_subnet[0].id
+  count                     = (var.is_vnet_isolated && var.existing_vm_subnet_id == "" ? 1 : 0)
+  subnet_id                 = local.vm_subnet_id
   network_security_group_id = azurerm_network_security_group.vm_nsg[0].id
 
   # The subnet will refuse to accept the NSG if it's not this exact

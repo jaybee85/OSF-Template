@@ -25,7 +25,7 @@ resource "azurerm_key_vault" "app_vault" {
 // Grant secret and key access to the current app to store the secret values --------------------------
 // Allows the deployment service principal to compare / check state later
 resource "azurerm_key_vault_access_policy" "user_access" {
-  count        = (var.cicd_sp_id == data.azurerm_client_config.current.object_id? 0 : 1)
+  count        = (var.cicd_sp_id == data.azurerm_client_config.current.object_id ? 0 : 1)
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
   object_id    = data.azurerm_client_config.current.object_id
@@ -43,10 +43,10 @@ resource "azurerm_key_vault_access_policy" "user_access" {
 }
 
 resource "azurerm_key_vault_access_policy" "cicd_access" {
-  count        = (var.cicd_sp_id == ""? 0 : 1)
+  count        = (var.cicd_sp_id == "" ? 0 : 1)
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = (var.cicd_sp_id == data.azurerm_client_config.current.object_id? var.cicd_sp_id : data.azurerm_client_config.current.object_id)
+  object_id    = (var.cicd_sp_id == data.azurerm_client_config.current.object_id ? var.cicd_sp_id : data.azurerm_client_config.current.object_id)
 
   key_permissions = [
     "Delete", "List", "Get", "Create", "Update", "Purge"
@@ -61,7 +61,7 @@ resource "azurerm_key_vault_access_policy" "cicd_access" {
 }
 
 resource "time_sleep" "cicd_access" {
-  depends_on = [azurerm_key_vault_access_policy.cicd_access,azurerm_key_vault_access_policy.user_access]
+  depends_on      = [azurerm_key_vault_access_policy.cicd_access, azurerm_key_vault_access_policy.user_access]
   create_duration = "10s"
 }
 
@@ -105,7 +105,7 @@ resource "azurerm_key_vault_access_policy" "purview_access" {
 
 // Allows the Azure function to retrieve the Function App - AAD App Reg - Client Secret
 resource "azurerm_key_vault_access_policy" "function_app" {
-  count = var.publish_function_app ? 1 : 0
+  count        = var.publish_function_app ? 1 : 0
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
   object_id    = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -148,7 +148,7 @@ resource "azurerm_private_endpoint" "app_vault_private_endpoint_with_dns" {
   name                = "${local.key_vault_name}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.key_vault_name}-plink-conn"
@@ -159,7 +159,7 @@ resource "azurerm_private_endpoint" "app_vault_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroup"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_kv[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_kv_id]
   }
 
   depends_on = [
@@ -179,7 +179,7 @@ resource "azurerm_monitor_diagnostic_setting" "app_vault_diagnostic_logs" {
   name = "diagnosticlogs"
 
   target_resource_id         = azurerm_key_vault.app_vault.id
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id = local.log_analytics_workspace_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

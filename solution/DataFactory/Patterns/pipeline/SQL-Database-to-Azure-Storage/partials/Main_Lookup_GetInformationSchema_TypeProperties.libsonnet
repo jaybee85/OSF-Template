@@ -87,5 +87,59 @@ else if (SourceType=="SqlServerTable") then
   },
   "firstRowOnly": false
 }
+else if (SourceType=="OracleServerTable") then
+{
+  local referenceName = "GDS_OracleServerTable_NA_",
+  "source": {
+    "type": "OracleSource",
+    "oracleReaderQuery": {
+      "value": "@activity('AF Get Information Schema SQL').output.InformationSchemaSQL",
+      "type": "Expression"
+    },
+    "queryTimeout": "02:00:00",
+    "partitionOption": "None"
+  },
+  "dataset": {    
+    "referenceName":if(GenerateArm=="false") 
+                    then referenceName + GFPIR
+                    else "[concat('"+referenceName+"', parameters('integrationRuntimeShortName'))]",   
+    "type": "DatasetReference",
+    "parameters": {
+        "Host": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.Host",
+            "type": "Expression"
+        },
+        "Port": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.Port",
+            "type": "Expression"
+        },
+        "SID": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.SID",
+            "type": "Expression"
+        },
+        "UserName": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.Username",
+            "type": "Expression"
+        },
+        "KeyVaultBaseUrl": {
+            "value": "@pipeline().parameters.TaskObject.KeyVaultBaseUrl",
+            "type": "Expression"
+        },
+        "Secret": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.PasswordKeyVaultSecretName",
+            "type": "Expression"
+        },
+        "TableSchema": {
+            "value": "@pipeline().parameters.TaskObject.Source.TableSchema",
+            "type": "Expression"
+        },
+        "TableName": {
+            "value": "@pipeline().parameters.TaskObject.Source.TableName",
+            "type": "Expression"
+        }
+    }
+  },
+  "firstRowOnly": false
+}
 else
   error 'GetInformationSchema.libsonnet failed. No mapping for:' +GFPIR+","+SourceType

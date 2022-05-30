@@ -341,13 +341,14 @@ namespace WebApplication.Controllers
                         (from md in modelDataAll
                          join tg in _context.TaskGroup
                             on md.TaskGroupId equals tg.TaskGroupId
-                         join rm in _context.SubjectAreaRoleMap
-                            on tg.SubjectAreaId equals rm.SubjectAreaId
+                         join rm in _context.EntityRoleMap
+                            on tg.SubjectAreaId equals rm.EntityId
                          where
                              GetUserAdGroupUids().Contains(rm.AadGroupUid)
                              && permittedRoles.Contains(rm.ApplicationRoleName)
+                             && rm.EntityTypeName == EntityRoleMap.SubjectAreaTypeName
                              && rm.ExpiryDate > DateTimeOffset.Now
-                             && rm.ActiveYn
+                             && rm.ActiveYN
                          select md).Distinct();
                 }
 

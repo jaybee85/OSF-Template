@@ -57,7 +57,7 @@ function Get-SelectionFromUser {
     return $Options.Get($Response - 1)
 } 
 
-$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+$environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
 
 if ($environmentName -eq "Quit")
 {
@@ -225,7 +225,10 @@ if ($PersistEnv -eq "Yes")
     #------------------------------------------------------------------------------------------------------------
     # Templated Configurations
     #------------------------------------------------------------------------------------------------------------
-
+    if($environmentName -eq "admz")
+    {
+        Exit
+    }
     $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS', 'Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines', 'Lockbox Light Including Vnet & Networking') -Prompt "Select deployment fast start template"
     if ($templateName -eq "Quit")
     {
