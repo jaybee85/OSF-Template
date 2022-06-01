@@ -53,7 +53,7 @@ namespace FunctionApp.Functions
             string tableName = JObject.Parse(data.ToString())["TableName"];
             string sourceType = JObject.Parse(data.ToString())["SourceType"];
             string informationSchemaSql = "";
-            if (sourceType == "OracleServerTable")
+            if (sourceType == "Oracle Server")
             {
                 informationSchemaSql = $@"
                     SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
