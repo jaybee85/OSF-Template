@@ -17,3 +17,6 @@ SET SystemServer = '(local)'
 	,SystemType = 'Oracle Server'
 WHERE SystemId = '-13'
 GO
+
+INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Oracle Server', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Database": {      "type": "string"    }  },  "required": [    "Database"  ]}')
+GO
