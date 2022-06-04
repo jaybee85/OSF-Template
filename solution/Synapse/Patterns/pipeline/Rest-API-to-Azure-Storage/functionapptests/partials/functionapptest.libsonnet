@@ -31,13 +31,13 @@ function(
         "Purview": Purview,
         "QualifiedIDAssociation": QualifiedIDAssociation,
         "PartitionSize": PartitionSize,
-        "Pagination": Pagination,
+        "UseNotebookActivity": UseNotebookActivity,       
         "Source":{
             "Type": SourceFormat,
             "RelativeUrl": SourceRelativeUrl,
             "RequestBody": SourceRequestBody,
-            "RequestMethod": SourceRequestMethod                       
-            
+            "RequestMethod": SourceRequestMethod,
+            "Pagination": Pagination                                     
         },
 
         "Target":{
@@ -55,7 +55,7 @@ function(
 
     local SourceSystemJson = 
     {
-            
+          
     },
 
     local TargetSystemJson = 
@@ -90,7 +90,6 @@ function(
 	"TargetSystemUserName":"",
     "SynapsePipeline": SynapsePipeline,
     "TestDescription": "[" + TestNumber + "] " + TestDescription,
-    "DependencyChainTag": "", 
-    "UseNotebookActivity": UseNotebookActivity
+    "DependencyChainTag": ""
 }+commons
 
