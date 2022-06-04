@@ -150,6 +150,11 @@ variable "deploy_app_insights" {
   default     = true
   type        = bool
 }
+variable "deploy_bastion" {
+  description = "Feature toggle for deploying bastion"
+  default     = true
+  type        = bool
+}
 variable "deploy_app_service_plan" {
   description = "Feature toggle for deploying the App Service"
   default     = true
@@ -266,6 +271,11 @@ variable "adf_git_toggle_integration" {
 variable "adf_git_use_pat" {
   description = "Whether a pat is required for authentication (non public repo)."
   default     = true
+  type        = bool
+}
+variable "deploy_custom_terraform" {
+  description = "Whether the platform deploys the infrastructure located in the terraform_custom folder"
+  default     = false
   type        = bool
 }
 #---------------------------------------------------------------
@@ -614,3 +624,110 @@ variable "synapse_spark_max_node_count" {
 
 
 
+#---------------------------------------------------------------
+# Parameters for specifying existing resources for reuse/
+#---------------------------------------------------------------
+variable "existing_log_analytics_workspace_id" {
+  description = "An existing log analytics workspace id for reuse"
+  default     = ""
+  type        = string
+}
+variable "existing_log_analytics_resource_id" {
+  description = "An existing log analytics resource id for reuse"
+  default     = ""
+  type        = string
+}
+variable "existing_plink_subnet_id" {
+  description = "An existing subnet id for reuse for the Private link resources"
+  default     = ""
+  type        = string
+}
+
+
+variable "existing_bastion_subnet_id" {
+  description = "An existing subnet id for reuse for the Bastion host"
+  default     = ""
+  type        = string
+}
+variable "existing_app_service_subnet_id" {
+  description = "An existing subnet id for reuse for the App Service delegation"
+  default     = ""
+  type        = string
+}
+variable "existing_vm_subnet_id" {
+  description = "An existing subnet id for reuse for the Agent VMs"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_db_id" {
+  description = "An existing private DNS zone for privatelink.database.windows.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_kv_id" {
+  description = "An existing private DNS zone for privatelink.vaultcore.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_blob_id" {
+  description = "An existing private DNS zone for privatelink.blob.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_queue_id" {
+  description = "An existing private DNS zone for privatelink.queue.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_dfs_id" {
+  description = "An existing private DNS zone for privatelink.dfs.core.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_purview_id" {
+  description = "An existing private DNS zone for privatelink.purview.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_purview_studio_id" {
+  description = "An existing private DNS zone for privatelink.purviewstudio.azure.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_servicebus_id" {
+  description = "An existing private DNS zone for privatelink.servicebus.windows.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_gateway_id" {
+  description = "An existing private DNS zone for privatelink.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_studio_id" {
+  description = "An existing private DNS zone for privatelink.dev.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_private_dns_zone_synapse_sql_id" {
+  description = "An existing private DNS zone for privatelink.sql.azuresynapse.net"
+  default     = ""
+  type        = string
+}
+
+variable "existing_synapse_private_link_hub_id" {
+  description = "An existing private link hub for synapse studio."
+  default     = ""
+  type        = string
+}

@@ -232,7 +232,8 @@ foreach ($patternFolder in $patternFolders)
         $SourceType = ($SourceType -eq "AzureSqlTable") ? "Azure SQL" : $SourceType
         $SourceType = ($SourceType -eq "AzureSqlDWTable") ? "Azure Synapse" : $SourceType
         $SourceType = ($SourceType -eq "SqlServerTable") ? "SQL Server" : $SourceType
-
+        $SourceType = ($SourceType -eq "OracleServerTable") ? "Oracle Server" : $SourceType
+        
         #$SourceFormat = $psplit[2]
         $SourceFormat = ($SourceFormat -eq "DelimitedText") ? "Csv":$SourceFormat
 
@@ -242,7 +243,8 @@ foreach ($patternFolder in $patternFolders)
         $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
         $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
-        
+        $TargetType = ($TargetType -eq "OracleServerTable") ? "Oracle Server" : $TargetType
+
         #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 

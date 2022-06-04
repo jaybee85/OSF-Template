@@ -6,17 +6,17 @@ resource "azurerm_data_factory" "data_factory" {
   public_network_enabled          = var.is_vnet_isolated == false || var.delay_private_access
   managed_virtual_network_enabled = true
   dynamic "github_configuration" {
-      for_each = ((var.adf_git_toggle_integration) ? [true] : [])
-      content {
-        account_name = var.adf_git_repository_owner
-        branch_name = var.adf_git_repository_branch_name
-        repository_name = var.adf_git_repository_name
-        root_folder = var.adf_git_repository_root_folder
-        git_url = var.adf_git_host_url
-      }
+    for_each = ((var.adf_git_toggle_integration) ? [true] : [])
+    content {
+      account_name    = var.adf_git_repository_owner
+      branch_name     = var.adf_git_repository_branch_name
+      repository_name = var.adf_git_repository_name
+      root_folder     = var.adf_git_repository_root_folder
+      git_url         = var.adf_git_host_url
+    }
   }
-  
-  
+
+
   identity {
     type = "SystemAssigned"
   }
@@ -37,14 +37,14 @@ resource "azurerm_role_assignment" "datafactory_function_app" {
 
 # // Diagnostic logs--------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "data_factory_diagnostic_logs" {
-  count                = var.deploy_data_factory ? 1 : 0
-  name = "diagnosticlogs"
+  count = var.deploy_data_factory ? 1 : 0
+  name  = "diagnosticlogs"
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]
   }
   target_resource_id             = azurerm_data_factory.data_factory[0].id
-  log_analytics_workspace_id     = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id     = local.log_analytics_resource_id
   log_analytics_destination_type = "Dedicated"
 
   log {

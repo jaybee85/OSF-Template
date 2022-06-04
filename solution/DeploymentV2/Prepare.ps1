@@ -57,7 +57,7 @@ function Get-SelectionFromUser {
     return $Options.Get($Response - 1)
 } 
 
-$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+$environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
 
 if ($environmentName -eq "Quit")
 {
@@ -205,7 +205,9 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 $PersistEnv = Get-SelectionFromUser -Options ('Yes','No') -Prompt "Do you want to automatically persist the configuration information into your environment file? WARNING this will overwrite your existing hcl file."
 if ($PersistEnv -eq "Quit")
 {
-    Exit
+    ## Changed so the prepare does not close if you do not wish to persist.
+    #this means you can still get a template even if you do not persist
+    ##Exit
 }
 
 if ($PersistEnv -eq "Yes")
@@ -225,7 +227,10 @@ if ($PersistEnv -eq "Yes")
     #------------------------------------------------------------------------------------------------------------
     # Templated Configurations
     #------------------------------------------------------------------------------------------------------------
-
+    if($environmentName -eq "admz")
+    {
+        Exit
+    }
     $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS', 'Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines', 'Lockbox Light Including Vnet & Networking') -Prompt "Select deployment fast start template"
     if ($templateName -eq "Quit")
     {

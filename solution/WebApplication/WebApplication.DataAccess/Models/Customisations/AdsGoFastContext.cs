@@ -20,7 +20,7 @@ namespace WebApplication.Models
             modelBuilder.Entity<ScheduleMaster>(entity =>
             {
                 entity.HasAnnotation("DisplayColumn", "ScheduleDesciption");
-                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYN");
+                entity.Property(e => e.ActiveYn).HasColumnName("ActiveYn");
 
                 entity.Property(e => e.ScheduleDesciption)
                     .IsRequired()
@@ -92,7 +92,6 @@ namespace WebApplication.Models
             modelBuilder.Entity<SubjectArea>(entity =>
             {
                 entity.HasOne<SubjectAreaForm>(tg => tg.SubjectAreaForm).WithMany(sa => sa.SubjectAreas).HasForeignKey(tg => tg.SubjectAreaFormId);
-                entity.HasMany<SubjectAreaRoleMap>(sa => sa.SubjectAreaRoleMaps).WithOne(rm => rm.SubjectArea).HasForeignKey(tg => tg.SubjectAreaId);
             });
 
 
@@ -139,14 +138,15 @@ namespace WebApplication.Models
 
         }
 
-        public IQueryable<SubjectAreaRoleMap> SubjectAreaRoleMapsFor(Guid[] assignedAdGroups, string[] applicationRoles)
+        public IQueryable<EntityRoleMap> GetEntityRoleMapsFor(string entityTypeName, Guid[] assignedAdGroups, string[] applicationRoles)
         {
             return
-                from r in this.SubjectAreaRoleMap
+                from r in this.EntityRoleMap
                 where assignedAdGroups.Contains(r.AadGroupUid)
                     && applicationRoles.Contains(r.ApplicationRoleName)
+                    && r.EntityTypeName == entityTypeName
                     && r.ExpiryDate > DateTimeOffset.Now
-                      && r.ActiveYn
+                      && r.ActiveYN
                 select r;
         }
     }

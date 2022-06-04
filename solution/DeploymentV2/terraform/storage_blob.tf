@@ -52,7 +52,7 @@ resource "azurerm_private_endpoint" "blob_storage_private_endpoint_with_dns" {
   name                = "${local.blob_storage_account_name}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.blob_storage_account_name}-plink-conn"
@@ -63,7 +63,7 @@ resource "azurerm_private_endpoint" "blob_storage_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupstorage"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_blob[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_blob_id]
   }
 
   depends_on = [
@@ -84,7 +84,7 @@ resource "azurerm_monitor_diagnostic_setting" "blob_storage_diagnostic_logs" {
   name                       = "diagnosticlogs"
   count                      = var.deploy_storage_account ? 1 : 0
   target_resource_id         = "${azurerm_storage_account.blob[0].id}/blobServices/default/"
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

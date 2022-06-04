@@ -57,7 +57,7 @@ resource "azurerm_private_endpoint" "adls_storage_private_endpoint_with_dns" {
   name                = "${local.adls_storage_account_name}-blob-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.adls_storage_account_name}-blob-plink-conn"
@@ -68,7 +68,7 @@ resource "azurerm_private_endpoint" "adls_storage_private_endpoint_with_dns" {
 
   private_dns_zone_group {
     name                 = "privatednszonegroupstorageblob"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_blob[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_blob_id]
   }
 
   depends_on = [
@@ -88,7 +88,7 @@ resource "azurerm_private_endpoint" "adls_dfs_storage_private_endpoint_with_dns"
   name                = "${local.adls_storage_account_name}-dfs-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
-  subnet_id           = azurerm_subnet.plink_subnet[0].id
+  subnet_id           = local.plink_subnet_id
 
   private_service_connection {
     name                           = "${local.adls_storage_account_name}-dfs-plink-conn"
@@ -99,7 +99,7 @@ resource "azurerm_private_endpoint" "adls_dfs_storage_private_endpoint_with_dns"
 
   private_dns_zone_group {
     name                 = "privatednszonegroupstoragedfs"
-    private_dns_zone_ids = [azurerm_private_dns_zone.private_dns_zone_dfs[0].id]
+    private_dns_zone_ids = [local.private_dns_zone_dfs_id]
   }
 
   depends_on = [
@@ -119,7 +119,7 @@ resource "azurerm_monitor_diagnostic_setting" "adls_storage_diagnostic_logs" {
   count                      = var.deploy_adls ? 1 : 0
   name                       = "diagnosticlogs"
   target_resource_id         = "${azurerm_storage_account.adls[0].id}/blobServices/default/"
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.log_analytics_workspace.id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

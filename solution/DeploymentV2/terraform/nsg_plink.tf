@@ -1,5 +1,5 @@
 resource "azurerm_network_security_group" "plink_nsg" {
-  count               = (var.is_vnet_isolated ? 1 : 0)
+  count               = (var.is_vnet_isolated && var.existing_plink_subnet_id == "" ? 1 : 0)
   name                = local.plink_nsg_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -15,7 +15,7 @@ resource "azurerm_network_security_group" "plink_nsg" {
 
 # Outbound Rules
 resource "azurerm_network_security_rule" "plink_out_deny_all" {
-  count     = (var.is_vnet_isolated ? 1 : 0)
+  count     = (var.is_vnet_isolated && var.existing_plink_subnet_id == "" ? 1 : 0)
   name      = "plink_out_deny_all"
   priority  = 110
   direction = "Outbound"
@@ -39,8 +39,8 @@ resource "azurerm_network_security_rule" "plink_out_deny_all" {
 # Associate NSG with subnet
 
 resource "azurerm_subnet_network_security_group_association" "plink_nsg" {
-  count                     = (var.is_vnet_isolated ? 1 : 0)
-  subnet_id                 = azurerm_subnet.plink_subnet[0].id
+  count                     = (var.is_vnet_isolated && var.existing_plink_subnet_id == "" ? 1 : 0)
+  subnet_id                 = local.plink_subnet_id
   network_security_group_id = azurerm_network_security_group.plink_nsg[0].id
 
   # The subnet will refuse to accept the NSG if it's not this exact

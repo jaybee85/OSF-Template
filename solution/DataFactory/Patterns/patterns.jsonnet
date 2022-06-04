@@ -71,19 +71,25 @@ local Template_REST_API_to_Azure_Storage = function(SourceType, SourceFormat, Ta
     #Blob
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Sql","AzureBlobStorage","Parquet"),
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Sql","AzureBlobStorage","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Sql","AzureBlobStorage","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Sql","AzureBlobStorage","Parquet"),
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","AzureBlobStorage","Parquet"),
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","AzureBlobStorage","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","AzureBlobStorage","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Table","AzureBlobStorage","Parquet"),
     #ADLS
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Sql","AzureBlobFS","Parquet"),
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Sql","AzureBlobFS","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Sql","AzureBlobFS","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Sql","AzureBlobFS","Parquet"),
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","AzureBlobFS","Parquet"),
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","AzureBlobFS","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","AzureBlobFS","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Table","AzureBlobFS","Parquet")   
     Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
-    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet")
+    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet"),
+    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","FileServer","Parquet")
+
 ]
 +
 #SQL_Database_CDC_to_Azure_Storage
