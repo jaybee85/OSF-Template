@@ -4,6 +4,7 @@ function GatherOutputsFromTerraform()
     #$environmentName = "local" # currently supports (local, staging)
     $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 
+    #$CurrentFolderPath = $PWD
     $env:TF_VAR_ip_address = $myIp
 
     #------------------------------------------------------------------------------------------------------------
@@ -22,6 +23,7 @@ function GatherOutputsFromTerraform()
     $rgid = (az group show -n $tout.resource_group_name | ConvertFrom-Json -Depth 10).id
     $tout | Add-Member  -MemberType NoteProperty -Name "resource_group_id" -Value $rgid
 
+    #Set-Location $CurrentFolderPath
     Write-Host "Reading Terraform Outputs - Finished"
     Write-Host "-------------------------------------------------------------------------------------------------"
     return $tout

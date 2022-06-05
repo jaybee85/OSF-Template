@@ -4,9 +4,9 @@
 
 The Azure Data Services Go Fast Codebase is a combination of Microsoft components designed to shorten the "time to value" when deploying an Azure Data Platform. Key features include:
 
-- Infrastucture as code (IAC) deployment of MVP Azure Data Platform 
+- Infrastructure as code (IAC) deployment of MVP Azure Data Platform 
 - "Out of the box" Continuous Integration and Continuous Deployment framework  
-- Enterpise grade security and monitoring with full support for Key Vault, VNETS, Private Enpoints and Managed Service Identities
+- Enterprise grade security and monitoring with full support for Key Vault, VNETS, Private Endpoints and Managed Service Identities
 - Codeless Ingestion from commonly used enterprise source systems into an enterprise data lake
 - Users can interact with capabilities through a webpage and embedded dashboards.
 
@@ -18,7 +18,7 @@ At its core this project is intended to be an accelerator. As such, it is design
 
 ## Getting Started
 
-Getting started is always the hardest part of any process so help clients & partners get started with this repository we provide a set of online, on-boarding and upskilling workshops. Spaces in these workshops are limited and subject to an application process. If you are intersted then please 
+Getting started is always the hardest part of any process so to help clients & partners get started with this repository we provide a set of online, on-boarding and upskilling workshops. Spaces in these workshops are limited and subject to an application process. If you are interested then please 
 nominate yourself at [https://forms.office.com/r/qbQrU6jFsj](https://forms.office.com/r/qbQrU6jFsj).
   
 
@@ -32,7 +32,7 @@ Deployment of this project requires a variety of services across Azure. Please e
 >- Owner rights on the Azure Resource Group
 >- Power BI Workspace (Optional)
 
-*Note that for a fully functioning deployment the deployment process will create a Deployment Service principal and two Azure Application Registrtions within the Azure Active Directory (AAD) domain that is connected to your Azure subscription. It is recommended that you use an Azure subscription and AAD on which you have the necessary priveleges to perform these operations. 
+*Note that for a fully functioning deployment the deployment process will create a Deployment Service principal and two Azure Application Registrations within the Azure Active Directory (AAD) domain that is connected to your Azure subscription. It is recommended that you use an Azure subscription and AAD on which you have the necessary privileges to perform these operations. 
 
 You can sign up for an Azure subscription [here](https://azure.microsoft.com/en-us/free/) 
 

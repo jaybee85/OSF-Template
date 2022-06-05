@@ -27,7 +27,9 @@ locals {
   blob_storage_account_name    = (var.blob_storage_account_name != "" ? var.blob_storage_account_name : "${module.naming.data_lake_store.name_unique}blob")
   bastion_name                 = (var.bastion_name != "" ? var.bastion_name : module.naming.bastion_host.name_unique)
   bastion_ip_name              = (var.bastion_ip_name != "" ? var.bastion_ip_name : module.naming.public_ip.name_unique)
-  purview_name                 = (var.purview_name != "" ? var.purview_name : "${var.prefix}${var.environment_tag}pur${var.app_name}")
+  purview_name                 = (var.purview_name != "" ? var.purview_name : "${var.prefix}${var.environment_tag}pur${var.app_name}${element(split("-", module.naming.data_factory.name_unique),length(split("-", module.naming.data_factory.name_unique))-1)}")
+  purview_account_plink        = (var.purview_name != "" ? var.purview_name : "${var.prefix}-${var.environment_tag}-pura-${lower(var.app_name)}-plink-${element(split("-", module.naming.data_factory.name_unique),length(split("-", module.naming.data_factory.name_unique))-1)}")
+  purview_portal_plink        = (var.purview_name != "" ? var.purview_name : "${var.prefix}-${var.environment_tag}-purp-${lower(var.app_name)}-plink-${element(split("-", module.naming.data_factory.name_unique),length(split("-", module.naming.data_factory.name_unique))-1)}")
   purview_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-purview"
   purview_ir_app_reg_name      = (var.purview_ir_app_reg_name != "" ? var.purview_ir_app_reg_name : "ADS GoFast Purview Integration Runtime (${var.environment_tag})")
   jumphost_vm_name             = module.naming.virtual_machine.name
@@ -41,6 +43,7 @@ locals {
   synapse_sql_password         = ((var.deploy_synapse && var.synapse_sql_password == null) ? "" : var.synapse_sql_password)
   selfhostedsqlvm_name         = "sqlvm${var.app_name}${element(split("-", module.naming.data_factory.name_unique), length(split("-", module.naming.data_factory.name_unique)) - 1)}"
   h2o-ai_name                  = "h2oai${var.app_name}${element(split("-", module.naming.data_factory.name_unique), length(split("-", module.naming.data_factory.name_unique)) - 1)}"
+
 
   tags = {
     Environment = var.environment_tag

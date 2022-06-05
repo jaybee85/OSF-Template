@@ -172,7 +172,7 @@
            
            Merge dbo.IntegrationRuntimeMapping tgt
            using #tempIntegrationRuntimeMapping2 src on 
-           tgt.IntegrationRuntimeName = src.IntegrationRuntimeName 
+           tgt.IntegrationRuntimeName = src.IntegrationRuntimeName and tgt.SystemId = src.SystemId
            when not matched by target then 
            insert 
            ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])

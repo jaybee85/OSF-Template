@@ -31,7 +31,9 @@ function(
             "Type":TargetFormat,
             "TableName": TargetTableName,
             "TableSchema":TargetTableSchema
-        }
+        },
+        "SQLStatement": "drop table if exists dbo.[ExecuteSQLTest-26]; Select * into dbo.[ExecuteSQLTest-26] from ( values (1 , 2) ) a(col1,col2); Select 1;",
+        "QueryTimeout": QueryTimeout,
     },
 
     local TaskInstanceJson =  
@@ -74,12 +76,8 @@ function(
     "TargetKeyVaultBaseUrl":"https://" + vars.keyvault_name +".vault.azure.net",
     "TargetSystemAuthType":"MSI",
     "TargetSystemSecretName":"",
-	"TargetSystemUserName":"",
-    "TMOptionals":{
-        "SQLStatement": SQLStatement,
-        "QueryTimeout": QueryTimeout,
-    },
-   "ADFPipeline": ADFPipeline,
+	"TargetSystemUserName":"",    
+    "ADFPipeline": ADFPipeline,
     "TestDescription": "[" + TestNumber + "] " +  " " + TestDescription,
     "TaskDatafactoryIR": if(TaskDatafactoryIR == null) then "Azure" else TaskDatafactoryIR,
     "DependencyChainTag": ""
