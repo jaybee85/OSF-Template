@@ -61,10 +61,10 @@ output "is_vnet_isolated" {
   value = var.is_vnet_isolated
 }
 output "aad_webreg_id" {
-  value = var.publish_web_app ? azuread_application.web_reg[0].application_id : ""
+  value = var.deploy_web_app ? azuread_application.web_reg[0].application_id : ""
 }
 output "aad_funcreg_id" {
-  value = var.publish_function_app ? azuread_application.function_app_reg[0].application_id : ""
+  value = var.deploy_function_app ? azuread_application.function_app_reg[0].application_id : ""
 }
 output "purview_sp_id" {
   value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].application_id : "0"
@@ -74,6 +74,12 @@ output "integration_runtimes" {
 }
 output "is_onprem_datafactory_ir_registered" {
   value = var.is_onprem_datafactory_ir_registered
+}
+output "deploy_web_app" {
+  value = var.deploy_web_app
+}
+output "deploy_function_app" {
+  value = var.deploy_function_app
 }
 output "publish_web_app" {
   value = var.publish_web_app

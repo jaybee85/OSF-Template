@@ -145,7 +145,7 @@ resource "time_sleep" "azurerm_synapse_firewall_rule_wait_30_seconds_cicd" {
 # Synapse Workspace Roles and Linked Services
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
-  count                = var.deploy_synapse && var.publish_function_app ? 1 : 0
+  count                = var.deploy_synapse && var.deploy_function_app ? 1 : 0
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -365,7 +365,7 @@ resource "azurerm_private_endpoint" "synapse_sqlondemand" {
 # --------------------------------------------------------------------------------------------------------------------
 
 resource "azurerm_role_assignment" "synapse_function_app" {
-  count                = var.deploy_synapse && var.publish_function_app ? 1 : 0
+  count                = var.deploy_synapse && var.deploy_function_app ? 1 : 0
   scope                = azurerm_synapse_workspace.synapse[0].id
   role_definition_name = "Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id

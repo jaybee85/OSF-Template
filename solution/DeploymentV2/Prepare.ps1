@@ -239,6 +239,9 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "Full-AllFeatures")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","true")
@@ -258,6 +261,9 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "Minimal-NoVNET,No Purview, No Synapse")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
@@ -277,6 +283,9 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
@@ -296,6 +305,9 @@ if ($PersistEnv -eq "Yes")
 
         if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
@@ -315,6 +327,9 @@ if ($PersistEnv -eq "Yes")
 
             if ($templateName -eq "Lockbox Light Including Vnet & Networking")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")

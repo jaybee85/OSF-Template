@@ -37,7 +37,7 @@ resource "azuread_service_principal" "function_app" {
 
 # This allows the function app MSI to be able to call/request the Azure function App reg
 resource "azuread_app_role_assignment" "func_msi_app_role" {
-  count               = var.publish_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
+  count               = var.deploy_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
   app_role_id         = random_uuid.function_app_reg_role_id.result
   principal_object_id = azurerm_function_app.function_app[0].identity[0].principal_id
   resource_object_id  = azuread_service_principal.function_app[0].object_id
@@ -46,20 +46,20 @@ resource "azuread_app_role_assignment" "func_msi_app_role" {
 # This allows the function app SP to be able to call/request the Azure function App reg / SP
 # This allows us to debug locally by using the app reg details for both auth modes
 resource "azuread_app_role_assignment" "func_sp_app_role" {
-  count               = var.publish_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
+  count               = var.deploy_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
   app_role_id         = random_uuid.function_app_reg_role_id.result
   principal_object_id = azuread_service_principal.function_app[0].object_id
   resource_object_id  = azuread_service_principal.function_app[0].object_id
 }
 
 resource "azuread_application_password" "function_app" {
-  count                 = var.publish_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
+  count                 = var.deploy_function_app && var.deploy_azure_ad_function_app_registration ? 1 : 0
   application_object_id = azuread_application.function_app_reg[0].object_id
 }
 
 resource "azurerm_function_app" "function_app" {
   name                       = local.functionapp_name
-  count                      = var.publish_function_app && var.deploy_app_service_plan ? 1 : 0
+  count                      = var.deploy_function_app && var.deploy_app_service_plan ? 1 : 0
   location                   = var.resource_location
   resource_group_name        = var.resource_group_name
   app_service_plan_id        = azurerm_app_service_plan.app_service_plan[0].id
@@ -153,14 +153,14 @@ resource "azurerm_function_app" "function_app" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration_func" {
-  count          = var.is_vnet_isolated && var.publish_function_app ? 1 : 0
+  count          = var.is_vnet_isolated && var.deploy_function_app ? 1 : 0
   app_service_id = azurerm_function_app.function_app[0].id
   subnet_id      = local.app_service_subnet_id
 }
 
 # Diagnostic logs--------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "function_diagnostic_logs" {
-  count = var.publish_function_app ? 1 : 0
+  count = var.deploy_function_app ? 1 : 0
   name  = "diagnosticlogs"
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
