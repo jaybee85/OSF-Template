@@ -273,6 +273,11 @@ variable "adf_git_use_pat" {
   default     = true
   type        = bool
 }
+variable "deploy_custom_terraform" {
+  description = "Whether the platform deploys the infrastructure located in the terraform_custom folder"
+  default     = false
+  type        = bool
+}
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------
@@ -627,7 +632,11 @@ variable "existing_log_analytics_workspace_id" {
   default     = ""
   type        = string
 }
-
+variable "existing_log_analytics_resource_id" {
+  description = "An existing log analytics resource id for reuse"
+  default     = ""
+  type        = string
+}
 variable "existing_plink_subnet_id" {
   description = "An existing subnet id for reuse for the Private link resources"
   default     = ""

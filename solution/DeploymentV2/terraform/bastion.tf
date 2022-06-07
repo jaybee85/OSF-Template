@@ -31,7 +31,7 @@ resource "azurerm_monitor_diagnostic_setting" "bastion_diagnostic_logs" {
   count               = (var.is_vnet_isolated && var.deploy_bastion? 1 : 0)
   name                       = "diagnosticlogs"
   target_resource_id         = azurerm_bastion_host.bastion[0].id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

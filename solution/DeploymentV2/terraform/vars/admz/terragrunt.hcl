@@ -27,8 +27,11 @@ inputs = {
   owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "prod"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "101.179.193.89"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  deploy_custom_terraform               = false # This is whether the infrastructure located in the terraform_custom folder is deployed or not.  
   configure_networking                  = false
   is_vnet_isolated                      = true
+  deploy_web_app                        = false
+  deploy_function_app                   = false
   publish_web_app                       = false
   publish_function_app                  = false
   publish_sample_files                  = true
@@ -47,8 +50,10 @@ inputs = {
 
   #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.
   #Please ensure that you enter everything that is relevant otherwise deployed resources may not work properly.
-  #log anayltics id can be found under the properties of the log analytics resource NOTE: This is the full URI not the workspaceID (ResourceID)
-  existing_log_analytics_workspace_id   = "/subscriptions/14f299e1-be54-43e9-bf5e-696840f86fc4/resourceGroups/dlzdev08lite/providers/Microsoft.OperationalInsights/workspaces/ark-stg-log-ads-g4js"
+  #log anayltics resource id can be found under the properties of the log analytics resource NOTE: This is the full URI not the workspaceID
+  #workspace id can be found under the main page, it is a guid
+  existing_log_analytics_resource_id   = "/subscriptions/14f299e1-be54-43e9-bf5e-696840f86fc4/resourceGroups/dlzdev08lite/providers/Microsoft.OperationalInsights/workspaces/ark-stg-log-ads-g4js"
+  existing_log_analytics_workspace_id   = "23bfd865-7b4e-494c-8538-a872f54c3893"
   #synapse private link hub id can be found under the properties of the synapse private link NOTE: This is the full URI (ResourceID)
   existing_synapse_private_link_hub_id  = "/subscriptions/14f299e1-be54-43e9-bf5e-696840f86fc4/resourceGroups/dlzdev08lite/providers/Microsoft.Synapse/privateLinkHubs/arkstgsynwadsg4jsplink"
   #Please assign subnet id's for the following - you may end up using the same subnet id for all of these resources depending on your already deployed assets.

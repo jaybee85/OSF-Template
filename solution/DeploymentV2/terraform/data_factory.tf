@@ -28,7 +28,7 @@ resource "azurerm_data_factory" "data_factory" {
 }
 
 resource "azurerm_role_assignment" "datafactory_function_app" {
-  count                = var.deploy_data_factory && var.publish_function_app ? 1 : 0
+  count                = var.deploy_data_factory && var.deploy_function_app ? 1 : 0
   scope                = azurerm_data_factory.data_factory[0].id
   role_definition_name = "Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -44,7 +44,7 @@ resource "azurerm_monitor_diagnostic_setting" "data_factory_diagnostic_logs" {
     ignore_changes = [log, metric]
   }
   target_resource_id             = azurerm_data_factory.data_factory[0].id
-  log_analytics_workspace_id     = local.log_analytics_workspace_id
+  log_analytics_workspace_id     = local.log_analytics_resource_id
   log_analytics_destination_type = "Dedicated"
 
   log {

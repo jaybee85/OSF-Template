@@ -1,8 +1,9 @@
 
 resource "random_uuid" "app_reg_role_id" {}
+resource "random_uuid" "app_reg_role_id2" {}
 
 resource "azuread_application" "web_reg" {
-  count        = var.publish_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
+  count        = var.deploy_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
   display_name = local.aad_webapp_name
   owners       = [data.azurerm_client_config.current.object_id]
   web {
@@ -21,6 +22,16 @@ resource "azuread_application" "web_reg" {
     enabled              = true
     value                = "Administrator"
   }
+
+  app_role {
+    allowed_member_types = ["User"]
+    id                   = random_uuid.app_reg_role_id2.result
+    description          = "Reader features of the application"
+    display_name         = "Reader"
+    enabled              = true
+    value                = "Reader"
+  }
+
   required_resource_access {
     resource_app_id = "00000003-0000-0000-c000-000000000000"
 
@@ -53,7 +64,7 @@ resource "time_sleep" "wait_30_seconds" {
 }
 
 resource "azuread_service_principal" "web_sp" {
-  count          = var.publish_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
+  count          = var.deploy_web_app && var.deploy_azure_ad_web_app_registration ? 1 : 0
   application_id = azuread_application.web_reg[0].application_id
   owners         = [data.azurerm_client_config.current.object_id]
   depends_on     = [time_sleep.wait_30_seconds]
@@ -61,7 +72,7 @@ resource "azuread_service_principal" "web_sp" {
 
 
 resource "azurerm_app_service" "web" {
-  count               = var.deploy_app_service_plan && var.publish_web_app ? 1 : 0
+  count               = var.deploy_app_service_plan && var.deploy_web_app ? 1 : 0
   name                = local.webapp_name
   location            = var.resource_location
   resource_group_name = var.resource_group_name
@@ -76,7 +87,7 @@ resource "azurerm_app_service" "web" {
     ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = var.publish_database ? azurerm_mssql_database.web_db[0].name : null
 
     ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
-    ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_workspace_id
+    ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_resource_id
 
     AzureAdAuth__Domain   = var.domain
     AzureAdAuth__TenantId = var.tenant_id
@@ -108,7 +119,7 @@ resource "azurerm_app_service" "web" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integration" {
-  count          = var.is_vnet_isolated && var.publish_web_app ? 1 : 0
+  count          = var.is_vnet_isolated && var.deploy_web_app ? 1 : 0
   app_service_id = azurerm_app_service.web[0].id
   subnet_id      = local.app_service_subnet_id
 }
@@ -117,9 +128,9 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_integratio
 # // Diagnostic logs--------------------------------------------------------------------------
 resource "azurerm_monitor_diagnostic_setting" "app_service_diagnostic_logs" {
   name                       = "diagnosticlogs"
-  count                      = var.publish_web_app ? 1 : 0
+  count                      = var.deploy_web_app ? 1 : 0
   target_resource_id         = azurerm_app_service.web[0].id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

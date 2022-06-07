@@ -25,7 +25,7 @@ resource "azurerm_data_factory_linked_service_key_vault" "key_vault_default" {
 
 #Azure Function - Non Generic
 resource "azurerm_data_factory_linked_service_azure_function" "function_app" {
-  count               = var.deploy_data_factory && var.publish_function_app ? 1 : 0
+  count               = var.deploy_data_factory && var.deploy_function_app ? 1 : 0
   name                = local.linkedservice_azure_function_name
  #resource_group_name = var.resource_group_name
   data_factory_id     = azurerm_data_factory.data_factory[0].id

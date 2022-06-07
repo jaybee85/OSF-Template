@@ -44,6 +44,7 @@ locals {
   selfhostedsqlvm_name         = replace(module.naming.virtual_machine.name,"-vm-","-vmsql-")
   h2o-ai_name                  = replace(module.naming.virtual_machine.name,"-vm-","-vmh2o-")
 
+
   tags = {
     Environment = var.environment_tag
     Owner       = var.owner_tag

@@ -8,10 +8,13 @@ inputs = {
   owner_tag                             = "Contoso"               # Owner tag value for Azure resources
   environment_tag                       = "dev"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "144.138.148.220"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  deploy_web_app                        = true
+  deploy_function_app                   = true
   deploy_app_service_plan               = true
-  deploy_data_factory                   = true
-  deploy_sentinel                       = true
-  deploy_purview                        = true      
+  deploy_data_factory                   = true    
+  deploy_custom_terraform               = false # This is whether the infrastructure located in the terraform_custom folder is deployed or not.  
+  deploy_sentinel                       = false
+  deploy_purview                        = false      
   deploy_synapse                        = true
   is_vnet_isolated                      = true
   publish_web_app                       = true
@@ -23,4 +26,5 @@ inputs = {
   publish_web_app_addcurrentuserasadmin = true
   deploy_selfhostedsql                  = false
   is_onprem_datafactory_ir_registered   = false
+
 }

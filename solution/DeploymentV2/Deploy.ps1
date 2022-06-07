@@ -138,15 +138,38 @@ $purview_sp_name=$outputs.purview_sp_name.value
 $synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
 $synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
 $synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
-
-$skipWebApp = if($tout.publish_web_app) {$false} else {$true}
-$skipFunctionApp = if($tout.publish_function_app) {$false} else {$true}
+$skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
+$skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
+$skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
 $skipDatabase = if($tout.publish_database) {$false} else {$true}
 $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
 $skipSIF= if($tout.publish_sif_database){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
+
+#------------------------------------------------------------------------------------------------------------
+# Deploy the customisable terraform layer
+#------------------------------------------------------------------------------------------------------------
+if ($skipCustomTerraform) {
+    Write-Host "Skipping Custom Terraform Layer"    
+}
+else {
+    Set-Location $deploymentFolderPath
+    Set-Location "./terraform_custom"
+
+    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+
+    if ($skipTerraformDeployment) {
+        Write-Host "Skipping Custom Terraform Deployment"
+    }
+    else {
+        Write-Host "Starting Custom Terraform Deployment"
+        terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
+    }
+}
+#------------------------------------------------------------------------------------------------------------
+
 
 if ($skipNetworking -or $tout.is_vnet_isolated -eq $false) {
     Write-Host "Skipping Private Link Connnections"    

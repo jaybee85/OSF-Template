@@ -105,7 +105,7 @@ resource "azurerm_key_vault_access_policy" "purview_access" {
 
 // Allows the Azure function to retrieve the Function App - AAD App Reg - Client Secret
 resource "azurerm_key_vault_access_policy" "function_app" {
-  count        = var.publish_function_app ? 1 : 0
+  count        = var.deploy_function_app ? 1 : 0
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = var.tenant_id
   object_id    = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -179,7 +179,7 @@ resource "azurerm_monitor_diagnostic_setting" "app_vault_diagnostic_logs" {
   name = "diagnosticlogs"
 
   target_resource_id         = azurerm_key_vault.app_vault.id
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]
@@ -214,7 +214,7 @@ resource "azurerm_monitor_diagnostic_setting" "app_vault_diagnostic_logs" {
 
 // Actual secrets ----------------------------------------------------------------------
 data "azurerm_function_app_host_keys" "function_app_host_key" {
-  count               = var.publish_function_app ? 1 : 0
+  count               = var.deploy_function_app ? 1 : 0
   name                = azurerm_function_app.function_app[0].name
   resource_group_name = var.resource_group_name
   depends_on = [
@@ -225,7 +225,7 @@ data "azurerm_function_app_host_keys" "function_app_host_key" {
 
 
 resource "azurerm_key_vault_secret" "function_app_key" {
-  count        = var.publish_function_app ? 1 : 0
+  count        = var.deploy_function_app ? 1 : 0
   name         = "AdsGfCoreFunctionAppKey"
   value        = data.azurerm_function_app_host_keys.function_app_host_key[0].default_function_key
   key_vault_id = azurerm_key_vault.app_vault.id
@@ -246,7 +246,7 @@ resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
 }
 
 resource "azurerm_key_vault_secret" "azure_function_secret" {
-  count        = var.publish_function_app ? 1 : 0
+  count        = var.deploy_function_app ? 1 : 0
   name         = "AzureFunctionClientSecret"
   value        = azuread_application_password.function_app[0].value
   key_vault_id = azurerm_key_vault.app_vault.id
