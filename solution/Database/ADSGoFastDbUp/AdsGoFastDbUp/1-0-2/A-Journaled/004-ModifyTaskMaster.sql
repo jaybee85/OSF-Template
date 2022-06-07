@@ -10,8 +10,8 @@ GO
 UPDATE [dbo].[SourceAndTargetSystems]
 SET SystemServer = '(local)'
 	,SystemKeyVaultBaseUrl = 'https://$KeyVaultName$.vault.azure.net/'
-	,SystemJSON = '{  "Database" : "Adventureworks"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
-	,SystemAuthType = 'WindowsAuth'
+	,SystemJSON = '{  "SID" : "sid"  , "Host" : "dummy"  , "Port" : "3333"  , "PasswordKeyVaultSecretName":"selfhostedsqlpw"   }'
+	,SystemAuthType = 'SID'
 	,SystemUserName = 'adminuser'
 	,SystemSecretName = 'selfhostedsqlpw'
 	,SystemType = 'Oracle Server'
@@ -19,5 +19,5 @@ WHERE SystemId = '-13'
 GO
 SET IDENTITY_INSERT [dbo].[SourceAndTargetSystems] OFF 
 GO
-INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Oracle Server', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "Database": {      "type": "string"    }  },  "required": [    "Database"  ]}')
+INSERT [dbo].[SourceAndTargetSystems_JsonSchema] ([SystemType], [JsonSchema]) VALUES (N'Oracle Server', N'{  "$schema": "http://json-schema.org/draft-04/schema#",  "type": "object",  "properties": {    "SID": {      "type": "string"    }, "Host": {      "type": "string"    }, "Port": {      "type": "string"    }  },  "required": [    "SID" , "Host" , "Port"  ]}')
 GO
