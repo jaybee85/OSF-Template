@@ -41,8 +41,8 @@ locals {
   synapse_sppool_name          = (var.synapse_sppool_name != "" ? var.synapse_sppool_name : "${var.prefix}${var.environment_tag}synsp${var.app_name}")
   synapse_resource_group_name  = "managed-${module.naming.resource_group.name_unique}-synapse"
   synapse_sql_password         = ((var.deploy_synapse && var.synapse_sql_password == null) ? "" : var.synapse_sql_password)
-  selfhostedsqlvm_name         = "sqlvm${var.app_name}${element(split("-", module.naming.data_factory.name_unique), length(split("-", module.naming.data_factory.name_unique)) - 1)}"
-  h2o-ai_name                  = "h2oai${var.app_name}${element(split("-", module.naming.data_factory.name_unique), length(split("-", module.naming.data_factory.name_unique)) - 1)}"
+  selfhostedsqlvm_name         = replace(module.naming.virtual_machine.name,"-vm-","-vmsql-")
+  h2o-ai_name                  = replace(module.naming.virtual_machine.name,"-vm-","-vmh2o-")
 
 
   tags = {

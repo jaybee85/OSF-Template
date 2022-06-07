@@ -77,7 +77,7 @@ resource "azurerm_key_vault_access_policy" "adf_access" {
   ]
 
   secret_permissions = [
-    "list", "get"
+    "List", "Get"
   ]
   depends_on = [
     azurerm_key_vault.app_vault,
@@ -96,7 +96,7 @@ resource "azurerm_key_vault_access_policy" "purview_access" {
   ]
 
   secret_permissions = [
-    "list", "get"
+    "List", "Get"
   ]
   depends_on = [
     azurerm_key_vault.app_vault,
@@ -115,7 +115,7 @@ resource "azurerm_key_vault_access_policy" "function_app" {
   ]
 
   secret_permissions = [
-    "list", "get"
+    "List", "Get"
   ]
   depends_on = [
     azurerm_key_vault.app_vault,
@@ -134,7 +134,7 @@ resource "azurerm_key_vault_access_policy" "synapse_access" {
   ]
 
   secret_permissions = [
-    "list", "get"
+    "List", "Get"
   ]
   depends_on = [
     azurerm_key_vault.app_vault,

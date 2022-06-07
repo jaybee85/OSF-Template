@@ -75,12 +75,18 @@ output "integration_runtimes" {
 output "is_onprem_datafactory_ir_registered" {
   value = var.is_onprem_datafactory_ir_registered
 }
+
+output "jumphost_vm_name" {
+  value = local.jumphost_vm_name
+}
+
 output "deploy_web_app" {
   value = var.deploy_web_app
 }
 output "deploy_function_app" {
   value = var.deploy_function_app
 }
+  
 output "publish_web_app" {
   value = var.publish_web_app
 }
@@ -184,4 +190,7 @@ output "adf_git_pat" {
 }
 output "adf_git_host_url" {
   value = var.adf_git_toggle_integration ? var.adf_git_host_url : ""
+}
+output "synapse_lakedatabase_container_name" {
+  value = azurerm_storage_data_lake_gen2_filesystem.dlfs[0].name
 }

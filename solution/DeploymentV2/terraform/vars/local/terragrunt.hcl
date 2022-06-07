@@ -4,7 +4,7 @@ inputs = {
   tenant_id                             = "72f988bf-86f1-41af-91ab-2d7cd011db47"           # This is the Azure AD tenant ID
   subscription_id                       = "035a1364-f00d-48e2-b582-4fe125905ee3"     # The azure subscription id to deploy to
   resource_location                     = "Australia East"        # The location of the resources
-  resource_group_name                   = "gf2"          # The resource group all resources will be deployed to
+  resource_group_name                   = "gf7"          # The resource group all resources will be deployed to
   owner_tag                             = "Contoso"               # Owner tag value for Azure resources
   environment_tag                       = "dev"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "144.138.148.220"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
@@ -24,6 +24,7 @@ inputs = {
   configure_networking                  = true
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
-  deploy_selfhostedsql                  = true
-  is_onprem_datafactory_ir_registered   = true
+  deploy_selfhostedsql                  = false
+  is_onprem_datafactory_ir_registered   = false
+
 }

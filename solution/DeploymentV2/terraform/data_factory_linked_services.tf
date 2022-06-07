@@ -18,7 +18,7 @@ resource "azurerm_data_factory_linked_service_key_vault" "key_vault_default" {
   count               = var.deploy_data_factory ? 1 : 0
   name                = local.linkedservice_keyvault_name
   description         = "Default Key Vault (Non-Dynamic)"
-  resource_group_name = var.resource_group_name
+  #resource_group_name = var.resource_group_name
   data_factory_id     = azurerm_data_factory.data_factory[0].id
   key_vault_id        = azurerm_key_vault.app_vault.id
 }
@@ -27,7 +27,7 @@ resource "azurerm_data_factory_linked_service_key_vault" "key_vault_default" {
 resource "azurerm_data_factory_linked_service_azure_function" "function_app" {
   count               = var.deploy_data_factory && var.deploy_function_app ? 1 : 0
   name                = local.linkedservice_azure_function_name
-  resource_group_name = var.resource_group_name
+ #resource_group_name = var.resource_group_name
   data_factory_id     = azurerm_data_factory.data_factory[0].id
   url                 = local.functionapp_url
   key_vault_key {

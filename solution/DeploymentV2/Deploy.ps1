@@ -127,6 +127,9 @@ $blobstorage_name=$outputs.blobstorage_name.value
 $adlsstorage_name=$outputs.adlsstorage_name.value
 $datafactory_name=$outputs.datafactory_name.value
 $keyvault_name=$outputs.keyvault_name.value
+#sif database name
+$sifdb_name  = if([string]::IsNullOrEmpty($outputs.sifdb_name.value)){"SIFDM"}
+
 $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
@@ -140,6 +143,7 @@ $skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else 
 $skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
 $skipDatabase = if($tout.publish_database) {$false} else {$true}
 $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
+$skipSIF= if($tout.publish_sif_database){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
@@ -311,9 +315,11 @@ else {
     Set-Location $deploymentFolderPath
     Set-Location ".\bin\publish\unzipped\database\"
 
-    # This has been updated to use the Azure CLI cred
-    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name
+    $lake_database_container_name = $tout.synapse_lakedatabase_container_name
 
+    # This has been updated to use the Azure CLI cred
+    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name --SynapseLakeDatabaseContainerName $lake_database_container_name
+    
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
     $SqlInstalled = false
     try { 
@@ -328,6 +334,23 @@ else {
     }
 
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
+ 	#SIFDatabase
+ 	if (!$skipSIF){
+        $databases = @($stagingdb_name, $sampledb_name, $sifdb_name ,$metadatadb_name)
+        Set-Location $deploymentFolderPath
+        Set-Location "..\Database\ADSGoFastDbUp\SIF"
+        dotnet restore
+        dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\' 
+        
+        Set-Location $deploymentFolderPath
+        Set-Location ".\bin\publish\unzipped\database\"
+        
+        dotnet SIF.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name
+    } else {
+        $databases = @($stagingdb_name, $sampledb_name ,$metadatadb_name)
+    }
+ 
+    
     $aadUsers =  @($datafactory_name)
 
     if(!$purview_sp_id -eq 0)
@@ -474,8 +497,28 @@ else
     #    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $adlsstorage_name --auth-mode login
     #    $result = az storage blob upload --file $file --container-name "datalakeraw" --name samples/$file --account-name $blobstorage_name --auth-mode login
     #}
-
-
+    
+    
+    #-----------------------------------------------------------------------------------------------------------
+    #   Deploy SIF 
+    #-----------------------------------------------------------------------------------------------------------
+    
+    if ($skipSIF) {
+        Write-Host "Skipping Deploying SIF files"    
+    }
+    else {
+        Set-Location $deploymentFolderPath
+        Set-Location "../SampleFiles/sif/"
+        Write-Host "Deploying SIF files"
+        if ($tout.is_vnet_isolated -eq $true)
+        {
+            $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
+        }
+        $files = Get-ChildItem -Name
+        foreach ($file in $files) {
+            $result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name synapse/sif/$file --account-name $adlsstorage_name --auth-mode login
+        }
+    }
 
     if ($tout.is_vnet_isolated -eq $true)
     {
