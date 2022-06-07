@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "blob" {
   account_kind             = "StorageV2"
   is_hns_enabled           = "false"
   min_tls_version          = "TLS1_2"
-  allow_blob_public_access = "false"
+  #allow_blob_public_access = "false"
   network_rules {
     default_action = var.is_vnet_isolated ? "Deny" : "Allow"
     bypass         = ["Metrics", "AzureServices"]

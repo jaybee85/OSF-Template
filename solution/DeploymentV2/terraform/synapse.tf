@@ -58,6 +58,9 @@ resource "azurerm_synapse_workspace" "synapse" {
     }
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
 
   tags = local.tags
   lifecycle {

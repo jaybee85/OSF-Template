@@ -75,6 +75,9 @@ output "integration_runtimes" {
 output "is_onprem_datafactory_ir_registered" {
   value = var.is_onprem_datafactory_ir_registered
 }
+output "jumphost_vm_name" {
+  value = local.jumphost_vm_name
+}
 output "publish_web_app" {
   value = var.publish_web_app
 }
