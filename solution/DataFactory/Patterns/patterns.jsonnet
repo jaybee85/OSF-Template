@@ -86,9 +86,9 @@ local Template_REST_API_to_Azure_Storage = function(SourceType, SourceFormat, Ta
     Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","AzureBlobFS","Parquet"),
     Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","AzureBlobFS","Parquet"),
     #Template_SQL_Database_to_Azure_Storage("AzureSqlDWTable","Table","AzureBlobFS","Parquet")   
-    Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
-    Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet"),
-    Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","FileServer","Parquet")
+    #Template_SQL_Database_to_Azure_Storage("AzureSqlTable","Table","FileServer","Parquet"),
+    #Template_SQL_Database_to_Azure_Storage("SqlServerTable","Table","FileServer","Parquet"),
+    #Template_SQL_Database_to_Azure_Storage("OracleServerTable","Table","FileServer","Parquet")
 
 ]
 +
