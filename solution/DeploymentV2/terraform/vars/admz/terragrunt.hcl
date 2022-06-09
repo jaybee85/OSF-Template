@@ -35,7 +35,7 @@ inputs = {
   publish_web_app                       = false
   publish_function_app                  = false
   publish_sample_files                  = true
-  publish_database                      = false
+  publish_metadata_database             = false
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
   deploy_bastion                        = false
@@ -46,6 +46,7 @@ inputs = {
   deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = false
   deploy_h2o-ai                         = false
+  deploy_metadata_database              = false
   is_onprem_datafactory_ir_registered   = false
 
   #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.

@@ -99,8 +99,11 @@ output "deploy_custom_terraform" {
 output "publish_sample_files" {
   value = var.publish_sample_files
 }
-output "publish_database" {
-  value = var.publish_database
+output "publish_metadata_database" {
+  value = var.publish_metadata_database
+}
+output "deploy_metadata_database" {
+  value = var.deploy_metadata_database
 }
 output "configure_networking" {
   value = var.configure_networking

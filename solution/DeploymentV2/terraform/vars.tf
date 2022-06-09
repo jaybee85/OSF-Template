@@ -175,6 +175,13 @@ variable "deploy_sql_server" {
   default     = true
   type        = bool
 }
+
+variable "deploy_metadata_database" {
+  description = "Feature toggle for deploying Metadata Database"
+  default     = true
+  type        = bool
+}
+
 variable "deploy_sql_extend_audit_policy" {
   description = "Feature toggle for deploying the SQL Server Extended Audit policy"
   default     = true
@@ -299,8 +306,8 @@ variable "publish_sample_files" {
   type        = bool
 }
 
-variable "publish_database" {
-  description = "Feature toggle for Publishing Database schema and seeding with data"
+variable "publish_metadata_database" {
+  description = "Feature toggle for Publishing Metadata Database schema and seeding with data"
   default     = true
   type        = bool
 }
