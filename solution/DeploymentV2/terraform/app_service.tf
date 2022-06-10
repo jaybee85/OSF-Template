@@ -15,7 +15,7 @@ resource "azuread_application" "web_reg" {
     }
   }
   app_role {
-    allowed_member_types = ["Administrator"]
+    allowed_member_types = ["User"]
     id                   = random_uuid.app_reg_role_id.result
     description          = "Administer features of the application"
     display_name         = "Administrator"
