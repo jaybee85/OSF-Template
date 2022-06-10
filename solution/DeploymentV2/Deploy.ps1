@@ -250,9 +250,9 @@ else {
         write-host "Adding Admin Role To WebApp"
         $authapp = (az ad app show --id $tout.aad_webreg_id) | ConvertFrom-Json
         $cu = az ad signed-in-user show | ConvertFrom-Json
-        $callinguser = $cu.objectId
+        $callinguser = $cu.id
         $authappid = $authapp.appId
-        $authappobjectid =  (az ad sp show --id $authapp.appId | ConvertFrom-Json).objectId
+        $authappobjectid =  (az ad sp show --id $authapp.appId | ConvertFrom-Json).id
 
         $body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
         $body.resourceId = $authappobjectid
