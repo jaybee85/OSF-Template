@@ -121,8 +121,8 @@ resource "azurerm_function_app" "function_app" {
     AzureWebJobsStorage                                                         = azurerm_storage_account.storage_acccount_security_logs.primary_connection_string
     APPINSIGHTS_INSTRUMENTATIONKEY                                              = azurerm_application_insights.app_insights[0].instrumentation_key
     ApplicationOptions__UseMSI                                                  = true
-    ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseServer = var.publish_database ? "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net" : null
-    ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseName   = var.publish_database ? azurerm_mssql_database.web_db[0].name : null
+    ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseServer = var.deploy_metadata_database ? "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net" : null
+    ApplicationOptions__ServiceConnections__AdsGoFastTaskMetaDataDatabaseName   = var.deploy_metadata_database ? azurerm_mssql_database.web_db[0].name : null
     ApplicationOptions__ServiceConnections__CoreFunctionsURL                    = local.functionapp_url
     ApplicationOptions__ServiceConnections__AppInsightsWorkspaceId              = azurerm_application_insights.app_insights[0].app_id
 

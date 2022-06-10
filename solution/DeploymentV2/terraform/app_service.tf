@@ -83,8 +83,8 @@ resource "azurerm_app_service" "web" {
     WEBSITE_RUN_FROM_PACKAGE = 1
 
     ApplicationOptions__UseMSI                              = true
-    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseServer = var.publish_database ? "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net" : null
-    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = var.publish_database ? azurerm_mssql_database.web_db[0].name : null
+    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseServer = var.deploy_metadata_database ? "${azurerm_mssql_server.sqlserver[0].name}.database.windows.net" : null
+    ApplicationOptions__AdsGoFastTaskMetaDataDatabaseName   = var.deploy_metadata_database ? azurerm_mssql_database.web_db[0].name : null
 
     ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
     ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_resource_id
