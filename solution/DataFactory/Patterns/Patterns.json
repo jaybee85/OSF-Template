@@ -120,36 +120,6 @@
       "TaskTypeId": -3
    },
    {
-      "Folder": "SQL-Database-to-Azure-Storage",
-      "GFPIR": "Azure",
-      "Pipeline": "GPL_AzureSqlTable_NA_FileServer_Parquet",
-      "SourceFormat": "Table",
-      "SourceType": "AzureSqlTable",
-      "TargetFormat": "Parquet",
-      "TargetType": "FileServer",
-      "TaskTypeId": -3
-   },
-   {
-      "Folder": "SQL-Database-to-Azure-Storage",
-      "GFPIR": "Azure",
-      "Pipeline": "GPL_SqlServerTable_NA_FileServer_Parquet",
-      "SourceFormat": "Table",
-      "SourceType": "SqlServerTable",
-      "TargetFormat": "Parquet",
-      "TargetType": "FileServer",
-      "TaskTypeId": -3
-   },
-   {
-      "Folder": "SQL-Database-to-Azure-Storage",
-      "GFPIR": "Azure",
-      "Pipeline": "GPL_OracleServerTable_NA_FileServer_Parquet",
-      "SourceFormat": "Table",
-      "SourceType": "OracleServerTable",
-      "TargetFormat": "Parquet",
-      "TargetType": "FileServer",
-      "TaskTypeId": -3
-   },
-   {
       "Folder": "SQL-Database-to-Azure-Storage-CDC",
       "GFPIR": "Azure",
       "Pipeline": "GPL_AzureSqlTable_NA_AzureBlobStorage_Parquet_CDC",
