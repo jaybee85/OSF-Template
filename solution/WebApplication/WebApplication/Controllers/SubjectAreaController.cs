@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.Graph;
 using WebApplication.Services;
 using WebApplication.Framework;
 using WebApplication.Models;
@@ -16,6 +17,7 @@ using WebApplication.Forms;
 using WebApplication.Models.Forms;
 using WebApplication.Models.Options;
 using WebApplication.Models.Wizards;
+using Site = WebApplication.Models.Site;
 
 namespace WebApplication.Controllers
 {
@@ -377,13 +379,13 @@ namespace WebApplication.Controllers
                         .Where(x => x.UpdatedBy == identity || (x.SubjectAreaForm != null && x.SubjectAreaForm.UpdatedBy == identity))
                       ;
 
-                    var myRoleMaps = _context.SubjectAreaRoleMapsFor(GetUserAdGroupUids(), permittedRoles);
+                    var myRoleMaps = _context.GetEntityRoleMapsFor(EntityRoleMap.SubjectAreaTypeName,GetUserAdGroupUids(), permittedRoles);
 
                     modelDataAll =
                         from md in modelDataAll
                         where
                             myIncompleteForms.Any(x => x.SubjectAreaId == md.SubjectAreaId)
-                            || myRoleMaps.Any(x => x.SubjectAreaId == md.SubjectAreaId)
+                            || myRoleMaps.Any(x => x.EntityId == md.SubjectAreaId && x.EntityTypeName == EntityRoleMap.SubjectAreaTypeName)
                         select md;
                 }
 
@@ -432,7 +434,7 @@ namespace WebApplication.Controllers
             if (subjectArea.SubjectAreaFormId != null && subjectArea.SubjectAreaFormId != 0)
                 subjectArea.SubjectAreaForm = _context.SubjectAreaForm.First(x => x.SubjectAreaFormId == subjectArea.SubjectAreaFormId);
 
-            ViewBag.Roles = _context.SubjectAreaRoleMap.Where(x => x.SubjectAreaId == subjectArea.SubjectAreaId);
+            ViewBag.Roles = _context.EntityRoleMap.Where(x => x.EntityId == subjectArea.SubjectAreaId && x.EntityTypeName == EntityRoleMap.SubjectAreaTypeName);
             return View(subjectArea);
         }
 

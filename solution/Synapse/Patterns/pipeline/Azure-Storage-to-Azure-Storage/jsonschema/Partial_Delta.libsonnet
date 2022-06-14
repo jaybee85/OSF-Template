@@ -28,7 +28,7 @@ function()
                 "inputAttributes": {
                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                 },
-                "infoText": "(required) Path of the folder holding the delta table to be imported."
+                "infoText": "(optional) Path of the folder holding the delta table to be imported."
             }
         },
         "DataFileName": {

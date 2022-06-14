@@ -277,8 +277,8 @@ namespace WebApplication.Controllers
 
                     var filteredTaskGroups =
                         from tg in _context.TaskGroup
-                        join rm in _context.SubjectAreaRoleMapsFor(GetUserAdGroupUids(), requiredRoles)
-                            on tg.SubjectAreaId equals rm.SubjectAreaId
+                        join rm in _context.GetEntityRoleMapsFor(EntityRoleMap.SubjectAreaTypeName, GetUserAdGroupUids(), requiredRoles)
+                            on tg.SubjectAreaId equals rm.EntityId
                         select tg;
 
                     //cross join + distinct to get all possiblities without a GroupJoin (which doesnt' work in EFCore)

@@ -68,6 +68,10 @@ variable "rest_oauth2_linkedservice_name" {
   description = "The name of the linked service for Rest OAuth2"
   type        = string
 }
+variable "oracledb_linkedservice_name" {
+  description = "The name of the linked service for Oracle DB"
+  type        = string
+}
 variable "name_suffix" {
   description = "Used to give resource group deployments unique names for an environment"
   type        = string

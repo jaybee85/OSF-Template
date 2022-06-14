@@ -57,7 +57,7 @@ function Get-SelectionFromUser {
     return $Options.Get($Response - 1)
 } 
 
-$environmentName = Get-SelectionFromUser -Options ('local','staging') -Prompt "Select deployment environment"
+$environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
 
 if ($environmentName -eq "Quit")
 {
@@ -205,7 +205,9 @@ $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
 $PersistEnv = Get-SelectionFromUser -Options ('Yes','No') -Prompt "Do you want to automatically persist the configuration information into your environment file? WARNING this will overwrite your existing hcl file."
 if ($PersistEnv -eq "Quit")
 {
-    Exit
+    ## Changed so the prepare does not close if you do not wish to persist.
+    #this means you can still get a template even if you do not persist
+    ##Exit
 }
 
 if ($PersistEnv -eq "Yes")
@@ -225,7 +227,10 @@ if ($PersistEnv -eq "Yes")
     #------------------------------------------------------------------------------------------------------------
     # Templated Configurations
     #------------------------------------------------------------------------------------------------------------
-
+    if($environmentName -eq "admz")
+    {
+        Exit
+    }
     $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS', 'Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines', 'Lockbox Light Including Vnet & Networking') -Prompt "Select deployment fast start template"
     if ($templateName -eq "Quit")
     {
@@ -234,14 +239,18 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "Full-AllFeatures")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","true")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
@@ -253,14 +262,18 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "Minimal-NoVNET,No Purview, No Synapse")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
@@ -272,14 +285,18 @@ if ($PersistEnv -eq "Yes")
 
     if ($templateName -eq "FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
@@ -291,14 +308,18 @@ if ($PersistEnv -eq "Yes")
 
         if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")
@@ -310,14 +331,18 @@ if ($PersistEnv -eq "Yes")
 
             if ($templateName -eq "Lockbox Light Including Vnet & Networking")
     {
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")

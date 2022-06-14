@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+    <PropertyGroup>
+	    <DefineConstants>TRACE</DefineConstants>
+    </PropertyGroup>
+
+  <ItemGroup>       
+    <None Remove="1-0-0\A-Journaled\001-Schemas.sql" />       
+    <None Remove="1-0-0\A-Journaled\002-Tables.sql" />       
+    <None Remove="1-0-0\A-Journaled\003-Views.sql" />       
+    <None Remove="1-0-0\A-Journaled\004-StoredProcsAndUserDefinedFuncs.sql" />       
+    <None Remove="1-0-0\A-Journaled\005-Users.sql" />       
+    <None Remove="1-0-0\A-Journaled\006-DataInsert.sql" />       
+    <None Remove="1-0-0\A-Journaled\007-ManualUpdate.sql" />
+    <None Remove="1-0-0\A-Journaled\008-CreateMSILogins.sql" />
+    <None Remove="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="1-0-0\A-Journaled\001-Schemas.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\002-Tables.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\003-Views.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\004-StoredProcsAndUserDefinedFuncs.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\005-Users.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\006-DataInsert.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\007-ManualUpdate.sql" />       
+    <EmbeddedResource Include="1-0-0\A-Journaled\008-CreateMSILogins.sql" />    
+    <EmbeddedResource Include="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" />    
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="DbUp" Version="4.5.0" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="1.21.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="1-0-0\B-Always\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
