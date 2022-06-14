@@ -62,7 +62,9 @@
     "valid_source_systems": [
       "-14",
       "-15",
-      "-9"
+      "-9",
+      "-3",
+      "-4"
     ]
   }
 ]') WITH 
@@ -145,7 +147,9 @@
     "valid_source_systems": [
       "-14",
       "-15",
-      "-9"
+      "-9",
+      "-3",
+      "-4"
     ]
   }
 ]') A 
@@ -168,8 +172,7 @@
            select a.IntegrationRuntimeId, a.IntegrationRuntimeName, a.SystemId from #tempIntegrationRuntimeMapping  a
            where a.SystemId != '*'
            ) a
-           
-           
+                    
            Merge dbo.IntegrationRuntimeMapping tgt
            using #tempIntegrationRuntimeMapping2 src on 
            tgt.IntegrationRuntimeName = src.IntegrationRuntimeName and tgt.SystemId = src.SystemId
@@ -177,5 +180,6 @@
            insert 
            ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])
            values 
-           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);
+           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);            
+
            

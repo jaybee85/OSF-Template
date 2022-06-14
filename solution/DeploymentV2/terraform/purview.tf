@@ -6,6 +6,11 @@ resource "azurerm_purview_account" "purview" {
   managed_resource_group_name = local.purview_resource_group_name
   public_network_enabled      = var.is_vnet_isolated == false || var.delay_private_access
   tags                        = local.tags
+
+  identity {
+    type = "SystemAssigned"
+  }
+
   lifecycle {
     ignore_changes = [
       tags

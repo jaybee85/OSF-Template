@@ -61,10 +61,10 @@ output "is_vnet_isolated" {
   value = var.is_vnet_isolated
 }
 output "aad_webreg_id" {
-  value = var.publish_web_app ? azuread_application.web_reg[0].application_id : ""
+  value = var.deploy_web_app ? azuread_application.web_reg[0].application_id : ""
 }
 output "aad_funcreg_id" {
-  value = var.publish_function_app ? azuread_application.function_app_reg[0].application_id : ""
+  value = var.deploy_function_app ? azuread_application.function_app_reg[0].application_id : ""
 }
 output "purview_sp_id" {
   value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].application_id : "0"
@@ -75,17 +75,35 @@ output "integration_runtimes" {
 output "is_onprem_datafactory_ir_registered" {
   value = var.is_onprem_datafactory_ir_registered
 }
+
+output "jumphost_vm_name" {
+  value = local.jumphost_vm_name
+}
+
+output "deploy_web_app" {
+  value = var.deploy_web_app
+}
+output "deploy_function_app" {
+  value = var.deploy_function_app
+}
+  
 output "publish_web_app" {
   value = var.publish_web_app
 }
 output "publish_function_app" {
   value = var.publish_function_app
 }
+output "deploy_custom_terraform" {
+  value = var.deploy_custom_terraform
+}
 output "publish_sample_files" {
   value = var.publish_sample_files
 }
-output "publish_database" {
-  value = var.publish_database
+output "publish_metadata_database" {
+  value = var.publish_metadata_database
+}
+output "deploy_metadata_database" {
+  value = var.deploy_metadata_database
 }
 output "configure_networking" {
   value = var.configure_networking

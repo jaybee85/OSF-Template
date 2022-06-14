@@ -19,7 +19,7 @@ function()
                         "inputAttributes": {
                             "placeholder": "AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                         },
-                        "infoText": "(required) The path of the directory into which you want your extracted data to be written. You can use placeholders such (eg. {yyyy}/{MM}/{dd}/{hh}/). "
+                        "infoText": "(optional) The path of the directory into which you want your extracted data to be written. You can use placeholders such (eg. {yyyy}/{MM}/{dd}/{hh}/). "
                     }
                 },
                 "DataFileName": {

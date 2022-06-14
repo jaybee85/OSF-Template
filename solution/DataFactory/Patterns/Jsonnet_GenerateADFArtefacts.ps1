@@ -94,8 +94,7 @@ $irsql = @"
            select a.IntegrationRuntimeId, a.IntegrationRuntimeName, a.SystemId from #tempIntegrationRuntimeMapping  a
            where a.SystemId != '*'
            ) a
-           
-           
+                    
            Merge dbo.IntegrationRuntimeMapping tgt
            using #tempIntegrationRuntimeMapping2 src on 
            tgt.IntegrationRuntimeName = src.IntegrationRuntimeName and tgt.SystemId = src.SystemId
@@ -103,7 +102,8 @@ $irsql = @"
            insert 
            ([IntegrationRuntimeId], [IntegrationRuntimeName], [SystemId], [ActiveYN])
            values 
-           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);
+           (src.IntegrationRuntimeId, src.IntegrationRuntimeName, cast(src.SystemId as bigint), 1);            
+
            
 "@            
 
@@ -232,7 +232,8 @@ foreach ($patternFolder in $patternFolders)
         $SourceType = ($SourceType -eq "AzureSqlTable") ? "Azure SQL" : $SourceType
         $SourceType = ($SourceType -eq "AzureSqlDWTable") ? "Azure Synapse" : $SourceType
         $SourceType = ($SourceType -eq "SqlServerTable") ? "SQL Server" : $SourceType
-
+        $SourceType = ($SourceType -eq "OracleServerTable") ? "Oracle Server" : $SourceType
+        
         #$SourceFormat = $psplit[2]
         $SourceFormat = ($SourceFormat -eq "DelimitedText") ? "Csv":$SourceFormat
 
@@ -242,7 +243,8 @@ foreach ($patternFolder in $patternFolders)
         $TargetType = ($TargetType -eq "AzureSqlTable") ? "Azure SQL" : $TargetType
         $TargetType = ($TargetType -eq "AzureSqlDWTable") ? "Azure Synapse" : $TargetType
         $TargetType = ($TargetType -eq "SqlServerTable") ? "SQL Server" : $TargetType
-        
+        $TargetType = ($TargetType -eq "OracleServerTable") ? "Oracle Server" : $TargetType
+
         #$TargetFormat = $psplit[4]        
         $TargetFormat = ($TargetFormat -eq "DelimitedText") ? "Csv":$TargetFormat
 

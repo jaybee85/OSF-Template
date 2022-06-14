@@ -42,6 +42,7 @@ function(
         "CustomDefinitions": CustomDefinitions,
         "Purview": Purview,
         "QualifiedIDAssociation": QualifiedIDAssociation,
+        "UseNotebookActivity":UseNotebookActivity,
         "Source":{
             "Type": SourceFormat,                       
             "RelativePath": "",

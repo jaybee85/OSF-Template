@@ -28,7 +28,7 @@ function()
                 "inputAttributes": {
                     "placeholder": "eg. AwSample/dbo/Customer/{yyyy}/{MM}/{dd}/{hh}/"
                 },
-                "infoText": "(required) Path of the file to be imported."
+                "infoText": "(optional) Path of the file to be imported."
             }
         },
         "DataFileName": {

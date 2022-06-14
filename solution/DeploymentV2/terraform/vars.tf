@@ -175,6 +175,13 @@ variable "deploy_sql_server" {
   default     = true
   type        = bool
 }
+
+variable "deploy_metadata_database" {
+  description = "Feature toggle for deploying Metadata Database"
+  default     = true
+  type        = bool
+}
+
 variable "deploy_sql_extend_audit_policy" {
   description = "Feature toggle for deploying the SQL Server Extended Audit policy"
   default     = true
@@ -273,6 +280,11 @@ variable "adf_git_use_pat" {
   default     = true
   type        = bool
 }
+variable "deploy_custom_terraform" {
+  description = "Whether the platform deploys the infrastructure located in the terraform_custom folder"
+  default     = false
+  type        = bool
+}
 #---------------------------------------------------------------
 # Post IAC - Feature Toggles 
 #---------------------------------------------------------------
@@ -294,8 +306,8 @@ variable "publish_sample_files" {
   type        = bool
 }
 
-variable "publish_database" {
-  description = "Feature toggle for Publishing Database schema and seeding with data"
+variable "publish_metadata_database" {
+  description = "Feature toggle for Publishing Metadata Database schema and seeding with data"
   default     = true
   type        = bool
 }
@@ -627,7 +639,11 @@ variable "existing_log_analytics_workspace_id" {
   default     = ""
   type        = string
 }
-
+variable "existing_log_analytics_resource_id" {
+  description = "An existing log analytics resource id for reuse"
+  default     = ""
+  type        = string
+}
 variable "existing_plink_subnet_id" {
   description = "An existing subnet id for reuse for the Private link resources"
   default     = ""

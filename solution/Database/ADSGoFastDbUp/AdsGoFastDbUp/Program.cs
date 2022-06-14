@@ -188,7 +188,7 @@ namespace AdsGoFastDbUp
             builder.WithVariable("SynapseWorkspaceName", o.SynapseWorkspaceName);
             builder.WithVariable("SynapseDatabaseName", o.SynapseDatabaseName);
             builder.WithVariable("SynapseSQLPoolName", o.SynapseSQLPoolName);
-            builder.WithVariable("SynapseSparkPoolName", o.SynapseSQLPoolName);            
+            builder.WithVariable("SynapseSparkPoolName", o.SynapseSparkPoolName);            
             builder.WithVariable("PurviewAccountName", o.PurviewAccountName);
             builder.WithVariable("SynapseLakeDatabaseContainerName", o.SynapseLakeDatabaseContainerName);
 

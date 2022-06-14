@@ -1,0 +1,34 @@
+name: Deploy Terraform State Store ArkahnaWorkflowTest
+
+on:
+  workflow_dispatch:
+  push:
+    branches: $default-branch
+
+jobs:
+    deploy-state-store:
+      name: Deploying state storage
+      env:   
+        # for state storage
+        resource_group_name  : ${{ secrets.ARM_RESOURCE_GROUP_NAME }}     
+        state_storage_account_name  : ${{ secrets.ARM_STORAGE_NAME }}     
+      environment: 
+        name: ArkahnaWorkflowTest
+      runs-on: ubuntu-latest
+      steps:
+      
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+          enable-AzPSSession: true 
+          
+      - name: Deploy State storage
+        id: state-deployment
+        shell: pwsh
+        run: |
+          az storage account create --resource-group ${{ env.resource_group_name }} --name ${{ env.state_storage_account_name }} --sku Standard_LRS --allow-blob-public-access false --https-only true --min-tls-version TLS1_2   
+          az storage container create --name tstate --account-name ${{ env.state_storage_account_name }} --auth-mode login        
+          #accept custom image terms for h20ai - only needs to be done ONCE
+          #https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
+          az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest   

@@ -10,7 +10,7 @@ resource "azurerm_storage_account" "blob" {
   account_kind             = "StorageV2"
   is_hns_enabled           = "false"
   min_tls_version          = "TLS1_2"
-  allow_blob_public_access = "false"
+  #allow_blob_public_access = "false"
   network_rules {
     default_action = var.is_vnet_isolated ? "Deny" : "Allow"
     bypass         = ["Metrics", "AzureServices"]
@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "blob" {
 }
 
 resource "azurerm_role_assignment" "blob_function_app" {
-  count                = var.deploy_storage_account && var.publish_function_app ? 1 : 0
+  count                = var.deploy_storage_account && var.deploy_function_app ? 1 : 0
   scope                = azurerm_storage_account.blob[0].id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
@@ -84,7 +84,7 @@ resource "azurerm_monitor_diagnostic_setting" "blob_storage_diagnostic_logs" {
   name                       = "diagnosticlogs"
   count                      = var.deploy_storage_account ? 1 : 0
   target_resource_id         = "${azurerm_storage_account.blob[0].id}/blobServices/default/"
-  log_analytics_workspace_id = local.log_analytics_workspace_id
+  log_analytics_workspace_id = local.log_analytics_resource_id
   # ignore_changes is here given the bug  https://github.com/terraform-providers/terraform-provider-azurerm/issues/10388
   lifecycle {
     ignore_changes = [log, metric]

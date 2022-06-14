@@ -121,14 +121,27 @@ resource "azurerm_windows_virtual_machine" "selfhostedsqlvm" {
 #---------------------------------------------------------------
 # H2O - AI VM
 #---------------------------------------------------------------
-
-resource "azurerm_public_ip" "h2o-ai" {
-  count               = var.deploy_h2o-ai ? 1 : 0
-  name                = "h2oaiip"
-  location            = var.resource_location
-  allocation_method   = "Dynamic"
-  resource_group_name = var.resource_group_name
+resource "random_password" "h2o-ai" {
+  count       = var.deploy_h2o-ai ? 1 : 0
+  length      = 32
+  min_numeric = 1
+  min_upper   = 1
+  min_lower   = 1
+  min_special = 1
+  special     = true
+  lower       = true
+  number      = true
+  upper       = true
 }
+
+
+#resource "azurerm_public_ip" "h2o-ai" {
+#  count               = var.deploy_h2o-ai ? 1 : 0
+#  name                = "h2oaiip"
+#  location            = var.resource_location
+#  allocation_method   = "Dynamic"
+#  resource_group_name = var.resource_group_name
+#}
 
 resource "azurerm_network_interface" "h2o-ai_nic" {
   count               = var.deploy_h2o-ai ? 1 : 0
@@ -137,10 +150,9 @@ resource "azurerm_network_interface" "h2o-ai_nic" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "external"
+    name                          = "internal"
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = local.vm_subnet_id
-    public_ip_address_id          = azurerm_public_ip.h2o-ai[0].id
   }
 }
 
@@ -153,7 +165,7 @@ resource "azurerm_linux_virtual_machine" "h2o-ai" {
   size                            = "Standard_D4_v3"
   admin_username                  = "adminuser"
   disable_password_authentication = false
-  admin_password                  = "Testyboy5329!?"
+  admin_password                  = random_password.h2o-ai[0].result
   network_interface_ids = [
     azurerm_network_interface.h2o-ai_nic[0].id,
   ]
