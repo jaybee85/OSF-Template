@@ -76,7 +76,7 @@ locals {
       short_name           = "OnPrem"
       is_azure             = false
       is_managed_vnet      = false
-      valid_source_systems = ["-14", "-15", "-9", "-3"]
+      valid_source_systems = ["-14", "-15", "-9", "-3", "-4"]
       valid_pipeline_patterns = [
         {
           Folder       = "Azure-Storage-to-Azure-Storage"
