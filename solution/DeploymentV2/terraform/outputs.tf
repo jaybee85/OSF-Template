@@ -31,11 +31,11 @@ output "datafactory_name" {
 }
 
 output "datafactory_principal_id" {
-  value = var.deploy_data_factory ? azurerm_data_factory.data_factory[0].identity.principal_id : ""
+  value = var.deploy_data_factory ? azurerm_data_factory.data_factory[0].identity[0].principal_id : ""
 }
 
 output "function_app_principal_id" {
-  value = var.deploy_function_app ? azurerm_data_factory.data_factory[0].identity.principal_id : ""
+  value = var.deploy_function_app ? azurerm_function_app.function_app[0].identity[0].principal_id : ""
 }
 output "keyvault_name" {
   value = local.key_vault_name
