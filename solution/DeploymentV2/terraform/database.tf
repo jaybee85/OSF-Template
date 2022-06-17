@@ -84,13 +84,13 @@ resource "azurerm_mssql_database" "staging_db" {
 
 resource "azurerm_private_endpoint" "db_private_endpoint_with_dns" {
   count               = var.is_vnet_isolated ? 1 : 0
-  name                = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink"
+  name                = "${local.sql_server_name}-plink"
   location            = var.resource_location
   resource_group_name = var.resource_group_name
   subnet_id           = local.plink_subnet_id
 
   private_service_connection {
-    name                           = "${var.prefix}-${var.environment_tag}-sql-${lower(var.app_name)}-plink-conn"
+    name                           = "${local.sql_server_name}-plink-conn"
     private_connection_resource_id = azurerm_mssql_server.sqlserver[0].id
     is_manual_connection           = false
     subresource_names              = ["sqlServer"]

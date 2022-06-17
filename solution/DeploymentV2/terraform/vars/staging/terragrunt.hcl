@@ -7,8 +7,8 @@ remote_state {
   config = {
     # You need to update the resource group and storage account here. 
     # You should have created these with the Prepare.ps1 script.
-    resource_group_name  = "LockboxDev02"
-    storage_account_name = "lockboxdev02state"
+    resource_group_name  = "lockbox"
+    storage_account_name = "lockboxnonprodstate"
     container_name       = "tstate"
     key                  = "terraform.tfstate"
   }
@@ -23,7 +23,7 @@ inputs = {
   tenant_id                             = "0fee3d31-b963-4a1c-8f4a-ca367205aa65"           # This is the Azure AD tenant ID
   subscription_id                       = "687fe1ae-a520-4f86-b921-a80664c40f9b"     # The azure subscription id to deploy to
   resource_location                     = "Australia East"        # The location of the resources
-  resource_group_name                   = "LockboxDev02"          # The resource group all resources will be deployed to
+  resource_group_name                   = "lockbox"          # The resource group all resources will be deployed to
   owner_tag                             = "Arkahna"               # Owner tag value for Azure resources
   environment_tag                       = "stg"                   # This is used on Azure tags as well as all resource names
   ip_address                            = "60.227.58.93"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
@@ -46,7 +46,7 @@ inputs = {
   deploy_selfhostedsql                  = false
   is_onprem_datafactory_ir_registered   = false
   deploy_h2o-ai = true
-
+  purview_name = "crdnonprodpuradsnbll"
   synapse_git_toggle_integration = true
   synapse_git_repository_owner = "h-sha"
   synapse_git_repository_name = "testLockbox"
