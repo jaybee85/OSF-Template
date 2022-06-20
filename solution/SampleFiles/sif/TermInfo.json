@@ -8,6 +8,8 @@
     "RelativeDuration": 0.25,
     "TermCode": "Sp2004",
     "Track": "PreK",
-    "TermSpan": "0833"
-  
+    "TermSpan": "0833",
+    "MarkingTerm": "N",
+    "SchedulingTerm": "N",
+    "AttendanceTerm": "N"
 }
