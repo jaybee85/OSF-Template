@@ -1,0 +1,17 @@
+{
+	"name": "369_dm_dimSectionInfo",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW dm.dimSectionInfo\nAS\nSELECT\n\t SectionInfoKey\n    , SchoolCourseInfoKey\n    , SectionInfoId\n    , [Description]\n    , SchoolYear\n    , TermInfoKey\n\t, MediumOfInstructionMain\n    , MediumOfInstructionOther\n    , LanguageOfInstructionMain\n    , LanguageOfInstructionOther\n    , LocationOfInstructionMain\n    , LocationOfInstructionOther\n    , IsSummerSchool\n    , CourseSectionCode\n    , SectionCode\n    , IsCountForAttendance\nFROM\ndbo.vw_SectionInfo\nGO\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

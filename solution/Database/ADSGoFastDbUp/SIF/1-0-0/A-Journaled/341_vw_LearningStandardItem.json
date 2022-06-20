@@ -1,0 +1,17 @@
+{
+	"name": "341_vw_LearningStandardItem",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS dbo.vw_LearningStandardItem\nGO\n\nCREATE VIEW dbo.vw_LearningStandardItem\nAS\nSELECT\n\tRefId  LearningStandardKey\n\t, JSON_VALUE(StandardSettingBody,'$.Country')  StandardSettingBodyCountryCode\n\t, JSON_VALUE(StandardSettingBody,'$.SettingBodyName')  StandardSettingBodyStateBodyName\n\t, JSON_VALUE(StandardSettingBody,'$.StateProvince')  StandardSettingBodyStateProvince\n\t, JSON_VALUE(StandardHierarchyLevel,'$.Number')  StandardHierarchyLevelNumber\n\t, JSON_VALUE(StandardHierarchyLevel,'$.Description')  StandardHierarchyLevelDescription\n\t, JSON_VALUE(PredecessorItems,'$.LearningStandardItemRefId[0]')  PredecessorItemKey\n\t, JSON_VALUE(StatementCodes,'$.StatementCode[0]')  StatementCode\n\t, JSON_VALUE(Statements,'$.Statement[0]')  [Statement]\n\t, JSON_VALUE(YearLevels,'$.YearLevel[0].Code')  Level1\n\t, JSON_VALUE(YearLevels,'$.YearLevel[1].Code')  Level2\n\t, LearningStandardDocumentRefId  LearningStandardDocumentKey\n\t,JSON_VALUE(StandardIdentifier, '$.ACStrandSubjectArea.SubjectArea.Code') SubjectArea\n\t\nFROM\nOPENROWSET(\nBULK 'samples/sif/LearningStandardItem/LearningStandardItem/Snapshot/LearningStandardItem/**',\nDATA_SOURCE ='sif_eds',\nFORMAT='PARQUET'\n    ) WITH(\n\t\n  [RefId] varchar(50),\n  [StandardSettingBody] varchar(255),\n  [StandardHierarchyLevel] varchar(255) ,\n  [PredecessorItems] varchar(255),\n  [StatementCodes] varchar(255) ,\n  [Statement] varchar(255),\n  [Statements] varchar(1000),\n  [YearLevels] varchar(255),\n  [LearningStandardDocumentRefId] varchar(50),\n    [StandardIdentifier] varchar(MAX)\n)\n    AS [result]\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

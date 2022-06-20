@@ -1,0 +1,17 @@
+{
+	"name": "326_dm_factStudentScoreJudgementAgainstStandard",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS [dm].[vw_StudentScoreJudgementAgainstStandard];\nGO\n\nCREATE VIEW [dm].[factStudentScoreJudgementAgainstStandard]\nAS\nSELECT \n\t[StudentScoreJASKey]\n\t, [SchoolYear]\n\t, [TermInfoKey]\n\t, [LocalTermCode]\n    , [StudentKey]\n    , [StudentStateProvinceId]\n    , [StudentLocalId]\n    , [YearLevel]\n    , [TeachingGroupKey]\n    , [ClassLocalId]\n    , [StaffKey]\n    , [StaffLocalId]\n    , [LearningStandardList]\n    , [CurriculumCode]   \n    , [CurriculumNodeCode]\n    , [Score]\n    , [SpecialCircumstanceLocalCode]\n    , [ManagedPathwayLocalCode]\n    , [SchoolInfoRefId]\n    , [SchoolLocalId]\n    , [SchoolCommonwealthId]\nFROM\n    dbo.vw_StudentScoreJudgementAgainstStandard\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "332_dm_factGradingAssignmentScore",
+	"properties": {
+		"content": {
+			"query": "drop view if EXISTS dm.factGradingAssignmentScore\ngo\nCREATE VIEW dm.factGradingAssignmentScore\nAS\nSELECT\n\t GradingAssignmentScoreKey\n    , StudentKey\n    , StudentId\n    , TeachingGroupKey\n    , SchoolInfoKey\n    , GradingAssignmentKey\n    , StaffKey\n\t, cast([DateGraded] as DATE) as DateGraded\n    , cast( ExpectedScore as bit) as ExpectedScore\n    , cast(ScorePoints as int)  as ScorePoints\n    , cast(ScorePercent as NUMERIC (5,2)) as ScorePercent\n    , ScoreLetter\n    , ScoreDescription\n    , TeacherJudgement\n    , MarkInfoKey\n    , AssignmentScoreIteration\nFROM dbo.vw_GradingAssignmentScore",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

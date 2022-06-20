@@ -1,0 +1,17 @@
+{
+	"name": "361_vw_MarkValueInfo",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS [dbo].[vw_MarkValueInfo];\nGO\n\nCREATE VIEW [dbo].[vw_MarkValueInfo]\nAS\nSELECT \n\t[RefId] AS [MarkInfoKey]\n\t, [SchoolInfoRefId] AS [SchoolInfoKey]\n\t, [Name] AS [ValueName]\n    , [PercentageMinimum]\n    , [PercentageMaximum]\n    , [PercentagePassingGrade]\n    , [NumericPrecision]\n    , [NumericScale]\n    , [NumericLow]\n    , [NumericHigh]\n    , [NumericPassingGrade]\n    , [NarrativeMaximumSize]\n    , [Narrative]    \nFROM\nOPENROWSET(\nBULK 'samples/sif/MarkValueInfo/MarkValueInfo/Snapshot/MarkValueInfo/*',\nDATA_SOURCE ='sif_eds',\nFORMAT='PARQUET'\n) \nWITH (\n    [RefId] VARCHAR(36)  ,\t\n    [SchoolInfoRefId] VARCHAR(36)  ,\t\n    [Name] VARCHAR(255)  ,\t\n    [PercentageMinimum] FLOAT  ,\t\n    [PercentageMaximum] FLOAT  ,\t\n    [PercentagePassingGrade] FLOAT  ,\t\n    [NumericPrecision] INT  ,\t\n    [NumericScale] INT  ,\t\n    [NumericLow] INT ,\t\n    [NumericHigh] INT  ,\t\n    [NumericPassingGrade] INT  ,\t\n    [Narrative] VARCHAR(255)  ,\t\n    [NarrativeMaximumSize] INT  \n)\nAS [result]\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "200_external_datasource",
+	"properties": {
+		"content": {
+			"query": "\n\n\nCREATE EXTERNAL DATA SOURCE sif_eds WITH (LOCATION = N'https://sif3devdlsadsh5azadsl.blob.core.windows.net/datalakelanding')\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

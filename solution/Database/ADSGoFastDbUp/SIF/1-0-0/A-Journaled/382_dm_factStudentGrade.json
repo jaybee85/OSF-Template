@@ -1,0 +1,17 @@
+{
+	"name": "382_dm_factStudentGrade",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW dm.factStudentGrade\nAS\nSELECT \n     StudentGradePK\n    , StudentKey\n    , SchoolInfoKey\n    , SchoolYear\n    , TermSpan\n    , GradeLetter\n    , GradeNumeric\n    , GradeNarrative\n    , GradePercentage\n    , Homegroup\n    , YearLevel\n    , TeachingGroupShortName\n    , TeachingGroupKey\n    , StaffKey\n \n    , TermInfoKey\n    , Description\n\n    , TeacherJudgement\nFROM\ndbo.vw_StudentGrade",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

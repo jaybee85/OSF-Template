@@ -1,0 +1,17 @@
+{
+	"name": "342_dm_dimLearningStandardItem",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS  dm.vw_LearningStandardInfo;\nGO\n\nCREATE VIEW  dm.dimLearningStandardInfo\nAS\n\nSELECT \n   \t  LearningStandardKey\n\t,   StandardSettingBodyCountryCode\n\t,   StandardSettingBodyStateBodyName\n\t,   StandardSettingBodyStateProvince\n\t,   StandardHierarchyLevelNumber\n\t,   StandardHierarchyLevelDescription\n\t,   PredecessorItemKey\n\t,   StatementCode\n\t, [Statement]\n\t,  Level1\n\t,   Level2\n\t,   LearningStandardDocumentKey\n\t, SubjectArea \n FROM dbo.vw_LearningStandardItem",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

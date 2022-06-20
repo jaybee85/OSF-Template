@@ -1,0 +1,17 @@
+{
+	"name": "351_vw_GradingAssignment",
+	"properties": {
+		"content": {
+			"query": "\nDROP VIEW IF EXISTS [dbo].[vw_GradingAssignment];\nGO\n\nCREATE VIEW [dbo].[vw_GradingAssignment]\nAS\nSELECT \n    [RefId] AS [GradingAssignmentKey]\n    ,[TeachingGroupRefId] AS [TeachingGroupKey]\n    ,[StudentPersonalRefIdList] AS [StudentKey]\n    ,[SchoolInfoRefId] AS [SchoolInfoKey]\n    ,[GradingCategory] AS [GradingCategory]\n    ,[Description] AS [Description]\n    ,[PointsPossible]\n    ,[CreateDate]\n    ,[DueDate]\n    ,[Weight]\n    ,[DetailedDescriptionURL]\nFROM\n    OPENROWSET(\n    BULK 'samples/sif/GradingAssignment/GradingAssignment/Snapshot/GradingAssignment/**',\n    DATA_SOURCE ='sif_eds',\n    FORMAT='PARQUET'\n) \nWITH (\n    [RefId] VARCHAR(36) ,\n    [TeachingGroupRefId] VARCHAR(36) ,\n    [StudentPersonalRefIdList] VARCHAR(36),\n    [SchoolInfoRefId] VARCHAR(36) ,\n    [GradingCategory] VARCHAR(255) ,\n    [Description] VARCHAR (1000) ,\n    [PointsPossible] VARCHAR(8000) ,\n    [CreateDate] VARCHAR (8000) ,\n    [DueDate] VARCHAR(8000) ,\n    [Weight] VARCHAR(18) ,\n    [DetailedDescriptionURL] VARCHAR(1000) \n) AS [result];\n\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

@@ -1,0 +1,17 @@
+{
+	"name": "352_dm_dimGradingInfo",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS [dm].[dimGradingInfo];\nGO\n\nCREATE VIEW [dm].[dimGradingInfo]\nAS\n\nSELECT \n     [GradingAssignmentKey]\n    ,[TeachingGroupKey]\n    ,[StudentKey]\n    ,[SchoolInfoKey]\n    ,[GradingCategory]\n    ,[Description]\n    ,[PointsPossible]\n    , cast([CreateDate] as date) as [CreateDate]     \n    , cast([DueDate] as date) as [DueDate]        --need to cast as datetime\n    ,[Weight]         --need to cast as numeric\n    ,[DetailedDescriptionURL]\n FROM [dbo].[vw_GradingAssignment]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

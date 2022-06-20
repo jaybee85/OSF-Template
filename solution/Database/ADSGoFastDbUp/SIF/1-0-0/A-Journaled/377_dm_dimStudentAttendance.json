@@ -1,0 +1,17 @@
+{
+	"name": "377_dm_dimStudentAttendance",
+	"properties": {
+		"content": {
+			"query": "USE [sif2];\nGO\n\nDROP VIEW IF EXISTS dm.dimStudentAttendance;\nGO\n\nCREATE VIEW dm.dimStudentAttendance\nAS\nSELECT\n    [RefId] AS StudentDailyAttendanceKey,\n    [StudentPersonalRefId] AS StudentKey,\n    [SchoolInfoRefId] AS SchoolInfoKey,\n    [Date] AS CalendarDate,\n    [SchoolYear] AS SchoolYear,\n    [DayValue] AS DayValue,\n    [AttendanceCode] AS AttendanceCode,\n    [AttendanceStatus] AS AttendanceStatus,\n    [TimeIn] AS TimeIn,\n    [TimeOut] AS [TimeOut],\n    [AttendanceNote] AS AttendanceNote\nFROM\n    [dbo].[vw_StudentDailyAttendance]\n\n-- SELECT * FROM dm.dimStudentAttendance    ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

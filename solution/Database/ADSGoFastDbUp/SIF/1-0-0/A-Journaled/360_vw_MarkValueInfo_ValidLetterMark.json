@@ -1,0 +1,17 @@
+{
+	"name": "360_vw_MarkValueInfo_ValidLetterMark",
+	"properties": {
+		"content": {
+			"query": "USE [sif2];\nGO\n\nDROP VIEW IF EXISTS dbo.vw_MarkValueInfo_ValidLetterMark;\nGO\n\nCREATE VIEW [dbo].[vw_MarkValueInfo_ValidLetterMark]\nAS\nSELECT \n\tMVI.[RefId] AS [MarkInfoKey],\n\tLML.Code,\n    LML.NumericEquivalent\nFROM\nOPENROWSET(\nBULK 'samples/sif/MarkValueInfo/MarkValueInfo/Snapshot/MarkValueInfo/*',\nDATA_SOURCE ='sif_eds',\nFORMAT='PARQUET'\n) \nWITH (\n    [RefId] VARCHAR(50),\t\n    [ValidLetterMarkList] VARCHAR(MAX) \n)\nAS MVI\nCROSS APPLY OPENJSON(MVI.ValidLetterMarkList,'$.ValidLetterMark')\n        WITH (\n        Code VARCHAR(3),\n        NumericEquivalent INT,\n        id int '$.sql:identity()'\n    ) as LML\n;\n\n\n-- SELECT * FROM dbo.vw_MarkValueInfo_ValidLetterMark",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

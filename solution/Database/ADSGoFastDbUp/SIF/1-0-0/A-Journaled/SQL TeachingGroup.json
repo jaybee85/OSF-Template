@@ -1,0 +1,17 @@
+{
+	"name": "SQL TeachingGroup",
+	"properties": {
+		"content": {
+			"query": "    SELECT\n        TG.RefId,\n        -- TG.SchoolYear,\n        -- TG.LocalId,\n        -- TG.ShortName,\n        -- TG.LongName,\n        -- TG.[Set],\n        -- TG.Block,\n        -- TG.CurriculumLevel,\n        StudentList.StudentPersonalRefId,\n        StudentList.StudentLocalId,\n        JSON_VALUE(StudentList.[Name], '$.Type') AS NameType,\n        JSON_VALUE(StudentList.[Name], '$.FamilyName') AS FamilyName,\n        JSON_VALUE(StudentList.[Name], '$.GivenName') AS GivenName,\n        TeacherList.Association,\n        TeacherList.StaffPersonalRefId,\n        TeacherList.StaffLocalId,\n        PeriodList.DayId,\n        PeriodList.PeriodId\n    FROM OPENROWSET(\n    BULK 'samples/sif/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**',\n    DATA_SOURCE ='sif_eds',\n    FORMAT='PARQUET'\n    ) AS TG\n    CROSS APPLY OPENJSON(TG.StudentList,'$.TeachingGroupStudent')\n            WITH (\n            StudentPersonalRefId VARCHAR(50),\n            StudentLocalId VARCHAR(50),\n            [Name] NVARCHAR(MAX) '$.Name' AS JSON,\n            id int '$.sql:identity()'\n        ) as StudentList\n    CROSS APPLY OPENJSON(TG.TeacherList,'$.TeachingGroupTeacher')\n            WITH (\n            Association VARCHAR(100),\n            StaffPersonalRefId VARCHAR(50),\n            StaffLocalId  VARCHAR(50),\n            [Name] NVARCHAR(MAX) '$.Name' AS JSON,\n            id int '$.sql:identity()'\n        ) as TeacherList\n    CROSS APPLY OPENJSON(TG.TeachingGroupPeriodList,'$.TeachingGroupPeriod')\n            WITH (\n            DayId VARCHAR(1),\n            PeriodId INT,\n            id int '$.sql:identity()'\n        ) as PeriodList\n\n\n\n\n\n\n    -- OUTER APPLY OPENJSON(StudentList.Name)\n    --     WITH (\n    --         Type VARCHAR(20) '$.Name',\n    --         FamilyName VARCHAR(100) '$.FamilyName',\n    --         GivenName VARCHAR(100) '$.GivenName'\n    --     ) as StudentListName        \n\n;\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

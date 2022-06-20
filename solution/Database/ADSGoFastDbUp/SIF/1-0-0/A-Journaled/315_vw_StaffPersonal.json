@@ -1,0 +1,17 @@
+{
+	"name": "315_vw_StaffPersonal",
+	"properties": {
+		"content": {
+			"query": "CREATE VIEW  [dbo].[vw_StaffPersonal]\nAS\nSELECT\n\t*\nFROM\nOPENROWSET(\nBULK 'samples/sif/StaffPersonal/StaffPersonal/Snapshot/StaffPersonal/**',\nDATA_SOURCE ='sif_eds',\nFORMAT='PARQUET'\n) WITH (\n\t[RefId] varchar(50)\n\t, [LocalId] varchar(50)\n\t, [StateProvinceId] varchar(20)\n\t, [FirstName] varchar(255) '$.PersonInfo.Name.GivenName'\t\n\t, [LastName] varchar(255) '$.PersonInfo.Name.FamilyName'\t\n\t, [MiddleName] varchar(255)\n\t, [OtherNames] varchar(max)  '$.PersonInfo.OtherNames'\n\t, [EmploymentStatus] varchar(1)\n\t, [Title] varchar(50)\n\t, [IndigenousStatus] varchar(255)  '$.PersonInfo.Demographics.IndigenousStatus'\n\t, [Sex] varchar(10) '$.PersonInfo.Demographics.Sex'\n\t, [BirthDate] varchar(255) '$.PersonInfo.Demographics.BirthDate'\n\t, [DateOfDeath] varchar(255) '$.PersonInfo.Demographics.DateOfDeath'\n\t, [Deceased] varchar(255) '$.PersonInfo.Demographics.Deceased'\n\t, [BirthDateVerification] varchar(50) '$.PersonInfo.Demographics.BirthDateVerification'\n\t, [PlaceOfBirth] varchar(50) '$.PersonInfo.Demographics.PlaceOfBirth'\n\t, [StateOfBirth] varchar(50) '$.PersonInfo.Demographics.StateOfBirth'\n\t, [CountryOfBirth ] varchar(50) '$.PersonInfo.Demographics.CountryOfBirth'\n\t, [CountryOfCitizenship ] varchar(max) '$.PersonInfo.Demographics.CountriesOfCitizenship'\n\t, [CountryOfResidency] varchar(max) '$.PersonInfo.Demographics.CountriesOfResidency'\n\t, [CountryArrivalDate] varchar(255) '$.PersonInfo.Demographics.CountryArrivalDate'\n\t, [AustralianCitizenshipStatus] varchar(255) '$.PersonInfo.Demographics.AustralianCitizenshipStatus'\n\t, [EnglishProficiency] varchar(255) '$.PersonInfo.Demographics.EnglishProficiency.Code'\n\t, [LanguageList] varchar(max)  '$.PersonInfo.Demographics.LanguageList'\n\t, [DwellingArrangement] varchar(50) '$.PersonInfo.Demographics.DwellingArrangement.Code'\n\t, [Religion] varchar(50)  '$.PersonInfo.Demographics.Religion.Code'\n\t, [ReligiousEventList] varchar(max)  '$.PersonInfo.Demographics.ReligiousEventList'\n\t, [ReligiousRegion] varchar(50) '$.PersonInfo.Demographics.ReligiousRegion'\n\t, [PermanentResident] varchar(255) '$.PersonInfo.Demographics.PermanentResident'\n\t, [VisaSubClass] varchar(255) '$.PersonInfo.Demographics.VisaSubClass'\n\t, [VisaStatisticalCode] varchar(5) '$.PersonInfo.Demographics.VisaStatisticalCode'\n\t, [EmailList] varchar(max) '$.PersonInfo.EmailList'\n\t, [PhoneNumberList] varchar(max) '$.PersonInfo.PhoneNumberList'\n\t, [AddressList] varchar(max)  '$.PersonInfo.AddressList'\n)\nAS [SP]",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

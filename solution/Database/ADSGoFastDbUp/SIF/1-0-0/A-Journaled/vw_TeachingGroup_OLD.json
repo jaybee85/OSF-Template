@@ -1,0 +1,17 @@
+{
+	"name": "vw_TeachingGroup_OLD",
+	"properties": {
+		"content": {
+			"query": "\nCREATE VIEW dbo.vw_TeachingGroup_old\nAS\nSELECT DISTINCT\n    RefId,\n    SchoolYear,\n    LocalId,\n    ShortName,\n    LongName,\n    GroupType,\n    CAST([Set] AS INT) [Set],\n    CAST(Block AS INT) Block,\n    CurriculumLevel,\n    SchoolInfoRefId,\n    SchoolLocalId,\n    SchoolCourseInfoRefId,\n    SchoolCourseLocalId,\n    TimeTableSubjectRefId,\n    TimeTableSubjectLocalId,\n    KeyLearningArea,\n    Semester,\n    MinClassSize,\n    MaxClassSize    \nFROM OPENROWSET(\nBULK 'samples/sif/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**',\nDATA_SOURCE ='sif_eds',\nFORMAT='PARQUET'\n) \nWITH(\n    RefId VARCHAR(50),\n    SchoolYear VARCHAR(4),\n    LocalId VARCHAR(50),\n    ShortName VARCHAR(20),\n    LongName VARCHAR(255),\n    GroupType  VARCHAR(255),\n    [Set] VARCHAR(4),\n    Block VARCHAR(4),\n    CurriculumLevel VARCHAR(255),\n    SchoolInfoRefId VARCHAR(50),\n    SchoolLocalId VARCHAR(50),\n    SchoolCourseInfoRefId VARCHAR(50),\n    SchoolCourseLocalId VARCHAR(50),\n    TimeTableSubjectRefId VARCHAR(50),\n    TimeTableSubjectLocalId VARCHAR(50),\n    KeyLearningArea VARCHAR(20),\n    Semester VARCHAR(50),\n    MinClassSize VARCHAR(4),\n    MaxClassSize VARCHAR(4)\n) AS TG    \n\n-- SELECT * FROM dbo.vw_TeachingGroup    \n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

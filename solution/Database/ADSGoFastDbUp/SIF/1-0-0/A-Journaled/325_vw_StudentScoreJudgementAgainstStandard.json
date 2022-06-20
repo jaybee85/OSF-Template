@@ -1,0 +1,17 @@
+{
+	"name": "325_vw_StudentScoreJudgementAgainstStandard",
+	"properties": {
+		"content": {
+			"query": "DROP VIEW IF EXISTS [dbo].[vw_StudentScoreJudgementAgainstStandard];\nGO\n\nCREATE VIEW [dbo].[vw_StudentScoreJudgementAgainstStandard]\nAS\nSELECT \n\t[RefId] AS [StudentScoreJASKey]\n\t, [SchoolYear]\n\t, [TermInfoRefId] AS [TermInfoKey]\n\t, [LocalTermCode]\n    , [StudentPersonalRefId] AS [StudentKey]\n    , [StudentStateProvinceId]\n    , [StudentLocalId]\n    , JSON_VALUE([YearLevel], '$.Code') AS [YearLevel]\n    , [TeachingGroupRefId] AS [TeachingGroupKey]\n    , [ClassLocalId]\n    , [StaffPersonalRefId] AS [StaffKey]\n    , [StaffLocalId]\n    , [LearningStandardList]\n    , [CurriculumCode]   \n    , [CurriculumNodeCode]\n    , [Score]\n    , [SpecialCircumstanceLocalCode]\n    , [ManagedPathwayLocalCode]\n    , [SchoolInfoRefId]\n    , [SchoolLocalId]\n    , [SchoolCommonwealthId]\nFROM\n    OPENROWSET(\n    BULK 'samples/sif/StudentScoreJudgementAgainstStandard/StudentScoreJudgementAgainstStandard/Snapshot/StudentScoreJudgementAgainstStandard/*',\n    DATA_SOURCE ='sif_eds',\n    FORMAT='PARQUET'\n) \nWITH (\n    [RefId] VARCHAR(36) ,\t\n    [SchoolYear] VARCHAR(8000) ,\t\n    [TermInfoRefId] VARCHAR(36) ,\t\n    [LocalTermCode] VARCHAR(255) ,\n    [StudentPersonalRefId] VARCHAR(36) ,\t\n    [StudentStateProvinceId] VARCHAR(255) ,\t\n    [StudentLocalId] VARCHAR(255) ,\t\n    [YearLevel] VARCHAR(100) ,\t\n    [TeachingGroupRefId] VARCHAR(36) ,\t\n    [ClassLocalId] VARCHAR(255) ,\t\n    [StaffPersonalRefId] VARCHAR(36) ,\t\n    [StaffLocalId] VARCHAR(255) ,\t\n    [LearningStandardList] VARCHAR(1000) ,\t\n    [CurriculumCode] VARCHAR(255) ,\t\n    [CurriculumNodeCode] VARCHAR(255) ,\t\n    [Score] VARCHAR(255) ,\t\n    [SpecialCircumstanceLocalCode] VARCHAR(255) ,\t\n    [ManagedPathwayLocalCode] VARCHAR(255) ,\t\n    [SchoolInfoRefId] VARCHAR(255) ,\t\n    [SchoolLocalId] VARCHAR(255) ,\t\n    [SchoolCommonwealthId] VARCHAR(255) \n) \nAS [result];\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

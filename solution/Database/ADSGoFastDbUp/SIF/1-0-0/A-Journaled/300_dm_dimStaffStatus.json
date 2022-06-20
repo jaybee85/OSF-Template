@@ -1,0 +1,17 @@
+{
+	"name": "300_dm_dimStaffStatus",
+	"properties": {
+		"content": {
+			"query": "USE [sif2];\nGO\n\nDROP VIEW IF EXISTS [dm].[dimStaffStatus];\nGO\n\nCREATE VIEW [dm].[dimStaffStatus]\nAS\nSELECT \n\t'A' AS [StaffStatus],\n\t'Active' AS [StaffStatusDescription]\nUNION ALL\nSELECT\t\n\t'I' AS [StaffStatus],\n\t'Inactive' AS  [StaffStatusDescription]\nUNION ALL\nSELECT\t\n\t'N' AS [StaffStatus],\n\t'No Longer Employed' AS [StaffStatusDescription]\nUNION ALL\nSELECT\t\n\t'O' AS [StaffStatus], \n\t'On Leave' AS  [StaffStatusDescription]\nUNION ALL\nSELECT\t\n\t'S' AS [StaffStatus], \n\t'Suspended' AS [StaffStatusDescription]\n\nUNION ALL\nSELECT\t\n\t'X' AS [StaffStatus], \n\t'Other - Details Not Available' AS [StaffStatusDescription]\n\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sif2",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
