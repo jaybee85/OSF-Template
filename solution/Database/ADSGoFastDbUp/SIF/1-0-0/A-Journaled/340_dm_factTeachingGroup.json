@@ -1,5 +1,5 @@
 {
-	"name": "dm_factTeachingGroup",
+	"name": "340_dm_factTeachingGroup",
 	"properties": {
 		"content": {
 			"query": "\nDROP VIEW IF EXISTS dm.factTeachingGroup;\nGO\n\nCREATE VIEW dm.factTeachingGroup\nAS\nSELECT DISTINCT\n    RefId AS TeachingGroupKey,\n    StudentPersonalRefId AS StudentKey,\n    StaffPersonalRefId AS StaffKey,\n    SchoolInfoRefId AS SchoolKey,    \n    SchoolCourseInfoRefId AS SchoolCourseKey,       \n    TimeTableSubjectRefId AS TimeTableSubjectKey,  \n    Association AS StaffPersonalAssociation,     \n    LocalId AS TeachingGroupId,      \n    SchoolLocalId,\n    SchoolCourseLocalId,\n    TimeTableSubjectLocalId,        \n    DayId,\n    PeriodId,    \n    SchoolYear,\n    ShortName,\n    LongName,\n    GroupType,\n    [Set],\n    Block,\n    CurriculumLevel,\n    KeyLearningArea,\n    Semester,\n    MinClassSize,\n    MaxClassSize \n FROM [dbo].[vw_TeachingGroup] \n;\n\n-- SELECT * FROM dm.factTeachingGroup    \n",
