@@ -171,6 +171,12 @@ output "synapse_git_use_pat" {
 output "synapse_git_pat" {
   value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
 }
+output "synapse_git_user_name" {
+  value = var.synapse_git_user_name
+}
+output "synapse_git_email_address" {
+  value = var.synapse_git_email_address
+}
 output "synapse_git_github_host_url" {
   value = var.synapse_git_toggle_integration ? var.synapse_git_github_host_url : ""
 }
@@ -197,6 +203,12 @@ output "adf_git_use_pat" {
 }
 output "adf_git_pat" {
   value = var.adf_git_use_pat ? var.adf_git_pat : ""
+}
+output "adf_git_user_name" {
+  value = var.adf_git_user_name
+}
+output "adf_git_email_address" {
+  value = var.adf_git_email_address
 }
 output "adf_git_host_url" {
   value = var.adf_git_toggle_integration ? var.adf_git_host_url : ""

@@ -101,7 +101,7 @@ Write-Host "$($tout.synapse_git_repository_branch_name)"
 $FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)"
 $FolderPath = RemoveRepetitiveChars -string $FolderPath -char "/"
 if ($tout.synapse_git_use_pat) {
-    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($tout.synapse_git_pat)"))
     git -c http.extraHeader="Authorization: Basic $B64Pat" clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)"
 } else {
     git clone -b "$($tout.synapse_git_repository_branch_name)" "$($GitURL)" "$($FolderPath)" 
@@ -164,11 +164,21 @@ foreach($child in $children.GetEnumerator()) {
 
 #Commit and remove
 Set-Location "$($Directory)/$($tout.synapse_git_repository_name)"
+
+#Set user ID / Email
+
+if ($tout.synapse_git_user_name -ne "") {
+    git config user.name "$($tout.synapse_git_user_name)"
+}
+if ($tout.synapse_git_email_address -ne "") {
+    git config user.name "$($tout.synapse_git_email_address)"
+}
+
 git add .
 Write-Host ("Committing to " + $tout.adf_git_repository_name + "/" + $tout.adf_git_repository_branch_name)
 git commit -m "Deployment commit" --quiet
 if ($tout.synapse_git_use_pat) {
-    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes(":$($tout.synapse_git_pat)"))
+    $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($tout.synapse_git_pat)"))
     git -c http.extraHeader="Authorization: Basic $B64Pat" push origin $($tout.synapse_git_repository_branch_name)
 } else {
     git push origin $($tout.synapse_git_repository_branch_name)
