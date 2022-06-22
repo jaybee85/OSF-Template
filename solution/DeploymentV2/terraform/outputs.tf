@@ -30,6 +30,13 @@ output "datafactory_name" {
   value = local.data_factory_name
 }
 
+output "datafactory_principal_id" {
+  value = var.deploy_data_factory ? azurerm_data_factory.data_factory[0].identity[0].principal_id : ""
+}
+
+output "function_app_principal_id" {
+  value = var.deploy_function_app ? azurerm_function_app.function_app[0].identity[0].principal_id : ""
+}
 output "keyvault_name" {
   value = local.key_vault_name
 }
@@ -164,6 +171,12 @@ output "synapse_git_use_pat" {
 output "synapse_git_pat" {
   value = var.synapse_git_use_pat ? var.synapse_git_pat : ""
 }
+output "synapse_git_user_name" {
+  value = var.synapse_git_user_name
+}
+output "synapse_git_email_address" {
+  value = var.synapse_git_email_address
+}
 output "synapse_git_github_host_url" {
   value = var.synapse_git_toggle_integration ? var.synapse_git_github_host_url : ""
 }
@@ -190,6 +203,12 @@ output "adf_git_use_pat" {
 }
 output "adf_git_pat" {
   value = var.adf_git_use_pat ? var.adf_git_pat : ""
+}
+output "adf_git_user_name" {
+  value = var.adf_git_user_name
+}
+output "adf_git_email_address" {
+  value = var.adf_git_email_address
 }
 output "adf_git_host_url" {
   value = var.adf_git_toggle_integration ? var.adf_git_host_url : ""

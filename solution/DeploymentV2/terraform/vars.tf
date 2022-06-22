@@ -553,7 +553,17 @@ variable "synapse_git_pat" {
   default     = ""
   type        = string
 }
+variable "synapse_git_user_name" {
+  description = "The user name to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 
+variable "synapse_git_email_address" {
+  description = "The email address to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 variable "adf_git_repository_owner" {
   description = "The owner of the github repository to be used for adf. Eg. for the repository https://github.com/contoso/ads, the owner is contoso"
   default     = ""
@@ -588,7 +598,17 @@ variable "adf_git_pat" {
   default     = ""
   type        = string
 }
+variable "adf_git_user_name" {
+  description = "The user name to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 
+variable "adf_git_email_address" {
+  description = "The email address to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 #---------------------------------------------------------------
 # Scale settings
 #---------------------------------------------------------------
