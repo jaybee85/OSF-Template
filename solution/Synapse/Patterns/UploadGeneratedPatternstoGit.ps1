@@ -175,7 +175,7 @@ if ($tout.synapse_git_email_address -ne "") {
 }
 
 git add .
-Write-Host ("Committing to " + $tout.adf_git_repository_name + "/" + $tout.adf_git_repository_branch_name)
+Write-Host ("Committing to " + $tout.synapse_git_repository_name + "/" + $tout.synapse_git_repository_branch_name)
 git commit -m "Deployment commit" --quiet
 if ($tout.synapse_git_use_pat) {
     $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($tout.synapse_git_pat)"))
