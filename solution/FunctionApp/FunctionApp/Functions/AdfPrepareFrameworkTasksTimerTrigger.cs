@@ -221,7 +221,7 @@ namespace FunctionApp.Functions
 
                     // Perform some transformations on the task master Json to support parameterisable Json templates
                     JObject root = new JObject();
-                    if (row.SourceSystemType == "ADLS" || row.SourceSystemType == "Azure Blob")
+                    if (row.SourceSystemType == "ADLS" || row.SourceSystemType == "Azure Blob" || row.SourceSystemType == "FileServer")
                     {
                         if (taskMasterJson?.Source.Type.ToString() != "Filelist")
                         {
@@ -229,7 +229,7 @@ namespace FunctionApp.Functions
                         }
                     }
 
-                    if (row.TargetSystemType == "ADLS" || row.TargetSystemType == "Azure Blob")
+                    if (row.TargetSystemType == "ADLS" || row.TargetSystemType == "Azure Blob" || row.TargetSystemType == "FileServer")
                     {
                         if (JObject.Parse(row.TaskMasterJSON)["Target"]["RelativePath"] != null)
                         {
