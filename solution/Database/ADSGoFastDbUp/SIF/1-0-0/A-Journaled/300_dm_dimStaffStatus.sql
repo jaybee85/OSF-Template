@@ -1,6 +1,4 @@
-USE [sif2];
-GO
-
+-------------------  SIF datatype with Staffstatus
 DROP VIEW IF EXISTS [dm].[dimStaffStatus];
 GO
 

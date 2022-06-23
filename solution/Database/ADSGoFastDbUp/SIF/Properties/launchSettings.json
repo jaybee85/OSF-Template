@@ -1,7 +1,12 @@
 {
   "profiles": {
     "AdsGoFastDbUp": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "RelativePath": "samples/sif/",
+        "sifdb_name": "sifdm",
+        "lake_database_container_name": "https://sif3devdlsadsh5azadsl.blob.core.windows.net/datalakelanding"
+      }
     }
   }
 }

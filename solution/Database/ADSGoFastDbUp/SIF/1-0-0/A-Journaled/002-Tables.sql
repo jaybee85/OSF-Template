@@ -1,32 +1,48 @@
 PRINT N'Creating Table [dm].[DimCalendarDate]...';
 
-CREATE TABLE [dm].[DimCalendarDate]
+CREATE TABLE [dm].[dimCalendar]
 (
-	[CalendarDateKey] bigint identity(1, 1) not null,
-	[CalendarDate] date NULL,
-	[CalendarSummaryKey] bigint NOT NULL,
-	[SchoolInfoKey] bigint NOT NULL,
-	[SchoolYear] varchar(4) NULL,
-	[CalendarDateType] varchar(4) NULL,
-	[CalendarDateNumber] int NULL,
-	[StudentCountsTowardAttendance] varchar(3) NULL,
-	[StudentAttendanceValue] numeric(4,1) NULL,
-	[TeacherCountsTowardAttendance] numeric(4,1) NULL,
-	[TeacherAttendanceValue] numeric(4,1) NULL,
-	[AdministratorCountsTowardAttendance] numeric(4,1) NULL,
-	[AdministratorAttendanceValue] numeric(4,1) NULL,
-	[Status] varchar(50) null,
-	[ValidFrom]       DATETIME2 (7)  NOT NULL,
-    [ValidTo]         DATETIME2 (7)  NULL,
-    [IsActive]        BIT NOT NULL,
-    [CreatedOn]       DATETIME2 (7)  NOT NULL,
-    [CreatedBy]       VARCHAR (256)  NOT NULL,
-    [UpdatedOn]       DATETIME2 (7)  NULL,
-    [UpdatedBy]       VARCHAR (256)   NOT NULL,
-    [HashKey] varbinary(32) null
+
+  DATEKEY       BIGINT,
+  CALENDAR_DATE         date,
+  CALENDAR_DAY_OF_MONTH   BIGINT,
+  CALENDAR_DAY_SUFFIX     CHAR (4),
+  CALENDAR_DAY_OF_WEEK     INT,
+  CALENDAR_DAY_OF_WEEK_NAME VARCHAR(10),
+  WEEKEND_IND   BIT,
+  HOLIDAY_IND   BIT,
+  DOW_IN_MONTH   INT,
+  CALENDAR_DAY_OF_YEAR   INT,
+  CALENDAR_WEEK_OF_MONTH  INT,
+  CALENDAR_WEEK_OF_YEAR    INT,
+  CALENDAR_MONTH_NUMBER      INT,
+  CALENDAR_MONTH_NAME       VARCHAR(10),
+  CALENDAR_QUARTER    CHAR(2),
+  CALENDAR_QUARTER_NAME  VARCHAR(6),
+  CALENDAR_YEAR                 INT,
+  CALENDAR_YYYYMM               CHAR(6),
+  CALENDAR_MONYYYY				CHAR(7),
+  CALENDAR_YEAR_START_DATE      DATETIME,
+  CALENDAR_YEAR_END_DATE        DATETIME,
+  MONTH_START_DATE			    DATETIME,
+  MONTH_END_DATE			    DATETIME,
+  NEXT_MONTH_START_DATE			DATETIME,
+  CALENDAR_DAYS_IN_MONTH		INT,
+  BUSINESS_DAYS_IN_MONTH		INT,
+  FINANCIAL_DAY_OF_YEAR			INT,
+  FINANCIAL_WEEK_OF_YEAR		INT,
+  FINANCIAL_MONTH_NUMBER		INT,
+  FINANCIAL_YYYYMM				CHAR(6),
+  FINANCIAL_QUARTER				CHAR(2),
+  FINANCIAL_QUARTER_NAME		VARCHAR(6),
+  FINANCIAL_YEAR				 INT,
+  FINANCIAL_YEAR_YYYY_YY		VARCHAR(6) ,
+  FINANCIAL_YEAR_START_DATE	  DATETIME,
+  FINANCIAL_YEAR_END_DATE		DATETIME
 );
 GO
 
+/* new implementations uses views
 PRINT N'Creating Table [dm].[DimStudentAttendance]...';
 
 
@@ -1693,8 +1709,7 @@ GO
 
 ALTER TABLE [dm].[DimStudentAttendance] ADD CONSTRAINT [DF__DimStudentAttendance__Updat__3BCADD1B] DEFAULT (getdate()) FOR [UpdatedBy]
 GO
-
--- DimCalendarDate
+*/
 
 
 

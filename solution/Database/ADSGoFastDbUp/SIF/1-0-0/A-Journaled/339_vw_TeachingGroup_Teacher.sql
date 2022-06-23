@@ -1,5 +1,4 @@
-USE [sif2];
-GO
+
 
 DROP VIEW IF EXISTS dbo.vw_TeachingGroup_Teacher;
 GO

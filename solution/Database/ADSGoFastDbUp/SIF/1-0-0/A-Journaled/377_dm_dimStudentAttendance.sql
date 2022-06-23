@@ -1,5 +1,3 @@
-USE [sif2];
-GO
 
 DROP VIEW IF EXISTS dm.dimStudentAttendance;
 GO

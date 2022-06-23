@@ -1,4 +1,4 @@
-CREATE VIEW dm.dimCalendarDate
+CREATE VIEW dm.CalendarDate
 as
 SELECT 
 CalendarDateRefId	CalendarDateKey

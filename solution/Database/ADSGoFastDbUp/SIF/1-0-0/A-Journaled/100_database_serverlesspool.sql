@@ -9,4 +9,4 @@ Create a separate database and reference the synchronized tables by using three-
 */
 
 
-create DATABASE sif2
+CREATE DATABASE [$(sifdb_name)]

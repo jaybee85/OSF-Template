@@ -1,5 +1,4 @@
-USE [sif2];
-GO
+-------------------  SIF datatype with SexCode
 
 DROP VIEW IF EXISTS [dm].[dimSexCode];
 GO
