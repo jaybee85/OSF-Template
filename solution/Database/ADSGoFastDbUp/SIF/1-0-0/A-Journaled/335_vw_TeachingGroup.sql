@@ -1,7 +1,7 @@
-DROP VIEW IF EXISTS dbo.vw_TeachingGroup;
-GO
+declare @path varchar(200)= 'samples/sif'+'/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**';
 
-CREATE VIEW dbo.vw_TeachingGroup
+declare @statement varchar(max) =
+'CREATE VIEW dbo.vw_TeachingGroup
 AS
 SELECT DISTINCT
     TG.RefId,
@@ -29,9 +29,9 @@ SELECT DISTINCT
     TG.MinClassSize,
     TG.MaxClassSize     
 FROM OPENROWSET(
-BULK 'samples/sif/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH(
     RefId VARCHAR(50),
@@ -57,26 +57,30 @@ WITH(
     TeacherList VARCHAR(MAX),
     TeachingGroupPeriodList VARCHAR(MAX)
 ) AS TG    
-CROSS APPLY OPENJSON(TG.StudentList,'$.TeachingGroupStudent')
+CROSS APPLY OPENJSON(TG.StudentList,''$.TeachingGroupStudent'')
         WITH (
         StudentPersonalRefId VARCHAR(50),
         StudentLocalId VARCHAR(50),
-        [Name] NVARCHAR(MAX) '$.Name' AS JSON,
-        id int '$.sql:identity()'
+        [Name] NVARCHAR(MAX) ''$.Name'' AS JSON,
+        id int               ''$.sql:identity()''
     ) AS StudentList
-CROSS APPLY OPENJSON(TG.TeacherList,'$.TeachingGroupTeacher')
+CROSS APPLY OPENJSON(TG.TeacherList,''$.TeachingGroupTeacher'')
         WITH (
         Association VARCHAR(100),
         StaffPersonalRefId VARCHAR(50),
         StaffLocalId  VARCHAR(50),
-        [Name] NVARCHAR(MAX) '$.Name' AS JSON,
-        id int '$.sql:identity()'
+        [Name] NVARCHAR(MAX) ''$.Name'' AS JSON,
+        id int ''$.sql:identity()''
     ) AS TeacherList
-CROSS APPLY OPENJSON(TG.TeachingGroupPeriodList,'$.TeachingGroupPeriod')
+CROSS APPLY OPENJSON(TG.TeachingGroupPeriodList,''$.TeachingGroupPeriod'')
         WITH (
         DayId VARCHAR(1),
         PeriodId INT,
-        id int '$.sql:identity()'
-    ) AS PeriodList
+        id int ''$.sql:identity()''
+    ) AS PeriodList';
 
--- SELECT * FROM dbo.vw_TeachingGroup    
+execute (@statement)
+;
+GO
+
+
