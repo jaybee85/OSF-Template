@@ -1,6 +1,7 @@
-drop view if EXISTS dbo.vw_StudentGrade
-go
+declare @path varchar(200)= 'samples/sif'+'/StudentGrade/StudentGrade/Snapshot/StudentGrade/**';
 
+declare @statement varchar(max) =
+'
 CREATE VIEW dbo.vw_StudentGrade
 AS
 SELECT 
@@ -9,10 +10,10 @@ SELECT
     , SchoolInfoRefId SchoolInfoKey
     , SchoolYear
     , TermSpan
-    , JSON_VALUE(Grade,'$.Letter')  GradeLetter
-    , JSON_VALUE(Grade,'$.Numeric')  GradeNumeric
-    , JSON_VALUE(Grade,'$.Narrative')  GradeNarrative
-    , JSON_VALUE(Grade,'$.Percentage')  GradePercentage
+    , JSON_VALUE(Grade,''$.Letter'')  GradeLetter
+    , JSON_VALUE(Grade,''$.Numeric'')  GradeNumeric
+    , JSON_VALUE(Grade,''$.Narrative'')  GradeNarrative
+    , JSON_VALUE(Grade,''$.Percentage'')  GradePercentage
     , Homegroup
     , YearLevel
     , TeachingGroupShortName
@@ -26,10 +27,10 @@ SELECT
     , GradingScoreList
     , TeacherJudgement
 FROM
-OPENROWSET(
-BULK 'samples/sif/StudentGrade/StudentGrade/Snapshot/StudentGrade/**',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
+    OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH (
 RefId VARCHAR(36) ,
@@ -52,4 +53,8 @@ LearningStandardList   VARCHAR(max),
 GradingScoreList VARCHAR(max),
 TeacherJudgement VARCHAR(255)
 
-) AS [result];
+) AS [result]';
+
+execute (@statement)
+;
+GO

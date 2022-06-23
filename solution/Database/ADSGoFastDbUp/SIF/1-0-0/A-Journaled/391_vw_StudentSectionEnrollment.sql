@@ -1,7 +1,7 @@
+declare @path varchar(200)='samples/sif'+'/StudentSectionEnrollment/StudentSectionEnrollment' ;
 
-DROP VIEW IF EXISTS dbo.vw_StudentSectionEnrollment;
-GO
-
+declare @statement varchar(max) =
+'
 CREATE VIEW dbo.vw_StudentSectionEnrollment 
 AS
 SELECT
@@ -11,19 +11,19 @@ SELECT
     SchoolYear,    
     EntryDate,
     ExitDate,
-    JSON_VALUE(SIF_ExtendedElements, '$.Status') [Status],
-    JSON_VALUE(SIF_ExtendedElements, '$.ValidFrom') ValidFrom,
-    JSON_VALUE(SIF_ExtendedElements, '$.ValidTo') ValidTo,
-    JSON_VALUE(SIF_ExtendedElements, '$.IsActive') IsActive,
-    JSON_VALUE(SIF_ExtendedElements, '$.CreatedOn') CreatedOn,
-    JSON_VALUE(SIF_ExtendedElements, '$.CreatedBy') CreatedBy,
-    JSON_VALUE(SIF_ExtendedElements, '$.UpdatedOn') UpdatedOn,
-    JSON_VALUE(SIF_ExtendedElements, '$.UpdatedBy') UpdatedBy,
-    JSON_VALUE(SIF_ExtendedElements, '$.HashKey') HashKey
-FROM OPENROWSET(
-BULK 'samples/sif/StudentSectionEnrollment/StudentSectionEnrollment',
-DATA_SOURCE = 'sif_eds',
-FORMAT = 'DELTA'
+    JSON_VALUE(SIF_ExtendedElements, ''$.Status'') [Status],
+    JSON_VALUE(SIF_ExtendedElements, ''$.ValidFrom'') ValidFrom,
+    JSON_VALUE(SIF_ExtendedElements, ''$.ValidTo'') ValidTo,
+    JSON_VALUE(SIF_ExtendedElements, ''$.IsActive'') IsActive,
+    JSON_VALUE(SIF_ExtendedElements, ''$.CreatedOn'') CreatedOn,
+    JSON_VALUE(SIF_ExtendedElements, ''$.CreatedBy'') CreatedBy,
+    JSON_VALUE(SIF_ExtendedElements, ''$.UpdatedOn'') UpdatedOn,
+    JSON_VALUE(SIF_ExtendedElements, ''$.UpdatedBy'') UpdatedBy,
+    JSON_VALUE(SIF_ExtendedElements, ''$.HashKey'') HashKey
+FROM     OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH (
     EntryDate VARCHAR(10),
@@ -42,6 +42,8 @@ WITH (
     UpdatedOn VARCHAR (10),
     UpdatedBy VARCHAR(255),
     HashKey VARCHAR(50)
-) AS [result];
+) AS [result]';
 
--- SELECT * FROM dbo.vw_StudentSectionEnrollment;
+execute (@statement)
+;
+GO

@@ -1,8 +1,7 @@
+declare @path varchar(200)= 'samples/sif/'+'GradingAssignment/GradingAssignment/Snapshot/GradingAssignment/**';
 
-DROP VIEW IF EXISTS [dbo].[vw_GradingAssignment];
-GO
-
-CREATE VIEW [dbo].[vw_GradingAssignment]
+declare @statement varchar(max) =
+'CREATE VIEW [dbo].[vw_GradingAssignment]
 AS
 SELECT 
     [RefId] AS [GradingAssignmentKey]
@@ -18,9 +17,9 @@ SELECT
     ,[DetailedDescriptionURL]
 FROM
     OPENROWSET(
-    BULK 'samples/sif/GradingAssignment/GradingAssignment/Snapshot/GradingAssignment/**',
-    DATA_SOURCE ='sif_eds',
-    FORMAT='PARQUET'
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH (
     [RefId] VARCHAR(36) ,
@@ -34,6 +33,9 @@ WITH (
     [DueDate] VARCHAR(8000) ,
     [Weight] VARCHAR(18) ,
     [DetailedDescriptionURL] VARCHAR(1000) 
-) AS [result];
+) AS [result]'
+;
 
+execute (@statement)
+;
 GO

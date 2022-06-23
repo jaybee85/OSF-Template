@@ -1,7 +1,7 @@
+declare @path varchar(200)= 'samples/sif/MarkValueInfo/MarkValueInfo/Snapshot/MarkValueInfo/*';
 
-DROP VIEW IF EXISTS dbo.vw_MarkValueInfo_ValidLetterMark;
-GO
-
+declare @statement varchar(max) =
+'
 CREATE VIEW [dbo].[vw_MarkValueInfo_ValidLetterMark]
 AS
 SELECT 
@@ -9,23 +9,23 @@ SELECT
 	LML.Code,
     LML.NumericEquivalent
 FROM
-OPENROWSET(
-BULK 'samples/sif/MarkValueInfo/MarkValueInfo/Snapshot/MarkValueInfo/*',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
+    OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH (
     [RefId] VARCHAR(50),	
     [ValidLetterMarkList] VARCHAR(MAX) 
 )
 AS MVI
-CROSS APPLY OPENJSON(MVI.ValidLetterMarkList,'$.ValidLetterMark')
+CROSS APPLY OPENJSON(MVI.ValidLetterMarkList,''$.ValidLetterMark'')
         WITH (
         Code VARCHAR(3),
         NumericEquivalent INT,
-        id int '$.sql:identity()'
-    ) as LML
+        id int ''$.sql:identity()''
+    ) as LML'
 ;
 
+execute (@statement);
 
--- SELECT * FROM dbo.vw_MarkValueInfo_ValidLetterMark
