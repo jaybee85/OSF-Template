@@ -1,0 +1,2374 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1460px" preserveAspectRatio="none" style="width:1779px;height:1460px;background:#FFFFFF;" version="1.1" viewBox="0 0 1779 1460" width="1779px" zoomAndPan="magnify"><defs/><g><!--MD5=[6f2a0a11da862631a2b8c86f1686e84b]
+cluster SystemAzure--><g id="cluster_SystemAzure"><rect height="1302.5" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="1015" x="225" y="7"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="694.5" y="23.5332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="45" x="710" y="43.2188">Azure</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="51" x="707" y="59.1914">[System]</text></g><!--MD5=[32aa6752af6519072926709591bc4165]
+cluster AdsGoFastCore--><g id="cluster_AdsGoFastCore"><rect height="1199.5" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="483" x="249" y="86"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="452.5" y="102.5332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="134" x="423.5" y="122.2188">Ads Go Fast Core</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="63" x="459" y="138.1914">[Container]</text></g><!--MD5=[3c5f7497e87bb810638d9390166cfe10]
+cluster Logs--><g id="cluster_Logs"><rect height="230" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="435" x="273" y="1031.5"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="452.5" y="1048.0332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="39" x="471" y="1067.7188">Logs</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="63" x="459" y="1083.6914">[Container]</text></g><!--MD5=[2f62f4706de347b6f9cc6e1896d1e1ce]
+cluster SystemOnPrem--><g id="cluster_SystemOnPrem"><rect height="208" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="339" x="1264" y="405"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="1395.5" y="421.5332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="180" x="1343.5" y="441.2188">Enterprise - On Premise</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="51" x="1408" y="457.1914">[System]</text></g><!--MD5=[9f6de2b7c2387d606bb2a8d4257836de]
+cluster SystemPowerPlatform--><g id="cluster_SystemPowerPlatform"><rect height="233" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="194" x="7" y="713.5"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="66" y="730.0332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="117" x="45.5" y="749.7188">Power Platform</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="51" x="78.5" y="765.6914">[System]</text></g><!--MD5=[3572139dd9dbd6256b845a221b2a274f]
+cluster SystemOtherClouds--><g id="cluster_SystemOtherClouds"><rect height="222" rx="2.5" ry="2.5" style="stroke:#444444;stroke-width:1.0;fill:none;stroke-dasharray:7.0,7.0;" width="146" x="1627" y="398"/><text fill="#444444" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="76" x="1662" y="414.5332">«boundary»</text><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="101" x="1649.5" y="434.2188">Other Clouds</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="51" x="1674.5" y="450.1914">[System]</text></g><!--MD5=[b75120cd14b1d35a264bd946e9ecb18a]
+entity AzureAdls--><g id="elem_AzureAdls"><rect fill="#FFFFFF" height="126.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="185" x="1038.5" y="1110.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="165" x="1048.5" y="1135.0332">«AzureDataLakeStorage»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="76" x="1093" y="1154.7188">Data Lake</text><image height="54" width="70" x="1096" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAAA2CAIAAAD1bngSAAABm0lEQVR42u2aPaoCQRCE+5JewSt4Ba9gaKqpmWBqYmD6BAMRA0HFQMRA8BU2DMsiusFWDdNs0yYG6mf3VP/s2Ottk/WpP932xn9UH8x2+KIX2QwvfBMbpgbGRcLfpuRxHy2PRCRBvn307fnBQsrCQ02/bEjw+eZKQcLn5vLV/sZSvGCWM0qkmOc8S637cHGIhuQVLxoSymw0JHiH1CF1SGUiQZFQE6ntv2VpVeMgeXVHlIIkHiJzuT+BhAIfBCm1lew5WoSUFkOYzyMoXnUmF2xvTHCEqpsTwYLNNKrtBnkovtS6aicDXtlISbWTgbBspIYLIGC3K+sspOYr4tabCWOrtjhEFKSaan83xukyXqPw00gCaLlSDpEkNXtGVe0vxmsjrPWsa7LOp84Xira19tAlwghYzUaGaquRaoIh6IlMNvxphiUFUiq7PNWWIlWzTna7wjRZx94K6ZA86zSTn2gE1Ki2DslHJvEFJS4SYDSTefcwpkSkXDe9iEj640u/JMBu9cWO4m5eCmOknzcrlsYYgOGtQh0/Pk1l/9i5X1BsuFb2AAAAAElFTkSuQmCC" y="1158.2344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="15" x="1123.5" y="1224.6914">[...]</text></g><!--MD5=[bf19f8211ee7a8239f9fe04846e1c57b]
+entity AzureDataFactory--><g id="elem_AzureDataFactory"><rect fill="#FFFFFF" height="140.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="192" x="811" y="1103.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="131" x="841.5" y="1128.0332">«AzureDataFactory»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="172" x="821" y="1147.7188">ADF Execution Engine</text><image height="68" width="70" x="872" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABECAIAAACzhNTYAAAB9ElEQVR42u3aMUoEMRTG8bmkV/AKXsErWNpqayfY2ljYKmwhYiGoWIhYCLt/eRBCkslmMuiL8C2v2J2dmX2/vElmEnbazrw2r1+X9+8n18/HV09HFw+H5xvi4PSOsPds5Nuz25ebx4+3z+/tMK8p/kBmpEiulvqi4CiOHcE2hZpQjSRLSsFGEiWoGEFBCHvPRqqU+znEF/ZDIrkkJzJelJaVN1yZBGdwI8UecqJca05H3cLZqKcPKW5aElp5OsoVV9uHlHSelU0bd0i6mT8ppEJPaL8CqQwNQYXjgo9FStKym08Y9Gyss+GOmiSMf0BaEyKJJJJIIokkkkgiiSSSSL6k7vUCpq1M5MYiMUG2ZdAODzNrfnQsEh6bI3eQmGvbjw5Eoo3jBerulbZRSKGNO0jJIvEQpGStt51kHS851p+UL8Q3khjciotTnqRiGzeSbHArhhspDG4dpKTjDUGau2ZaSPHgNgqp3sZ1UrHjOZPywa2RVOl4nqSWNi6S9l6oDqT2Ns5JlcHNjVQf3Oqklo7316RF10xC2ju4OZBWNkffgeOSukMkkUQSSSSRSrf/PLp3W7Tnr5A4aXG2kzwQzE2K8ue6ucXX4hOTSCKJJJJIq8L+wJxHcifhY3G3fNXF/sWZR3GaqKcHkUQSSSSRRBJpMWkHavoTM6BjLRUAAAAASUVORK5CYII=" y="1151.2344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="15" x="899.5" y="1231.6914">[...]</text></g><!--MD5=[10e6a6ecb66305ca26dc725c85cff76f]
+entity AzureDataFactoryIR1--><g id="elem_AzureDataFactoryIR1"><rect fill="#FFFFFF" height="140.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="170" x="1054" y="787"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="131" x="1073.5" y="811.5332">«AzureDataFactory»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="150" x="1064" y="831.2188">Integration Runtime</text><image height="68" width="70" x="1104" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABECAIAAACzhNTYAAAB9ElEQVR42u3aMUoEMRTG8bmkV/AKXsErWNpqayfY2ljYKmwhYiGoWIhYCLt/eRBCkslmMuiL8C2v2J2dmX2/vElmEnbazrw2r1+X9+8n18/HV09HFw+H5xvi4PSOsPds5Nuz25ebx4+3z+/tMK8p/kBmpEiulvqi4CiOHcE2hZpQjSRLSsFGEiWoGEFBCHvPRqqU+znEF/ZDIrkkJzJelJaVN1yZBGdwI8UecqJca05H3cLZqKcPKW5aElp5OsoVV9uHlHSelU0bd0i6mT8ppEJPaL8CqQwNQYXjgo9FStKym08Y9Gyss+GOmiSMf0BaEyKJJJJIIokkkkgiiSSSSL6k7vUCpq1M5MYiMUG2ZdAODzNrfnQsEh6bI3eQmGvbjw5Eoo3jBerulbZRSKGNO0jJIvEQpGStt51kHS851p+UL8Q3khjciotTnqRiGzeSbHArhhspDG4dpKTjDUGau2ZaSPHgNgqp3sZ1UrHjOZPywa2RVOl4nqSWNi6S9l6oDqT2Ns5JlcHNjVQf3Oqklo7316RF10xC2ju4OZBWNkffgeOSukMkkUQSSSSRSrf/PLp3W7Tnr5A4aXG2kzwQzE2K8ue6ucXX4hOTSCKJJJJIq8L+wJxHcifhY3G3fNXF/sWZR3GaqKcHkUQSSSSRRBJpMWkHavoTM6BjLRUAAAAASUVORK5CYII=" y="834.7344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="15" x="1131.5" y="915.1914">[...]</text></g><!--MD5=[ece344fa765e5488a83ddd2a70bae604]
+entity FunctionApp--><g id="elem_FunctionApp"><rect fill="#FFFFFF" height="192.1719" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="191" x="300.5" y="761.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="108" x="342" y="786.0332">«AzureFunction»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="167" x="310.5" y="805.7188">Go Fast Orchestration</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="68" x="362" y="825.8438">Function</text><image height="64" width="70" x="361" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABACAIAAAAoFZbOAAADD0lEQVR42s2aPUoEQRCF65JewSt4Ba9gaKqpmWBqYmCqsIGIgaBiIGIgrAUDY1P9V/WqenuWSTSYqa/79evqN0P7Yb/d+8/R+QN8HV/uPr5/gefSOKSz21cP0t3zF/bcgUg8zDDP6c0L/NxRSDzGh5fcWCQeZhjp+vHT82jamuo8khuIxMM8RXIDkWDVOSU3ComHeZbkRiFd3L/NktwopJOrp1mS8yJxv5Nv8FgTJCRXvPNwpNXTRDWA6oTk1j2aZ/twSKlHc0HO7UhILh0UjIqcqz8tCGiCcpfjGUvHhamstkEeHv7T03rXXI7/mXqMlYpC5gdTXcPlBJXJ4rVIYgbyaqyq626sMBWF8FibIH19gor9PQBJwyPWdOzGaqUiUwNaK8XUegO9XFpGl4r8PNYmiG2Gb6W50tIFVaO9ID8P3Hpb15uSijSj3pY+1npj601DRV3r7HaQWOsNr7euXZGTx5k/YhbfpqKaEWt4/PkjHEo2qMjD48wfa37obDjJw+PJH4uX9TRRpCKYJ1x1WPyQU5HwK/28h6sOjh/EFkqiLP194fwxPPESYiFRmUnNrJP8YlsXV7dJF6d9a6ojTsGUyxE4Gzv1CedBOc+/iYu5C6TquqJp9TZ4VulSbZFFUbVdEU62ajyyIcqphqoODo0bPIW2NXau2qrDXLvNUz5cBK6rhtdhrt3lqZ6XoqhqqsMkx3Oe3pCLtJ1q/VSNvRhwbSVPJ3tw7lc11QGurefpJ0R5b6GkqgUSgIuaeFQ5HkZVVB2whIRndnm0aasYJw1VMZCwurYYFw2PIRM3URVVZ3VtwaNfgQTvCQ2qXHXWXhvmMb9fUlLlqtPE8yE8yFvAYj/fVp2pJsEDNE3Iu1oRV4gZyHcz083TGcaaQPCN+hpi5osEfnsnRgSOIlyfcvD8iIpF+Ar32hv6Hi9VnXIbCf8FI61rzJOQbAgpVZ3JtbeLtJ5H4IRkc0iL6kISi00gLS1z4Gd185EW1QV+VjcfiednlmsPQVqOHvtt/ChKdRNdewjSXNeOR5puceL3B+UCjU0w5KlgAAAAAElFTkSuQmCC" y="829.3594"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="52" x="370" y="905.8164">[C#/.NET]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="394" y="922.9863"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="394" y="940.5957"> </text></g><!--MD5=[ed05b4b62fc63017e649bfedb1046e43]
+entity WebApp--><g id="elem_WebApp"><rect fill="#FFFFFF" height="178.0469" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="207" x="334.5" y="157"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="108" x="384" y="181.5332">«AzureWebApp»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="187" x="344.5" y="201.2188">Go Fast Web Application</text><image height="70" width="70" x="403" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAAFHElEQVR42s1bsaoVQQzNT/oL/oK/4C9Y2mprJ9jaWNgqvELEQlCxELEQ9EBgGE8y2Uyye32P5cHbt3c2J3NykszMlT9n/3z7+fvNxx/P3n558vrz41efHr348PD53bjwJy7cxwMv33+/+/rrdAPkrIEUBsx98PTd1gWcQAh48MW9gAQ3AwnM2kXiXsAG1/w3SAADC05BYucNbropJDAkA0YjB08iqMY1oivzcbDxFpBimsFc2A3yHAYGHlDSxt7BgLsSIltMW0W/Tgh+lxUMExJIyxYPJf9Kd3JUlGdsHeGCRzDJq+lKjpyC5L4G1qs6kXebqALhSbLgGJI7+swEAKAJBMhTEp3lRQaV7OJxBwVCm2FOKURcA+LcJVt4AkLbh3dRwVOwFUE7X7hjaR/PleTjB3dimyxP4o/AOzAayA/TlE1lQcTKSt928aibrXFWf2FKoYayqFYRKxnL8gLqxvQoAvDfQl07m5FxtAOJPql/biVNt2brgJnjk+5YqZBYu9Tl+L1bNBFh9CpMC+ZBOyuYDvrYXGyDSmLK1SCpuhCMJCrAAIZYpmnCiX4SCPH85yk1W4BKyZmMWOv6WdNlfo68NUfFVo0zfJFBVWv7KEDmHCirKdLGO4jCVapx1cWW7f0edjVRMkyxkj9DypT3roK7qHCn35CTtI6IEnce9X3zzcPqZoWHwnIQr9NcuRM1NEyC/81uiEUvxjNQ2TakiYpmQnO6qEFuCUP3V1SxuXXVwNmCvYmK4kWpJLZCHeJGGuhyL4NnjkO3tujE1axqSiWhzEW1oFUVXUzVdL7q3mNzLUs7qMhHGEdo7kjZSNm3ipqAVG6ZUkNl7Zc4YDK8qq1+2Aw21+xl3cMcCIWstaNQbub7WVtZF1BROMmsDa5S70La7c+tDMIkrbi1itd6PBBGGkFmiLZP3CVeoWYPFgmTnTUZKTOhrYMLrCtHeaZHdFGRHMhsNH2A8lLyyqxSbK0Z0mUZSHb+A4kUvCZ3nXXJDCTrsggSPW0D97pwyvPcuuz+QqKkmR9/A9LtiVcbnyEFipd024nyUBM9Vrw4LxUW3zrNQoYXtnTkvDQHjKUpOeBS1uWdSNu4VAAJQbQ+Xm3L5buJs3Iu9cWDgdQccXNhq8ZCwu1s8dtlQD3rMTw1u1g3pynSxBbnzTJvd2eguUFIqQzWitvrJjO6+m/1QJ+EmR1kYin8KG6vG2d0YMAn50kIVoj04YtQUQmv4iSrdZYgNbm+j09FzCGqG5iZ4x4ZBtoYFpdd42VWxON6J5BH7eRowbCTl1dmi2v6eFNhqzzZz/VT2WpNTtwcN/ahrNczAp08N9Wsoey+BENyV80zG4mFM0f22o0ru3Xkb5mRBa5Nu+/OLJePvYz84GTY7GgJBMTdtOsvxuf3Z3VzVhOGHnbTJV4KB4pGiQlq10SvhlQ4AEF1qdjIdnegO+pUW5ZZpTgyz0qLbDUt5TQS60Re9O2uafbAzYp+ZUjuWRwK7hEnq/Ovlj5uuylJv+pwnWS/Ol8XZ4UhDPk9AQnGsl7pn7LTo13jQH9Gtd2mMMj40j+5demPa0NMFimMeGl7d6j+h+SX2rw3D9yXi6nMS1MnkFdLHFf0rcHx4+S7pEmD3RNNsSSu6vctqks/WJvf2dEDufEJsK0BpRa1cb4fGj3OBY70Mpeeh98nqa1bFL/sgzdtLVkWatNylLa+klU7SxwXe/FO8+WQkvGQ/+7cKcbI6RKcjBOFcXiMtfDzF9rdpsgeZO/DAAAAAElFTkSuQmCC" y="204.7344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="52" x="412" y="287.1914">[C#/.NET]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="436" y="304.3613"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="436" y="321.9707"> </text></g><!--MD5=[df3128774f2cb70765e7988930fcb058]
+entity GoFastDB--><g id="elem_GoFastDB"><rect fill="#FFFFFF" height="198.1719" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="156" x="265" y="437.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="134" x="276" y="462.0332">«AzureSqlDatabase»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="132" x="275" y="481.7188">Go Fast Metadata</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="84" x="301" y="501.8438">Repository</text><image height="70" width="65" x="310.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAABGCAIAAAAckG6qAAADu0lEQVR42u1aMa4UMQz1JbkCV+AKXIGSFlo6JFoaClqQfoEQBRIgCoQokJYnPelhxUmY3TjJR5pR9LV/Z3biZzv2sxO7HLu+/fz95uOPl++/P3v75fGrT49efMB4+PwO48HTd/zAL3H3yevPeAzP3339dZl/WeceJIDQkImC3jaIjZDWYYDKMSUmvlnuDh6YKN04VkiPOfpCyFVgIg76mAZu4YG+9aCgRLP8xdCSHtJArNuUx1XUsiq+TLGJcaY4B7QIpeJWlrboooVxOEsChggANpm0/qr6GoRh0E10ntnRMC6VEaey+Dqgmo0Bakq0vFWDT+IyqKadqLgR41srhk5KSXD9aszFIknGoPdmhSboPgalFRj8BPBX4IEoByGJXx2kKtMxtFgQGZ6GiOANL9yAIX2cGE4MJ4YTw4nhxHBiODH8pxjYjOGIZE6tmlYzhizwCBGcggEyRZrt+zexeoztKd0CD1+NoVUZqoHQqbl9k2EnBt9lYNeVpSnlK+Zje69a8u/EUO2jsO7BB19qy3m86STxfcFAL/dI/K2W9fZjqDbe6EgeQyGZtw8x78TQWrXA5ieD4lvI7wUG9WZii67VdZQvycc2x1YJVwiNf73fA2S0m77ciQFTstXOzYdC8TF7+GyIz8JftJs0FmFodRr5QKdT5vvBrWe2YfDNxmpDNjaDd2JQf7LD58T5/PIo+JI4XzGKXcbBXdME7g05qqu8/xPInbVDkFM/FFsWUGqLbFN6LXQAhh1EzklnYNur+u1pNZCvNNg/7myEev7i94sLv63y/511nCIyY0N/v137Fd5umzEIACPvwZ1pFVX9na4VGLRaCODa7UMGiU7wXYGBKqdGb9t0ZWpvWWM6BmqdQoxs4JL5V4sCS2+x8HBHEU+4OgfzAEPwRAz+KAwAAAbpHcvx8QMNKleiN1qiw9Bnqplh3AgKa3FxJ2CgYnSYhBGdFqARmL+ytujj4Q4bOecmC5Cxphzk+WfGiG5p8fjHVYFfRU/B/OZdcUlY9QTIwUF9kOGsAcAQV8RoO8iWW0ZoxYp5F4ltiaHPlvsUiPTzsvCq26HVtT7iSNUWwew1Xa6HmEd8Z7IzmNEWO5J6Ir73ZZ1I3D+2Q0KRkoCvyg++TqIL2JEMr4oxstHFdogsEDDsBo8kFyKriytsPQwbfAvNetl3YXYbd9BOX3BNurCUt2w0RQ6GfqG4IF1YyrtUtk893BsvJmXLeh0P37J4WMD/xCrw13LfKyavw6OThq9ebIaGlE3nDd8j/AO+SkWCZXXe4QAAAABJRU5ErkJggg==" y="505.3594"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="37" x="324.5" y="587.8164">[TSQL]</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="341" y="604.9863"> </text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="4" x="341" y="622.5957"> </text></g><!--MD5=[fab0244d4f9f8fdbdee81eaad4cd03bc]
+entity AzureLogAnalytics--><g id="elem_AzureLogAnalytics"><rect fill="#FFFFFF" height="142.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="153" x="538.5" y="1102.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="133" x="548.5" y="1127.0332">«AzureLogAnalytics»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="102" x="564" y="1146.7188">General Logs</text><image height="70" width="70" x="580" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACHUlEQVR42u2aPUpEMRDHcziv4BW8glfwCFrarq2dYGtjsZWgsIWIhbCKhYiFoH8JhJB9L5tMMnmZOMs0+3bz8ctM/vPyYX6afzavX6v19uT6+fjy8ehic3h+7wxf8fzs5uX26ePt85tWv2lGgl6iu+j3weldooEQ8LlsLZCuHt7RuXSSwDAKGAv4tgskwGS5JW4AS/EYFxLaxlSpBeN7DMO0ABKmTUXnTLqrKVLdYIsox1wQVkaCQHHD7KUydf3TjCdCZaTMnzmDCLEgYagW4bGGaK+PxKHXWcruJ2IjcQpNTqqaSAuGnG8uBZsBXBQ4qhSp5H20ukF1S5FQBV+2cZauPVbQDbQi0XaTGt61uOd6lpxiVqOTBkvIRNt9BWYSBjKSFQk6EvzWQJFzkRA4dCQ+rStBQlk6Ep50iIS5QEeKt2T1lBaiJUgwOlI8IylSH0hxBf93SOglanM2AhJq86tSJEWSjlSUavtEwp+NvzLZa/0jrdZbw7TlsBQS2hoKyRYcCsnuUdIX6r0h2VX6H9Iwiufq5EKyx+POSn5N2eFwLmJEWmqrdRCk4DxGPJIfciMgBccw4pHQAV9XxSPN8UhFmow3wUjQt/i1G0lIKbdtxCChreDYXDCS3R7Lu4/XG5K7O4nmaBcn6YsLaGhdmzxo7PoiaLOPIolAIm96tS/IrnjkgsgwiQXTc5EiKZIiKZIiKZIiKZIiKZIwpF9vhFEZqWNozgAAAABJRU5ErkJggg==" y="1150.2344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="15" x="607.5" y="1232.6914">[...]</text></g><!--MD5=[600478d01f420c9bbf82e20ce76ef993]
+entity AppInsights--><g id="elem_AppInsights"><rect fill="#FFFFFF" height="142.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="214" x="289" y="1102.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="133" x="329.5" y="1127.0332">«AzureLogAnalytics»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="194" x="299" y="1146.7188">Application Insights Logs</text><image height="70" width="70" x="361" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABGCAIAAAD+THXTAAACHUlEQVR42u2aPUpEMRDHcziv4BW8glfwCFrarq2dYGtjsZWgsIWIhbCKhYiFoH8JhJB9L5tMMnmZOMs0+3bz8ctM/vPyYX6afzavX6v19uT6+fjy8ehic3h+7wxf8fzs5uX26ePt85tWv2lGgl6iu+j3weldooEQ8LlsLZCuHt7RuXSSwDAKGAv4tgskwGS5JW4AS/EYFxLaxlSpBeN7DMO0ABKmTUXnTLqrKVLdYIsox1wQVkaCQHHD7KUydf3TjCdCZaTMnzmDCLEgYagW4bGGaK+PxKHXWcruJ2IjcQpNTqqaSAuGnG8uBZsBXBQ4qhSp5H20ukF1S5FQBV+2cZauPVbQDbQi0XaTGt61uOd6lpxiVqOTBkvIRNt9BWYSBjKSFQk6EvzWQJFzkRA4dCQ+rStBQlk6Ep50iIS5QEeKt2T1lBaiJUgwOlI8IylSH0hxBf93SOglanM2AhJq86tSJEWSjlSUavtEwp+NvzLZa/0jrdZbw7TlsBQS2hoKyRYcCsnuUdIX6r0h2VX6H9Iwiufq5EKyx+POSn5N2eFwLmJEWmqrdRCk4DxGPJIfciMgBccw4pHQAV9XxSPN8UhFmow3wUjQt/i1G0lIKbdtxCChreDYXDCS3R7Lu4/XG5K7O4nmaBcn6YsLaGhdmzxo7PoiaLOPIolAIm96tS/IrnjkgsgwiQXTc5EiKZIiKZIiKZIiKZIiKZIwpF9vhFEZqWNozgAAAABJRU5ErkJggg==" y="1150.2344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="15" x="388.5" y="1232.6914">[...]</text></g><!--MD5=[61a2b2c2093ef8668fab128593ce8bf8]
+entity opora--><g id="elem_opora"><rect fill="#438DD5" height="120.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="125" x="1461.5" y="476"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="75" x="1486.5" y="500.5332">«container»</text><image height="48" width="48" x="1500" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAABWElEQVR42u2UP0pDQRCH924eIBfIAbxADpADmMpK7CwsLNOlknSCjYVIAkIgBAIBJQpKQIhf+MEw7osJJE2K3zLvsczOn29n5r1ydvF8UlIMZCADGchABjKQgQxkIAMdDdS5m8zeV+u0Pr5/bh8WHPUGs/XfNZp/ta/H4d9/ekOZNTjinkNxyqZ1+VLl7vanVd7zm9fCw47EOISgxJTQ6CHIRxDcj5aKyE3wfZx8ItJcDec44h72KHk3gZQXpmy5qRBZydEsncomoKzHONJjAAGxKAOhpdEmy1Yg4ujOWfYAkUZA3Ca6oBaoNUTU5TBDzwYNjocBEWQDFKXL1qTMLQtN1EZjoc7GBNBKUeaR+g9I7W7SFw1XHkMtlS23jIgAaaR4V3VVVhLAVIUSfbWwVF2zEpJSBc3ztVViTnd/vc1Q+cvYYewfo4EMZCADGchABjKQgQx0nPwCNZJrxPxV/7UAAAAASUVORK5CYII=" y="503.6094"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="86" x="1481" y="568.2188">Oracle DBs</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="105" x="1471.5" y="584.1914">[Oracle Databases]</text></g><!--MD5=[c2045ddd12f10776338e430a2e39967f]
+entity opsql--><g id="elem_opsql"><rect fill="#438DD5" height="120.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="146" x="1280" y="476"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="75" x="1315.5" y="500.5332">«container»</text><image height="48" width="48" x="1329" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAACwUlEQVR42u2YMUrEUBCGczcP4AU8gBfwAB5AKyuxs7Cw3M5K7AQbC5EVhAVZWBAUFRRBWD/4YHi8xbh5m022CDxCEsPOl/+fmTex2jq426hVDUAD0ACUrO2j+00B2juf7I+eOO6ePvYJhCTHV7PDi2low3lvQKCMZ58cWcijNmfXz/0AjW5fWEGwc/KAX8hzM/mArwcg9DA22nCCZTAB5/1+LEOSALocv71//aAZIoHVonFV0+KCIBKZS8jkI704ARFixOuu7IEgKpYpWFZo0EA2ff1m8RjPdNGHiIQYwaFfIOogWWUBqh/O8sDyLbQECEfm83lowBGpiG3ULJ+4CT3PL5lnhZ1a1zRIOPNGnYSGQM3MPNvYv+lVCBTdiLdncQkWIrm8E7G5E9Lyp3qmQiBel0TRMpOJMKSLWJmWaWojYZjbJhA/qkjE0x1eHSBMxL7o3VwubnbQ1ORTIZC1AwrhQUEDLgkfuJYbZDYI84mjrbXGtRIgIrmLYZACGDLVwG7EUbjlW2VVltEQGI9IWiYoJ7ZslCjr11WBPG4RMDke6YVieN7pgGZrMV04IZncZS0lS687ILMSDqIiiQlknYPi1LbiNFI16s7mDUerJut79qeOgAhPTbljOKCFcZKZTxjXBZAGGRiI0EYHHdCiX68dyC4SHPgVjR893FnTO+tN6mi+ZKufHM7Rama1g2v/9fk1ln320+6dcjiCWXHREZzI4h1aBjKqyWtNAZS6o32pls7/qwzUdUCEt44k0BR3DEM6c7lvhE4pYptAQOBOiGGWpMlkj04nax/LhqE2FXJvWkwmfQFXCbOpbcUEqgNykteOmGnc52N/cOLR2bY+Yav6rwv3imygyWZQp307QhdfrkRyKhXCUTDkcbvwsVb+f1U1+mCNL4rA+qtpdfcp7TZiPkUCNRpSh//CDkADUL/rFwa02BAwyO1kAAAAAElFTkSuQmCC" y="503.6094"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="70" x="1318" y="568.2188">SQL DBs</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="126" x="1290" y="584.1914">[Sql Server Databases]</text></g><!--MD5=[2dfefee6a38302e72bd784a5dfa9766e]
+entity PowerBI--><g id="elem_PowerBI"><rect fill="#FFFFFF" height="145.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="162" x="23" y="784.5"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="67" x="70.5" y="809.0332">«PowerBi»</text><text fill="#000000" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="69" x="69.5" y="828.7188">Power BI</text><image height="73" width="70" x="69" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEYAAABJCAIAAAAPGscGAAAB20lEQVR42u3aS2rEMAwGYN//Sr1CT1DoqusOXQxDF4U0EDDCD0XyUz/IhFLKdOIPxY4tKxyV9v71PK/P798DrYX8T28fP/l18h6vPzzS1fUiKcKuX5BIwuuynT9Nk/j43Art8AITohgKodbIYxmYEBWnwdvxtv3JrJL4f0vCIhFuJsl7oIrbmiHXS2qO27zQDSOp3m9TZ5QppGRVpRpy/by5pCRu8tD1jLpFpJ4Xunb1vJqUP5ZaoWlSw3RCH2DTpIZ1M9NVW6TmIQdA0vJohwFIwgUKJImfTmKfIUm1uQSelKg2RykueegisHn5b4I0aruRdNsiSbsMd5KTnARFotvS2uyMRBLOzitIo9JRhkjJbVRvayOkdPXQnCoQ9tUoqdYJejqIRBLuKJ00k0RPx4rJTjBSbTcv6atRUk9fwUj0Bk5ykpOcBEWqJr2c5CQnOclJTnLSVBLuFlAdJWBS7R7Gcw83J+o2M0RMAWIxT6ojMSUik0jFzC5fqTIs2yqZGBtIzcVRdnPiKhKtQQyHshXPPyaNJUmdXl6bpyatP1/ih1D++cEk4b0bJvH4zbTYvvjJRVHqJ8nbYJJkvEGSlhUJAJCG1FvsIUnW/mCkgxSq0qKPId+8jTSv/QOyhRDqYSAoCgAAAABJRU5ErkJggg==" y="832.2344"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="142" x="33" y="917.6914">[Reports, Dashboards etc]</text></g><!--MD5=[6b79fc3fbc1964d4aa85a65b864094f2]
+entity AWS--><g id="elem_AWS"><rect fill="#438DD5" height="134.8281" rx="2.5" ry="2.5" style="stroke:#3C7FC0;stroke-width:0.5;" width="113" x="1643.5" y="469"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="75" x="1662.5" y="493.5332">«container»</text><image height="62" width="51" x="1674.5" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAA+CAIAAAAJXbSjAAABaklEQVR42u3aQWrCQBQG4Lmb1/AAXsADeAA9gHTnwoVLd66Ku0I3LrpQEAIiBAqFInTdH1IeYzKZTJLnjNoffgTJ+PIh8TnMjBlMP1QyXmXr3RdetQqa/iUm69N7dkEgW759IqPFMbFMTCWZis+omJyynj6jYvLIinR4/lrL6lh+GUIZZZR1kKHroHRIE1KXDV8OUgHD8PZPVrpQDRqYugztzVlBBkNlnBfqMt/mnWWzzdnz2SqgnQzpLGtk/SfZPv+pJpnMqalLJJlNDGGFgJRlpeAha+uIJCtwlD26TEDSz1733wlk/A+gjDLKKKOMMsqiz8+KiVAh6zNL45yWsoaMV9locfSsfEeSzTZnOEIS+KtU6xrhMnyLyfpZVSkadtq7lc23ec912kbflcy+WePyseLatrO/2IONfcuQfb9b7AeI0h7GPRTKKHsSmQfnkUU9rxEoS3bGxSNLf/pGfCK7l3NBEsgUq/0C9FfMFu4Tbw4AAAAASUVORK5CYII=" y="496.6094"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacing" textLength="37" x="1681.5" y="575.2188">AWS</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="93" x="1653.5" y="591.1914">[S3, Oracle, SQL]</text></g><!--MD5=[17d86fd1dd87583708c3d10e25f8dbce]
+link GoFastDB to FunctionApp--><g id="link_GoFastDB_FunctionApp"><path d="M335.35,635.67 C335.37,656.2 336.61,677.65 340,697.5 C343.15,715.93 348.21,735.06 354.04,753.39 " fill="none" id="GoFastDB-to-FunctionApp" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="356.58,761.2,356.9492,752.664,351.2454,754.526,356.58,761.2" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="153" x="341" y="678.957">Retrieves Task Information</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="118" x="358.5" y="694.0508">[async, JSON/HTTPS]</text></g><!--MD5=[c1cb17fe078fbd83be3627bcdd326b64]
+link FunctionApp to AzureDataFactory--><g id="link_FunctionApp_AzureDataFactory"><path d="M491.68,952.33 C492.78,953.07 493.89,953.79 495,954.5 C558.8,995.23 580.79,996.28 654,1015.5 C677.47,1021.66 685.61,1014.15 708,1023.5 C750.6,1041.3 792.31,1070.28 826.45,1098.01 " fill="none" id="FunctionApp-to-AzureDataFactory" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="832.73,1103.18,828.4557,1095.782,824.6452,1100.4167,832.73,1103.18" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="152" x="655" y="996.957">Initiates Pipeline Execution</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="118" x="672" y="1012.0508">[async, JSON/HTTPS]</text></g><!--MD5=[47200842ea1abeeec9b73795dd61fd80]
+link GoFastDB to WebApp--><g id="link_GoFastDB_WebApp"><path d="M380,437.17 C386.55,418.91 393.15,399.93 399,382 C403.11,369.4 407.24,356.06 411.18,342.88 " fill="none" id="GoFastDB-to-WebApp" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="413.48,335.14,408.3322,341.9591,414.0853,343.6625,413.48,335.14" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="92" x="405" y="378.457">Reads Metadata</text></g><!--MD5=[56dfb3209d7bf58f20134878f8b36b08]
+link WebApp to GoFastDB--><g id="link_WebApp_GoFastDB"><path d="M334.29,313.08 C318.37,328.11 304.19,345.49 295,365 C285.48,385.19 285.22,407.64 289.73,429.44 " fill="none" id="WebApp-to-GoFastDB" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="291.6,437.44,292.6914,428.966,286.8503,430.3378,291.6,437.44" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="94" x="296" y="378.457">Writes Metadata</text></g><!--MD5=[2f6dac40ad2b24efcdfbce4d3de2063b]
+link AzureDataFactoryIR1 to AzureAdls--><g id="link_AzureDataFactoryIR1_AzureAdls"><path d="M1143.6,928.22 C1144.59,946.22 1145.5,965.58 1146,983.5 C1147.1,1022.75 1143.94,1066.44 1140.24,1101.97 " fill="none" id="AzureDataFactoryIR1-to-AzureAdls" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1139.34,1110.35,1143.166,1102.7105,1137.1994,1102.0785,1139.34,1110.35" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="20" x="1147" y="1004.457">****</text></g><!--MD5=[1feabdaaffa489de84eefc779d1ce8cf]
+link AzureDataFactory to AzureDataFactoryIR1--><g id="link_AzureDataFactory_AzureDataFactoryIR1"><path d="M952.38,1103.08 C976.46,1066.84 1006.99,1022.19 1036,983.5 C1048.14,967.31 1061.59,950.35 1074.66,934.33 " fill="none" id="AzureDataFactory-to-AzureDataFactoryIR1" style="stroke:#FFA500;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FFA500" points="1079.84,928,1072.4528,932.2929,1077.097,936.0917,1079.84,928" style="stroke:#FFA500;stroke-width:1.0;"/><text fill="#FFA500" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="100" x="1037" y="996.957">Initiates Activities</text><text fill="#FFA500" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="38" x="1068" y="1012.0508">[async]</text></g><!--MD5=[509ff2be2d47e5a4e5feda416acecaff]
+link AzureDataFactoryIR1 to AzureDataFactory--><g id="link_AzureDataFactoryIR1_AzureDataFactory"><path d="M1053.86,866.77 C980.04,878.96 877.36,909.07 827,983.5 C803.74,1017.88 818.1,1060.12 840.71,1095.98 " fill="none" id="AzureDataFactoryIR1-to-AzureDataFactory" style="stroke:#FFA500;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#FFA500" points="845.33,1103.06,843.4629,1094.7225,838.4411,1098.006,845.33,1103.06" style="stroke:#FFA500;stroke-width:1.0;"/><text fill="#FFA500" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="176" x="828" y="1004.457">Communicates Activity Results</text></g><!--MD5=[5b4dd05478b78aceca89bdf60c5e6749]
+link FunctionApp to AppInsights--><g id="link_FunctionApp_AppInsights"><path d="M396,953.71 C396,998.55 396,1051.41 396,1093.99 " fill="none" id="FunctionApp-to-AppInsights" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="396,1102.09,399,1094.09,393,1094.09,396,1102.09" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="83" x="397" y="1004.457">Log Messages</text></g><!--MD5=[3784e4bcf62545eb4dbc60b6d25a4196]
+link WebApp to AppInsights--><g id="link_WebApp_AppInsights"><path d="M495.04,335.09 C499.47,344.89 503.27,354.96 506,365 C540.41,491.4 529.67,825.14 509,954.5 C500.98,1004.73 475.96,1055.52 451.49,1095.47 " fill="none" id="WebApp-to-AppInsights" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="447.26,1102.3,454.0322,1097.0906,448.937,1093.9222,447.26,1102.3" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="83" x="530" y="686.457">Log Messages</text></g><!--MD5=[9d623b876f9227b7226bf3f469f49e49]
+link AzureDataFactory to AzureLogAnalytics--><g id="link_AzureDataFactory_AzureLogAnalytics"><path d="M810.93,1174 C775.11,1174 734.72,1174 699.97,1174 " fill="none" id="AzureDataFactory-to-AzureLogAnalytics" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="691.72,1174,699.72,1177,699.72,1171,691.72,1174" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="83" x="709.75" y="1167.457">Log Messages</text></g><!--MD5=[bd090f9cffb5916e830c4cc482b7bff7]
+link opora to AzureDataFactoryIR1--><g id="link_opora_AzureDataFactoryIR1"><path d="M1487.47,597.09 C1465.83,629.29 1436.36,668.32 1404,697.5 C1352.43,744.01 1285.26,784.14 1231.45,812.44 " fill="none" id="opora-to-AzureDataFactoryIR1" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1224.29,816.18,1232.7684,815.1229,1229.9827,809.8087,1224.29,816.18" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="100" x="1456.5" y="678.957">Scans Databases</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="143" x="1435" y="694.0508">[Https, Expressroute, VPN]</text></g><!--MD5=[15d588bd7a9a1c7f3436be159398964e]
+link opsql to AzureDataFactoryIR1--><g id="link_opsql_AzureDataFactoryIR1"><path d="M1305.28,597.07 C1288.83,618.3 1270.64,642.63 1255,665.5 C1229.86,702.28 1203.93,744.5 1182.98,779.88 " fill="none" id="opsql-to-AzureDataFactoryIR1" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1178.86,786.86,1185.5059,781.4904,1180.3365,778.4445,1178.86,786.86" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="100" x="1277.5" y="678.957">Scans Databases</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="143" x="1256" y="694.0508">[Https, Expressroute, VPN]</text></g><!--MD5=[553f77b4bd26dcfbfe2e3f1d218be3fe]
+link GoFastDB to PowerBI--><g id="link_GoFastDB_PowerBI"><path d="M269.34,635.81 C235.16,681.43 195.08,734.93 162.95,777.82 " fill="none" id="GoFastDB-to-PowerBI" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="158.06,784.34,165.26,779.74,160.46,776.14,158.06,784.34" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="20" x="246" y="686.457">****</text></g><!--MD5=[b5ce43d3f479e99411abcc9761d55e1d]
+link AWS to AzureDataFactoryIR1--><g id="link_AWS_AzureDataFactoryIR1"><path d="M1665.75,604.12 C1646.39,636.16 1619.52,672.85 1587,697.5 C1480.31,778.35 1328.99,820.57 1232.41,840.66 " fill="none" id="AWS-to-AzureDataFactoryIR1" style="stroke:#666666;stroke-width:1.0;"/><polygon fill="#666666" points="1224.39,842.31,1232.8287,843.6473,1231.6273,837.7688,1224.39,842.31" style="stroke:#666666;stroke-width:1.0;"/><text fill="#666666" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacing" textLength="100" x="1640.5" y="678.957">Scans Databases</text><text fill="#666666" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="143" x="1619" y="694.0508">[Https, Expressroute, VPN]</text></g><rect height="121.6563" rx="7.5" ry="7.5" style="stroke:#00000000;stroke-width:1.0;fill:none;" width="430" x="1327" y="1322.5"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="56" x="1333" y="1345.0332">              </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="33" x="1599" y="1345.0332">Type</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="159" x="1333" y="1362.6426">&lt;PERSON_BG_COLOR&gt;</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="1599" y="1362.6426">person</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="238" x="1333" y="1380.252">&lt;EXTERNAL_PERSON_BG_COLOR&gt;</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="1599" y="1380.252">external person</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="158" x="1333" y="1397.8613">&lt;SYSTEM_BG_COLOR&gt;</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="1599" y="1397.8613">system</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="237" x="1333" y="1415.4707">&lt;EXTERNAL_SYSTEM_BG_COLOR&gt;</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="1599" y="1415.4707">external system</text><rect fill="#FFFFFF" height="17.6094" style="stroke:none;stroke-width:1.0;" width="262" x="1333" y="1418.5469"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="1333" y="1433.0801">       </text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="148" x="1599" y="1433.0801">Azure service container</text><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1330.5" y2="1330.5"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1348.1094" y2="1348.1094"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1365.7188" y2="1365.7188"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1383.3281" y2="1383.3281"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1400.9375" y2="1400.9375"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1418.5469" y2="1418.5469"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1751" y1="1436.1563" y2="1436.1563"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1333" x2="1333" y1="1330.5" y2="1436.1563"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1595" x2="1595" y1="1330.5" y2="1436.1563"/><line style="stroke:#FFFFFF;stroke-width:1.0;" x1="1751" x2="1751" y1="1330.5" y2="1436.1563"/><!--MD5=[337685677c040dccb6bfb4f24ec1510e]
+@startuml "messagebus"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+' uncomment the following line and comment the first to use locally
+' !include C4_Container.puml
+
+!define AzurePuml https://raw.githubusercontent.com/RicardoNiepel/Azure-PlantUML/release/2-1/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureC4Integration.puml
+!includeurl AzurePuml/Databases/all.puml
+!includeurl AzurePuml/Compute/all.puml
+!includeurl AzurePuml/Storage/all.puml
+!includeurl AzurePuml/Networking/all.puml
+!includeurl AzurePuml/Web/all.puml
+!includeurl AzurePuml/Management/all.puml
+!include icons/SynapseSprite.puml
+!include icons/PowerBISprite.puml
+!include icons/PurviewSprite.puml
+
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/flask.puml
+!includeurl SPRITESURL/kafka.puml
+!includeurl SPRITESURL/kotlin.puml
+!includeurl SPRITESURL/aws-s3.puml
+
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS/msql_server.puml
+!include DEVICONS2/oracle_original.puml
+!include FONTAWESOME/users.puml
+
+
+!define MS https://raw.githubusercontent.com/jballe/plantuml-microsoft-icons/master/sprites/Cloud
+!include MS/cloud_office_365.puml
+!include https://raw.githubusercontent.com/jballe/plantuml-microsoft-icons/master/sprites/OtherMicrosoftProd/outlook.puml
+!include https://raw.githubusercontent.com/jballe/plantuml-microsoft-icons/master/sprites/OtherMicrosoftProd/sharepoint.puml
+!include https://raw.githubusercontent.com/jballe/plantuml-microsoft-icons/master/sprites/office-2019-icons/teams.puml
+skinparam wrapWidth 200
+skinparam maxMessageSize 200
+
+LAYOUT_TOP_DOWN()
+'LAYOUT_AS_SKETCH()
+LAYOUT_WITH_LEGEND()
+
+'Styling
+AddElementTag("Orange", $fontColor="orange")
+AddRelTag("Orange", $textColor="orange", $lineColor="orange", $lineStyle = DashedLine())
+
+System_Boundary(SystemAzure, "Azure") { 
+    'Purview(AzurePurview, "Azure Purview", "", "")
+    'AzureAppService(pbiauditor, "Power BI Auditor", "Power BI Embedded", "")
+    Container_Boundary(AdsGoFastCore, "Ads Go Fast Core"){
+        AzureFunction(FunctionApp, "Go Fast Orchestration Function", "C#/.NET", "")
+        AzureWebApp(WebApp, "Go Fast Web Application", "C#/.NET", "")
+        AzureSqlDatabase(GoFastDB, "Go Fast Metadata Repository", "TSQL", "")
+        Container_Boundary(Logs, "Logs"){
+            AzureLogAnalytics(AzureLogAnalytics, "General Logs","...")
+            AzureLogAnalytics(AppInsights, "Application Insights Logs","...")
+        }
+    }
+    'AzureAppService(pbitel, "Telemetry & Usage Gathering Function", "C#/.NET", "")
+    'AzureSqlDatabase(ExploratorySQL, "Exploratory SQL Engine", "TSQL", "")
+    AzureDataLakeStorage(AzureAdls, "Data Lake","...")
+    AzureDataFactory(AzureDataFactory, "ADF Execution Engine","...")
+    AzureDataFactory(AzureDataFactoryIR1, "Integration Runtime","...")
+    
+}
+Rel(GoFastDB, FunctionApp, "Retrieves Task Information", "async, JSON/HTTPS")
+Rel(FunctionApp, AzureDataFactory, "Initiates Pipeline Execution", "async, JSON/HTTPS")
+Rel(GoFastDB,WebApp, "Reads Metadata", "")
+Rel(WebApp, GoFastDB, "Writes Metadata", "")
+Rel(AzureDataFactoryIR1,AzureAdls, "", "")
+Rel(AzureDataFactory,AzureDataFactoryIR1, "Initiates Activities", "async", $tags="Orange")
+Rel(AzureDataFactoryIR1, AzureDataFactory, "Communicates Activity Results", "", $tags="Orange")
+Rel(FunctionApp, AppInsights, "Log Messages", "")
+Rel(WebApp, AppInsights, "Log Messages", "")
+Rel(AzureDataFactory, AzureLogAnalytics, "Log Messages", "")
+
+System_Boundary(SystemOnPrem, "Enterprise - On Premise") {
+    Container(opora, "Oracle DBs","Oracle Databases", $sprite="oracle_original")
+    Container(opsql, "SQL DBs","Sql Server Databases", $sprite="msql_server")
+}
+Rel(opora, AzureDataFactoryIR1, "Scans Databases", "Https, Expressroute, VPN")
+Rel(opsql, AzureDataFactoryIR1, "Scans Databases", "Https, Expressroute, VPN")
+
+
+System_Boundary(SystemPowerPlatform, "Power Platform") {
+    PowerBi(PowerBI, "Power BI", "Reports, Dashboards etc")
+}
+Rel( GoFastDB, PowerBI, "", "")
+
+System_Boundary(SystemOtherClouds, "Other Clouds") {
+    Container(AWS, "AWS", "S3, Oracle, SQL", ,aws-s3)
+}
+
+Rel(AWS, AzureDataFactoryIR1, "Scans Databases", "Https, Expressroute, VPN")
+
+@enduml
+
+@startuml "messagebus"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam LegendBorderColor transparent
+skinparam LegendBackgroundColor transparent
+skinparam LegendFontColor #FFFFFF
+
+skinparam shadowing<<legendArea>> false
+skinparam rectangle<<legendArea>> {
+    backgroundcolor #00000000
+    bordercolor #00000000
+}
+
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam database {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam queue {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam actor {
+    StereotypeFontSize 12
+    shadowing false
+    style awesome
+}
+
+skinparam person {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam package {
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontStyle plain
+    BackgroundColor transparent
+}
+
+skinparam rectangle<<boundary>> {
+    Shadowing false
+    StereotypeFontSize 6
+    StereotypeFontColor transparent
+    FontColor #444444
+    BorderColor #444444
+    BackgroundColor transparent
+    BorderStyle dashed
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam database<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam queue<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam actor<<person>> {
+    StereotypeFontColor #08427B
+    FontColor #08427B
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+skinparam person<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam database<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_person>> {
+    StereotypeFontColor #686868
+    FontColor #686868
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+skinparam person<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+
+skinparam rectangle<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam database<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam queue<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam actor<<system>> {
+    StereotypeFontColor #1168BD
+    FontColor #1168BD
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+skinparam person<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+
+skinparam rectangle<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam database<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam queue<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam actor<<external_system>> {
+    StereotypeFontColor #999999
+    FontColor #999999
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+skinparam person<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+sprite $person [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000025788300000000005886410000000000000
+000000000007DFFFFFFD9643347BFFFFFFFB400000000000
+0000000004EFFFFFFFFFFFFFFFFFFFFFFFFFFB1000000000
+000000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFD200000000
+00000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE10000000
+0000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB0000000
+000000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5000000
+000003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD000000
+000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF200000
+00000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF600000
+00000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF800000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+00001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA00000
+00000EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF700000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+0000008FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD3000000
+000000014555555555555555555555555555555300000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+sprite $person2 [48x48/16] {
+0000000000000000000049BCCA7200000000000000000000
+0000000000000000006EFFFFFFFFB3000000000000000000
+00000000000000001CFFFFFFFFFFFF700000000000000000
+0000000000000001EFFFFFFFFFFFFFF80000000000000000
+000000000000000CFFFFFFFFFFFFFFFF6000000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+00000000000001FFFFFFFFFFFFFFFFFFF900000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFF00000000000000
+0000000000000BFFFFFFFFFFFFFFFFFFFF40000000000000
+0000000000000EFFFFFFFFFFFFFFFFFFFF70000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000FFFFFFFFFFFFFFFFFFFFF80000000000000
+0000000000000DFFFFFFFFFFFFFFFFFFFF60000000000000
+0000000000000AFFFFFFFFFFFFFFFFFFFF40000000000000
+00000000000006FFFFFFFFFFFFFFFFFFFE00000000000000
+00000000000000EFFFFFFFFFFFFFFFFFF800000000000000
+000000000000007FFFFFFFFFFFFFFFFFF100000000000000
+000000000000000BFFFFFFFFFFFFFFFF5000000000000000
+0000000000000001DFFFFFFFFFFFFFF70000000000000000
+00000000000000000BFFFFFFFFFFFF500000000000000000
+0000000000000000005DFFFFFFFFA1000000000000000000
+0000000000000000000037ABB96100000000000000000000
+000000000002578888300000000005888864100000000000
+0000000007DFFFFFFFFD9643347BFFFFFFFFFB4000000000
+00000004EFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB10000000
+0000007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD2000000
+000006FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFE100000
+00003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB00000
+0000BFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF50000
+0003FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFD0000
+0009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF2000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFB000
+001FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFA000
+000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF8000
+000DFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000
+0009FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFF2000
+0003FFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFFD0000
+0000BFFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFF50000
+00003FFFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFFB00000
+000006FFFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFFE100000
+0000007FFFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFFD2000000
+00000004EFFF8FFFFFFFFFFFFFFFFFFFFFF8FFFB10000000
+0000000007DF8FFFFFFFFFFFFFFFFFFFFFF8FB4000000000
+000000000002578888888888888888888864100000000000
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam database<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam queue<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam actor<<container>> {
+    StereotypeFontColor #438DD5
+    FontColor #438DD5
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+skinparam person<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+
+
+skinparam rectangle<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam database<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam queue<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam actor<<external_container>> {
+    StereotypeFontColor #B3B3B3
+    FontColor #B3B3B3
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+skinparam person<<external_container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #B3B3B3
+    BorderColor #A6A6A6
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+skinparam database<<component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+skinparam queue<<component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+skinparam actor<<component>> {
+    StereotypeFontColor #85BBF0
+    FontColor #85BBF0
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+skinparam person<<component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #85BBF0
+    BorderColor #78A8D8
+}
+
+
+skinparam rectangle<<external_component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #CCCCCC
+    BorderColor #BFBFBF
+}
+skinparam database<<external_component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #CCCCCC
+    BorderColor #BFBFBF
+}
+skinparam queue<<external_component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #CCCCCC
+    BorderColor #BFBFBF
+}
+skinparam actor<<external_component>> {
+    StereotypeFontColor #CCCCCC
+    FontColor #CCCCCC
+    BackgroundColor #CCCCCC
+    BorderColor #BFBFBF
+}
+skinparam person<<external_component>> {
+    StereotypeFontColor #000000
+    FontColor #000000
+    BackgroundColor #CCCCCC
+    BorderColor #BFBFBF
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam rectangle {
+    StereotypeFontSize 12
+}
+
+skinparam Arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+
+
+
+
+
+
+
+
+
+
+sprite $AzureCosmosDb [70x70/16z] {
+dPVRbjim24K10PBu__zjEmfs5DRH6gVxfPtRzk5YMw4tJ5yYwhrtOzfftobyHgAqOVGS7R4Xz6QsnuvNZEagqdf4to96_yOn_KeG4NJJzsHdP2o7qitOB1Bn
+80ptom4jl6BQRyKKns96x98wD1p4gH0nivoKvEzWsWeYuDjzENeacHSZ3als2ELcCmfTPQ-3ppT93ff_8lNOcNhzBalJYyRdEiVLDb2GQ06BHaIZn2x9zPjD
+2-R_Q5IHY5as8GRAaPA5rJpzi-EUIJ98nIzQZH9b1NFdM1L6IUhsMzdkMIJOulQvY7NmYYNsWszepR_JLrTEAP36Sa0xYXfhZf1NxP6xiYDWnEQOQygT4630
+4CqLOmA0UZ3jLO_YA4yiEUnngaUUMlBEOnpbeOLVgzy8mGyjxRLlJgU2AgVvzDmtWDhYbp2MJH72-8L1JP8teHA6lMYWXr-RukStHT4WVYGJR0gq-5b20tKM
+M-mewVbabV-r215vZaSF5YuMAB4SJxFZf3ToRtPQFWtMmhYtNomupqgGCzPytY7CAoL9o_DMo-s3D3zhsdPe4oyMq5vObAHat1B5GGILP5LoNujXZl1pIP8z
+cNnBZ10zOasf0YLuGlbM064irrxtSd2KxQq0B4Y2k-8H0uxf9R4gKGB8-wtGIfIyHlHTubIfPndT9IqR_qIYdoSykrZ3uP4te3Xiokai8vhmTRPN805H1dYx
+jVlil_O5IVWpIgEgKRaFdkl91gUZ9Kf5-6h9M8TyVDoTvGYEQFDwxxHrH7IJkY2whUqaX4Ma_zKc0GiojxKru92x6f9_yE4o_TrRFWHnki6IrC22igtx3k6i
+Yvcl1eTNwKn7M6UycIeUTK8wIn38ssESd-XBKX04qBUFPVsZkMqvHdeVQERzt_QPSYezOX-lvVwpzYoJ7jFkN-PLmbWfCiTp9bEYSJEKliFgL6PNfcyHIlu2
+}
+
+skinparam rectangle<<AzureCosmosDb>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDatabaseForMariaDB [52x70/16z] {
+xTK5WkGm34JH4fcKtF-u2nfmECuop6-6rsZ0RupuIoBCJ8JRMDNCj1StXN4IwVhPQwc4NM9wambMaUb0HXlo5EbeziqcterDUnQbb2nQ4GwIqT7NP-PzeJk1
+JOBeAyWNVN6AY7sU58XOqmLH1Y9nd-SvemyqjHrCfa9uAtcOUSgq7QCIRGSfMVCmKL7S9jcZCD5KZN4QQO1kkclPb0dBM3HLxtMpfkwjbL9hQzwxC1r6lyby
+c4prYSdA14OUDuL0W8grOLC0cnb5p4TD1I025l5Xmq2aFcoiJ-jHK_kx31i6eZPk4X2n3vkArtJODC9hQTIKTu8oPfgYvoEcAj2JM-D52QlojOddR_ChqnW7
+oPN9EAnU6CLXxCk62CgvoLX7G2Jdfc6J8cAbCrC9crASvGoKdV6imY4uL_TMIp9XpWo0t2j3jaRn6fNLUAllNx_LhNaRlZhDAwC0x6pjjNYJkXdNDMRDcQav
+bxQR2mAfJzVu-h_iSzCtcFBS59eU6uPC3uq2eFR4D4PaFcmCxqaTCKsnYhHCbwOcna6ikKq7fcKJeFSP
+}
+
+skinparam rectangle<<AzureDatabaseForMariaDB>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDatabaseForMySQL [52x70/16z] {
+xTP76giw38RXNzMD_Q_t1WldnccOoUdVA06zZoOq_CI8cUKMCnDEOrNJEJDLneTe6d-1z2h4z2IJML28CqMNoOnqELmtXhs-ZMq-yz1yWhjn13fctTDpxXvq
+46sCtWru-jBkqEEwDK74-WqPZx5IjsrpZ4ZKNg6f44PMwswsveI7Y5YEc0YFQQbXTfK4fx5r4IPOLiB7I3p0PCAvofCa5ainFvkvMal9oLFAUGoVcQZLw3Sr
+_qnrjVmmxsgfV3T-tBC7gOIz_DKGUkamZ9vyCmqHnQA2Y5SCl1j5H4k6slIlHBLNUYyc5ld_9ZQcUYjZprvCB28SKKsd9XPbh1iIxCKZKXTDndqQPT5iX97K
+LUCObSb8BgMazwOEmjk3cNenco1AmvHpSunG6wRAgTdiM7CtHKxDbeKuZIDSRvMSV2yJRld2lPry50lJWX7CbUj6wsN3vQeX-tEVlVzCksvAlcwSsbLJ2DAk
+cS80k5uncT2pkcgoufwM5PC5KwIvVJKVFZt5KWquc-pAUEW_
+}
+
+skinparam rectangle<<AzureDatabaseForMySQL>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDatabaseForPostgreSQL [53x70/16z] {
+xTG9OgCm38LXItfF4hx_WSS3TY6DJJhx-cTF-8hALdvjeYtJbfJNgO4ahf60BQs0n2h29aHFi7JoIEGaj-mBJMSNX0zdNu_aQJoovJssdiOJb5EHxZ6fsVvx
+7oprU6Fa2HRmRT5C6viGTuecfHjlA7azZ2QIC2qZeU-eCIdNH5JLp5HLtlq2zuvQRkLrIlU1XeFU0B4k1ZhRvt-QrT3159quma7Ifp6NpS4I_KT10Bw_9TG0
+qpsiKPXvX5C5K6Q6cqHjRHGiaEjMU-BZ7UnuDPiZhIDhPfIwTJr3yDfBgvUs_iVqWcOhodejR7yXRv7Mnn2rvRX3mGiu1tJU8SQZoMDRu1R1JKs7J04rNcu8
+iwt1yL5Jahb4sq3jZGUpexfLj6_2PWZH4NOTVcvA-_pW33aVKFQFo0E9pr1QHtOWz0s1_Hj_SUmThydnSQl8gZv7o2low2XGcRb2ZdEy_jnNXLGkq9XltoAR
+rL52Kts5RCoNZyUIGRb4OxwjCBMURMA-HEEWC3gAdgioLJCLp15HMs2cUTLX4ksHePoZtFyRk2bhbO52FQYwlkwfmq8QJNr3RW1khx3qzb1L2nq8_FXb-GsP
+Vm7QEf8lGVaLoA8Z_G84Fqn-2N8UYFW2DBQv-1UWL6zaKtmHSbCLfKzGhD4ou2kGblXYX59afMvCYr-4h1p9bAt92F41n4xEnFmMGSiyCNWy8SBUWKy
+}
+
+skinparam rectangle<<AzureDatabaseForPostgreSQL>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDataFactory [70x68/16z] {
+xTH5OYCn443HbbJuxt_V8RFBawHs0VrLuskKZdDJp2CJCiDqZQFTqE2vq1uq7O1qLP6rHDHEg3SS1N0PpxUNW7IGdCUB35WVL1AmrsyBy0yg0FdoaWv4Gu6G
+-NWVovAkSf9CLKHKpHEWgzHQobQsifMjs56QsbH6P44MJMKaHH6QoagAOZGLWQ8uJKKfoWYQYbEKcVIK4HHbGKyPIL64fZAJeXXDHQ0eJbDHYZA2fk8KPIOz
+PGH5MT1JHb8KeQdCf2X6LTe53QNJLe2jvAcoKjRUKlGu5G3vCC7PUSs-Wx8LbrC9a7BA0GWv5Lzy76rbAxy1
+}
+
+skinparam rectangle<<AzureDataFactory>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureRedisCache [63x70/16z] {
+rTS7ikCm20PWqq7tlszwI28hqfhj_zHNFXTi6Bnz18b5pJqYMaIucmeJREi0gqSR9rmP9XOrsYgXECRYtJ-6tnFTGPttcEBbJ1ZXyvwGvUscd3gjQGL_vEPa
+Um-_VZrFdkRZ1gBJQ-_RMxfZJYBjdXZnM7cE8Syum-ITocUxvnbNHkWbiQQTydnfpFGQitpY4pxF_yyZujv2SOplcmXmoUTDjERPcsMkhswzpp_FuOUmuAbH
+V3ouQCOVvMMVZhxltAvdzdu0HlHN-FtQ8VBP4RwtaEJaiWcNIVtHsYtudMjEfb7kdghSr_oQO9WCdodF6II403S7cCDdoIVvkpn-Yhlz33UCd-2wMQjpsQXU
+kg1jyp8Fp9sWm0soamjSSq-eSBbgR3KUbArQu86vInMuG-vI1QwvNrMuF3Is0WzwRUotw14Us2zfxG1tsEsN1xZjH_m1xdHBNZ-KNXj-Q2mzTtzjjXLEkLLN
+k6NHAZmWYrRXaaMhSC-YbJXbqIhSicXx7aiUa4NRSrzooQ8DEAru38kMLQ6OBcQDP0YpgA2pjT1jeltRrxiztvEOwPmZf5qDR_sjKypTzvvOzDEHBSPMSHi5
+a5Zq4ii1mMeURukr2kLLdm4
+}
+
+skinparam rectangle<<AzureRedisCache>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSqlDatabase [65x70/16z] {
+xTQ7phEw5eJXMVPgC_T_mGTXlaw0wAZl_r59VqErZUziUbGtARAxCkR0OyEB-eiT4_SiMgyn1ovPwWChmzsdRoABElJ4QwcbOlnjp-WZCN3ErXVeXXSikBw1
+K-ltYUNoJquBiROUDoXjnijF0ZVgvNPgHyEbmPSRgeKJ5vpQzNbWQJUS6a7fBh1q-lXHiUb5BKy22xjhqqqjDu4R_xt0ly2_0AkAnxFCusbtyrcWx7E8ps-J
+1O3vA51OGWeSuft0031y8jQNtB6fDmBOK69h0iYrIVFDW2Kb0h2FRNeZuDY5-F6J2O3F0mhil06CbNmle5uRKTXmxOBfUQ0erHuO07njaRyHc1OLs73Fm00O
+zu3DpNq0YqlsVKB5uMaWA75-pQVF0-hCB6h76W1Icpv8OiOy2vpYEfHV68PpEaS3CAc50PXdK-noUn8GQ_ErGBEaMBbMVcNuedi519a3omWotWaKKEg1BvQg
+vm4QIecVNFquC90A_3PL3mE9gSHV8RyBT0p3XiIPvdMW9s1Zpk5od1cAgq02ixKZpbLV10BMOimnF0FdN0CRwaHYa8vh9iUcz1TXvC0T1JQ3-iDH7BZ513P-
+iW53WNjTs4tgfq8I3p2nMEe71mltxDjcZgI-J2XmRnvpoS6BEWoJuvvdKOLlXcVl0IZmJAp2TpQcWOd71PmfuYdYZ6lYeSQfvlyPc2eyOi8vLniUIE459sFW
+XgKIhrX9x6jINlOzwreEu7y
+}
+
+skinparam rectangle<<AzureSqlDatabase>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSqlDataWarehouse [70x68/16z] {
+xTS5ajj048NXDzFyxd_WhBgML8vSqYYS_SpqMmmueccuIv9awUr6o_NEJBQMijO8jZkTuNmKytQZnRZGA1xoanqhFbC-xZPQ6PxJuXcb5neh7KbUaNgxqN8-
+LBYW_eDAizr7Hmu2VtmbczsiiCLFgNnLiZaUCNG2m1XpCzQMbm68HHRvgi9aNAtCA3BTLEOBKRL-G_UL6Mq25ctVI3BaOVWiMVgvecm293UrYnHp7arKFrif
+SkBxWZnR8Qa7bRnKAJiuJhbK8Sjbx1EMvBuYsGI8R0-LBgMxRJoARLzvYWT-GkLWgPlHv4pbUEeAczwkV5MacW1HcmHcjTTA301EbWuCBTA7ig6D5tYAv5QL
+eQm1RDUYGTXm4ad785bKZ6GEw58bNu_V02Tf64iL6W2f0hPM06iLfcuP8BgoD2pD0GueIO4iLK8Y16ChgGkGD4nthsiLR88qR6QzFhbMOVhhzgtS391Atroh
+x8MgyzLofVrHbQzA_P2AyOd4MLOy4WEtJ_r3S8ruxaiLEh1YYfgvcwdCWLVV
+}
+
+skinparam rectangle<<AzureSqlDataWarehouse>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSqlStretchDatabase [70x48/16z] {
+hTG7ikGm24LHGCIt__rEw51Tha5kupzd0LTPT6AfHrPLfQlG7Qo9WzHvmml_g6772gsOJ2ImatmvajXBkgY9p1UbMJYZz0Mp23CHyRB4Hj6Mg7-cyBnah3MQ
+Z7W16MQwrb8rYmBAXVfExeua5jC1Qm31_N59Cv522ZKaKSBTRBmzLw6M046vMPAegGgz0LZKKg3Q2ZGA3sMVIcd_bewLNigx0fGVjvUN5t2bWdfay5OP_bT4
+uk5OgMs67vL6Kp7TTM9I8Kdqrg0YYmAjd5HWj5cLJ2e8bZQZemfAsbNvjuhQovBN9jkyiZxiVQwhcifK2YUEZ31MIew3HRZ1Zwig8lnyCdwdKiB7uvORbMIf
+wMlyME_fQur_1eyNbVvyKCOqVG6StMxFNsD71fN7bhJYUaN9iL6NAyI9YRwo2Z-l94xanSgvLV-XOXGu4LJuAeI82rl5Ay-5AzDVxBk6qmHRi_eqfYbU5bbu
+g0nRmyHl
+}
+
+skinparam rectangle<<AzureSqlStretchDatabase>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureAppService [70x70/16z] {
+xTO5WiCm34JHaUG8xd_WCjkkx7PvyygG7mQr10FGI5Wa_dC5RUMkWZRvmPMribQ8fUWR5Iz8v1KNuEqAdL-PQQfI4_NOyuLVheZ7bV5h5Ojx-aA5F1xPVCMZ
+PhCLYnQTgvHeuwcAHvkDLeW0YHxfL5INFS5UiTXnZnu5m7fcfygPOuSzCWw0k-T6FazVXW3gLPRpA58Ce5UXytf9IVLFbXE-sqJI2jsfjzOSuwaOWwSeXhXK
+4wCdrHfAGjWfUdQxTr2CAysnEdPY0W5eVskJ4sFDZK1Yd5PNZRn3gE9fXPXvgJS0ygavsfEw0XxDE9vKG5DxGLqvuyKZeuIaCk7tLMZd_4f9PUxgyETNrifQ
+MIlIfdULqljJxbn9_BtA5W
+}
+
+skinparam rectangle<<AzureAppService>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureBatch [70x65/16z] {
+xTC7Ykn038JXajIfwlxtVT5Cqo0McStXFy0tOrlLg59qF15LRE29z5pbHtdrMhNuh6-NZSzNwB2PrWjAON9b9MokMf4gpIW9NSMOAHrmQM6eMgRGWA0zIxaO
+uBcAbZrJkPZdAPi9c5TBb8iXFAeboXKnLEqTbCaxIdTcoW0cqp9bf0iOXbBd0lnK9cBKQllcOC2bq9UaPggt6LmA0QFahchf0lmlC-2wtuJl9m8CDvMzWA7D
+t5BogwFTKfWe5sFMgiNYe-FgE0DM3KV7rOMhsZiev1s5mLHnZBf2onSG06hANi24wwW3c3SKEk1uA6F-NmZGLLFswJwK3ao9048L9Lz00x1uhPDnrdDbC-RQ
+J02Wf8MpU5BH6ljB1_usbIhrgulzPjSPRoXoH7q1pbFPDVsD9UKiMS1ylj80F5iPrGMSdGjOvGNipWKiYLPSmDcvWFyxbpZELbLH01P_gUBjdfKMK5VaZpVB
+TZOAIca1TON1voYxzrMmL8k_0G
+}
+
+skinparam rectangle<<AzureBatch>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureFunction [70x64/16z] {
+hTK7Ra8n48JXTVVc_lSDTKNxtMIFUe0F9cFhIJV-3w9Erf992R8O1QJ8OiA9Fb90YR8QFT17uea-KaxqSIVwI3hHH-fM7nyQfx_OgtFB52oaxd4Gw-IyYeSb
+cZrcahq_y3vERuoRG99TPzh7LMBubuWez36cltb-lJrG7sRQY1JgOxapVemunJvZfho_EmxkJp664JxzARx76nCOuUiCcpDJ3Q7h39iJyzWklAFj55W34T_l
+WunJG-1XHiyqO00HRIC9hXqZeOrKlBs0z0gf4sIg_QQfGh5nMlNtnTWTcMyVj7MF-7lAMnz0lDu_d-wCctbMXoOYae71lH8YrhC00tlLBcBCe92w3WA_XWl5
+0TBxtnGScP4seyq-uVPI5fbW8eoCY2KHKs1aHYpnbt4qCYDjnWgfe-KCmMzuPogF71bXnWeLGfAquurvAwIJ23DMo2yZnhmLIe146SMfVN-YaUiOiMUSFZv0
+8oT0EDw9FI0ZlRYIP8TYAseZxyI_Hjv8jf4t2rNPJh2HDmj5sOzcsKzGEP3ivK2I7CZgF1S
+}
+
+skinparam rectangle<<AzureFunction>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureServiceFabric [70x70/16z] {
+jPVd0XmX28I55MLu__TDJxPaFCLild_NE1Zgbi-eTG1kMlQH7h_nRJi7ueALBMhSQLkUn9DQyY2UGFRY-UUOd5X1Eid1EDBQCYmloml2sBQLzttHODHzTVUj
+L0IbPRNbzB9CZp4kPGdn-0HqAJk_9S7TfVxd_LgAr8u8z7hrJ6ft0Dtqr1Lw7NQmYu_DyEVz9d-Fry0z_lhJ0xUnNj1xLdakHEMMEswcPfht03CZj4XnpBI_
+q-XCEx8DTj1uiitUWe1iNNimvWlc3e8XhrZHCYGO_eel_HLrUUAocIx8oL84p8fbfoB_WISF3Fu30Mt5CGesOCI9aOaPDeSDPuXI5cYNV9u_4EiWtJpDjvkm
+QcgfZTK6rf4w7O_H2QQPMs1O1bRMrUt3cko9WEhGIoHE99qhDiyp9jbBvPd_0mBUj73K77HhyNFRbJzrdM1bfC8cIzgdBKPBfwuCipfPrug5yIopfofVcSzi
+OTjazllIjW9tvKIMBlP3_x3ql6InGoEovEclMF7_4j4HEzZITOCBIzTIPmwdgqvZqW7WT_5KtpfHhg_SMeqqVMx0ZDVd_2we-7o0g0z6uLS
+}
+
+skinparam rectangle<<AzureServiceFabric>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureVirtualMachine [70x55/16z] {
+xTPLUiKm34JXaM9Pcjd_ViiC5woKUxuy_o4JWkh5SeJwqQWT2ktH_A7Aly9v89weq70WusbA0VPkG9sgcDxDlbRX3afj66mg701WanqbSPUpewJXkgsoeS1p
+0fvftb1k7wCSQ2f00Rz7cNQdU3KKCO22pUuCuAZW5y_fldAeKnKw3kGyJP5uN-4suqCh-n5ksrgx6dTGM1lkcbnIQ8ONcP-l-Eksttdo-5TObB9Ob5Irg1HI
+iWYuD06kAVAX1CEivBwi13XSuMCKvh92f4s55uRbidBx7k5oH4C9kAwLG1rKg4EHbCYxwzqYjKERK-qIm3QQEN09
+}
+
+skinparam rectangle<<AzureVirtualMachine>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureVirtualMachineScaleSet [70x70/16z] {
+rTPL0kGW383X18ZU_y2xxJ2MAc7rVnlfLmU0pCSoXatauod4p1CL27cckgSW3CH72lppIcESLegw6yqfABvcRLIfxHMRUqzRIDsTsrBPKSI7aurIFL6B2daY
+YGelN_995E8ZfS50zQye1UOL5DSogVG1LN16QUQFZCQK8kP3cPIDWkR3MObAyqGS5V94kgSOdWRVwP420_qTXMXUgUfkRKufucjQymf-3EU2IQMPVsIKKOfw
+oEgUWZyxLf0z96Mhz88IZYOSILJiIj7bssfVLwLeKEXIUTnTUZYCZqayA41gQuTAlxl8xbgwjr5wVAYypwFrkvvJbgoz7-6KqjFrJxEA0-Z_fWWpwvH2_Ywl
+r2EbsLOnEb10WlAEeo88HmgKjYHR1L3UIXWqWz8x67UhTgMVJ4PPQhOgZ32Z03805O2C4llp2evqe8mMbVHQ2aAvTHt4YYRMc7Ug_fb1BWmN8TcNqlwgKhuK
+WapnvXiE0rYRUCYubRjIzSledrH-
+}
+
+skinparam rectangle<<AzureVirtualMachineScaleSet>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureBlobStorage [70x59/16z] {
+fPVTZiOW24H7L8Hv__VT7zF4PXNRRpttFJ5CIGRynVb8mHELptZ2dkHyWM9Fuoi4EpBVOTXXV4b6JE5R737ErrH4A2zEqXP-GZj9UI1FANl4b7OysYO8oFwq
+JZMOVgpnpG8PWA9B_ceq7cs9_-0Uv5qZOSePYQ6bQ-AqRMqnwzzuQ_vhcJHvMg3POeAkrslwc3G-fJnP3EWM0ve2piMcr6c19aksz6ifgAH0gRzKG9Vh99mi
+5x-MBc15kTo0BjDkBomQM2XZWGuiDbBUMZAq3sTjOHaBjBDKP7f22onzmCaZYvK2vE86Y40OMAWzvT0Y7MSJfEoXXG9XO9c8BGrsQEdaodEB9tXiyLRL-Kjh
+lh4Ke8GMb-l7DW5QO1bR6rWAn1H21xQM300IMHAKJ70l9XjBGqVN5kyFAFtxZSNJr9zcItsoL5oKWxVuilmC2xj5O5jB6PQyj0WA3OaxYmLrOLWK443f8e28
+hImI5DHXeKeI9JrtLXQDolARFGeBbGyBkAFTB3MibtNVubq0ZtkGtLwP9EIUQDvqGqlO8hxhXsDcDKj83aOxfNtMcoi_mKzlYKuvksj6okVjMz0v6x1YWvvS
+90C_I7bGFXljKTeP3yY_3gnl
+}
+
+skinparam rectangle<<AzureBlobStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDataBox [70x67/16z] {
+xTO7sXiX38JX4I24TFy3PzTnDp1RqlE_1_YUaUjY9gkvHtWppJWcMJppcWuqMdneUmTPT5NiqMB04tQGRD6NiOkeayn66Ztig5oghQgcyJiLZecazkmQibtl
+bAYzKy6YngTcjKZl5kl9rqnNAtXJh4-lH_NvQqVDPXcFaIPioIEJOYntNfF1QrDZx7gLs9m04dIDaegICI5qoYgHCUqwXOzfv2RZ0EXyJ38k0obcKZ5AiOYP
+gjiYy9ZmkYs25ZCR8oYamYCyGoERCjKc2h0jesJ9jamcIxPbn8Qs__CsrF6MYuIBh8iQVOfiX61bv1V6Y4GhTTrwkY9Or9CLnKhELHg-IsSgBY0PMhb6hgGU
+h3IXVzMyelG1XbTCy4dAdeghO41IAVf67XMxgfe5HnXvBFnJAr-LhqgB1GvJMtcit2u4ktbyE5197vaCWcH8X6LuX1DdaUqP7k4P6jcUuH6UuH5EQiBGDm
+}
+
+skinparam rectangle<<AzureDataBox>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDataLakeStorage [70x54/16z] {
+xTQ5OGGW44JHZxFJVxznERSXdjS0iWejTCPid3DrWSbfJHVfd1IwJEOKlV3Uf4jLJgYNAdouwYkW1GPQeMk5q5Vx5oNaguHiWo9R9Bfi1KAk1bck2JIP8WFJ
+3p8aFyX0zOCC33l86rBe9frDvUOW-rU9pAQXcpGsrHNloM44-StKRThcbE_or9SWUz9Ba2rpByYtXhl9bL-2R3zeojMWovQfiWKfPEjC-URGZnDQOMg1A5gW
+KPTi5QJQB3N1FG
+}
+
+skinparam rectangle<<AzureDataLakeStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDiskStorage [70x59/16z] {
+dTTHZkiW38LXm3x7mEn_lvU9IaekU0hzdgjVfZ922MinYIWQNj2eI8enx8cYu09UL5lixuA27enQoKaa9NsOgCHv2luDCnBfqG1F8xoC7ULXX0D4Vn2_madw
+ZT1dbfkIiz59N2G4UdAfzUUjbjPo9F4QlJ2ecMlUaDOY2vbdoYfIZMl6xIFLul-OFkj_SAsrP3Dwp1iI7SqsZh_AOB3t7quPu2nYPLe3D6x5tuawT33xFCWL
+o7qjiRHncARgiDv-n1_ZOY4_rsglOhabRZM6dhbB-PrQ1tgXgoaqdEzBQsNhQ9USItdjyaE9uIBbvsiLuQPVTYfZ64cknus2k7WOxI1KCzpd4RdKZKB9T1EY
+5rXBEQtw6u1S5ez-57q2Nkz8BYKtPYHK1jeaf-6G_sZtxZWDjw8FhnTMZo8wIHyY_Ie1gkj2p_W5sWC9TSJaHMo1UiYMe6TuL87k7ubG1zK7a3r0G5rmXvIN
+pUDZUylyI8ETRVVrlQAJsAh0RbWMcir1S7TaOQlHf66zDolpFKF0SwsSY9ze64BFTCGxvQ_YY34qOZCI4vAsq1-bIFkUX5lYzurHWXsZh3ySRHya1aSKSAUW
+ANoIHBqMsG8n78Xfs1Zv-yF-7m
+}
+
+skinparam rectangle<<AzureDiskStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureFileStorage [70x60/16z] {
+hPS7giKm30JNNUlx7_XJFoBo9X4lGtzb21FaWYjpFq8yKVSB1Xwm_G8MtDBtAnPkuNv7Gq2crJ2PDXzuxK0-SDi9LY9jFl3OAGmd2l-_7_tCu7RqkxHia3I6
+m29jHK1e9WBclghzH0kQAjCseD_bhDI12vr_AKlGz3X0pvQWOHYWDnQlYO4jPG6FWVj-PVb_KpoE4uL5JI5FupJt3nRwjD6owWLpbhXUBM49WtQsiFYqUOiF
+J67Xka1XsSqDKAwknr3uksLtzuzS5m_d9vR23omTNLbe5wZh0lPptGgW2Gld1GhB_6u2KFYJfSUjDJ_JziagLUE-cBVCk4VdBInnKyjRHjpLyXPJvwZgb2Uc
+_t5Jn-Nkzxu8Ar3qsSxSGvOgAG26FWRL44nH6NyP0y-2Eph3WU7yjcaQXW4AWJEOl1jbg2hRJZ2_lat4m6_fq8nCMeqbqcfQAcqYS29jBl304yCUMRZo1m
+}
+
+skinparam rectangle<<AzureFileStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureManagedDisks [70x59/16z] {
+dTTLWeH034NHqiWB-z_kI8RsPAgwppTSB5W9rTR796OHqLyYp3H7RxNiQODO0y8d6lt_LfkY6NumUubrKitn2nelkzGyaHD-8QhS7ngi2q72oQr3kY9Xmd7r
+HXLToXBkTtUQvl33Va3aho0Q6QL8ch3ZdXcWYJQpnX4mZObex0X1tsDlLV16nlA5DGVOxTmQD8K3YpbJOEFm3Md2RPv3m-Qqvn67EE5q1RudjvClmYys6h_q
+S0RXoBhXnd4HTTO99qMF6oIdDfyaPxKKVPbFuLCIC7jSfPKVVBZWCO1Vgd3dwY_GYXiuFaVbQjhn6Qxbtj3ZRPZUU52dsB5FgPLO8zqAcNBshkwJ78iYRHbK
+QBhn6gg37fqZXvFVPJGV4Ctsq9YqC9_GHIyNWrRYX9ld6vRMieJhYyZbYqoOA4cScRoWi3lmLgnrYWdi1PHYsKuoB2Bq7hK0c69CsuS4PKeevLXK0JC0VcvJ
+35vC26s0WTE4spo7u9rfpx7QBqYIsAe8VXEtpWnixeYOWypvVaNK7FhTD2IHzNt6XH_7Agba2OTQYjZBhJjFMG1sx-_bE67F0F-Q4RuHEIVvcTJYcjh7CExV
+Z1ysPddG6VOk6V6Fess3p5OIRRBk5AYNXTgdZqC4oZDxG-U_zpuoVw-HCLg- -ZS
+}
+
+skinparam rectangle<<AzureManagedDisks>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureNetAppFiles [70x70/16z] {
+xTC5OaGX38HXI2P1Ul_pLcc1sXDcg_iTu4SJBkfAT5KCqTDfkJHOZ3JflCAe54QbC2g5KSbbGeaKIgJWE3D_pOxpjoWHfqIS4d56f5Kqd2QKIlmtbIXRzbJI
+pPRuFoeppPiLc7T_kQAnstEx0zdnHjMRilBIDJH-hRnKhXL3ftciQ9DMvgYYoR-iWe5C5SMZL_S2wuQATdD5MdggABgVNu5OwlovOccmMG5qXaSwsQfWdyyh
+O5J0g62Xqlbvb8XJ8Wv6n8KHiI2uPqiqNDBL7G
+}
+
+skinparam rectangle<<AzureNetAppFiles>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureQueueStorage [70x60/16z] {
+fPO7bkmW30IRBEd-z_s1VYClPXAhsZWEPMWiMxWpx2EQy85iNz3n0R5lo7XBjQyGl2EfVKV56xfzYKQZ9JqQBSd1QCd02zHEAC5eYOPMsMaWdmhel9oA7TD3
+qRvUxMQ_GABHaXgCrWFUemq6B6OzuP2YQy2DPN46wsuiqLOqFMCmpVApW0haV86INkMKpIqg6_foioRKgvpaiYJi22EyepCJcJ9cv1OWvGK0OrhoGcB55EH7
+mBfQbdYwMzhzEJTdoamp_rmMS0FH0hUWg6zkVl4s0nPaMoqj-V6IW5ffQSb7gHbeXHPDSv1LRfQXPHxFx8VHCZTpb2CX3QkqM9-3qdwtpDFxd4rMSyiyeQer
+RgPbPbBD17gpy78rCL2tS8QvS3Cj_2TJTRTmwcdOQc7QtEmM0SPSITajfgsghPR9jTblaCBRBcyMibiSjmn0hR8OVslXGei_62vBrnLQjiq5-gZg358lomuj
+E-hHFf27fM0Zgrd3HfahMHajoRISmI9gowWhoZYZ0pAZTP8Apkdt29ffguUC_SqXWLTZyEtOOaqGqM13HWfscf5Whwh1JegKQ5T7HZ1Qaa-RiN3tBNYD1gCb
+DHejaQC22WPSyPuUZ9Oa3KPBIlz8mvs_
+}
+
+skinparam rectangle<<AzureQueueStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureStorage [70x60/16z] {
+xTO5iW9138JXqKZV_xvFsU2J36vV6VeZlLjG1FEKqZR1ILhQWjFG8rG-bK-bbGM1xNA55gER3pfSAMdHD-xEa6Hauq5jflAfa1486IWP1TjblkRnqjk2mSr0
+kb6GNUQvxuMTx-K-bQmR7vk0_m-U9ok4GtYkKd1OFRQHsEKEgIk2myGgP-aJnowEqXm-ZmOLKBII5GCbM66CSAnICLP35S6OH7u3UkWF4Swc-R_21uyNXX8f
+VEHzBmKHnQam8dXSQOYfeuegOcHKcLFpeeFiSi6DCN0-pOBpzLJEpsZoDFXQSWayadmrS1O5i7j6HsHrLauXtLavI2ChdxLsJM5opigcdBMoeU3AyslRod7T
+MVaR
+}
+
+skinparam rectangle<<AzureStorage>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureStorSimple [70x61/16z] {
+xTK7OiCW38LXCGnwx_xtxLvAOv1bkliTu4yibipbhQi2qBvbYIaTV0Cj4AhAT_h1JbPUrUI0ZNiqYrVZFdWpdJoVwHn32ix4KfagdDjaHZc7TE9x_Di6T4ao
+KkcpNJ-wZmUtA7rKBbNmk3GuTtvrF8Z8O1g3Uk2V3CTRkAAYAogLAogW4PjkvWbjU7nnWJlgQBRmtkFPZ2LQqTvAj6AXHYjMsvbBjp0zb8td8LLUeHOuqP9Z
+Bie9Y2weKFAIYlGbbOJWTEtFPj08dkq26cYMyzrFEdppu7sMAkALAgzgHwZIirYvr0TbN45zLP9uORITVcIbN90lbB8b8OrM_gyyIfPyeHpSTVyhVGi
+}
+
+skinparam rectangle<<AzureStorSimple>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureApplicationGateway [70x70/16z] {
+fTS5OkH034JH4fNkV-AWnsfRcvNJ-SFqnWmOKYV3yBU2t-dVaMBsaMBsaKgtaSRi8k4UnMmXeVXAR8-9mr2F21V06_CG4PWYoEDvOnuXNm-2O9YA78pz3g72
+lYt1Pw9macc_GXnQus11KkHJMPWPeOWgIQbt0ixCPqpznC0GGFo4DR-ofmWT4VXCISfhIkNAp0WDT02GSt4BEd9bPeGAAZxZLr-UWoip8pJG040kIfxP4uGE
+Sb4SegB8cIdacAs06U0dB9ep4rmJSIZfW40FE7BDPeGEhHLGWmoHl6OZGifhPF2T8B8n4y9uAIx628LbomQacEyAwSoAz481Ys2u0jw9ObQaPpWIvW_PY3ZE
+D0TcH6PcHcP61-GX8peZCqCVa8VCDRiXeW0WSMCO_rLWLuJVIbuPmgzAt1JO1Sb3kJ34NR6x0bkGKXQ6Q0gQ0bsGKef1KnpQb1KffPYc4BWoAx8gnNI5WXjp
+GqefffH2Rim5QKfwANUac59W_rA8KXQaCIWccqAKiY2TGMLtXQXyGJg3bIcba58AQKoSjNd4jK8wK-LHAQr2ElDS8Mur9fio8ft9MIcafwDIoCHaLpeoCTaK
+T6HaVZeu4HOofbdCDjAPZcmm7TbWEhB1T6IBQSWUqv0zvaG2s6Mgm4xQaNsc8_jCO3zjo5OIdmQdazPt
+}
+
+skinparam rectangle<<AzureApplicationGateway>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureAzureDDoSProtection [51x70/16z] {
+lT454jim48NXvGqellzn6z1KYcjuM_g74jkVaFOogcQXPH4X9U7nod0WqNC1WNS08hPOvSgq6wl5PcuoCsOHKJNtECxTL4IOEU2o5_-IP9bacUJ_8BbFydhx
+fMj67f3RVQDR7f7xPdNIJadxwld_bBIhUPi3I9ZTsiyU3Peb9j49i9SX03Bgl4OQIAPbBSkZmTllucdWG-xYMIjSvKUWXpmcmGzvo09f9VAvzXv6uj8tKZda
+-p92I9gDIS13lhLbX6z_1CtoFqWharOcxPyG_oOD8FPb4Y6giu08yoGW4aHU94h4Gq24djaGs-I-ckJP47dT8jSSERsJGVAoKKunVTAdm1AYde52QUIGC9ep
+J1IDqZg5TpwI8n1CMt7i2gUz5DW6D94p7MRm52FsrMKWISm71QOT21Mo9r3QxWS
+}
+
+skinparam rectangle<<AzureAzureDDoSProtection>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureDNS [70x70/16z] {
+fLY9Skim23G2SUZ_F_XDZBec-DMzTeuq2hEiO7Nr-1p4ekOHAznjoZX-3bPV3M52Fw4O6kl_CFusXwq7X7o7Wwmb9s9xv_bQpunLu6FBooB51_LJVH2zNERv
+SKMVSfGrlfwMH7BmGV7wF0fEVZvey-Yd98ffdwcZwjwyA1nqTjYLX5z_5TKOcv1SQJf9CEJR_m8YTVcgMZk9qvKsszFdDClaxsgqMjDHlXO3CMa8xpQ1GuIE
+iQLqq6wJ63nvgnpWZZGDbhyMp3xZc5wfT0eJ8OA6J7qZyBFQenM5ZuCjrWqHwuwOupZUDOzYnlJuCqB7hMd96Sth3s14Id4Dvq_0AyCWbcaENRbfyWY4Takq
+benK1X0roymI2p7T7L99EwIPn98rwRq6kZlITOo8WD0gFB1yVmFV7acstqAolfeVlmMbYAjt4YVSvi0sxAwKVrl4p47ro0CEzHtdEgNz7J2wLaQW08hLZmRd
+zycxGs1134PcPP5YONJ9vbKMoxmasFyDZ60vtJg85HPxHHGpsjksAZdY-JjO5e9ghosrWGKgFKViDKfW8R00jZBNg2pWtrfUZ7ffYPinT1-z4M5WmIyZMSvS
+11RRXsT2tJsk0nmiL_iuMR89O24SmYZ_4mkqfA-IfTnCx96bpoWhQc31BSaQYun1drRtWpDP4iEtumSpxnxTEqrNfttNmi22D7HrsbvQEeiMrtsKAGfBZXJ2
+-meuIBSKi1ou-R0WJvGL86-hCLJL0cSUMEO7YouNogKcnUTbnxT-ZTmi4AD9XwuYWMANAYoUQIeBxxLDlXBwll4Q5ZNn2sCS035J_tDCCnL2IFPS_hvx-oOR
+lsRnFHLhQztS_LDMSdThfzeY5AuTciyJU0ysY6gsjAFYyRJ7ELJ5rCDoiCWy8I8y27q53D9kT-JJ3kgnEi8LfrUx-RGlwUv7ACJ4Mtgy7MZw-WR26FiszVT6
+VvEvgUghBAfg7ls6AFt98Ql31XqTG-zXlOD8mlFryQbHHvcrtmEIuk5wnLVv8iF7pTfblT_5T7jIzCSinZ5FwcBwgucZLRQfyN7huTqTStMIJeDpj2ycC7Cy
+lyqDZ-Mv-igMFJAi5VRfGUrDCwytOzgt7lU1ArsrfKNxZyMp7C0Pv_i5fUCPi1GGPj7Mnl4zWEU6KFhDVuFwXl1Ja6XzgwaypEGV
+}
+
+skinparam rectangle<<AzureDNS>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureExpressRoute [70x42/16z] {
+fPO74hCX24H34_3-z_sBc_6RTCMNtjxWMiZjEsIH6Orl9rXsq0uahK-YB548pggXx03mIIaXukE9rLD17dwGZCyAfFyZwnQ4gWUrsAY04JDy1RWFt35NSZ2Y
+YpYLWA1Z2JH5ISI8E6eQdraGCrslgIHvtjv9snB7goTDKVAigKg0tJLSaDGqCIKBceBaILEI05tHn3ofVsbaHLBHO9dJ9LdJaAZGKmUCIxAc2KI8Y3ZxPlUI
+Xr-abYJFcYv85Cp6iLqDAHuTifH5O773psosFUtRw6oWEHjvR3fmXj5uEYo4lLot13950zo4PmDjY8Sb-ZPfYfyxTx1vgiPJpEtnvIBy752K_hlfym3QjI70
+tl9rkfVN8ZDijmkhPqORvynV
+}
+
+skinparam rectangle<<AzureExpressRoute>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureFrontDoorService [70x61/16z] {
+lTTNYiD048JXwgXq__kkSowZzZJxFuiFJOJ1nqGzyb2u2NvC8nyA7JBkrHtF3pbgHNvE2eOGuyg87fBwdzoJ-uI5bH0UTpGh2L6o45r_omucoyd-MPcdfEtS
+j1cvhNDXfO8fsxPEktycgN9e8OwLb8EJdmfoX9X2fgUeaEdHoeZei8ni5wAGOHark78ekE9ymFvTkS-Bn9SpOjyL8VDQKt0j1XI_NoiDYkI8aY5aUIhATPLo
+L4a1T5n9m1iKGpGeYUnGh4M95YLxb6XHh4MH5WNHe3YqGL4WnXK0qd2E3kcW4W1Zk4A_b155S4tyLoNmc4H9uQyUzTYZn5M8FIymeWX8_w-iQ50c6LSM0qQL
+DO1HPPq4mygimAYoECOoCY6rTC-4_04
+}
+
+skinparam rectangle<<AzureFrontDoorService>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureLoadBalancer [70x70/16z] {
+fTI7TW8X58JXeNDv__TDvxZ_IQ8EZjrTFZfwa38YPajwAMDz9Ufho4vx7I7Z8s3E4JBdI0mmXqXH1tE82Cmf0kOO8NECa3b6o1mZP6p4PuYibZ-Jz9cKFpF0
+-Cj-6fk121M30KB5O81GkSyGCHGmG0m531130GF4KCW0yHGoH68XqP8-K-TYWWoHMN5lJzefz0iP8YhhaYf9gPJyzOdcA8CX0gL9AbzbeoTnS0I629GXgUqV
+aNUvhO010YLf8vjfKC3q6m9bI6bTCl5RO4e1efHtajGvBLAfEm8J0mWJKBeGCa2OXGmXO09ts4hwQGLkEUrHNs3EHdUb08EPpi_Ez5Iz5OEoCXeJ_0aahWjq
+K1cwb8loQmUKk5G0vjTkh3zpcCLDBI9aFXKoohNL915Pln0mbKiaQQTosYiGChzFp8uJ4m42nZYzWO0n521W30K864CXGiPGY91n52BtcSXtBZpBHDgBpa1-
+CGKNY3p9y0GC0o6JyJyGWz4b1OZ1K05YCEmH48VfkcK2SPX8sgb0F6PkfWGGauagIQal7-4GpuaprcOG82v3v9GXSiuGEMVE4QwJcNGtxm
+}
+
+skinparam rectangle<<AzureLoadBalancer>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureTrafficManager [68x70/16z] {
+pTS5rk0m20HWOeJC_U-xBkcoPKX_dIVrhyuZugEupsgIoK2KLK-8vqW72KSumH531YblZvGKOWHPdmMfEKJU7cclWNHaCcMFMeYi13ByXOsTwA38029arOgx
+w7NlULEALfKAWdGWGbQJo83kX4Sc03I93UXt8aIQC0FzN_CQwy8DHOn8ok08DpXoRc2S6npX1a6U6kY71a4-r1ZY35yT1dkctEY839M4CH0PKnB6W3CSGGn5
+P9WaZBf2OwhwpCtmY28V4u-S6nuvDnpopD3c-fHJGx7gXWJ66d-Y5sFyRkXsHDcTsxvs05V4CiRSr_RVCnl23Vr_5sAo8SGel7af5XWnejiJyuR_krYfwoCm
+GgIxQkADxlfCWdX3eR-HpD1ElV4TvaYD46l0XlGxf0J8MjU7F-uGrxsvK6J82QBaGyiXX7Y6gFWO-PQc- -sU89pWY7522aKeaKUCZ6r3f1WXKiWAXiSKQR-t
+4y8NBbykAYSuulCL
+}
+
+skinparam rectangle<<AzureTrafficManager>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureVirtualNetwork [70x36/16z] {
+fTK7hiGW30HG6nDCVF_x_e96o5glc2sZalv2Hqg6oJ5kmkDn6ttEaOZxyBn7W668oY4NOpZ26I0JoBbIqRz02iCGpX24n-x454HIE7CTa2-O6H4kxwI1uGXd
+HaM-OdG-eDtzKfphSE-2cFjebG5IInPtso_kSevu62SA9fz9VXSTjX2qeiNAhPMfJOqFe-73JNeaChU6oyZwIY2sXZh-NvKymzjYPcOcNbOHQJZtLDNeKXUj
+mk3_GzB_6ne1jQi82fMOAxUtx_VGXbDBTLOAesQQBsIdMPEA83rTibJaAsRW6yfmXEyp756HhnWl26CumXc-qFCDWYCrzX8p2y9MzXej2648GfXvUXvupfZp
+d-mPyWi
+}
+
+skinparam rectangle<<AzureVirtualNetwork>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureVirtualWAN [70x70/16z] {
+jPM9biGe24LP18N__-0PgykqRpHBvvovlTPsyq0qT8TeiNyfHPbU8iLcb5x0u7ZfKTlnnxgAxH5w3XlmiYgxG5wKyxutOfSKkeP5X9di1hqSiSUyAM957uxf
+Yywe_HL-AK7afGJHYxw-RmpRAueAByF-qWJrl4UUHN7tMjrlsdnfQ963QDLF-omNYl7v6Awe9sdqqj5CcJfIBpnorfRM5ONfYtU1bSyVtzIq3nAPJMcWaHcz
+VEBkMUDiBJszqO7D3wLbnga59I5qK3CR4qZZtj8_HI1n0dJHKDb8wjXXFHKKTw9PLjf_aqXsZeUeQM0HGoA3jNXh4Vb5QQ7WIX6jJKbW58XKg8cm91yJwbPg
+3jgQXYFRR66i9zELH-g3q4rDamN3pAlAG-4zLML2vZ1uDhGCg7siaLI8iuJ1WpVIq7A4q7LkCYiSLFBRMwQvegBAur7xxsBLKLB1ixTcGEIW6PyqK1BZtQJ1
+ZkcFW4_l8Qk3vBjIaGNgLa8yuGsHjPS3i5gcq86C9c6_XOMFiBMC3q14nhOiH7QQVACv3S02NTXlvW_orEBhBcGPUoj-hbDlBHMk95OZ9wHRphBmri8McKYO
+d5H4cRAnVCjeLaHcMsrfj25Ibxxmn-4wMlv3y-mKsb2x7DUezFHb7kXEC5698pfIii64XUFzhUCnRayAYu7Z2XV5qmdtroXv9R8GDY1e0AN2ctTl6Bull9jV
+A6Y1ZtsS0zdMFGhRKxETMd0u5M8YF6O0DinkE0EZ89x1yyr8Jom6KHOYsxJG9vkM5UTsrpl_H55Hp-IjHMBrhtSh-huhJawgoA0RBBD-rqQx4HXRY-aEpnmP
+VBFKBJE4xh7VzxL5uv3aMZEs8GTUkCHJoJYRl7zS8aDdHnezHrjcXcbFazR5fPjXOfzvejDgBwB51sFw7_a7
+}
+
+skinparam rectangle<<AzureVirtualWAN>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureVPNGateway [63x70/16z] {
+lTTdpkCm38HXKPN3-z_tIo8O4AmDX_Aszw_ps6ffoQkqhe11Hw-I7YLrs2tqSeppj7jeSeYTq6BTZOJCiQZn6jKm7lTgFEw7dLGStUmeoD74CLh9aalJpO-3
+eMjTLwJVxvo_w7nxyiGhkTrRdVD2fjU2nsExpERMqrxThjAL1Rsvf6zLDZpGZPd1FtfoSAow_uJ2nxw_Hls98Jc9_vf6r_tALZvlBeSxmVxNUFs_NDfGsBEW
+lQHP8vIccNr4nK6Is1yqWeVN5ZnUgOxcLi2_4G9VkOvyephqZUdODwPZtuYcddFzLAVKJoudLUVN2k4TFaSFUIdmE4g9UIguywNJ2Pz-vrCVyUKnMzhd65Sv
+NVxUr2cFgrzuMYs_wHNZqrCTSz3VOWy7hnBmMcjxr_DDRrxgrT76xVxXiUdrtLZ-Y6VdqAgSyAbtVldoHszOhN_sSO4_uolEKUHTcicxWfZxnrHWX1E_DE74
+BqquyKnR0_TSMrMZdckhtKWgN5lEHZtN6l_pZ8wbFZJxJ_UESx7_LNm1
+}
+
+skinparam rectangle<<AzureVPNGateway>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureAPIManagement [70x61/16z] {
+fPO7ceGm28Mf2UJ-zztEV15bOjn_wrYGyW1X2KapStVhol0CL1yJtXyOeZvEcC0URLnYjEE8Zmg5kyXinCri_jpX7Zg2BWG_83VVCoFXXEBnk6sOuRWMoqWR
+hC3VAvtX0hJnWy02-pLILVHNHOwBfAokwdTIuycJobckb4RCtDRAGg-S8RLPvdVaH91W6mTMlUjNrSxDQxUqxKa2s_s6KqYvUwst_cCHOKLFoaEF-OE_dyKC
+bcXAZ9tbZZTRhQUY6S8UU2W2FZC2U2XIYvxPvM35Ks4V-SBJX-TvQP7gNJYMIXPF1fb5cDwETzTNMWZEK0j5UvTAk-6FPxtd5eydPdm4JfKlEXBEvxG41buC
+4n-9b3mM9eerftsIItwMDM7H5WQrN2lUgfdK6-OaIVbEmDEqgP5YBOJWmC_Eb8-qIdtmTcyGCyrcjBA2NiQiFcb5hXekZh-aeTLMZ-5Z5vg8m_5t3EDoBpYc
+4Pbt-ZIzXpTXGiJpgs4B8VgbndiiWOIdGnXsLKH_QD_uc8I2VIoGSFuAFPQZHbC3fd03RFxCYWlCe7JVZiWLuGnIaBCRErLUC3D2JL5f2tCxPDNXevsJEw25
+KplaRgJGrpx4GhDd1eb7uJ7y1xBekas4KuAUn8C-J1a1YRjFzTwZZumJxC8Zqn6sQKNdRaBDqol3GrYxVT6KOCKd
+}
+
+skinparam rectangle<<AzureAPIManagement>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureCDN [70x32/16z] {
+hTC5SkWm40DGBHYa-z_tOtcTrCxq3PfHs6Sv9iNPq_1KJBqRZYTywhDXMB51BGq0MTiOM9XQcm2QLXA5QOrM9hcRXbfgGEW2wnrdEKhBY0ICkZ9HUEiVDCEB
+hck93OPFMwc8RtYRaZY6xWJksD2MZXjExU6JIIh35QDEP-ai9-tQv-lVu33gT2-itp6rZoNAJmuqy4-mf6zetymm0B3MFmfWwWWxLeOE3InqdMgeKgU8odJi
+PuvKKZ1BZZRKjGDmFhWNbghW-HlD-lm-Z_-BSr4RdRiXm7-Mdpd-CTzW0F0R
+}
+
+skinparam rectangle<<AzureCDN>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSearch [70x47/16z] {
+dPPNmZCW20G54LdkVz-_VYaMZ6IUKiUsMLFkOEa6XtNXyYrY_iBaAqSr7x6QbwYljAoa-uwUb-Gr9DgxDWwNyq1Z1p-7nh-bLu-fLnk9MWey1fTx8E8dv4hY
+W7jsCispy2eXU9QMcueraQRc4xPQu05ezCY1VjeOze1ExvyQnreizIwYD2oBPeiSVouiJNWzX79dmN_7_maOJn_4QedZMJ4yxOSpud0gZD7AXxn8kBLzrjhp
+cVBeGBmWpA7NVGx8V0ylIwrpob67ADrRP5SGX6ETqUBLNUcPXxJvVUnw2FIOto6vTPezOVCn-04UsrY3JF1Zf5FFDpokXQ12j7aCwjibfKBX3GKxIQxR6Jc9
+UcmvIwWyOFES1VowfaoO2d4pZx3FaWiq8Ocfv_y3vZVODhl8ILpsASf9GFjYaBYyWazB41Q-bLWSQi0lCIgn9Y49cZU11bT9XivbX5it9B17u_pbDm
+}
+
+skinparam rectangle<<AzureSearch>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSignalRService [70x70/16z] {
+nPO5agv120C9TlyRFrrV9aLchSj_wSeGFZ62HrRrNoh3OJgU_OuCKq3sWVAreveHekFU4xsWm8FqaX224CfEP2l0Hgerm2IwXajqJVODMBJZObFe0Ios9-q5
+esIrWyw7WkKcq_F0bfOa9MEmyvvm_kOL7ad2r2YPSPgRIxWdnu9Wd9ngsaZuehkP4yaoJPcb9XaBCICI0hdYY8IF9hnVu22GC1Mz9uvXiWNg6AOlDKKj7AVt
+93rCz0VuP8l_-8bYdcwrnA7fR0K_R1qv7dqHS-rPd8y4ZdUOmkuC_0KmhJchcvsRzeeyBujPNBm2ulqgwk-Z60ANEbkV0hiusvm3IxEDK-3OHe4dcTsk8V3P
+MUmqpckq-e0692pHa2UTe25hMPSQylIc6hhRkD64sRM6I1GDaSYQi1aeJRaToQscO0Hd6e7u70rIqkWUc8ONkPSe8EgL8Kctlm4
+}
+
+skinparam rectangle<<AzureSignalRService>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureWebApp [70x70/16z] {
+dLY9WeIe3ZG9kVp__trlLrgBbc0xcxcHBYgLWqnlQoDHyyZCZ71jlFtTH6E_MNgZlq2mvbwRosiCtnyizGq6ZHWPRcRcaUDY-ma2NyA41d1Mm0S_EnCNYIns
+jaln9xVQXqZ4lq1K7MCddMMuFZjIjjW1iz0-5ruvoD91AXQfb0ymFZxJdXsFOKnPWC1TBs5Oshycjc3JrmqBULkWvaFIH5RAjJl8nZc4bAQIY48vxcjKYDYs
+JMAVBQPpj-Zh5R_Ks4lhodM54P7Syrh0ScJcHCEq2RDzIyDPesns87p1XEBq-FB9Ju9rtG0cbMOrF-7cuun_LQ0fXG1JTIWzbWSgebqg60L2aL5tEP2XO_E1
+gxT00oQ0CONHBbfo_F09f0kMYMoVoIH-EM1p0ZbWObt2UYPcp_F-Kowci21TTmBg-lOof4-aV0PHPB4i-adsr0deJTAamPsKmS6KXRv2L-5wJs3Ow0MlOFhh
+8KShwfPksREtCaf-A4T8eT6yQ8Qj5COGu7m0GIysjiWm_bhrBcxXKLRN5SmWRqzmhnqgf8mPHiwWMA_ikrcP7h3k59yeMeSeVg3OY8AYV1PcSZl-AmhDpu7o
+tgEzv88OqIjrvo09yWKRfXZ0xeoJhnMz79JQePeC1ZmxVi6fTXDNAXIAiGDQXmr2YJ4GqA3guIvT-gd1NQ6yIg2jEyDwgChEmYzX7AEwmwj7itxHK6SWo4id
+6ky0Nz91cSVPnP4mWiaNWM2H2WqtI7U4paWds6BGoAEVBKTAEk6i62jR_amWnai-WxPDqIL_A0bGaV7AlarOK0T65PKOivgZt2Wv-dJJECPpPHYO9j8wptJC
+HCJI35I-hyLyGYb7NeQC7Q6C0rS086zLsx2dNf3ps1npoB94uSG59Sqy4f39nOa9b3bCAL20kBZy8OtNDUVXIdElqXLnBM7glRP-5FGJH9UH0CtyGOS3_NGD
+yzpXs7_lqVBV1fZuguxCkNwRH2nVlsEXYUnq5MOYPcaMM7VWBuriVxIGxPMHvWeYZLz1G0COjDh-QlobHRe-UF9_
+}
+
+skinparam rectangle<<AzureWebApp>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureAutomation [70x61/16z] {
+fLS9hgmm36lQRER-z_qBwWICogpMzaIH4yTncTS-GgHhRpz2jl-0_qQasqJgDptCuh4LyiD-XcE3x7zYEn1Vg8YTxqG2-MOMexNc9nRxKD2S0mj2-ufbKnAa
+xofHPXbJK7NM-cjLDiqi5ZaBwgs9iqzhalzmQOf7zKuk2wgdbqkAgk_DoELulJLLju1-4kHLveNXVgP8xMTYI1EyPRZWu1WrgN8vohWtu-lpGPvSrhUpb7CU
+DAbPl-FDB0cAX0N5IN1_nUANrvApt5-iYxYxcO5zbCeopUt_c-vZjRM5fATaBTzxwwcIZ_HKbuifxOfb2LbK3Ih767I7NBSdRGUzkSf1J-gJ1J4zAXAwsDhA
+20ig64l2JI9jvmaML71UAPUd5uCl1adaHYDPiV2v_aTUNT8FMBYXb0kBteSW3aKSJyXro-CkaORLvM57nFa-35bpB6z340d5dBHVDx9Vdm-Mo6juTsOys-kx
+olKOg3CmkTs67q-_8Nf-walfv0EV0iYDVKKiUqu0BDNiFBsW8fhBbdFP0wqlnLSQGqaoatCp1usiIPAwWCvFGqeJXzJ2KmuMDtpdOMFQXi0SQjp_i9NZZ6B6
+IFPnS-8Hnyqk4FRfW7bj4dLBEe2m7GTGmWa0YBh6HhE2wOnpFrI6RqjuJEeIgwXBJ7B_iomRhVNO67FWFS-Viy3Pj56DTi2EHmoTrJ4k7rHmegCsxOPbHsyt
+B9HIOkbD1CLIOE_6iTc8mVagNYCMXjUqE_Yb8kP_i-p-9pB2WiHHBtORPQvsUukAUXPpfgkq5R0neds8jPNo3OrlEMGVFrGKBFjzzCVTPhHBtmhxck0l
+}
+
+skinparam rectangle<<AzureAutomation>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureBackup [70x58/16z] {
+hTS5aYjH20LGz27xt-_N6AqCbLCocbj8A_IXMaI6Bu4nzdmpWWdqhDQaaCYdUEGvGWk9BcNy6v9l0VRufjELHlxdJ5bIO3s-mqOBHKa1UUJ3DSsyIW6A_4lW
+Yfmbc0h3NnYFn7Dq7A5bd7vNZEUUCsnOPbgxb8C9l4S3fzQ-6JmR7VKRSlmy4CiI6Sum4x4itrQ26i-zM9QKI-AlgjyzH3ar6Hh8ClMraaSAHRuuDIyhDII3
+vvS8ClSyvd00PPcRASCEh-Z5Y5zV5lKeHtVNri9mNwhb7bvV3u9XHwwBiJmxWP2PwIB6o-bpX44VVRgSnjnUtYBs3TfP2cQBlgvqHUcdGGvx-b4fxtCp3bCa
+k_oWT2jRRk5oLItNq-optGUYZALfTrcLIGfkOWmcALH7wUN0RPDohx1wW-epV1t18UKSRIeFGE82mv3ZcoNbX4FbEQB3KghOFI2Cq5b3yvOYXnPyoAdr_Ley
+X-JxEveVBqLC5rtmj9JASe1XowVzL3ODgJH_8XYEuOfiShbxrxobWd3aDm
+}
+
+skinparam rectangle<<AzureBackup>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureBlueprints [70x67/16z] {
+hT87WiCW34HHMn8gC_S_xrPIs1B7a9_UNX3szf560HMsBIJ5Niay0bw3pYh5kx3F8Or3FgSaXp2dW6Dp2ZbMpvOPRd9JLYhVkx8MsX-AojEfjGJ9M51w3jAN
+5J4G-x8YJlgXqWvTi8uK9-IW98wK_6DvYLAv5UI1eaMstnl165uVA040h1zlaimJIi95n0gwe3JsOQh6CLNbUINhogcCdL3WqcDxkH80ydcbKaJiyqQJMtbs
+TqsYogHAvXL9W4KKR4MH8a5sP5f9ia3gcW92WlGbfP4fHjQIacGJ0Qah2WYHFjAqOcH-FzI24cJhIz9v1OHspISKhwz8Z4_ob6BnMP4LNu6ChoOc0gdZ1ib9
+PJmqZSmfPTnJ47AjkNixLcu33IVnsB4o3jH7cb36WSQHxCH4TVTy7Cb8FgjWcC7kLrR4dnELkoS6XL2vA-yKP_oXbFMNk2bAbo7SVgdGtmhkFhuf9MFjfaZ8
+RwN97_zY9Z_onqTQxZALqpa9GXPpibwY96dhIYDZNTb1-hAoDP88RnEPNfNDEHz2kx9fBJbVocUxjfdmxMHN9YlsNgFW9KgyGgbjNM7kwqhgjbQ4s_SwtW4
+}
+
+skinparam rectangle<<AzureBlueprints>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureLogAnalytics [70x70/16z] {
+xTG5SiKm38JXbItJwlxtRTwmfWxAvVu3uIziN2gLrWUtHgjPyAJSQAvHRaCwx7riwPP1swa9BYRTzgFYKfbsM7jwDxuXEAlOLfHHipYJQPVgE4Xe5olOhzlL
+c1u-5D_0NhGRwS6bn2zcsAqoPcKxQCXMzsyRoILurKwltokKwbAyuat5TA8akwkqYQAtbJ5Hwcs54wMxLvWkA3PHnZTI-65ArwsmKh7rXnGkKRhudYa5lcTA
+Mg4Ch50AaakUA1GiU4SLnmh7rcoE_bBcogqK2vIE1GfbWSA4kCACWEAGeCA4kD85OOKAH1KM8Afq1K8AHrC1VBEH8U-N17yayLrUTVoEvgkAMrM-hVAl_2l_
+oXi
+}
+
+skinparam rectangle<<AzureLogAnalytics>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureManagedApplications [65x70/16z] {
+fPGBcYCX28HLG46v_tat9iHrM6AwPslUazJ_bLHBkg12aFv31OdezuYCP2g_jvlmFWBefp3Vj_y70YWItXh0hmE0rLOSeXWNlXI_lRjiTjXYbGl1BI_izWH1
+fw7T8t1bEy_3x3usv6WY19UAAq6s616_XI0EPyf-_d7nTe88xWLnyLW2Flhv6y8V7u9E_sQZ1IYrWf72uWdjnHrEmZjWHs2sqD6ZQ7PayO1gOotXsCnOB1kB
+UC0KvbEhwzNIH2B0b9jcr5mcaH1WAYw2Bnv5pW1qf_3vwmL0iV-YNyePhW78AbrD6f6aNWNKQXxO3izo1r0f6sAhxWx04APiDWzO8WSmmMOF0FN7DWW0Xa2H
+2D3SQeKGK1ziYG2CmKAv0I2tKAhTrek0cb-zxYtO1gFl03iyiAlHMYlb2m1XFHOEiExH4R1w3G2hU8m1QtPqUX9jXuS01hiJ9u2500zOpTUh2mKSW6ui5B1A
+Du0rJnS0C5iWGnXWDLyF09fw0N1j-58V65xDVmHaejga3vqIGjg6iJVl0KtUUbh7w5D3HwMj46i-0aoFgNVXjsIe4Mf9rdm4OD3EiSPu4sPvBLuec9810kcW
+mtMsNay0KQ4Je4tx2S1T6pqr-slCl06uGSgbd04ybBazX5HdNuqNe27oipNs04_OrHiRe53NMPfqvG0GI_g3C8DGRaE7l8_v0J0adCdp76hs8w1hZm1DXexz
+bH4V8IPqzNOP8xyVvUupTnt-kR3i-rjAeZR5NIVR6qOtZQ7_s6Kev_HNmEedrwt6rqKJNt67z5D5hdLgwIdzgshdFidIjvmYeOvBTYdfWq37XVIOFgiCbM_f
+qr5PjDzFxqSfiVsGtlMvjlDB-lnIrPek2cmLZ2xSQgLQMsiLKw0_
+}
+
+skinparam rectangle<<AzureManagedApplications>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureManagementGroups [70x56/16z] {
+dPU7cWCX28GjoA1v__UzsnOodoQwErS9-ZDYYWPNL2jXKGcGOQBKV-L5YjLQaRg7nUeNIen3oYRbL4BTfHr2QslDEdW-C2OVGyl1w0TBEuK1dkS8SQbYQuGP
+-uyRr8DEjRd89vNVx6mGwZUjnsNZVTsLX1R3GliKUULb0TklC9OH9OMX3XkReJc5lVHFdHyK9Khu8amewHE2XnHkRtnC4Thefoi2wWL1UKY9078gC9MeGBb1
+OOWGyGc5ooS0wJwb04glRm3nBaMwIKBO6ILRQwONXDq1hTMoGC5hLnjqGUkHgt56AQzJbGcScr1YUrtgDzPpvJT5NczrhKoUiz-KGYDPsNDrsGiUUk6-o8- -
+w6IFiB97BKueePu3wK4kqNAOKNBzD-vFK5BQSmrXIb4WHGNY-1MQjroQKH9GzXUm3Dznz1WnevIZ4g33rta-t8wxo-KSnW8G0Xab2fTpcejcKuueLAwppG-n
+KQQmMRPDziXeJn4rUpk0cKfqliAGtwuC9Oufi4rEsPIkUOCeZoZ5TY4C8h53fo-Ac6Ad8aNfRSpBAqL4YJplYZ97n9If5moZDFDohLt38ChKfKGHpdETUEUt
+QTvUttVv7cq4_JYe9f73rXLbZwAKBlAZQg93yxBuDg11w02_AZx2VrnIoYs0JwpA5njP9_3LXYyfM5yMLsPtjefHx-O0lhgehpiRzOuNlX_-0G
+}
+
+skinparam rectangle<<AzureManagementGroups>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureMonitor [70x70/16z] {
+bLTPek0W21CK1Ez_trdfCzfgRRvcCoGXsdbf3SgYvjwQkrKfdBuZgxS9NWkb3s2W657BCKTj6xWSSLXxWR_hqVkXkplZlH0VqfGSSHANCQgTBG4AlSsZ0cPj
+kQwUgkNLyleOVY7nlAcYxcaCF9yjyO6chaPmoPcVu-CLIHrkWV5rnXHivciYFMz7fo1BIgMtbkP6sAWQ8y5R834ue3JHQ0B0duqDrZu1rWTpmQUEcP2rrcEY
+Xk0f6v_z-A2s6s-0Wb6E-Wt6p0x2BeJFHfjZqcS0ubztPUJNPcZ8eKu6SmDGIc8EzR0usESHICaFxuCBNymrj5VKxJqPnVuKvv0tlsca9SRtC4ftuI7bifg3
+kbAw8MD2U3PZAlgZi6YwW_gwCYHJBqCwfhu2hWiolKGnKCDTtOXXe6L2GmvbUqOPt-zm8XayC7HqWNbG71SW5kZQ2ha6OeNnmO34Azpa0u0sWzcED_T2CRUI
+NhRciQfGX_c3Fdk4HBp0WiyHbdK1h5l0bopQjg0aTnQtgfAPqD0Md0GTRLgsWK-vBE4x4hvOR6mPSIwYd0BnFH1-0dNB5LQh_dG1YDzR9r0p0R-dYF_fmN26
+pyuxu8ZnjvTXXeG8XtWLdeOprBZC5Inm- -efAXozCg0-zzGF4rvZXcwVm7xUk8f1wAaX74hzgX2kIRzaQ_U3VFvYZb_uWhz9vRmjXej9FlnE6dzfNCkmBmY3
+Flana0Qif_2v4dnUadcotYtwEKrzgdZzI5CVrPEtBzaOLFoHHWwsi_wt_F8J8OOOqDs4lHms8DdIk6n_xj_F8ckTvsbRnOuUGsqTfdbG8I7Ze1BP6y9DLKIr
+UXkWHpTr3mCXcm2ti9oEGEexZdFa-aWXb3w2fVgGSrvJ_0O
+}
+
+skinparam rectangle<<AzureMonitor>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzurePolicy [62x70/16z] {
+jPTNWkmW30HHjEz_uHTNJgqPw0tzDw5i2X1Xl8jaoFXiOlyJ_nph-_zinhEwxKSsvLZ9_POKWeqTueHm9RUp-KO8bwzjXBuclCmltIUhmjv-Asl2qWz1z2GO
+zhsHFIiWt3RCreNn-K48GoR2gSkKIFK7NqsMcI43X9UY-JSn3ZOOuVmV1M66DgRyaQQCpLshq_vc54rqrT_uFss2bimBBgPZ4BJdHsfm9hIecOvA56qhj5LB
+XQSbp_YzvJgb9Qy9wBNtTDvZvuYbJ6dFQmeHZx0nfdG-uysqanUq9cHKBWDWFUr8I_S7QUb0MjiQ-m7QMneVhorjIFV5sj82S0p4_TLuHzzmqPi0qltBupB8
+CnhDvT8WGnfnW8rPM_GvnsEnlelto0mJQcN2yE_6w7tY24VN_DLp1oReGc0dol79NH1E3TIc14SqXlRzI0X_Te2J6haPIvxyihv4XdL7SZvB-XelVvlebs2B
+p_LzSZu7_UuecslwAUrZZRsOI2xF2FmlEHljgc_WGen-XQl2OA-XgCy8u-Y3C1K3OIu-4_uD
+}
+
+skinparam rectangle<<AzurePolicy>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureResourceGroups [70x56/16z] {
+xPSBSiCW30Kb14A-_uNhCcJaFB-nTO1i_mtPWSrNagZ7a1lgiyaDYsd26CU92T3Zn5M0EDSIUu-3M2msusuv0NkRnyBXlv5qqA_rLxlwiGYJxqnVx0FWTJxs
+aNz34C2LxN_PDGvoHfl16ApbqKLc2Y48Wddo6DP9a170MvuvyPR186zvR6tZ_DA78EzvTkG3WXIu9l2R9SeOiHJ25lQIj6eNRgdtTHLg0Nhj_i8jtWjvSeqf
+jxWRoSE3c5dZbd-QREmfIBDdYm_DF1Wa7MyMl-Hn7iGg5io3GKeMo8D1YXRCCsQ3mvGic0SSDGlaWI1L2-I185KBv057qO8Qa1Gj24rYFylFyhCejOWLB20X
+5j5UjhIdrsaTtC8TQ4ciO141Iv0t_oyMlOy4Zk-wCGzQcjmdY6Wu0IpQ00iuO1eOqk4D_CQeHUauDFFNKmWUjA33uZeEAHzAH4TQo64-8ucH8GNpR0iw9CSZ
+iZjSR7tPy30oim8frQK6kKNoLWkL6hw3RFu
+}
+
+skinparam rectangle<<AzureResourceGroups>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureScheduler [55x70/16z] {
+dPK73kmW34G16nVkVzzV26Y4bG3QKLkSFDmtwKE5HSszkQjKIbSYyRRAQZumUJAkbQdy4t5LRqfRQ5vVmWCs-mGVo6KmWVp0o3jqoEFTbG9AEPUIzr2sxehJ
+45NpaQTotbEMnwc65YXVK38XeyuZZg1EAIhpo5DA5HvpfBHVZSfqFHR2qMcbk1lpk07oqizGNHBhKH4eSEeD2fp18EqW3Y7YvrvbOWWnUrlbmjM2QL0LLTH0
+MNwnIdHM0kKPRyGmQUFieQ9TrpBc5gHOZKLvlfj7adTONQflHmp16uhZHmnHelMbNMDKK5A-nsfTA-Bg1ypqVrAFPJwqCLy18zYaDreLXPIdVR9WaIkzT6OB
+9ciRP69OSUgO-eArIX9o2vmpQHjOmoQieeM3vC7onuhw1rSTVSjjpp7CP9WI3DVHtoYteAlV7BAtySjmspU7D7W6d17bXYl3aESlHX0RJZ05ZYWnZv4hOyJm
+nwHeB6eSvGogrVacviZQXx1HjbI7Tc76W16bZMATE0gzPnolFZWskn5MydBK55__KJxsrxo6B2wp-2Xq1eVdc9duXStQjsdXhAGW0JTLn4i2vm88ylSu2ltd
+J2j587RByc8kQIjUnWz9dpXfBxaNT7F30UGyiMON7AIrZCvOsYlkjgjYUbwrcyOpb_MTa_IRmvfEggyWfwCuWEZ2GIMuT507PHRpG5spOQTliKZTOqxf5onG
+bnYd7x1FwYy
+}
+
+skinparam rectangle<<AzureScheduler>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSiteRecovery [70x58/16z] {
+hPU7ZaGX24KLfLp-_t-txvkO1KBCdlGPWXUblT67M067oHhNRFCNCiSDP7x2DqBy3zezVpFlhpjW3x26YoduFPIsXsWtX1ePDUejQ5I8zz0wd2vLsi2xy9sK
+_ckRznafNj2_c4MqrcP5rqiDCRePKyDU8xFR4chsQ67k3Y2NapK4OLulgJH_hycQgKVo76g1Lb8FMAKH8Zz1Q2XJ7pG2j1OZHJBCMTYv57_kywuWbAb15ivJ
+hrFzGMTIhu_a9BdFsyJw_Z7p8d4tdF2J5LgdKbRSzZ03SsHLX-VdKAE6RsInCR9CtM6-nAMwikexGqBzGkAUvJkYn8fReUPTad0aLkAbc0Pqve3Di35k8lgn
+92BEQezmEY4BKk87GjgMrb68AywiA7VF80GoKoVk5ip9L6v-cYOz81tGMZHsxWwGMLXjpq5l-Ar1_TbgkMRq5w3AjBzW-Ytw_rhCB-6RrROUpiilAPRRFb9i
+j_VBfTtURLxKzvyHX0id0NeHJi0oB-Ylk7EB6b1ZcdoHlmC
+}
+
+skinparam rectangle<<AzureSiteRecovery>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSubscription [43x70/16z] {
+jTO7SWD130D10j3_l-niE2thncagIwr0hiBDb-GarboNbtm5bJGW6v0DIDTUo4wtszvxiYUfmskSPTORMbQQJUQmk4NsG9sqiqoqdbjbioGd9niIant1eLQX
+zKczrisaOo-vuYTqBQKu2rCDVWCpWcDfPdn5AsSCg6TgrofhWQm5iXR8MY1hWQo5SWR81cG3iW5v7cqkwErswvDY6d4QSHfnclzuLlt71eRJ45hxByiofXvA
+_I_BCgSnf_5VxJNaj4hvbHvOLcqbjHfWAvdLa5G9x5dU0m
+}
+
+skinparam rectangle<<AzureSubscription>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $AzureSynapse [70x83/16] {
+0000000000000000000000000000000000840000000000000000000000000000000000
+00000000000000000000000000000000A9A97000000000000000000000000000000000
+00000000000000000000000000000067AAAAA860000000000000000000000000000000
+0000000000000000000000000000089AAAAAAAA8700000000000000000000000000000
+0000000000000000000000000005A9AAAAAAAAAAA90000000000000000000000000000
+000000000000000000000000057AAAAAAAAAAAAAAA9700000000000000000000000000
+00000000000000000000000189AAAAAAAAAAAAAAAAAA88000000000000000000000000
+000000000000000000000099AAAAAAAAAAAAAAAAAAAAAA800000000000000000000000
+0000000000000000000048AAAAAAAAAAAA98AAAAAAAAAAA97000000000000000000000
+000000000000000000089AAAAAAAAAAA970089AAAAAAAAAAA860000000000000000000
+000000000000000009AAAAAAAAAAAA988000008AAAAAAAAAAAA8500000000000000000
+00000000000000078AAAAAAAAAAAA950000000099AAAAAAAAA95440000000000000000
+0000000000000A8AAAAAAAAAAAA990000000000009AAAAAAA644444300000000000000
+0000000000009ABBBBBBBBBBB980000000000000001AABA85444444432000000000000
+00000000006AABBBBBBBBBBB8600000000000000000038544444444444500000000000
+00000000A8BBBBBBBBBBBBA50000000000000000000234444444444458A99000000000
+00000008ABBBBBBBBBBBA72000000000000000000334444444444447ABBBB960000000
+000006ABBBBBBBBBBBA9B0000000000000000000234444444444459BBBBBBBBA500000
+00069ABBBBBBBBBBBA80000000000000000000234444444444436BBBBBBBBBBBB90000
+078ABBBBBBBBBBBA80000000000000000000443444444444443209ABBBBBBBBBBBA700
+BABBBBBBBBBBBA990000000000000000000234444444444442000029BBBBBBBBBBBB95
+ABBBBBBBBBBAA6000000000000000000023444444444444210000000AABBBBBBBBBBBA
+AAABBBBBBBA700000000000000000002334444444444333000000000009ABBBBBBBAAA
+AAAABBBBA900000000000000000000234444444444443000000000000001ABBBBBAAAA
+AAAAAAB9700000000013333310002344444444444332000000000000000005ABAAAAAA
+AAAAAA9000000000033444444323444444444444310000000000000000000009AAAAAA
+AAAAAA9000000000344444444444444444444432000000000000000000000008AAAAAA
+AAAAAA9000000003444444444444444444443200000000000000000000000008AAAAAA
+AAAAAA9000000024444444444444444444430000000000000000000000000008AAAAAA
+AAAAAA9000000044444444444444444443300000000000000000000000000008AAAAAA
+AAAAAA9000000245555555555555544420000000000000000000000000000008AAAAAA
+AAAAAA9000000355555555555555553100000000000000000000000000000008AAAAAA
+AAAAAA9000000455555555555555554433300000000000000000000000000008AAAAAA
+AAAAAA9000000455555555555555554444433200000000000000000000000008AAAAAA
+AAAAAA9000000266666666666666654444444432000000000000000000000008AAAAAA
+AAAAAA9000000066666666666666654444444443300000000000000000000008AAAAAA
+AAAAAA9000000067777777777777744444444444430000000000000000000008AAAAAA
+AAAAAA9000000056777777777777544444444444444200000000000000000008AAAAAA
+AAAAAA9000000005777777777776333344444444444420000000000000000008AAAAAA
+AAAAAA9000000000588888888888000033344444444433000000000000000008AAAAAA
+AAAAAA9000000000007788887610000000034444444443100000000000000008AAAAAA
+AAAAAA9000000000000035940000000000001344444444333321000000000008AAAAAA
+AAAAAA9000000000000000000000000000000024444444444444300000000008AAAAAA
+AAAAAA9000000000000000000000000000000002444444444444433000000008AAAAAA
+AAAAAA9000000000000000000000000000000000244444444444443000000008AAAAAA
+AAAAAA9000000000000000000000000000000000034444444444444300000008AAAAAA
+AAAAAA9000000000000000000000000000000000334444444444444430000008AAAAAA
+AAAAAA9000000000000000000000000000000000355555555555555540000008AAAAAA
+AAAAAA9000000000000000000000000000000000455555555555555540000008AAAAAA
+AAAAAA9000000000000000000000000000000000455555555555555550000008AAAAAA
+AAAAAA9000000000000000000000000000000000455555555555555550000008AAAAAA
+AAAAAA9000000000000000000000000000000023566666666666666650000008AAAAAA
+AAAAAA9000000000000000000000000000002444466666666666666640000008AAAAAA
+AAAAAA9000000000000000000000000000324444467777777777777650000008AAAAAA
+AAAAAA9000000000000000000000000002344444447777777777777600000008AAAAAA
+AAAAAA9000000000000000000000000334444444445888888888875000000008AAAAAA
+AAAAAA9000000000000000000000023344444444444578888888760000000008AAAAAA
+AAAAAA8000000000000000000000234444444444433256888887500000000078AAAAAA
+AAAAAAA84000000000000000002444444444444431000005483000000000969AAAAAAA
+AAAAAAAAA9100000000000001334444444444433000000000000000000069AAAAAAAAA
+AAAAAAAAAA97000000000002444444444444330000000000000000000599AAAAAAAAAA
+AAAAAAAAAAAA850000000334444444444443400000000000000000088AAAAAAAAAAAA9
+37AAAAAAAAAAAA830004344444444444433000000000000000000559AAAAAAAAAAAA8A
+0068AAAAAAAAAAA985244444444444443000000000000000000078AAAAAAAAAAAA8300
+000068AAAAAAAAAA8544444444444421000000000000000000389AAAAAAAAAAA870000
+00000079AAAAAA9644444444444432000000000000000000269AAAAAAAAAAA99300000
+000000038AAA9844444444444432000000000000000000098AAAAAAAAAAA9850000000
+000000000598544444444444422000000000000000000A89AAAAAAAAAA987000000000
+0000000000044444444444468500000000000000000169AAAAAAAAAAA9840000000000
+00000000000004444444459AAA730000000000000069AAAAAAAAAAA964000000000000
+0000000000000044444579AAAAA970000000000048AAAAAAAAAAA98600000000000000
+00000000000000004579AAAAAAAAA96000000076AAAAAAAAAAAA970000000000000000
+00000000000000000099AAAAAAAAAAA84000468AAAAAAAAAAAA7700000000000000000
+000000000000000000057AAAAAAAAAAA980889AAAAAAAAAA9860000000000000000000
+00000000000000000000058AAAAAAAAAAA99AAAAAAAAAAA96000000000000000000000
+0000000000000000000000089AAAAAAAAAAAAAAAAAAAA9980000000000000000000000
+00000000000000000000000068AAAAAAAAAAAAAAAAAA75000000000000000000000000
+0000000000000000000000000068AAAAAAAAAAAAAA8600000000000000000000000000
+000000000000000000000000000079AAAAAAAAAA880000000000000000000000000000
+00000000000000000000000000000189AAAAAA98200000000000000000000000000000
+000000000000000000000000000000058AAA9850000000000000000000000000000000
+0000000000000000000000000000000006998100000000000000000000000000000000
+0000000000000000000000000000000000030000000000000000000000000000000000
+}
+
+skinparam rectangle<<AzureSynapse>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $PowerBi [70x73/16] {
+0000000033200000000000000000000000000000000000000000000000000000000000
+0000004444444310000000000000000000000000000000000000000000000000000000
+0000434444444443440000000000000000000000000000000000000000000000000000
+0000444444444444443430000000000000000000000000000000000000000000000000
+0003444444444444444444433000000000000000000000000000000000000000000000
+0004444443433444444444444344000000000000000000000000000000000000000000
+0034444440000003434444444444434300000000000000000000000000000000000000
+0034444400000000004434444444444444300000000000000000000000000000000000
+0034444300000000000003434444444444433300000000000000000000000000000000
+0034444300000000000000004434444444444444430000000000000000000000000000
+0034444300000000000000000000434444444444443440000000000000000000000000
+0034444300000000000000000000000333444444444444434000000000000000000000
+0034444300000000000000000000000000433444444444444333000000000000000000
+0034444300000000000000000000000000000344444444444444443200000000000000
+0034444300000000000000000000000000000000033444444444444444400000000000
+0034444300000000000000000000000000000000000043444444444444433400000000
+0034444300000000000000000000000000000000000000044444444444444444300000
+0034444300000000000000000000000000000000000000000034444444444444440000
+0034444300000000000000000000000000000000000000000000003444444444443000
+0034444300000000000000000000000000000000000000000000000004434444444000
+0034444300000000000000000000000000000000000000000000000000004344444300
+0034444300000000000000000000000000000000000000000000000000000044444400
+0034444300000000000000000000000000000000000000000000000000000004444300
+0034444300000000000000000000000000000003333334300000000000000004444300
+0034444300000000000000000000000000000004444444430000000000000003444400
+0034444300000000000000000000000000000004444444440000000000000003444400
+0034444300000000000000000000000000000004444444440000000000000003444400
+0034444300000000000000000000000000000004444444440000000000000003444400
+0034444300000000000000000000000000000004444444440000000000000003444400
+0034444300000000000000000000000000000004444444440000000000000003444400
+0034444300000000000000000004333343000004444444440000000000000003444400
+0034444300000000000000000044444444300004444444440000000000000003444400
+0044444300000000000000000044444444300004444444440000000000000003444400
+0004444000000004444300000044444444300004444444440000000000000003444300
+0000000000000033444443000044444444300004444444440000000000000003444300
+0000000000000044444444100044444444300004444444440000000000000003444300
+0000000000000444444444300044444444300004444444440000000000000003444300
+0000000000000444444444300044444444300004444444440000000000000003444300
+0034333330000444444444300044444444300004444444440000000000000003444300
+0344444443000444444444300044444444300004444444440000000000000003444300
+0444444443000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000003444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0444444444000444444444300044444444300004444444440000000000000004444300
+0344444443000444444444300044444444300004444444440000000000000004444300
+0444444443000444444444300044444444300004444444440000000000000004444300
+0044444440000444444444300044444444300004444444440000000000000044444300
+0000000000000444444444300044444444300004444444440000344000000334444400
+0000000000000344444444300044444444300004444444440003444443344444444400
+0000000000000044444444400044444444300004444444440004444444444444443000
+0000000000000033444443000044444444300004444444440004444444444444442000
+0000000000000000344440000044444444300004444444440000434444444444340000
+0000000000000000000000000044444444300004444444440000003344444444000000
+0000000000000000000000000034444444400004444444440000000034434340000000
+0000000000000000000000000044444444400004444444440000000000000000000000
+0000000000000000000000000000344440000004444444440000000000000000000000
+0000000000000000000000000000000000000004444444440000000000000000000000
+0000000000000000000000000000000000000004444444430000000000000000000000
+0000000000000000000000000000000000000003444444430000000000000000000000
+0000000000000000000000000000000000000000443333400000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000
+}
+
+skinparam rectangle<<PowerBi>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+sprite $Purview [70x46/16] {
+0000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000000000000000000000000000000000000000000000000
+0000000000000000000000000066666667777666666000000000000000000000000000
+0000000000000000000000066666777788888877776556000000000000000000000000
+0000000000000000000007667788888888888888877766600000000000000000000000
+0000000000000000000777788888888888888877776676000000000000000000000000
+0000000000000000076778888888888888877666600000000000000000000000000000
+0000000000000004567888888888888887765600000000000000000000000000000000
+0000000000000066788888888888888876680000056655555555660000000000000000
+0000000000004678888888888888888767000065555566666666655560000000000000
+0000000000076788999999999999886600006556666666666666666655000000000000
+0000000000878899999999999998866000003566666666666666666665500000000000
+0000000000789999999999999998560000000765666666666666666666648000000000
+0000000000489999999999999986600000000000646777777777777777765700000000
+0000000000079999999999999875000000000000006677777777777777776560000000
+0000006800079999999999999760000000000000000667777777777777777766000000
+0000042330007999999999998500000058000000000085777777777777777776600000
+000032332800699A99A999997400005444380000000008677777777777777777650000
+000333333400689AAAAAAA986000043444440000000000867888888888888888766000
+003333333380079AAAAAAA970000434444430000000000066888888888888888876600
+0433333333400489AAAAAA870005344444444000000000006788888888888888888660
+5333333444360068AAAAA9870004444555554400000000000688888888888888888868
+53444444444300079AAAA9880004555555555545660000000878888888888888888887
+5444444444444000699AA9800004555555555555556000000068899999989999999988
+54444444444436008799A9800005555555555555556000000087999999999999999988
+5344444444444300067999880005555555555556655000650007899999999999999987
+0344444444444440007799860004555555666666655000534007899999999999999860
+0034444444444443000679860005556666666666545000343000799999999999998660
+005344445444555440000676000046666666666654000634460069999AA99999997600
+000634455555555544800077000055666666666546000344440079AAAAAAAAA9977000
+000063455555555555460000000005566666665450005344440079AAAAAAAAA9870000
+000005345555555555545000000000755666555500063455550088AAAAAAAA97700000
+000000534555555555555460000000000766680000644555540008AAAAAAA976000000
+000000053455555555555544600000000000000005345555540007AAAAAA8760000000
+000000006455555555555555545600000000000544555555540006AAAAA87600000000
+000000000044555555555555555545566666654455555555540007AAAA878000000000
+000000000005455555555555555555555555555555555555540007AA98600000000000
+0000000000006455555555556666666655555555555555555400489976000000000000
+0000000000000545556666666666666666666666666666655500888670000000000000
+0000000000000005455666666666666666666666666666665500077000000000000000
+0000000000000000055566666666666666666666666666665500000000000000000000
+0000000000000000005556666666666666666666666666665600000000000000000000
+0000000000000000000065566666666666666666666666555000000000000000000000
+0000000000000000000000655566666666666666666555560000000000000000000000
+0000000000000000000000000655555666666666555568000000000000000000000000
+0000000000000000000000000000866666666666668000000000000000000000000000
+}
+
+skinparam rectangle<<Purview>> {
+    BackgroundColor #FFFFFF
+    BorderColor #3C7FC0
+}
+
+
+sprite $flask [51x65/16] {
+00000F0F0000000000000000000000000000000000000000000
+00000EFF0000000000000000000000000000000000000000000
+000000FF0000000000000000000000000000000000000000000
+000000FFFFF0000000000000000000000000000000000000000
+00000FFFFFF0000000000000000000000000000000000000000
+00000FFFF08FFF2000000000000000000000000000000000000
+00000FA8662FFFF300000000000000000000000000000000000
+0001FFFFD5004FFFF0000000000000000000000000000000000
+00FFFCDFFFF0FF94101B0000000000000000000000000000000
+006DFFFFFF50004A000FFF00000000000000000000000000000
+0FFFFFA00500000001B3FF20000000000000000000000000000
+FF70FE0D100002BFFF000000000000000000000000000000000
+F0F02F003EFFFA0000000000000000000000000000000000000
+F0F00F4FFFF3000000000000000000000000000000000000000
+4DFFFFFFAE000000F6000000000000000000000000000000000
+0FFFFFE000000000F5000000000000000000000000000000000
+0FFFFFFFF010000000400000000000000000000000000000000
+04FFFFF10056000000700000000000000000000000000000000
+00FFFF0003F0000000B00000000000000000000000000000000
+00FF7FE5CD00000000E00000000000000000000000000000000
+00FCFFF0E801007903F00000000000000000000000000000000
+0040FFF0FC02F00E10B00000000000000000000000000000000
+000F0FDABD11FF02C1200000000000000000000000000000000
+000F0FF90EFE110000010000000000000000000000000000000
+0005DFFFE0F00000000C0000000000000000000000000000000
+0000D6FFFAFC0000000E0000000000000000000000000000000
+0000DBFFF002000000020000000000000000000000000000000
+000005FFFFF0ACF80003D000000000000000000000000000000
+00000ECFFFFFFFE9F009F000000000000000000000000000000
+000000EFFFE800FFE0002F00000000000000000000000000000
+00000050FFFA0EFF10000080000000000000000000000000000
+0000000F0FFF50FFFF000A10000000000000000000000000000
+00000000FEFFFF1F1FF0000F000000000000000000000000000
+0000000060FFFBFFFF000000F00000000000000000000000000
+000000000F0FF607FB1F10050F0000000000000000000000000
+0000000000E1FFFBFF9FFF000DF000000000000000000000000
+00000000000D0FFFFFFEFFF000EF30000000000000000000000
+000000000000F1FFF8F4F2EF0000FF000000000000000000000
+0000000000000F0DFBFDFFFFF000007D000000007F900000000
+00000000000000BFFFEFFFFCA0000006FF500009FF000000000
+0000000000000002FAC3FFFFFFC01FF400FFFFAFF0000070000
+00000000000000000966CFFFFFFFDE0AEB300F60028FFF6C87F
+00000000000000000009B0488FFFFFFEF4BFFFFFFFFFFFFFFFF
+0000000000000000000000D908FFFFFFFFFFFFFFFFFFFAF3000
+000000000000000000000000015DFC720006FFFFC8200000000
+000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000000
+000000000000000F00000000000000000000000002F00000000
+B300000258600FFF000000000000000000000005FFF00000000
+0FFFEEEEFF600AFF000000000000000000000000FFF00000000
+01FF00000F0000FF0000000000000000000000000FF00000000
+00FF0000010000FF0000000000000000000000000FF00000000
+00FF0000000000FF0000000000000000000000000FF00000000
+00FF0000000000FF0000000000000000000000000FF00000000
+00FF0000E00000FF0000000140000000034000000FF00000000
+00FF78BF900000FF00000BFCFF70000CFCFFF0000FF00CFFFF0
+00FF89CF600000FF0000FF400FF0000F1000F0000FF001F2000
+00FF0006600000FF000012000FF0000FE00000000FF07F00000
+00FF0000100000FF000000000FF0000FFFC000000FFDFE00000
+00FF0000000000FF000002FFBFF00000AFFF90000FFCFF00000
+00FF0000000000FF0000FF000FF00000009FF0000FF00FF0000
+00FF0000000000FF0002FD000FF000C00007F0000FF00AFF000
+0FFF0000000000FF4000FF00CFFFC0DF000EF0000FF000FFF00
+FFFFFF0000000FFFFF007FFF04F6002FFFFF0007FFFFF00FFFF
+}
+sprite $kafka [102x46/16] {
+000005EEEE10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000EEEEEEEE000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000EEEEEEEEEE00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00DEEEC00EEEE50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEEA0000EEEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE000000EEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE000000EEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE30000BEEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEEE400AEEEA0000000297000000000000000000000000000000000000000000000000000000000000000000000000000000
+000EEEEEEEEEE000000CEEEEEE0000000000000000000000000000000000000000000000000000000000000000000000000000
+0001EEEEEEEE000000EEEEEEEEE100000000000000000000000000000000000000000000000000000000000000000000000000
+00000EEEEED000000BEEEEEEEEEE00000000000000000000000000000000000000000000000000000000000000000000000000
+0000001EE00000000EEED0002EEE60000000000000000000000000000000000000000000000000000000000000000000000000
+0000001EE00000002EEE00000CEEE0000000000000000000000000000000000000000000000000000000000000000000000000
+0000001EE00000004EEE000005EEE000000000EEE00000000000000000000000000004EEE00AEEA00000000000000000000000
+000003EEED2000002EEE00000BEEE000000000EEE0000000000000000000000000005EEEE00AEEA00000000000000000000000
+0005EEEEEEEE10002EEEB0000EEE8000000000EEE000000000000000000000000000EEED000AEEA00000000000000000000000
+00CEEEEEEEEEE60EEEEEEECEEEEE0000000000EEE000000000000000000000000000EEE0000AEEA00000000000000000000000
+0AEEEEEEEEEEEEEEEEEEEEEEEEE30000000000EEE00000000000002CED6000000000EEE0000AEEA00000000000008DEB000000
+0EEEED0000EEEEEE900EEEEEEE200000000000EEE0000EEEB0000EEEEEEE0EEE00EEEEEEE00AEEA0009EEE0000BEEEEEEE0EEE
+CEEEC000000EEEE1000007DB10000000000000EEE000EEEC0001EEEEEEEEEEEE00EEEEEEE00AEEA007EEE0000DEEEEEEEEEEEE
+EEEE00000000EEEC0000000000000000000000EEE00EEEE0000EEEE5001EEEEE0000EEE0000AEEA04EEE10008EEEE1009EEEEE
+EEEE00000000EEEE0000000000000000000000EEE0EEEE0000DEEE000000EEEE0000EEE0000AEEA1EEE20000EEEE000000EEEE
+EEEE00000000EEEE0000000000000000000000EEEEEEE00000EEE60000000EEE0000EEE0000AEEAEEE300000EEE0000000BEEE
+EEEE00000000EEEC0000000000000000000000EEEEEE000000EEE00000000EEE0000EEE0000AEEEEE7000006EEE00000000EEE
+CEEED000000EEEE1000008EC20000000000000EEEEEED00000EEE00000000EEE0000EEE0000AEEAEEE000007EEE00000000EEE
+0EEEED0000EEEEEE800EEEEEEE200000000000EEE0EEE20000EEE00000000EEE0000EEE0000AEEA7EEE00002EEE00000002EEE
+08EEEEEEEEEEEEEEEEEEEEEEEEE30000000000EEE01EEE0000EEEE0000005EEE0000EEE0000AEEA0DEEE0000EEE1000000EEEE
+00CEEEEEEEEEE60EEEEEEEBEEEEE0000000000EEE00CEEE0000EEEC00003EEEE0000EEE0000AEEA00EEE7000EEEE10000DEEEE
+0005EEEEEEEE10001EEEB0000EEE8000000000EEE000EEED000EEEEEEEEEEEEE0000EEE0000AEEA001EEE0000EEEEEEEEEEEEE
+000003DEEC1000002EEE00000AEEE000000000EEE0000EEE3000EEEEEEEEEEEE0000EEE0000AEEA000AEEE0002EEEEEEEE2EEE
+0000001EE00000004EEE000004EEE000000000EEE00004EEE00006EEEEE90EEE0000EEE0000AEEA0000EEEE0000EEEEEE10EEE
+0000001EE00000002EEE00000CEEE0000000000000000000000000000000000000000000000000000000000000000000000000
+0000001EE00000000EEED0002EEE60000000000000000000000000000000000000000000000000000000000000000000000000
+00000EEEEED000000BEEEEEEEEEE00000000000000000000000000000000000000000000000000000000000000000000000000
+0002EEEEEEEE000000EEEEEEEEE000000000000000000000000000000000000000000000000000000000000000000000000000
+000EEEEEEEEEE000000CEEEEEE0000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEEE2009EEEB0000000176000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE20000BEEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE000000EEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEE000001EEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00EEEB0000EEEE0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00DEEED01EEEE50000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000EEEEEEEEEE00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+0000EEEEEEEE000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+000004EEEE00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+}
+sprite $kotlin [51x51/16] {
+888888888888888877777777766666666666666666666666663
+888888888888888887777777666666666666666666666666630
+988888888888888888777776666666666666666666666666300
+988888888888888888877766666666666666666666666663000
+998888888888888888887666666666666666666666666630000
+999888888888888888886666666666666666666666666300000
+999988888888888888866666666666666666666666663000000
+999998888888888888766666666666666666666666630000000
+999998888888888887666666666666666666666666300000000
+999999988888888876666666666666666666666663000000000
+999999988888888866666666666666666666666630000000000
+999999998888888666666666666666666666666300000000000
+999999999888886666666666666666666666663000000000000
+999999999988866666666666666666666666630000000000000
+999999999998666666666666666666666666300000000000000
+999999999986666666666666666666666663000000000000000
+999999999966666666666666666666666630000000000000000
+999999999666666666666666666666666300000000000000000
+999999996666666666666666666666663000000000000000000
+999999966666666666666666666666630000000000000000000
+999999666666666666666666666666300000000000000000000
+999996666666666666666666666663000000000000000000000
+999977666666666666666666666630000000000000000000000
+999777766666666666666666666300000000000000000000000
+997777776666666666666666663000000000000000000000000
+977777777666666666666666650000000000000000000000000
+777777777766666666666666676000000000000000000000000
+777777777776666666666666777600000000000000000000000
+777777777777666666666667777760000000000000000000000
+777777777777766666666677777776000000000000000000000
+777777777777776666666777777777600000000000000000000
+777777777777777666667777777777760000000000000000000
+777777777777777766677777777777776000000000000000000
+777777777777777776777777777777777600000000000000000
+777777777777777767777777777777777750000000000000000
+777777777777777688778777777777777776000000000000000
+777777777777776888878877877777777777500000000000000
+777777777777768888888887887787777777750000000000000
+777777777777688888888888888788778777775000000000000
+777777777776888888888888888888878877877500000000000
+777777777768888888888888888888888887887750000000000
+777777777688888888888888888888888888888785000000000
+777777776888888888888888888888888888888888500000000
+777777768888888888888888888888888888888888850000000
+777777688888888888888888888888888888888888885000000
+777776888888888888888888888888888888888888888500000
+777768888888888888888888888888888888888888888850000
+777688888888888888888888888888888888888888888884000
+776888888888888888888888888888888888888888888888400
+768888888888888888888888888888888888888888888888850
+688888888888888888888888888888888888888888888888884
+}
+sprite $aws-s3 [51x62/16] {
+000000000000000000000000494000000000000000000000000
+00000000000000000000005BB98830000000000000000000000
+000000000000000000005BBBB98888300000000000000000000
+0000000000000000005BBBBBB98888883000000000000000000
+00000000000000005BBBBBBBB98888888840000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+003B888300000000BBBBBBBBB9888888888000000002BBB8200
+2BBB888888850000BBBBBBBBB988888888800004BBBBBBB8882
+BBBB888888888887BBBBBBBBB98888888886BBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBCCCCCCC888888BBBBBBBBBBBB8888
+BBBB888888888888BBCCCCCCCCCCCCCCC88BBBBBBBBBBBB8888
+BBBB888888888888888BCCCCCCCCCCCCBBBBBBBBBBBBBBB8888
+BBBB888888888888888888889CBBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888889BB988ABBBBBBBBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB88888888888888888889B989BBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB8888888888888888888889BBBBBBBBBBBBBBBBBBBBB8888
+BBBB88888888888888888888435BBBBBBBBBBBBBBBBBBBB8888
+BBBB88888888888888633333333333338BBBBBBBBBBBBBB8888
+BBBB888888888888BB63333333333333588BBBBBBBBBBBB8888
+BBBB888888888888BBBBBB6333335888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888888BBBBBBBBB9888888888BBBBBBBBBBBB8888
+BBBB888888888870BBBBBBBBB988888888808BBBBBBBBBB8888
+0BBB888888500000BBBBBBBBB9888888888000005BBBBBB8880
+000B883000000000BBBBBBBBB98888888880000000005BB8000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+0000000000000000BBBBBBBBB98888888880000000000000000
+00000000000000000BBBBBBBB98888888800000000000000000
+0000000000000000000BBBBBB98888880000000000000000000
+000000000000000000000BBBB98888000000000000000000000
+00000000000000000000000BB98800000000000000000000000
+000000000000000000000000090000000000000000000000000
+}
+
+sprite $msql_server [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000001000000000000000000000000000
+000000000000000000454300000000000000000000000000
+000000000000000176100600000000000000000000000000
+000000000000007C77530800000000000000000000000000
+000000000000099080246B70000000000000000000000000
+00000000000003B75B1283B0000000000000000000000000
+00000000000000475BAE9688000000000000000000000000
+000000000000000466004ABACB9520000000000000000000
+000000000000000049147060005CDD940000000000000000
+000000000000000009B600801963304AE810000000000000
+000000000000000002FD9497A10800001BF8000000000000
+000000000000000000915CFD201902896467C20000000000
+000000000000000000802BB8FAAAB8200A002B2000000000
+0000000000000000007394602EFA0000940001A100000000
+000000000000000000A80928BE5D70056000001800000000
+000000000000000000E82DB48500A6371489875200000000
+0000000000000000036BF60480001CDCA620000000000000
+0000000000000000084DC228038CB7200000000000000000
+00000000000000003B941798CA9800000000000000000000
+000000000000000196506EE9403900000000000000000000
+0000000000000008769C60A0353B00000000000000000000
+000000000000009DCD8900A0007B00000000000000000000
+00000000000009F91B165090174B00000000000000000000
+0000000000009C9059008788602B00000000000000000000
+0000000000062590D1004FD1004900000000000000000000
+00000000005003C7839C8C27505800000000000000000000
+00000000080000EFC830760014A500000000000000000000
+00000000831689ED1000D00055B200000000000000000000
+00000000E6510754D206728600D000000000000000000000
+00000001F10027003C6EB60002A000000000000000000000
+00000000CA0080005BFE6000075000000000000000000000
+000000002F86148843B037653B0000000000000000000000
+0000000002DC62000A100015780000000000000000000000
+000000000007D71063037740710000000000000000000000
+000000000000049AB8630000800000000000000000000000
+000000000000000025887656200000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+
+skinparam folderBackgroundColor<<DEV MSQL_SERVER>> White
+sprite $oracle_original [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+04DFFFFE806FFFFFC20009F20008EFFFE2F1000005DFFFF3
+3F611113D86C11119A004FBB007D311101F100003F511100
+890000004D6C00009B00D71E50D5000001F100009D888880
+890000004E6C3EFFE208D116E1D4000001F100009D888860
+3F500002D86C02DB002F3DFFFA8D200001F100004F400000
+05EFFFFF906C001BC1C900001F48FFFFF2FFFFFF46EFFFF5
+000011100000000010100000000001110001111000001110
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+
+skinparam folderBackgroundColor<<DEV2 ORACLE_ORIGINAL>> White
+sprite $users [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000024310000000000000000000000
+000000000000000000018EFFFFC400000000000000000000
+0000000000000000003EFFFFFFFF90000000000000000000
+000000000000000002EFFFFFFFFFF9000000000000000000
+00000000000000000CFFFFFFFFFFFF400000000000000000
+0000006DFE8000004FFFFFFFFFFFFFC000004BFEA2000000
+000009FFFFFC00009FFFFFFFFFFFFFF10005FFFFFE200000
+00003FFFFFFF8000BFFFFFFFFFFFFFF3001FFFFFFFC00000
+00009FFFFFFFD000CFFFFFFFFFFFFFF4005FFFFFFFF10000
+0000AFFFFFFFE000AFFFFFFFFFFFFFF2006FFFFFFFF20000
+00007FFFFFFFC0006FFFFFFFFFFFFFE0004FFFFFFFF00000
+00001FFFFFFF50001FFFFFFFFFFFFF80000DFFFFFF900000
+000004FFFFF8000007FFFFFFFFFFFE100002DFFFFB000000
+000000179830000000AFFFFFFFFFF3000000069940000000
+00000000000000000007FFFFFFFC20000000000000000000
+0000012333310000000016ACB94000000000233332000000
+0001BFFFFFFFD3000000000000000000008FFFFFFFE60000
+000DFFFFFFFFE400000000000000000000AFFFFFFFFF6000
+007FFFFFFFFD1006BEFE8310025BFFD92006FFFFFFFFF000
+00CFFFFFFFE102DFFFFFFFFFFFFFFFFFF8007FFFFFFFF400
+00DFFFFFFF302FFFFFFFFFFFFFFFFFFFFFA00BFFFFFFF500
+00DFFFFFFB00EFFFFFFFFFFFFFFFFFFFFFF603FFFFFFF500
+00CFFFFFF407FFFFFFFFFFFFFFFFFFFFFFFE00CFFFFFF400
+006FFFFFF00DFFFFFFFFFFFFFFFFFFFFFFFF508FFFFFD000
+00037777601FFFFFFFFFFFFFFFFFFFFFFFFF902777761000
+00000000002FFFFFFFFFFFFFFFFFFFFFFFFFB00000000000
+00000000003FFFFFFFFFFFFFFFFFFFFFFFFFB00000000000
+00000000003FFFFFFFFFFFFFFFFFFFFFFFFFB00000000000
+00000000000FFFFFFFFFFFFFFFFFFFFFFFFF800000000000
+000000000009FFFFFFFFFFFFFFFFFFFFFFFF200000000000
+0000000000007DEEEEEEEEEEEEEEEEEEEEB2000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+
+skinparam folderBackgroundColor<<FA5 USERS>> White
+
+
+sprite $cloudoffice365 [48x48/16] {
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+00000000000000000000089EEE8800000000000000000000
+00000000000000000008EEEEEEEE90000000000000000000
+0000000000000000009EEEEEEEEEEE000000000000000000
+000000000000000009EEEEEEEEEEEE900000000000000000
+00000000000000005EEEEEEEEEEEEEE859EEE93000000000
+0000000000000000EEEEEEEEEEEEEEEEEEEEEEE900000000
+0000000000000008EEEEEEEEEEEEEEEEEEEEEEEEE8000000
+0000000000000005EEEEEEEEEEEEEEEEEEEEEEEEEE000000
+0000000000000889EEEEEEEEEEEEEEEEEEEEEEEEEE800000
+000000000008EEEEEEEEEEEEE88059EEEEEEEEEEEEE00000
+0000000003EEEEEEEEEEEE9500000005EEEEEEEEEEE50000
+000000003EEEEEEEEEEE500000800000EEEEEEEEEEE80000
+000089EEEEEEEEEEEE8000389EE00000EEEEEEEEEEE90000
+0005EEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEE90000
+005EEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEE5000
+03EEEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEEE500
+09EEEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEEEE30
+8EEEEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEEEE90
+5EEEEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEEEEE3
+8EEEEEEEEEEEEEEEEE5008EEEEE00000EEEEEEEEEEEEEEE5
+8EEEEEEEEEEEEEEEEE5009EEEEE00000EEEEEEEEEEEEEEE8
+5EEEEEEEEEEEEEEEEE859EEEEEE00000EEEEEEEEEEEEEEE8
+0EEEEEEEEEEEEEEEEEEE98589EE00000EEEEEEEEEEEEEEE5
+09EEEEEEEEEEEEEEEEEEEE5800000003EEEEEEEEEEEEEEE0
+08EEEEEEEEEEEEEEEEEEEEEE9500859EEEEEEEEEEEEEEE50
+005EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE900
+0005EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE9000
+0000059EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE930000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+000000000000000000000000000000000000000000000000
+}
+
+
+sprite $outlook [48x48/16] {
+000000000000000000000000038900000000000000000000
+00000000000000000008589EEEEE00000000000000000000
+00000000000000359EEEEEEEEEEE00000000000000000000
+00000000358EEEEEEEEEEEEEEEEE00000000000000000000
+008589EEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+9EEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE58888888888888888880
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE9
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE8000000000000000009E
+EEEEEEEEEEEEE99EEEEEEEEEEEEE0000000000000000009E
+EEEEEEEEEE80000089EEEEEEEEEE000000000000000008EE
+EEEEEEEEE3000000008EEEEEEEEE00000000000000009E9E
+EEEEEEEE500000000009EEEEEEEE0000000000000009E83E
+EEEEEEE9000059500008EEEEEEEE000000000000009E003E
+EEEEEEE80009EEE900009EEEEEEE5000000000000EE0003E
+EEEEEEE0005EEEEE50005EEEEEEEE50000000000E900003E
+EEEEEE80009EEEEE90008EEEEEEE5E500000008E9000003E
+EEEEEE5000EEEEEEE0000EEEEEEE00E8000008E90000003E
+EEEEEE3000EEEEEEE0000EEEEEEE000E80003E800000003E
+EEEEEE3000EEEEEEE0000EEEEEEE0000E905E8000000003E
+EEEEEE5000EEEEEEE0000EEEEEEE000009EE50000000003E
+EEEEEE80009EEEEE80003EEEEEEE0000008500000000003E
+EEEEEEE0008EEEEE00008EEEEEEE0000000000000000003E
+EEEEEEE80003EEE30000EEEEEEEE0000000000000000003E
+EEEEEEE9000000000005EEEEEEEE0000000000000000003E
+EEEEEEEE50000000008EEEEEEEEE0000000000000000003E
+EEEEEEEEE500000003EEEEEEEEEE0000000000000000003E
+EEEEEEEEEEE500039EEEEEEEEEEE0000000000000000003E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE0000000000000000003E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE0000000000000000003E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE5833333333333333388E
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE8
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE80000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+08589EEEEEEEEEEEEEEEEEEEEEEE00000000000000000000
+00000008589EEEEEEEEEEEEEEEEE00000000000000000000
+00000000000008589EEEEEEEEEEE00000000000000000000
+00000000000000000003589EEEEE00000000000000000000
+000000000000000000000000858900000000000000000000
+}
+
+
+sprite $sharepoint [48x48/16] {
+000000000000000000000000003800000000000000000000
+000000000000000000000359EEE800000000000000000000
+0000000000000003589EEEEEEEE800000000000000000000
+0000000008589EEEEEEEEEEEEEE800000000000000000000
+0000359EEEEEEEEEEEEEEEEEEEE800000000000000000000
+8EEEEEEEEEEEEEEEEEEEEEEEEEE933000000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE3000000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE9885EE500000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800008E30000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE8000009E0000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE8000003E8000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE8000000E8000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE80000009EE30000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800000003EE5000000000
+EEEEEEEEEEEE95559EEEEEEEEEE80000000009E500000000
+EEEEEEEEEE80000005EEEEEEEEE800000800008E50000000
+EEEEEEEEE800000008EEEEEEEEE80005EEE30009E0000000
+EEEEEEEEE000000008EEEEEEEEEE99EE505E5000E9000000
+EEEEEEEE80005EEE55EEEEEEEEEE55300003E8005EE88000
+EEEEEEEE5000EEEEEEEEEEEEEEE9000000005900089EE500
+EEEEEEEE50009EEEEEEEEEEEEEE9000000008E0000009E50
+EEEEEEEE900008EEEEEEEEEEEEE900000008E300000009E8
+EEEEEEEEE0000089EEEEEEEEEEE9000000089000000000E8
+EEEEEEEEE90000008EEEEEEEEEE90000000E30000000009E
+EEEEEEEEEE90000008EEEEEEEEE90000000E80000000008E
+EEEEEEEEEEEE500000EEEEEEEEE90000000E500000000089
+EEEEEEEEEEEEE900008EEEEEEEE9000000089000000000E5
+EEEEEEEEEEEEEE50005EEEEEEEE900000000E30000000890
+EEEEEEEE53EEEE80005EEEEEEEE9000000005E0000009E00
+EEEEEEEE50035800009EEEEEEEE900000000890009EE9000
+EEEEEEEE5000000008EEEEEEEEEE88500005E0005E500000
+EEEEEEEE900000000EEEEEEEEEEE89EE805E3000E5000000
+EEEEEEEEEE580088EEEEEEEEEEE80003EEE8000990000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800000500009E00000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE80000000009E800000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800000005E90000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE80000009E500000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE8000000E5000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE8000003E0000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800000E80000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE800009E00000000000000
+EEEEEEEEEEEEEEEEEEEEEEEEEEE9338E9000000000000000
+8EEEEEEEEEEEEEEEEEEEEEEEEEEEEE930000000000000000
+0008589EEEEEEEEEEEEEEEEEEEE800000000000000000000
+0000000008589EEEEEEEEEEEEEE800000000000000000000
+000000000000000359EEEEEEEEE800000000000000000000
+000000000000000000000359EEE800000000000000000000
+000000000000000000000000003800000000000000000000
+}
+
+
+sprite $teams [44x48/16] {
+000000000000000000000005885800000000000000000000
+000000000000000000000599999950000000000000000000
+000000000000000000008999999998000000000000000000
+000000000000000000059999999999800000000000000000
+000000000000000000099999999998880000000585000000
+00000000000000000039999999998885000005EEEEE50000
+0000000000000000005999999988888500005EEEEEEE3000
+0000000000000000005999999888888500009EEEEEEE9000
+000000000000000000399999888888850000EEEEEEEEE000
+000000000000000000899999888888880008EEEEEEEEE000
+09EEEEEEEEEEE99999EEEEE98888885000009EEEEEEE9000
+9EEEEEEEEEEEEEEEEEEEEEEE8888880000005EEEEEE95000
+EEEEEEEEEEEEEEEEEEEEEEEE98885000000008EEEE980000
+EEEEEEEEEEEEEEEEEEEEEEEE855300000000005898500000
+EEEEEEEEEEEEEEEEEEEEEEE9000000000000000000000000
+EEEEEEE9999999989EEEEEE9000000000000000000000000
+EEEEEEE00000000009EEEEE9000000000000000000000000
+EEEEEEE80000000009EEEEEE555555555555588888888850
+EEEEEEEEEE8008EEEEEEEEEE888885555555599999999995
+EEEEEEEEEE8008EEEEEEEEEE888855555555599999999998
+EEEEEEEEEE8008EEEEEEEEEE888855555555599999999998
+EEEEEEEEEE8008EEEEEEEEEE888555555555599999999998
+EEEEEEEEEE8008EEEEEEEEEE885555555555589999999998
+EEEEEEEEEE8008EEEEEEEEE9885555555555589999999998
+EEEEEEEEEE8008EEEEEEEEE9885555555555589999999998
+EEEEEEEEEE8008EEEEEEEEE9855555555555589999999988
+EEEEEEEEEE8008EEEEEEEEE9855555555555589999999888
+EEEEEEEEEE8008EEEEEEEEE9855555555555589999998888
+EEEEEEEEEEE88EEEEEEEEEE9855555555555589999988885
+EEEEEEEEEEEEEEEEEEEEEEE9855555555553389999888885
+EEEEEEEEEEEEEEEEEEEEEEE9855555555553389998888885
+EEEEEEEEEEEEEEEEEEEEEEE9555555555533389988888883
+9EEEEEEEEEEEEEEEEEEEEEE9555555555533389888888880
+09EEEEEEEEEEEEEEEEEEEE98555555555333389888888830
+000000000000039999888885555555555333588888888500
+000000000000008888888855555555553333588888883000
+000000000000005888888555555555553333003555300000
+000000000000000888885555555555553330000000000000
+000000000000000588885555555555553380000000000000
+000000000000000058885555555555533300000000000000
+000000000000000005855555555555533000000000000000
+000000000000000000555555555555530000000000000000
+000000000000000000005555555553000000000000000000
+000000000000000000000035555300000000000000000000
+}
+
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 200
+
+top to bottom direction
+        hide <<person>> stereotype
+        hide <<external_system>> stereotype
+        hide <<system>> stereotype
+        hide <<external_system>> stereotype
+        legend right
+        |=              |= Type |
+        |<PERSON_BG_COLOR>      | person |
+        |<EXTERNAL_PERSON_BG_COLOR>      | external person |
+        |<SYSTEM_BG_COLOR>   | system |
+        |<EXTERNAL_SYSTEM_BG_COLOR>      | external system |
+        |<#FFFFFF>       | Azure service container |
+        endlegend
+
+skinparam rectangle<<Orange>> {
+    StereotypeFontColor orange
+    FontColor orange
+}
+skinparam database<<Orange>> {
+    StereotypeFontColor orange
+    FontColor orange
+}
+skinparam queue<<Orange>> {
+    StereotypeFontColor orange
+    FontColor orange
+}
+skinparam actor<<Orange>> {
+}
+skinparam person<<Orange>> {
+    StereotypeFontColor orange
+    FontColor orange
+}
+
+
+skinparam arrow<<Orange>> {
+    Color orange;text:orange;line.dashed
+}
+
+
+rectangle "==Azure\n<size:12>[System]</size>" <<boundary>> as SystemAzure  { 
+rectangle "==Ads Go Fast Core\n<size:12>[Container]</size>" <<boundary>> as AdsGoFastCore {
+        rectangle "==Go Fast Orchestration Function\n<color:#0072C6><$AzureFunction></color>\n//<size:12>[C#/.NET]</size>//\n\n " <<AzureFunction>> as FunctionApp
+        rectangle "==Go Fast Web Application\n<color:#0072C6><$AzureWebApp></color>\n//<size:12>[C#/.NET]</size>//\n\n " <<AzureWebApp>> as WebApp
+        rectangle "==Go Fast Metadata Repository\n<color:#0072C6><$AzureSqlDatabase></color>\n//<size:12>[TSQL]</size>//\n\n " <<AzureSqlDatabase>> as GoFastDB
+rectangle "==Logs\n<size:12>[Container]</size>" <<boundary>> as Logs {
+            rectangle "==General Logs\n<color:#0072C6><$AzureLogAnalytics></color>\n//<size:12>[...]</size>//" <<AzureLogAnalytics>> as AzureLogAnalytics
+            rectangle "==Application Insights Logs\n<color:#0072C6><$AzureLogAnalytics></color>\n//<size:12>[...]</size>//" <<AzureLogAnalytics>> as AppInsights
+        }
+    }
+    rectangle "==Data Lake\n<color:#0072C6><$AzureDataLakeStorage></color>\n//<size:12>[...]</size>//" <<AzureDataLakeStorage>> as AzureAdls
+    rectangle "==ADF Execution Engine\n<color:#0072C6><$AzureDataFactory></color>\n//<size:12>[...]</size>//" <<AzureDataFactory>> as AzureDataFactory
+    rectangle "==Integration Runtime\n<color:#0072C6><$AzureDataFactory></color>\n//<size:12>[...]</size>//" <<AzureDataFactory>> as AzureDataFactoryIR1
+    
+}
+GoFastDB - ->> FunctionApp : **Retrieves Task Information**\n//<size:12>[async, JSON/HTTPS]</size>//
+FunctionApp - ->> AzureDataFactory : **Initiates Pipeline Execution**\n//<size:12>[async, JSON/HTTPS]</size>//
+GoFastDB - ->> WebApp : **Reads Metadata**
+WebApp - ->> GoFastDB : **Writes Metadata**
+AzureDataFactoryIR1 - ->> AzureAdls : ****
+AzureDataFactory - ->> AzureDataFactoryIR1 <<Orange>> : **Initiates Activities**\n//<size:12>[async]</size>//
+AzureDataFactoryIR1 - ->> AzureDataFactory <<Orange>> : **Communicates Activity Results**
+FunctionApp - ->> AppInsights : **Log Messages**
+WebApp - ->> AppInsights : **Log Messages**
+AzureDataFactory - ->> AzureLogAnalytics : **Log Messages**
+
+rectangle "==Enterprise - On Premise\n<size:12>[System]</size>" <<boundary>> as SystemOnPrem  {
+    rectangle "<$oracle_original>\n==Oracle DBs\n//<size:12>[Oracle Databases]</size>//" <<container>> as opora 
+    rectangle "<$msql_server>\n==SQL DBs\n//<size:12>[Sql Server Databases]</size>//" <<container>> as opsql 
+}
+opora - ->> AzureDataFactoryIR1 : **Scans Databases**\n//<size:12>[Https, Expressroute, VPN]</size>//
+opsql - ->> AzureDataFactoryIR1 : **Scans Databases**\n//<size:12>[Https, Expressroute, VPN]</size>//
+
+
+rectangle "==Power Platform\n<size:12>[System]</size>" <<boundary>> as SystemPowerPlatform  {
+    rectangle "==Power BI\n<color:#0072C6><$PowerBi></color>\n//<size:12>[Reports, Dashboards etc]</size>//" <<PowerBi>> as PowerBI
+}
+GoFastDB - ->> PowerBI : ****
+
+rectangle "==Other Clouds\n<size:12>[System]</size>" <<boundary>> as SystemOtherClouds  {
+    rectangle "<$aws-s3>\n==AWS\n//<size:12>[S3, Oracle, SQL]</size>//" <<container>> as AWS 
+}
+
+AWS - ->> AzureDataFactoryIR1 : **Scans Databases**\n//<size:12>[Https, Expressroute, VPN]</size>//
+
+@enduml
+
+PlantUML version 1.2022.3(Wed Mar 30 02:10:57 AEST 2022)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: AU
+--></g></svg>

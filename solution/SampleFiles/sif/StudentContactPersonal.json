@@ -1,5 +1,4 @@
 {
-  "StudentContactPersonal": {
     "RefId": "7C834EA9-EDA1-2090-347F-83297E1C290F",
     "LocalId": "P1234567",
     "OtherIdList": {
@@ -154,4 +153,3 @@
     "Employment": "Fletcher",
     "Workplace": "Bob's Arrows"
   }
-}
