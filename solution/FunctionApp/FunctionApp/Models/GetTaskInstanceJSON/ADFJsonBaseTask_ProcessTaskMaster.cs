@@ -41,8 +41,9 @@ namespace FunctionApp.Models.GetTaskInstanceJSON
                 if (TaskType == "Azure Storage to SQL Database")
                 {
                     ProcessTaskMaster_Default();
-                    JObject tgt = (JObject)_jsonObjectForAdf["Target"];
-                    string pcs = string.Format("Truncate Table [{0}].[{1}];", tgt["StagingTableSchema"], tgt["StagingTableName"]) + System.Environment.NewLine;
+                    JObject tgt = (JObject)_jsonObjectForAdf["Target"];                    
+                    
+                    string pcs = string.Format("if (object_id('[{0}].[{1}]') > 0) begin truncate table [{0}].[{1}]; end", tgt["StagingTableSchema"], tgt["StagingTableName"]) + System.Environment.NewLine;
                     if (tgt.ContainsKey("PreCopySQL"))
                     {
                         if (string.IsNullOrEmpty(tgt["PreCopySQL"].ToString()))
