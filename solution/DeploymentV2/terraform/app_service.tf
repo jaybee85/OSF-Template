@@ -89,6 +89,8 @@ resource "azurerm_app_service" "web" {
     ApplicationOptions__AppInsightsWorkspaceId  = azurerm_application_insights.app_insights[0].app_id
     ApplicationOptions__LogAnalyticsWorkspaceId = local.log_analytics_resource_id
 
+    SecurityModelOptions__SecurityRoles__Administrator__SecurityGroupId = var.web_app_admin_security_group
+
     AzureAdAuth__Domain   = var.domain
     AzureAdAuth__TenantId = var.tenant_id
     AzureAdAuth__ClientId = azuread_application.web_reg[0].application_id

@@ -1,4 +1,4 @@
-name: Continuous Delivery Arkahna Workflow Test
+name: Continuous Delivery
 
 on:
   workflow_dispatch:
@@ -6,11 +6,14 @@ on:
     branches: $default-branch
 
 jobs:
-    deploy-to-arkahna:
-      name: Deploy to Arkahna Environment
+    deploy-to-nonprod:
+      name: Deploy to NonProd Environment
+      concurrency: terraform
       env:
         environmentName: staging
-        skipTerraformDeployment: true
+        gitDeploy : true
+        skipTerraformDeployment: false
+        specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         synapseWorkspaceName: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
         datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
@@ -22,15 +25,28 @@ jobs:
         # Customizing Terraform vars
         TF_VAR_domain : ${{ secrets.ARM_DOMAIN }}
         TF_VAR_subscription_id : ${{ secrets.ARM_SUBSCRIPTION_ID }}
-        TF_VAR_tenant_id : ${{ secrets.ARM_TENANT_ID }}     
+        TF_VAR_tenant_id : ${{ secrets.ARM_TENANT_ID }}
+        TF_VAR_environment_tag : ${{ secrets.ENVIRONMENT_TAG }}
         TF_VAR_resource_group_name  : ${{ secrets.ARM_RESOURCE_GROUP_NAME }}     
         TF_VAR_state_storage_account_name  : ${{ secrets.ARM_STORAGE_NAME }}     
         TF_VAR_jumphost_password : ${{secrets.ARM_JUMPHOST_PASSWORD}}
-        TF_VAR_synapse_git_pat : ${{secrets.GIT_PAT}}
-        TF_VAR_adf_git_pat : ${{secrets.GIT_PAT}}
         TF_VAR_synapse_sql_password : ${{secrets.ARM_SYNAPSE_PASSWORD}}
+        TF_VAR_web_app_admin_security_group : ${{secrets.WEB_APP_ADMIN_SECURITY_GROUP}}
+        # GIT Integration set up
+        TF_VAR_synapse_git_repository_name : ${{secrets.GIT_REPOSITORY_NAME}}
+        TF_VAR_synapse_git_repository_branch_name : ${{secrets.GIT_SYNAPSE_REPOSITORY_BRANCH_NAME}}
+        TF_VAR_synapse_git_pat : ${{secrets.GIT_PAT}}
+        TF_VAR_synapse_git_user_name : ${{secrets.GIT_USER_NAME}}
+        TF_VAR_synapse_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
+        TF_VAR_adf_git_repository_name : ${{secrets.GIT_REPOSITORY_NAME}}
+        TF_VAR_adf_git_repository_branch_name : ${{secrets.GIT_ADF_REPOSITORY_BRANCH_NAME}}
+        TF_VAR_adf_git_pat : ${{secrets.GIT_PAT}}
+        TF_VAR_adf_git_user_name : ${{secrets.GIT_USER_NAME}}
+        TF_VAR_adf_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
+
+        #TF_LOG : TRACE
       environment: 
-        name: ArkahnaWorkflowTest
+        name: NonProd
       runs-on: ubuntu-latest
       steps:
       
@@ -47,6 +63,13 @@ jobs:
           creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
           enable-AzPSSession: true 
 
+      - name: Set PAL
+        id: set_pal
+        continue-on-error: true
+        run: |
+          az extension add --name managementpartner
+          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669
+
       - name: Terragrunt Install
         id: terragrunt_install
         working-directory: ./solution/DeploymentV2/terraform
@@ -55,6 +78,7 @@ jobs:
           az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
           az synapse workspace firewall-rule create --name AllowCICD --resource-group ${{ env.TF_VAR_resource_group_name }} --start-ip-address ${{ steps.ip.outputs.ipv4 }} --end-ip-address ${{ steps.ip.outputs.ipv4 }} --workspace-name ${{ env.synapseWorkspaceName }} 
           az storage account network-rule add --resource-group ${{ env.TF_VAR_resource_group_name }} --account-name ${{ env.datalakeName }} --ip-address ${{ steps.ip.outputs.ipv4 }}
+
       - name: Install Jsonnet
         id: jsonnet-install
         working-directory: ./solution/DeploymentV2/
@@ -71,5 +95,101 @@ jobs:
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          git update-index --chmod=+x ./DeployGitHub.ps1  
-          ./DeployGitHub.ps1           
+          git update-index --chmod=+x ./Deploy.ps1  
+          ./Deploy.ps1           
+    
+    #PROD ENVIRONMENT
+    deploy-to-prod:
+      name: Deploy to Prod Environment
+      needs: [deploy-to-nonprod]
+      concurrency: terraform
+      env:
+        environmentName: production
+        gitDeploy : true
+        skipTerraformDeployment: false
+        specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
+        # Required for updating firewall for runner
+        keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
+        synapseWorkspaceName: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
+        datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
+        # Required for Terraform
+        ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+        ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}      
+        # Customizing Terraform vars
+        TF_VAR_domain : ${{ secrets.ARM_DOMAIN }}
+        TF_VAR_subscription_id : ${{ secrets.ARM_SUBSCRIPTION_ID }}
+        TF_VAR_tenant_id : ${{ secrets.ARM_TENANT_ID }}
+        TF_VAR_environment_tag : ${{ secrets.ENVIRONMENT_TAG }}
+        TF_VAR_resource_group_name  : ${{ secrets.ARM_RESOURCE_GROUP_NAME }}     
+        TF_VAR_state_storage_account_name  : ${{ secrets.ARM_STORAGE_NAME }}     
+        TF_VAR_jumphost_password : ${{secrets.ARM_JUMPHOST_PASSWORD}}
+        TF_VAR_synapse_sql_password : ${{secrets.ARM_SYNAPSE_PASSWORD}}
+        TF_VAR_web_app_admin_security_group : ${{secrets.WEB_APP_ADMIN_SECURITY_GROUP}}
+        # GIT Integration set up
+        TF_VAR_synapse_git_repository_name : ${{secrets.GIT_REPOSITORY_NAME}}
+        TF_VAR_synapse_git_repository_branch_name : ${{secrets.GIT_SYNAPSE_REPOSITORY_BRANCH_NAME}}
+        TF_VAR_synapse_git_pat : ${{secrets.GIT_PAT}}
+        TF_VAR_synapse_git_user_name : ${{secrets.GIT_USER_NAME}}
+        TF_VAR_synapse_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
+        TF_VAR_adf_git_repository_name : ${{secrets.GIT_REPOSITORY_NAME}}
+        TF_VAR_adf_git_repository_branch_name : ${{secrets.GIT_ADF_REPOSITORY_BRANCH_NAME}}
+        TF_VAR_adf_git_pat : ${{secrets.GIT_PAT}}
+        TF_VAR_adf_git_user_name : ${{secrets.GIT_USER_NAME}}
+        TF_VAR_adf_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
+
+
+        #TF_LOG : TRACE
+      environment: 
+        name: Prod
+      runs-on: ubuntu-latest
+      steps:
+      
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+
+      - name: Get public IP
+        id: ip
+        uses: haythem/public-ip@v1.2
+
+      - name: Login via Az module
+        uses: azure/login@v1
+        with:
+          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
+          enable-AzPSSession: true 
+
+      - name: Set PAL
+        id: set_pal
+        continue-on-error: true
+        run: |
+          az extension add --name managementpartner
+          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669
+
+      - name: Terragrunt Install
+        id: terragrunt_install
+        working-directory: ./solution/DeploymentV2/terraform
+        run: |
+          brew install terragrunt    
+          az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
+          az synapse workspace firewall-rule create --name AllowCICD --resource-group ${{ env.TF_VAR_resource_group_name }} --start-ip-address ${{ steps.ip.outputs.ipv4 }} --end-ip-address ${{ steps.ip.outputs.ipv4 }} --workspace-name ${{ env.synapseWorkspaceName }} 
+          az storage account network-rule add --resource-group ${{ env.TF_VAR_resource_group_name }} --account-name ${{ env.datalakeName }} --ip-address ${{ steps.ip.outputs.ipv4 }}
+
+      - name: Install Jsonnet
+        id: jsonnet-install
+        working-directory: ./solution/DeploymentV2/
+        env:
+          TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
+        run: |
+          wget https://github.com/google/go-jsonnet/releases/download/v0.17.0/jsonnet-go_0.17.0_linux_amd64.deb   
+          sudo dpkg -i jsonnet-go_0.17.0_linux_amd64.deb 
+          
+      - name: Deploy Solution
+        id: solution-deployment
+        working-directory: ./solution/DeploymentV2/
+        shell: pwsh
+        env:
+          TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
+        run: |
+          git update-index --chmod=+x ./Deploy.ps1  
+          ./Deploy.ps1           

@@ -20,48 +20,67 @@
 # 
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
+$gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 
-function Get-SelectionFromUser {
-    param (
-        [Parameter(Mandatory=$true)]
-        [string[]]$Options,
-        [Parameter(Mandatory=$true)]
-        [string]$Prompt        
-    )
-    
-    [int]$Response = 0;
-    [bool]$ValidResponse = $false    
-
-    while (!($ValidResponse)) {            
-        [int]$OptionNo = 0
-
-        Write-Host $Prompt -ForegroundColor DarkYellow
-        Write-Host "[0]: Quit"
-
-        foreach ($Option in $Options) {
-            $OptionNo += 1
-            Write-Host ("[$OptionNo]: {0}" -f $Option)
-        }
-
-        if ([Int]::TryParse((Read-Host), [ref]$Response)) {
-            if ($Response -eq 0) {
-                return ''
-            }
-            elseif($Response -le $OptionNo) {
-                $ValidResponse = $true
-            }
-        }
+if ($gitDeploy)
+{
+    $resourceGroupName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_GROUP_NAME')
+    $synapseWorkspaceName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_SYNAPSE_WORKSPACE_NAME')
+    $specificuser = [System.Environment]::GetEnvironmentVariable('specificUserIdForWebAppAdmin')
+    if ($specificuser -ne "") {
+        $AddSpecificUserAsWebAppAdmin = $true
+    } else {
+        $AddSpecificUserAsWebAppAdmin = $false
     }
 
-    return $Options.Get($Response - 1)
-} 
-
-#Only Prompt if Environment Variable has not been set
-if ($null -eq [System.Environment]::GetEnvironmentVariable('environmentName'))
-{
-    $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
-    [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
 }
+else
+{
+    function Get-SelectionFromUser {
+        param (
+            [Parameter(Mandatory=$true)]
+            [string[]]$Options,
+            [Parameter(Mandatory=$true)]
+            [string]$Prompt        
+        )
+        
+        [int]$Response = 0;
+        [bool]$ValidResponse = $false    
+    
+        while (!($ValidResponse)) {            
+            [int]$OptionNo = 0
+    
+            Write-Host $Prompt -ForegroundColor DarkYellow
+            Write-Host "[0]: Quit"
+    
+            foreach ($Option in $Options) {
+                $OptionNo += 1
+                Write-Host ("[$OptionNo]: {0}" -f $Option)
+            }
+    
+            if ([Int]::TryParse((Read-Host), [ref]$Response)) {
+                if ($Response -eq 0) {
+                    return ''
+                }
+                elseif($Response -le $OptionNo) {
+                    $ValidResponse = $true
+                }
+            }
+        }
+    
+        return $Options.Get($Response - 1)
+    } 
+    
+    #Only Prompt if Environment Variable has not been set
+    if ($null -eq [System.Environment]::GetEnvironmentVariable('environmentName'))
+    {
+        $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
+        [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
+    }
+}
+
+#needed for git integration
+az extension add --upgrade --name datafactory
 
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 
@@ -146,6 +165,9 @@ $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
 $skipSIF= if($tout.publish_sif_database){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
+$skipFunctionalTests = if($tout.publish_functional_tests) {$false} else {$true}
+$skipConfigurePurview = if($tout.publish_configure_purview) {$false} else {$true}
+
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 #------------------------------------------------------------------------------------------------------------
@@ -245,22 +267,40 @@ else {
     Compress-Archive -Path '.\unzipped\webapplication\*' -DestinationPath $Path -force
 
     $result = az webapp deployment source config-zip --resource-group $resource_group_name --name $webapp_name --src $Path
-
-    if ($AddCurrentUserAsWebAppAdmin) {                
-        write-host "Adding Admin Role To WebApp"
-        $authapp = (az ad app show --id $tout.aad_webreg_id) | ConvertFrom-Json
-        $cu = az ad signed-in-user show | ConvertFrom-Json
-        $callinguser = $cu.id
-        $authappid = $authapp.appId
-        $authappobjectid =  (az ad sp show --id $authapp.appId | ConvertFrom-Json).id
-
-        $body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
-        $body.resourceId = $authappobjectid
-        $body.appRoleId =  ($authapp.appRoles | Where-Object {$_.value -eq "Administrator" }).id
-        $body.principalId = $callinguser
-        $body = ($body | ConvertTo-Json -compress | Out-String).Replace('"','\"')
-
-        $result = az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$authappobjectid/appRoleAssignedTo" --headers '{\"Content-Type\":\"application/json\"}' --body $body
+    if ($gitDeploy) 
+    {
+        if ($AddSpecificUserAsWebAppAdmin) {
+            write-host "Adding Admin Role To WebApp for specific user"
+            $authapp = (az ad app show --id $tout.aad_webreg_id) | ConvertFrom-Json
+            $authappid = $authapp.appId
+            $authappobjectid = (az ad sp show --id $authapp.appId | ConvertFrom-Json).id
+            $body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
+            $body.resourceId = $authappobjectid
+            $body.appRoleId = ($authapp.appRoles | Where-Object {$_.value -eq "Administrator" }).id
+            $body.principalId = $specificuser
+            $body = ($body | ConvertTo-Json -compress | Out-String).Replace('"','\"')
+    
+            $result = az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$authappobjectid/appRoleAssignedTo" --headers '{\"Content-Type\":\"application/json\"}' --body $body
+        }
+    }
+    else 
+    {
+        if ($AddCurrentUserAsWebAppAdmin) {                
+            write-host "Adding Admin Role To WebApp"
+            $authapp = (az ad app show --id $tout.aad_webreg_id) | ConvertFrom-Json
+            $cu = az ad signed-in-user show | ConvertFrom-Json
+            $callinguser = $cu.id
+            $authappid = $authapp.appId
+            $authappobjectid =  (az ad sp show --id $authapp.appId | ConvertFrom-Json).id
+    
+            $body = '{"principalId": "@principalid","resourceId":"@resourceId","appRoleId": "@appRoleId"}' | ConvertFrom-Json
+            $body.resourceId = $authappobjectid
+            $body.appRoleId =  ($authapp.appRoles | Where-Object {$_.value -eq "Administrator" }).id
+            $body.principalId = $callinguser
+            $body = ($body | ConvertTo-Json -compress | Out-String).Replace('"','\"')
+    
+            $result = az rest --method post --uri "https://graph.microsoft.com/v1.0/servicePrincipals/$authappobjectid/appRoleAssignedTo" --headers '{\"Content-Type\":\"application/json\"}' --body $body
+        }
     }
 }
 
@@ -526,6 +566,38 @@ else
     }
 
 }
+
+#----------------------------------------------------------------------------------------------------------------
+#   Set up Purview
+#----------------------------------------------------------------------------------------------------------------
+# This is a WIP - not recommended to use for standard user
+#----------------------------------------------------------------------------------------------------------------
+#
+if($skipConfigurePurview) {
+    Write-Host "Skipping experimental Purview Configuration"
+}
+else {
+    Write-Host "Running Purview Configuration (experimental) Script"
+    Set-Location $deploymentFolderPath
+    Invoke-Expression ./ConfigureAzurePurview.ps1
+}
+
+
+#----------------------------------------------------------------------------------------------------------------
+#   Deploy Functional Tests
+#----------------------------------------------------------------------------------------------------------------
+# This is for development purposes primarily - If using understand these may not be all working with most recent platform version, as tests can become outdated.
+#----------------------------------------------------------------------------------------------------------------
+if($skipFunctionalTests) {
+    Write-Host "Skipping Functional Tests Upload"
+}
+else {
+    Write-Host "Deploying Functional Tests to Web App"
+    Set-Location $deploymentFolderPath
+    Invoke-Expression ./GenerateAndUploadFunctionalTests.ps1
+}
+
+
 
 Set-Location $deploymentFolderPath
 Write-Host "Finished"

@@ -311,7 +311,17 @@ variable "publish_metadata_database" {
   default     = true
   type        = bool
 }
+variable "publish_functional_tests" {
+  description = "Feature toggle for Publishing Functional Tests to the Web App"
+  default     = false
+  type        = bool
+}
 
+variable "publish_purview_configuration" {
+  description = "Feature toggle for deploying the Purview configuration script (WIP)"
+  default     = false
+  type        = bool
+}
 variable "configure_networking" {
   description = "Feature toggle for post IAC network configuration"
   default     = true
@@ -755,6 +765,12 @@ variable "existing_private_dns_zone_synapse_sql_id" {
 
 variable "existing_synapse_private_link_hub_id" {
   description = "An existing private link hub for synapse studio."
+  default     = ""
+  type        = string
+}
+
+variable "web_app_admin_security_group" {
+  description = "A web app Azure security group used for admin access."
   default     = ""
   type        = string
 }
