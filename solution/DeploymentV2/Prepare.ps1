@@ -21,7 +21,8 @@
 #
 # Once this script has finished, you then run Deploy.ps1 to create your environment
 # ------------------------------------------------------------------------------------------------------------
-#by default $gitDeploy will not be true, only being set by the git environment - meaning if not using a runner it will default to a standard prepare.
+
+#by default $gitDeploy will not be true, only being set by the git environment - meaning if not using a runner it will default to a standard execution.
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 
 if ($gitDeploy)

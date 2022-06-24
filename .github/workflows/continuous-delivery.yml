@@ -101,8 +101,8 @@ jobs:
     #PROD ENVIRONMENT
     deploy-to-prod:
       name: Deploy to Prod Environment
-      needs: [deploy-to-nonprod]
       concurrency: terraform
+      needs: [deploy-to-nonprod]
       env:
         environmentName: production
         gitDeploy : true
