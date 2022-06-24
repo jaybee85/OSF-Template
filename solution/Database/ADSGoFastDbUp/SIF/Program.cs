@@ -46,7 +46,7 @@ namespace AdsGoFastDbUp
 
         [Option("BlobStorageName", Required = false, HelpText = "BlobStorageName Parameter for the scripts.")]
         public string BlobStorageName { get; set; }
-        [Option("AdlsStorageName", Required = false, HelpText = "AdlsStorageName Parameter for the scripts.")]
+        [Option("AdlsStorageName", Required = true, HelpText = "AdlsStorageName Parameter for the scripts.")]
         public string AdlsStorageName { get;set; }
         [Option("DataFactoryName", Required = false, HelpText = "DataFactoryName Parameter for the scripts.")]
         public string DataFactoryName { get; set; }
@@ -54,16 +54,18 @@ namespace AdsGoFastDbUp
         public string WebAppName { get; set; }
         [Option("FunctionAppName", Required = false, HelpText = "FunctionAppName Parameter for the scripts.")]
         public string FunctionAppName { get; set; }
-        [Option("SqlServerName", Required = true, HelpText = "SqlServerName Parameter for the scripts.")]
+        [Option("SqlServerName", Required = false, HelpText = "SqlServerName Parameter for the scripts.")]
         public string SqlServerName { get; set; }
         [Option("SynapseWorkspaceName", Required = false, HelpText = "SynapseWorkspaceName Parameter for the scripts.")]
         public string SynapseWorkspaceName { get; set; }
-        [Option("SynapseDatabaseName", Required = false, HelpText = "SynapseDatabaseName Parameter for the scripts.")]
+        [Option("SynapseDatabaseName", Required = true, HelpText = "SynapseDatabaseName Parameter for the scripts.")]
         public string SynapseDatabaseName { get; set; }
         [Option("SynapseSQLPoolName", Required = false, HelpText = "SynapseSQLPoolName Parameter for the scripts.")]
         public string SynapseSQLPoolName { get; set; }
         [Option("PurviewAccountName", Required = false, HelpText = "PurviewAccountName Parameter for the scripts.")]
         public string PurviewAccountName { get; set; }
+        [Option("RelativePath", Required = true, HelpText = "Parameter for the vw scripts.")]
+        public string RelativePath { get; set; }
 
     }
 
@@ -194,7 +196,7 @@ namespace AdsGoFastDbUp
             builder.WithVariable("SynapseDatabaseName", o.SynapseDatabaseName);
             builder.WithVariable("SynapseSQLPoolName", o.SynapseSQLPoolName);
             builder.WithVariable("PurviewAccountName", o.PurviewAccountName);
-
+            builder.WithVariable("RelativePath", o.RelativePath);
 
             return builder.Build();
         }

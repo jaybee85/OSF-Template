@@ -334,21 +334,7 @@ else {
     }
 
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
- 	#SIFDatabase
- 	if (!$skipSIF){
-        $databases = @($stagingdb_name, $sampledb_name, $sifdb_name ,$metadatadb_name)
-        Set-Location $deploymentFolderPath
-        Set-Location "..\Database\ADSGoFastDbUp\SIF"
-        dotnet restore
-        dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\' 
-        
-        Set-Location $deploymentFolderPath
-        Set-Location ".\bin\publish\unzipped\database\"
-        
-        dotnet SIF.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name
-    } else {
-        $databases = @($stagingdb_name, $sampledb_name ,$metadatadb_name)
-    }
+ 
  
     
     $aadUsers =  @($datafactory_name)
@@ -421,7 +407,6 @@ else {
             write-host "Installing SqlServer Module"
             Install-Module -Name SqlServer -Scope CurrentUser -Force
         }
-
 
 
         $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
@@ -525,6 +510,23 @@ else
         $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
     }
 
+
+    	#SIFDatabase serverless pool
+ 	
+      
+        Set-Location $deploymentFolderPath
+        Set-Location "..\Database\ADSGoFastDbUp\SIF"
+        dotnet restore
+        dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\' 
+        
+        Set-Location $deploymentFolderPath
+        Set-Location ".\bin\publish\unzipped\database\"
+
+        $synapse_sql_serverless_name = ${synapse_sql_pool_name}"-ondemand.sql.azuresynapse.net"
+        
+        dotnet SIF.dll -a True -c "Data Source=tcp:${synapse_sql_serverless_name};Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath
+   
+   
 }
 
 Set-Location $deploymentFolderPath
