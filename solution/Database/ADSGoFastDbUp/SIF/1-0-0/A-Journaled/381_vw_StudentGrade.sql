@@ -1,4 +1,6 @@
-declare @path varchar(200)= 'samples/sif'+'/StudentGrade/StudentGrade/Snapshot/StudentGrade/**';
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/StudentGrade/StudentGrade/Snapshot/StudentGrade/**';
 
 declare @statement varchar(max) =
 '

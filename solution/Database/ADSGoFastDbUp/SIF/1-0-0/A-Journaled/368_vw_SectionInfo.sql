@@ -1,4 +1,6 @@
-declare @path varchar(200)= 'samples/sif'+'/SectionInfo/SectionInfo/Snapshot/SectionInfo/*';
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/SectionInfo/SectionInfo/Snapshot/SectionInfo/*';
 declare @statement varchar(max) =
 'CREATE VIEW dbo.vw_SectionInfo
 AS

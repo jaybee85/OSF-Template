@@ -1,4 +1,6 @@
-declare @path varchar(200)= 'samples/sif'+'/GradingAssignmentScore/GradingAssignmentScore/Snapshot/GradingAssignmentScore/**'
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/GradingAssignmentScore/GradingAssignmentScore/Snapshot/GradingAssignmentScore/**'
 
 declare @statement varchar(max) ='CREATE VIEW dbo.vw_GradingAssignmentScore
 AS

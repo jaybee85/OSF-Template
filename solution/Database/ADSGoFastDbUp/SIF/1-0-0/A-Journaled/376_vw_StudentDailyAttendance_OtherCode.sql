@@ -1,4 +1,6 @@
-declare @path varchar(200)= 'samples/sif/StudentDailyAttendance/StudentDailyAttendance/Snapshot/StudentDailyAttendance/**';
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/StudentDailyAttendance/StudentDailyAttendance/Snapshot/StudentDailyAttendance/**';
 declare @statement varchar(max) =
 '
 CREATE VIEW dbo.vw_StudentDailyAttendance_OtherCode
