@@ -335,7 +335,6 @@ else {
 
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
  
- 
     
     $aadUsers =  @($datafactory_name)
 
@@ -494,6 +493,7 @@ else
     else {
         Set-Location $deploymentFolderPath
         Set-Location "../SampleFiles/sif/"
+        $RelativePath = "'samples/sif'"
         Write-Host "Deploying SIF files"
         if ($tout.is_vnet_isolated -eq $true)
         {
@@ -524,7 +524,7 @@ else
 
         $synapse_sql_serverless_name = ${synapse_sql_pool_name}"-ondemand.sql.azuresynapse.net"
         
-        dotnet SIF.dll -a True -c "Data Source=tcp:${synapse_sql_serverless_name};Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath
+        dotnet SIF.dll -a True -c "Data Source=tcp:${synapse_sql_serverless_name};Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath $RelativePath  --AdlsStorageName $adlsstorage_name 
    
    
 }
