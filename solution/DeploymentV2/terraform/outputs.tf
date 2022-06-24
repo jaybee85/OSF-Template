@@ -99,6 +99,12 @@ output "deploy_custom_terraform" {
 output "publish_sample_files" {
   value = var.publish_sample_files
 }
+output "publish_sif_database" {
+  value = var.publish_sif_database
+}
+output "sif_database_name" {
+  value = var.sif_database_name
+}
 output "publish_metadata_database" {
   value = var.publish_metadata_database
 }

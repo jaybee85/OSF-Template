@@ -128,25 +128,25 @@ $adlsstorage_name=$outputs.adlsstorage_name.value
 $datafactory_name=$outputs.datafactory_name.value
 $keyvault_name=$outputs.keyvault_name.value
 #sif database name
-$sifdb_name  = if([string]::IsNullOrEmpty($outputs.sifdb_name.value)){"SIFDM"}
+$sifdb_name  = if ([string]::IsNullOrEmpty($outputs.sif_database_name.value)) {"SIFDM"}
 
 $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 $purview_sp_name=$outputs.purview_sp_name.value
-$synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
-$synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
-$synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
-$skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
-$skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
-$skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
-$skipDatabase = if($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
-$skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
-$skipSIF= if($tout.publish_sif_database){$false} else {$true}
-$skipNetworking = if($tout.configure_networking){$false} else {$true}
-$skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
-$AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
+$synapse_workspace_name= if ([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
+$synapse_sql_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
+$synapse_spark_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
+$skipCustomTerraform = if ($tout.deploy_custom_terraform) {$false} else {$true}
+$skipWebApp = if ($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
+$skipFunctionApp = if ($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
+$skipDatabase = if ($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
+$skipSampleFiles = if ($tout.publish_sample_files) {$false} else {$true}
+$skipSIF= if ($tout.publish_sif_database) {$false} else {$true}
+$skipNetworking = if ($tout.configure_networking) {$false} else {$true}
+$skipDataFactoryPipelines = if ($tout.publish_datafactory_pipelines) {$false} else {$true}
+$AddCurrentUserAsWebAppAdmin = if ($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer

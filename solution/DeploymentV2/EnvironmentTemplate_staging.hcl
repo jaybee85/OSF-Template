@@ -40,6 +40,7 @@ inputs = {
   publish_web_app                       = {publish_web_app}
   publish_function_app                  = {publish_function_app}
   publish_sample_files                  = {publish_sample_files}
+  publish_sif_database                  = {publish_sif_database}
   publish_metadata_database             = {publish_metadata_database}
   configure_networking                  = {configure_networking}
   publish_datafactory_pipelines         = {publish_datafactory_pipelines}
