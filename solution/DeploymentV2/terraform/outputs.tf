@@ -109,11 +109,20 @@ output "publish_sample_files" {
 output "publish_metadata_database" {
   value = var.publish_metadata_database
 }
+output "publish_sql_logins" {
+  value = var.publish_sql_logins
+}
 output "publish_functional_tests" {
   value = var.publish_functional_tests
 }
 output "publish_purview_configuration" {
   value = var.publish_purview_configuration
+}
+output "deploy_sql_server" {
+  value = var.deploy_sql_server
+}
+output "deploy_synapse" {
+  value = var.deploy_synapse
 }
 output "deploy_metadata_database" {
   value = var.deploy_metadata_database

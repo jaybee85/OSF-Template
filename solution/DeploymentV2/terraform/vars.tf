@@ -311,6 +311,11 @@ variable "publish_metadata_database" {
   default     = true
   type        = bool
 }
+variable "publish_sql_logins" {
+  description = "Feature toggle for Publishing Synapse / SQL database logins for lockbox"
+  default     = true
+  type        = bool
+}
 variable "publish_functional_tests" {
   description = "Feature toggle for Publishing Functional Tests to the Web App"
   default     = false

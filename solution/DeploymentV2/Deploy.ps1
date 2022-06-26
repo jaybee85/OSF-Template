@@ -22,6 +22,28 @@
 #----------------------------------------------------------------------------------------------------------------
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 
+#Check for SQLServer Module
+$SqlInstalled = false
+try { 
+    $SqlInstalled = Get-InstalledModule SqlServer
+}
+catch { "SqlServer PowerShell module not installed." }
+
+if($null -eq $SqlInstalled)
+{
+    write-host "Installing SqlServer Module"
+    Install-Module -Name SqlServer -Scope CurrentUser -Force
+}
+
+#needed for git integration
+az extension add --upgrade --name datafactory
+
+
+#accept custom image terms
+#https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
+
+#az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest
+
 if ($gitDeploy)
 {
     $resourceGroupName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_GROUP_NAME')
@@ -33,17 +55,6 @@ if ($gitDeploy)
         $AddSpecificUserAsWebAppAdmin = $false
     }
 
-    $SqlInstalled = false
-    try { 
-        $SqlInstalled = Get-InstalledModule SqlServer
-    }
-    catch { "SqlServer PowerShell module not installed." }
-    
-    if($null -eq $SqlInstalled)
-    {
-        write-host "Installing SqlServer Module"
-        Install-Module -Name SqlServer -Scope CurrentUser -Force
-    }
 
 }
 else
@@ -91,8 +102,7 @@ else
     }
 }
 
-#needed for git integration
-az extension add --upgrade --name datafactory
+
 
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 
@@ -104,12 +114,6 @@ if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
     Write-Error "Environment is not set"
     Exit
 }
-
-
-#accept custom image terms
-#https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
-
-#az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest
 
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
@@ -173,6 +177,8 @@ $skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
 $skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
 $skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
 $skipDatabase = if($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
+$skipSQLLogins = if($tout.publish_sql_logins -and $tout.deploy_sql_server) {$false} else {$true}
+$skipSynapseLogins = if($tout.publish_sql_logins -and $tout.deploy_synapse) {$false} else {$true}
 $skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
 $skipSIF= if($tout.publish_sif_database){$false} else {$true}
 $skipNetworking = if($tout.configure_networking){$false} else {$true}
@@ -401,16 +407,27 @@ else {
     } else {
         $databases = @($stagingdb_name, $sampledb_name ,$metadatadb_name)
     }
- 
-    
-    $aadUsers =  @($datafactory_name)
 
+}
+
+#----------------------------------------------------------------------------------------------------------------
+#   Configure SQL Server Logins
+#----------------------------------------------------------------------------------------------------------------
+if($skipSQLLogins) {
+    Write-Host "Skipping Setting up SQL Server Users"    
+}
+else {
+    Write-Host "Configuring SQL Server Users"
+    $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
+
+    $aadUsers =  @($datafactory_name)
+    
     if(!$purview_sp_id -eq 0)
     {
         $aadUsers +=  $purview_name
         $aadUsers +=  $purview_sp_name
     }
-
+    
     $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
     foreach($database in $databases)
     {
@@ -427,69 +444,69 @@ else {
                         GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
                         GO
                 "
-
+    
                 write-host "Granting MSI Privileges on $database DB to $user"
                 Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
             }
         }
     }
-
+    
     $ddlCommand = "ALTER ROLE db_ddladmin ADD MEMBER [$datafactory_name];"
     foreach($database in $databases)
     {
             write-host "Granting DDL Role on $database DB to $datafactory_name"
             Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $database -AccessToken $token -query $ddlCommand   
     }
+    
+}
 
 #----------------------------------------------------------------------------------------------------------------
 #   Configure Synapse Logins
 #----------------------------------------------------------------------------------------------------------------
-    if([string]::IsNullOrEmpty($tout.synapse_workspace_name)) {
-        Write-Host "Skipping Synapse SQL Users"    
-    }
-    else {
-        Write-Host "Configuring Synapse SQL Users"
-
-        #Add Ip to SQL Firewall
-        #$result = az synapse workspace update -n $synapse_workspace_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
-        $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
-
-        if ($tout.is_vnet_isolated -eq $false)
-        {
-            $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "AllowAllWindowsAzureIps" --start-ip-address "0.0.0.0" --end-ip-address "0.0.0.0"
-        }
-    
-        if([string]::IsNullOrEmpty($synapse_sql_pool_name) )
-        {
-            write-host "Synapse pool is not deployed."
-        }
-        else 
-        {
-            # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
-            $SqlInstalled = Get-InstalledModule SqlServer
-            if($null -eq $SqlInstalled)
-            {
-                write-host "Installing SqlServer Module"
-                Install-Module -Name SqlServer -Scope CurrentUser -Force
-            }
-
-
-
-            $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
-            if ((![string]::IsNullOrEmpty($datafactory_name)) -and ($synapse_sql_pool_name -ne 'Dummy') -and (![string]::IsNullOrEmpty($synapse_sql_pool_name)))
-            {
-                # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
-                Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "IF NOT EXISTS (SELECT name
-        FROM [sys].[database_principals]
-        WHERE [type] = 'E' AND name = N'$datafactory_name') BEGIN CREATE USER [$datafactory_name] FROM EXTERNAL PROVIDER END"    
-                Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "EXEC sp_addrolemember 'db_owner', '$datafactory_name'"
-            }
-        }
-
-
-    }
+if($skipSynapseLogins) {
+    Write-Host "Skipping Synapse SQL Users"    
 }
+else {
+    Write-Host "Configuring Synapse SQL Users"
 
+    #Add Ip to SQL Firewall
+    #$result = az synapse workspace update -n $synapse_workspace_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
+    $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
+
+    if ($tout.is_vnet_isolated -eq $false)
+    {
+        $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "AllowAllWindowsAzureIps" --start-ip-address "0.0.0.0" --end-ip-address "0.0.0.0"
+    }
+
+    if([string]::IsNullOrEmpty($synapse_sql_pool_name) )
+    {
+        write-host "Synapse pool is not deployed."
+    }
+    else 
+    {
+        # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
+        $SqlInstalled = Get-InstalledModule SqlServer
+        if($null -eq $SqlInstalled)
+        {
+            write-host "Installing SqlServer Module"
+            Install-Module -Name SqlServer -Scope CurrentUser -Force
+        }
+
+
+
+        $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
+        if ((![string]::IsNullOrEmpty($datafactory_name)) -and ($synapse_sql_pool_name -ne 'Dummy') -and (![string]::IsNullOrEmpty($synapse_sql_pool_name)))
+        {
+            # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
+            Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "IF NOT EXISTS (SELECT name
+    FROM [sys].[database_principals]
+    WHERE [type] = 'E' AND name = N'$datafactory_name') BEGIN CREATE USER [$datafactory_name] FROM EXTERNAL PROVIDER END"    
+            Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "EXEC sp_addrolemember 'db_owner', '$datafactory_name'"
+        }
+    }
+
+
+}
 
 
 #----------------------------------------------------------------------------------------------------------------
@@ -600,7 +617,7 @@ else {
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Functional Tests
 #----------------------------------------------------------------------------------------------------------------
-# This is for development purposes primarily - If using understand these may not be all working with most recent platform version, as tests can become outdated.
+# This is for development purposes primarily - If using, understand these may not be all working with most recent platform version as tests can become outdated / missing new required fields.
 #----------------------------------------------------------------------------------------------------------------
 if($skipFunctionalTests) {
     Write-Host "Skipping Functional Tests Upload"

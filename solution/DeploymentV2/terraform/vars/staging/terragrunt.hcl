@@ -39,6 +39,7 @@ inputs = {
   publish_function_app                  = true
   publish_sample_files                  = true
   publish_metadata_database             = true
+  publish_sql_logins                    = true
   configure_networking                  = true
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
