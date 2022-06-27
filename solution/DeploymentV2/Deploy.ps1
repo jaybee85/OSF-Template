@@ -501,7 +501,9 @@ else
         }
         $files = Get-ChildItem -Name
         foreach ($file in $files) {
-            $result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name synapse/sif/$file --account-name $adlsstorage_name --auth-mode login
+            $result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
+
+            $name = $file.PSChildName.Replace(".json","")
         }
     }
 
