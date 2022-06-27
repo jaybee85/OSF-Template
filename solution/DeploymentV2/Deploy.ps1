@@ -128,25 +128,25 @@ $adlsstorage_name=$outputs.adlsstorage_name.value
 $datafactory_name=$outputs.datafactory_name.value
 $keyvault_name=$outputs.keyvault_name.value
 #sif database name
-$sifdb_name  = if([string]::IsNullOrEmpty($outputs.sifdb_name.value)){"SIFDM"}
+$sifdb_name  = if ([string]::IsNullOrEmpty($outputs.sif_database_name.value)) {"SIFDM"}
 
 $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 $purview_sp_name=$outputs.purview_sp_name.value
-$synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
-$synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
-$synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
-$skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
-$skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
-$skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
-$skipDatabase = if($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
-$skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
-$skipSIF= if($tout.publish_sif_database){$false} else {$true}
-$skipNetworking = if($tout.configure_networking){$false} else {$true}
-$skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
-$AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
+$synapse_workspace_name= if ([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
+$synapse_sql_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
+$synapse_spark_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
+$skipCustomTerraform = if ($tout.deploy_custom_terraform) {$false} else {$true}
+$skipWebApp = if ($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
+$skipFunctionApp = if ($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
+$skipDatabase = if ($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
+$skipSampleFiles = if ($tout.publish_sample_files) {$false} else {$true}
+$skipSIF= if ($tout.publish_sif_database) {$false} else {$true}
+$skipNetworking = if ($tout.configure_networking) {$false} else {$true}
+$skipDataFactoryPipelines = if ($tout.publish_datafactory_pipelines) {$false} else {$true}
+$AddCurrentUserAsWebAppAdmin = if ($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer
@@ -318,7 +318,12 @@ else {
     $lake_database_container_name = $tout.synapse_lakedatabase_container_name
 
     # This has been updated to use the Azure CLI cred
-    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name --SynapseLakeDatabaseContainerName $lake_database_container_name
+    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name `
+                             --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id `
+                             --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name `
+                             --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name `
+                             --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name `
+                             --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name --SynapseLakeDatabaseContainerName $lake_database_container_name
     
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
     $SqlInstalled = false
@@ -495,6 +500,7 @@ else
         Set-Location "../SampleFiles/sif/"
         $RelativePath = "'samples/sif'"
         Write-Host "Deploying SIF files"
+        # TODO: is this needed twice? See below
         if ($tout.is_vnet_isolated -eq $true)
         {
             $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
@@ -505,17 +511,13 @@ else
 
             $name = $file.PSChildName.Replace(".json","")
         }
-    }
+        # TODO: is this needed twice? See above
+        if ($tout.is_vnet_isolated -eq $true)
+        {
+            $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
+        }
 
-    if ($tout.is_vnet_isolated -eq $true)
-    {
-        $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
-    }
-
-
-    	#SIFDatabase serverless pool
- 	
-      
+        #SIFDatabase serverless pool
         Set-Location $deploymentFolderPath
         Set-Location "..\Database\ADSGoFastDbUp\SIF"
         dotnet restore
@@ -526,9 +528,11 @@ else
 
         $synapse_sql_serverless_name = ${synapse_sql_pool_name}"-ondemand.sql.azuresynapse.net"
         
-        dotnet SIF.dll -a True -c "Data Source=tcp:${synapse_sql_serverless_name};Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath $RelativePath  --AdlsStorageName $adlsstorage_name 
-   
-   
+        dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=$sifdb_name;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
+                       --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name --WebAppName $webapp_name `
+                       --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name `
+                       --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath $RelativePath --AdlsStorageName $adlsstorage_name 
+    }
 }
 
 Set-Location $deploymentFolderPath

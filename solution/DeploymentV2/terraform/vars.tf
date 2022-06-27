@@ -301,9 +301,21 @@ variable "publish_function_app" {
 }
 
 variable "publish_sample_files" {
-  description = "Feature toggle for Publishing Sample Filess"
+  description = "Feature toggle for Publishing Sample Files"
   default     = true
   type        = bool
+}
+
+variable "publish_sif_database" {
+  description = "Feature toggle for Publishing SIF Database"
+  default     = false
+  type        = bool
+}
+
+variable "sif_database_name" {
+  description = "SIF DataMart Name"
+  default     = "SIFDM"
+  type        = string
 }
 
 variable "publish_metadata_database" {

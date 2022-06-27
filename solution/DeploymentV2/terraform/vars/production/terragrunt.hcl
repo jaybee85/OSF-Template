@@ -30,4 +30,5 @@ inputs = {
   deploy_sentinel                       = true
   deploy_purview                        = false  
   deploy_synapse                        = true
+  publish_database_sif                  = false
 }

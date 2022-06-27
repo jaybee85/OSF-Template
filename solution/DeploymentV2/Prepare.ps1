@@ -250,7 +250,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_database_sif}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
@@ -274,6 +274,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
@@ -297,6 +298,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
@@ -307,7 +309,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
 
-        if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
+    if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
     {
         $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
@@ -320,6 +322,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
@@ -330,7 +333,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
 
-            if ($templateName -eq "Lockbox Light Including Vnet & Networking")
+    if ($templateName -eq "Lockbox Light Including Vnet & Networking")
     {
         $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
@@ -343,6 +346,7 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
         $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
         $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
@@ -352,9 +356,5 @@ if ($PersistEnv -eq "Yes")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","false")
         $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
     } 
-    
-    
     $environmentFileContents | Set-Content $environmentFileTarget
-
-
 }
