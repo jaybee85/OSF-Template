@@ -488,9 +488,9 @@ else
     #}
     
     
-    #-----------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------
     #   Deploy SIF 
-    #-----------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------
     
     if ($skipSIF) {
         Write-Host "Skipping Deploying SIF files"    
@@ -500,7 +500,7 @@ else
         Set-Location "../SampleFiles/sif/"
         $RelativePath = "'samples/sif'"
         Write-Host "Deploying SIF files"
-        # TODO: is this needed twice? See below
+        # first true allow
         if ($tout.is_vnet_isolated -eq $true)
         {
             $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
@@ -511,7 +511,7 @@ else
 
             $name = $file.PSChildName.Replace(".json","")
         }
-        # TODO: is this needed twice? See above
+        # Then deny
         if ($tout.is_vnet_isolated -eq $true)
         {
             $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
@@ -526,7 +526,7 @@ else
         Set-Location $deploymentFolderPath
         Set-Location ".\bin\publish\unzipped\database\"
 
-        $synapse_sql_serverless_name = ${synapse_sql_pool_name}"-ondemand.sql.azuresynapse.net"
+        $synapse_sql_serverless_name = "${synapse_sql_pool_name}-ondemand.sql.azuresynapse.net"
         
         dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=$sifdb_name;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
                        --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name --WebAppName $webapp_name `
