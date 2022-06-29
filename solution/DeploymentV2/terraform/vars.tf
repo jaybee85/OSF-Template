@@ -251,7 +251,16 @@ variable "deploy_h2o-ai" {
   default     = false
   type        = bool
 }
-
+variable "deploy_custom_vm" {
+  description = "Feature toggle for deploying a custom virtual machine"
+  default     = false
+  type        = bool
+}
+variable "custom_vm_os" {
+  description = "User must define whether they wish deploy a 'windows' or 'linux' virtual machine."
+  default     = "linux"
+  type        = string
+}
 variable "synapse_git_toggle_integration" {
   description = "Feature toggle for enabling synapse github integration"
   default     = false
@@ -777,5 +786,41 @@ variable "existing_synapse_private_link_hub_id" {
 variable "web_app_admin_security_group" {
   description = "A web app Azure security group used for admin access."
   default     = ""
+  type        = string
+}
+
+variable "custom_vm_plan_name" {
+  description = "An Azure vm plan name to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_plan_product" {
+  description = "An Azure vm plan product to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_plan_publisher" {
+  description = "An Azure vm plan publisher to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_offer" {
+  description = "An Azure custom image marketplace image offer to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_publisher" {
+  description = "An Azure custom image marketplace image publisher to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_sku" {
+  description = "An Azure custom image marketplace image sku to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_version" {
+  description = "An Azure custom image marketplace image version to be referenced for a custom vm image."
+  default     = "latest"
   type        = string
 }

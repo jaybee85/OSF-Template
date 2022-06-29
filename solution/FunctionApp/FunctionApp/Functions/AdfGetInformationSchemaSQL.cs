@@ -56,7 +56,7 @@ namespace FunctionApp.Functions
             if (sourceType == "Oracle Server")
             {
                 informationSchemaSql = $@"
-                    SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ;
+                    ALTER SESSION SET ISOLATION_LEVEL=READ COMMITTED;
                     SELECT DISTINCT
 	                    c.ORDINAL_POSITION,
 	                    c.COLUMN_NAME, 

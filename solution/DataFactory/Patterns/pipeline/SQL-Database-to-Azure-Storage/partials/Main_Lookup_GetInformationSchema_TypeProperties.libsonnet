@@ -113,8 +113,8 @@ else if (SourceType=="OracleServerTable") then
             "value": "@pipeline().parameters.TaskObject.Source.System.Port",
             "type": "Expression"
         },
-        "SID": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.SID",
+        "ServiceName": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.ServiceName",
             "type": "Expression"
         },
         "UserName": {

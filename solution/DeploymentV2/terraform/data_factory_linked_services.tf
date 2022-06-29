@@ -531,7 +531,7 @@ resource "azurerm_data_factory_linked_custom_service" "oracledb" {
   }
   type_properties_json = <<JSON
     {			
-      "connectionString": "host=@{linkedService().Host};port=@{linkedService().Port};sid=@{linkedService().SID};user id=@{linkedService().UserName}",
+      "connectionString": "host=@{linkedService().Host};port=@{linkedService().Port};serviceName=@{linkedService().ServiceName};user id=@{linkedService().UserName}",
       "password": {
           "type": "AzureKeyVaultSecret",
           "store": {
@@ -554,8 +554,8 @@ JSON
   parameters = {
     Host            = ""
     Port            = ""
-    SID             = ""
-    UserName          = ""
+    ServiceName     = ""
+    UserName        = ""
     KeyVaultBaseUrl = ""
     Secret          = ""
   }

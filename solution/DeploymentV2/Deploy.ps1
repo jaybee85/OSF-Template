@@ -107,7 +107,7 @@ else
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
-
+#$skipTerraformDeployment = $true
 if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 {
     write-host "environmentName is currently: $environmentName"
@@ -187,7 +187,6 @@ $skipFunctionalTests = if($tout.publish_functional_tests) {$false} else {$true}
 $skipConfigurePurview = if($tout.publish_configure_purview) {$false} else {$true}
 
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
-
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer
 #------------------------------------------------------------------------------------------------------------
@@ -414,7 +413,7 @@ else {
 #   Configure SQL Server Logins
 #----------------------------------------------------------------------------------------------------------------
 if($skipSQLLogins) {
-    Write-Host "Skipping Setting up SQL Server Users"    
+    Write-Host "Skipping configuration of SQL Server Users"    
 }
 else {
     Write-Host "Configuring SQL Server Users"
@@ -464,7 +463,7 @@ else {
 #   Configure Synapse Logins
 #----------------------------------------------------------------------------------------------------------------
 if($skipSynapseLogins) {
-    Write-Host "Skipping Synapse SQL Users"    
+    Write-Host "Skipping configuration of Synapse SQL Users"    
 }
 else {
     Write-Host "Configuring Synapse SQL Users"
