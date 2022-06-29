@@ -128,7 +128,7 @@ $adlsstorage_name=$outputs.adlsstorage_name.value
 $datafactory_name=$outputs.datafactory_name.value
 $keyvault_name=$outputs.keyvault_name.value
 #sif database name
-$sifdb_name  = if ([string]::IsNullOrEmpty($outputs.sif_database_name.value)) {"SIFDM"}
+$sifdb_name  = if ([string]::IsNullOrEmpty($outputs.sif_database_name.value)) {"SIFDM"} else {$outputs.sif_database_name.value}
 
 $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
@@ -511,11 +511,7 @@ else
 
             $name = $file.PSChildName.Replace(".json","")
         }
-        # Then deny
-        if ($tout.is_vnet_isolated -eq $true)
-        {
-            $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
-        }
+    
 
         #SIFDatabase serverless pool
         Set-Location $deploymentFolderPath
@@ -528,10 +524,10 @@ else
 
         $synapse_sql_serverless_name = "${synapse_sql_pool_name}-ondemand.sql.azuresynapse.net"
         
-        dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=$sifdb_name;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
-                       --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name --WebAppName $webapp_name `
-                       --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $sifdb_name `
-                       --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --RelativePath $RelativePath --AdlsStorageName $adlsstorage_name 
+        dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=master;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
+                       --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id  --WebAppName $webapp_name `
+                       --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name  --SynapseSQLPoolName $synapse_sql_pool_name `
+                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $adlsstorage_name 
     }
 }
 

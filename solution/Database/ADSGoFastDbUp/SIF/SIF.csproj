@@ -19,7 +19,7 @@
     <None Remove="1-0-0\A-Journaled\006-DataInsert.sql" />       
     <None Remove="1-0-0\A-Journaled\007-ManualUpdate.sql" />
     <None Remove="1-0-0\A-Journaled\008-CreateMSILogins.sql" />
-    <None Remove="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" />
+    <!--None Remove="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" /-->
 	  <None Remove="1-0-0\A-Journaled\100_database_serverlesspool.sql"/>
 	  <None Remove="1-0-0\A-Journaled\200_external_datasource.sql"/>
 	  <None Remove="1-0-0\A-Journaled\300_dm_dimSexCode.sql"/>
@@ -73,7 +73,7 @@
     <EmbeddedResource Include="1-0-0\A-Journaled\006-DataInsert.sql" />       
     <EmbeddedResource Include="1-0-0\A-Journaled\007-ManualUpdate.sql" />       
     <EmbeddedResource Include="1-0-0\A-Journaled\008-CreateMSILogins.sql" />    
-    <EmbeddedResource Include="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" />
+    <!--EmbeddedResource Include="1-0-0\A-Journaled\009-InsertSIFTaskMasters.sql" /-->
 	  <EmbeddedResource Include="1-0-0\A-Journaled\100_database_serverlesspool.sql"/>
 	  <EmbeddedResource Include="1-0-0\A-Journaled\200_external_datasource.sql"/>
 	  <EmbeddedResource Include="1-0-0\A-Journaled\300_dm_dimSexCode.sql"/>
