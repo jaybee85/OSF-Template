@@ -82,6 +82,11 @@ namespace AdsGoFastDbUp
             //Set args from local.settings
             using FileStream openStream = File.OpenRead("local.settings.json");
             var o = JsonSerializer.DeserializeAsync<Options>(openStream).Result;
+            //1 connection stream in o contains initial catalog(DB) this is an issue, for create db cmd must be master, 
+
+
+            //for the other scripts initial catalog must be the new DB created in 1
+
             RetVal = MethodBody(o);
 #else
             Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => { RetVal = MethodBody(o);  });

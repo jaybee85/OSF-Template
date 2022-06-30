@@ -522,12 +522,14 @@ else
         Set-Location $deploymentFolderPath
         Set-Location ".\bin\publish\unzipped\database\"
 
-        $synapse_sql_serverless_name = "${synapse_sql_pool_name}-ondemand.sql.azuresynapse.net"
-        
+        $synapse_sql_serverless_name = "${synapse_workspace_name}-ondemand.sql.azuresynapse.net"
+        $AdlsStorageurl =  "https://${adlsstorage_name}.blob.core.windows.net/datalakelanding"
+
+
         dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=master;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
                        --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id  --WebAppName $webapp_name `
                        --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name  --SynapseSQLPoolName $synapse_sql_pool_name `
-                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $adlsstorage_name 
+                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $AdlsStorageurl
     }
 }
 
