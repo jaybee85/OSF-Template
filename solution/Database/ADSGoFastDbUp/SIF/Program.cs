@@ -160,12 +160,15 @@ namespace AdsGoFastDbUp
             }
             else
             {
-                builder = DeployChanges.To.AzureSqlDatabaseWithIntegratedSecurity(DbUp.Builder.SupportedDatabases ,o.connectionString, "dbo");
+                builder = DeployChanges.To.AzureSqlDatabaseWithIntegratedSecurity(o.connectionString, "dbo");
             }
 
-            builder.WithTransactionPerScript()
-                            .LogToConsole()
+            builder.WithoutTransaction().LogToConsole()
                             .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), s => filterstring == null || s.Contains(filterstring));
+
+
+            //builder.WithTransactionPerScript().LogToConsole()
+                      //      .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), s => filterstring == null || s.Contains(filterstring));
 
             if (JournalYN)
             {
