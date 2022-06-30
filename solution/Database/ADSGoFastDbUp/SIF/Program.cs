@@ -106,7 +106,6 @@ namespace AdsGoFastDbUp
             var engine = GetEngine(o, null, true);
             List<SqlScript> AllScripts = engine.GetDiscoveredScripts();
 
-
             List<string> Releases = new List<string>();
             foreach (var script in AllScripts)
             {
@@ -120,7 +119,7 @@ namespace AdsGoFastDbUp
 
             foreach (string r in Releases.OrderBy(r => r))
             {
-                var A = GetEngine(o, r + "." + "A_Journaled", true);
+                var A = GetEngine(o, r + "." + "A_Journaled", false);
 
                 var result_A = A.PerformUpgrade();
                 if (!result_A.Successful)
@@ -161,7 +160,7 @@ namespace AdsGoFastDbUp
             }
             else
             {
-                builder = DeployChanges.To.AzureSqlDatabaseWithIntegratedSecurity(o.connectionString, "dbo");
+                builder = DeployChanges.To.AzureSqlDatabaseWithIntegratedSecurity(DbUp.Builder.SupportedDatabases ,o.connectionString, "dbo");
             }
 
             builder.WithTransactionPerScript()
