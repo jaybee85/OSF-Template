@@ -9,4 +9,4 @@ Create a separate database and reference the synchronized tables by using three-
 */
 
 
-CREATE DATABASE [$(SynapseDatabaseName)]
+CREATE DATABASE [$SynapseDatabaseName$]
