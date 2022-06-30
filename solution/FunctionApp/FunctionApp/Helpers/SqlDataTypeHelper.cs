@@ -50,6 +50,17 @@ namespace FunctionApp.Helpers
                 case "varbinary": return "Byte[]";
                 case "varchar": return "String";
                 case "xml": return "Xml";
+                case "VARCHAR2": return "String";
+                case "NVARCHAR2": return "String";
+                case "FLOAT": return "Double";
+                case "LONG": return "Double";
+                case "DATE": return "DateTime";
+                case "BINARY_FLOAT": return "DECIMAL";
+                case "BINARY_DOUBLE": return "DECIMAL";
+                case "RAW": return "String";
+                case "LONG RAW": return "String";
+                case "NUMBER": return "Int64";
+                case "TIMESTAMP": return "Byte[]";
 
                 default:
                     throw new Exception(DataType.ToString() +
@@ -133,6 +144,17 @@ namespace FunctionApp.Helpers
                 case "uniqueidentifier": return "Binary";
                 case "varbinary": return "Binary";
                 case "xml": return "Binary";
+                case "VARCHAR2": return "UTF8";
+                case "NVARCHAR2": return "UTF8";
+                case "FLOAT": return "DECIMAL";
+                case "LONG": return "DECIMAL";
+                case "DATE": return "Int96";
+                case "BINARY_FLOAT": return "DECIMAL";
+                case "BINARY_DOUBLE": return "DECIMAL";
+                case "RAW": return "UTF8";
+                case "LONG RAW": return "UTF8";
+                case "NUMBER": return "Int64";
+                case "TIMESTAMP": return "Int96";
 
                 default:
                     throw new Exception(DataType.ToString() +
@@ -165,7 +187,7 @@ namespace FunctionApp.Helpers
                 JObject source = new JObject();
                 JObject sink = new JObject();
 
-                if (metadataType == "SQL" && (sourceType == "Azure SQL" || sourceType == "SQL Server" || sourceType == "Azure Synapse") && (targetType == "Azure Blob" || targetType == "ADLS"))
+                if (metadataType == "SQL" && (sourceType == "Azure SQL" || sourceType == "SQL Server" || sourceType == "Azure Synapse" || sourceType == "Oracle Server") && (targetType == "Azure Blob" || targetType == "ADLS"))
                 {
                     source["name"] = r["COLUMN_NAME"].ToString();
                     source["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString());
@@ -175,7 +197,7 @@ namespace FunctionApp.Helpers
                     sink["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());
                     sink["physicalType"] = r["DATA_TYPE"].ToString();
                 }
-                else if (metadataType == "Parquet" && (sourceType == "Azure Blob" || sourceType == "ADLS") && (targetType == "SQL Server" || targetType == "Azure SQL" || targetType == "Azure Synapse" || targetType == "Table"))
+                else if (metadataType == "Parquet" && (sourceType == "Azure Blob" || sourceType == "ADLS") && (targetType == "SQL Server" || targetType == "Azure SQL" || targetType == "Azure Synapse" || targetType == "Oracle Server" || targetType == "Table"))
                 {
                     source["name"] = TransformParquetFileColName(r["COLUMN_NAME"].ToString());
                     source["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());

@@ -108,7 +108,7 @@ if (SourceType=="OracleServerTable") then
     "type": "DatasetReference",
     "parameters": {
         "Host": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.Host",
+            "value": "@pipeline().parameters.TaskObject.SystemServer",
             "type": "Expression"
         },
         "Port": {
@@ -120,7 +120,7 @@ if (SourceType=="OracleServerTable") then
             "type": "Expression"
         },
         "UserName": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.Username",
+            "value": "@pipeline().parameters.TaskObject.UserName",
             "type": "Expression"
         },
         "KeyVaultBaseUrl": {
@@ -128,7 +128,7 @@ if (SourceType=="OracleServerTable") then
             "type": "Expression"
         },
         "Secret": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.PasswordKeyVaultSecretName",
+            "value": "@pipeline().parameters.TaskObject.SystemSecretName",
             "type": "Expression"
         },
         "TableSchema": {

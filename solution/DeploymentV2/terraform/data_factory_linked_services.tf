@@ -9,7 +9,7 @@ locals {
   linkedservice_generic_mssql_prefix    = "GLS_SqlServerDatabase_"
   linkedservice_generic_file_prefix     = "GLS_FileServer_"
   linkedservice_generic_rest_prefix     = "GLS_RestService_Auth"
-  linkedservice_generic_oracledb_prefix = "GLS_OracleDB_"
+  linkedservice_generic_oracledb_prefix = "GLS_OracleDatabase_SN_"
 
 }
 
@@ -525,7 +525,7 @@ resource "azurerm_data_factory_linked_custom_service" "oracledb" {
   name            = "${local.linkedservice_generic_oracledb_prefix}${each.value.short_name}"
   data_factory_id = azurerm_data_factory.data_factory[0].id
   type            = "Oracle"
-  description     = "Generic Service Principal Oracle DB Connection"
+  description     = "Generic Service Principal Oracle DB Connection using Service Name"
   integration_runtime {
     name = each.value.name
   }

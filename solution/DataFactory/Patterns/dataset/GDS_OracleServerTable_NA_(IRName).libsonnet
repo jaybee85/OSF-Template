@@ -3,7 +3,7 @@ function(shortIRName = "", fullIRName = "")
 	"name": "GDS_OracleServerTable_NA_" + shortIRName,
     "properties": {
         "linkedServiceName": {
-            "referenceName": "GLS_OracleDatabase_" + shortIRName,
+            "referenceName": "GLS_OracleDatabase_SN_" + shortIRName,
             "type": "LinkedServiceReference",
             "parameters": {
                 "Host": {
@@ -14,8 +14,8 @@ function(shortIRName = "", fullIRName = "")
                     "value": "@dataset().Port",
                     "type": "Expression"
                 },
-                "SID": {
-                    "value": "@dataset().SID",
+                "ServiceName": {
+                    "value": "@dataset().ServiceName",
                     "type": "Expression"
                 },
                 "UserName": {
@@ -39,7 +39,7 @@ function(shortIRName = "", fullIRName = "")
             "Port": {
                 "type": "string"
             },
-            "SID": {
+            "ServiceName": {
                 "type": "string"
             },
             "UserName": {
