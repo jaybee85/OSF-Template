@@ -28,7 +28,8 @@
     <None Remove="1-0-2\A-Journaled\002-AddTemporalTables.sql" />   
     <None Remove="1-0-2\A-Journaled\003-Extend-SubjectAreaMap-Table.sql" />   
     <None Remove="1-0-2\A-Journaled\004-ModifyTaskMaster.sql" />   
-    <None Remove="1-0-2\A-Journaled\005-AddSynapseContainerAsSource.sql" />            
+    <None Remove="1-0-2\A-Journaled\005-AddSynapseContainerAsSource.sql" />         
+    <None Remove="1-0-3\A-Journaled\001-UpdateOracleSource.sql" />               
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,7 @@
     <EmbeddedResource Include="1-0-2\A-Journaled\003-Extend-SubjectAreaMap-Table.sql" /> 
     <EmbeddedResource Include="1-0-2\A-Journaled\004-ModifyTaskMaster.sql" /> 
     <EmbeddedResource Include="1-0-2\A-Journaled\005-AddSynapseContainerAsSource.sql" />
+    <EmbeddedResource Include="1-0-3\A-Journaled\001-UpdateOracleSource.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,7 +66,7 @@
     <Folder Include="1-0-0\" />
     <Folder Include="1-0-1\" />
     <Folder Include="1-0-2\" />
-
+    <Folder Include="1-0-3\" />
 
   </ItemGroup>
 
