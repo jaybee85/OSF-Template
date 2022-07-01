@@ -14,7 +14,7 @@ namespace FunctionApp.Helpers
         /// </summary>
         /// <param name="DataType"></param>
         /// <returns></returns>
-        public static string TransformSqlTypesToDotNetFramework(string DataType)
+        public static string TransformSqlTypesToDotNetFramework(string DataType, string NumericPrecision)
         {
 
             switch (DataType)
@@ -59,7 +59,14 @@ namespace FunctionApp.Helpers
                 case "BINARY_DOUBLE": return "DECIMAL";
                 case "RAW": return "String";
                 case "LONG RAW": return "String";
-                case "NUMBER": return "Int64";
+                case "NUMBER":
+                    switch (NumericPrecision) 
+                    {
+                        case "1": return "Boolean";
+                        case "3": return "Boolean";
+                        default: 
+                            return "Int64";
+                    }                
                 case "TIMESTAMP": return "Byte[]";
 
                 default:
@@ -109,7 +116,7 @@ namespace FunctionApp.Helpers
         /// </summary>
         /// <param name="DataType"></param>
         /// <returns></returns>
-        public static string TransformSqlTypesToParquet(string DataType)
+        public static string TransformSqlTypesToParquet(string DataType, String NumericPrecision)
         {
 
             switch (DataType)
@@ -153,14 +160,22 @@ namespace FunctionApp.Helpers
                 case "BINARY_DOUBLE": return "DECIMAL";
                 case "RAW": return "UTF8";
                 case "LONG RAW": return "UTF8";
-                case "NUMBER": return "Int64";
+                case "NUMBER":
+                    switch (NumericPrecision) 
+                    {
+                        case "1": return "Boolean";
+                        case "3": return "Boolean";
+                        default: 
+                            return "Int64";
+                    }
                 case "TIMESTAMP": return "Int96";
-
                 default:
                     throw new Exception(DataType.ToString() +
                                         " conversion not implemented. Please add conversion logic to TransformSQLTypesToParquet");
             }
         }
+
+
 
 
         public static JObject CreateMappingBetweenSourceAndTarget(JArray arr, string sourceType, string targetType, string metadataType)
@@ -190,21 +205,21 @@ namespace FunctionApp.Helpers
                 if (metadataType == "SQL" && (sourceType == "Azure SQL" || sourceType == "SQL Server" || sourceType == "Azure Synapse" || sourceType == "Oracle Server") && (targetType == "Azure Blob" || targetType == "ADLS"))
                 {
                     source["name"] = r["COLUMN_NAME"].ToString();
-                    source["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString());
+                    source["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString(), r["NUMERIC_PRECISION"].ToString());
                     source["physicalType"] = r["DATA_TYPE"].ToString();
 
                     sink["name"] = TransformParquetFileColName(r["COLUMN_NAME"].ToString());
-                    sink["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());
+                    sink["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString(), r["NUMERIC_PRECISION"].ToString());
                     sink["physicalType"] = r["DATA_TYPE"].ToString();
                 }
                 else if (metadataType == "Parquet" && (sourceType == "Azure Blob" || sourceType == "ADLS") && (targetType == "SQL Server" || targetType == "Azure SQL" || targetType == "Azure Synapse" || targetType == "Oracle Server" || targetType == "Table"))
                 {
                     source["name"] = TransformParquetFileColName(r["COLUMN_NAME"].ToString());
-                    source["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString());
+                    source["type"] = TransformSqlTypesToParquet(r["DATA_TYPE"].ToString(), r["NUMERIC_PRECISION"].ToString());
                     source["physicalType"] = r["DATA_TYPE"].ToString();
 
                     sink["name"] = r["COLUMN_NAME"].ToString();
-                    sink["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString());
+                    sink["type"] = TransformSqlTypesToDotNetFramework(r["DATA_TYPE"].ToString(), r["NUMERIC_PRECISION"].ToString());
                     sink["physicalType"] = r["DATA_TYPE"].ToString();
                 }
 

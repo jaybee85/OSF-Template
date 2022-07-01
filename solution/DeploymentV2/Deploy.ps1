@@ -107,7 +107,6 @@ else
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
-$skipTerraformDeployment = $true
 if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 {
     write-host "environmentName is currently: $environmentName"
@@ -185,7 +184,6 @@ $skipNetworking = if($tout.configure_networking){$false} else {$true}
 $skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
 $skipFunctionalTests = if($tout.publish_functional_tests) {$false} else {$true}
 $skipConfigurePurview = if($tout.publish_configure_purview) {$false} else {$true}
-$skipFunctionApp = $false
 $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer
