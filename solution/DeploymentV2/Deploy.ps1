@@ -514,8 +514,8 @@ else
 
         foreach ($folder in $folders){
             Set-Location $folder
-            if ($folder -neq ".") az storage blob directory create   -c "datalakeraw" -d $folder --account-name $adlsstorage_name
-            $files = Get-ChildItem | Where { ! $_.PSIsContainer } | Select Name
+            if ($folder -ne "."){ az storage blob directory create   -c "datalakeraw" -d $folder --account-name $adlsstorage_name }
+            $files = Get-ChildItem -Name | Where { ! $_.PSIsContainer }  
             foreach ($file in $files) {
                 #metadata inserts have been configured from datalakeraw to datalanding
                 #$result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
