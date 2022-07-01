@@ -99,6 +99,12 @@ output "deploy_custom_terraform" {
 output "publish_sample_files" {
   value = var.publish_sample_files
 }
+output "publish_sif_database" {
+  value = var.publish_sif_database
+}
+output "sif_database_name" {
+  value = var.sif_database_name
+}
 output "publish_metadata_database" {
   value = var.publish_metadata_database
 }
@@ -197,3 +203,11 @@ output "adf_git_host_url" {
 output "synapse_lakedatabase_container_name" {
   value = azurerm_storage_data_lake_gen2_filesystem.dlfs[0].name
 }
+
+output "synapse_sql_administrator_login"{
+  value = var.synapse_sql_login
+}
+
+output "synapse_sql_administrator_login_password"   { 
+  value = local.synapse_sql_password
+  }

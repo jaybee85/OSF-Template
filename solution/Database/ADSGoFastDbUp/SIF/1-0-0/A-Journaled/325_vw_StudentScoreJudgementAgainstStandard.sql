@@ -1,7 +1,9 @@
-DROP VIEW IF EXISTS [dbo].[vw_StudentScoreJudgementAgainstStandard];
-GO
+Declare @path varchar(200);
 
-CREATE VIEW [dbo].[vw_StudentScoreJudgementAgainstStandard]
+SET @path= $(RelativePath)+'/StudentScoreJudgementAgainstStandard/StudentScoreJudgementAgainstStandard/Snapshot/StudentScoreJudgementAgainstStandard/*'
+
+declare @statement varchar(max) =
+'CREATE VIEW [dbo].[vw_StudentScoreJudgementAgainstStandard]
 AS
 SELECT 
 	[RefId] AS [StudentScoreJASKey]
@@ -11,7 +13,7 @@ SELECT
     , [StudentPersonalRefId] AS [StudentKey]
     , [StudentStateProvinceId]
     , [StudentLocalId]
-    , JSON_VALUE([YearLevel], '$.Code') AS [YearLevel]
+    , JSON_VALUE([YearLevel], ''$.Code'') AS [YearLevel]
     , [TeachingGroupRefId] AS [TeachingGroupKey]
     , [ClassLocalId]
     , [StaffPersonalRefId] AS [StaffKey]
@@ -27,9 +29,9 @@ SELECT
     , [SchoolCommonwealthId]
 FROM
     OPENROWSET(
-    BULK 'samples/sif/StudentScoreJudgementAgainstStandard/StudentScoreJudgementAgainstStandard/Snapshot/StudentScoreJudgementAgainstStandard/*',
-    DATA_SOURCE ='sif_eds',
-    FORMAT='PARQUET'
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) 
 WITH (
     [RefId] VARCHAR(36) ,	
@@ -54,5 +56,8 @@ WITH (
     [SchoolLocalId] VARCHAR(255) ,	
     [SchoolCommonwealthId] VARCHAR(255) 
 ) 
-AS [result];
+AS [result]';
+
+execute (@statement)
+;
 GO

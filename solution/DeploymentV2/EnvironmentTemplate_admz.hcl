@@ -32,6 +32,7 @@ inputs = {
   publish_web_app                       = false
   publish_function_app                  = false
   publish_sample_files                  = true
+  publish_sif_database                  = false
   publish_metadata_database             = false
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true

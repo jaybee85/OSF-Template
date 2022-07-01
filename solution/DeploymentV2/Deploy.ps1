@@ -128,25 +128,25 @@ $adlsstorage_name=$outputs.adlsstorage_name.value
 $datafactory_name=$outputs.datafactory_name.value
 $keyvault_name=$outputs.keyvault_name.value
 #sif database name
-$sifdb_name  = if([string]::IsNullOrEmpty($outputs.sifdb_name.value)){"SIFDM"}
+$sifdb_name  = if ([string]::IsNullOrEmpty($outputs.sif_database_name.value)) {"SIFDM"} else {$outputs.sif_database_name.value}
 
 $stagingdb_name=$outputs.stagingdb_name.value
 $sampledb_name=$outputs.sampledb_name.value
 $metadatadb_name=$outputs.metadatadb_name.value
 $loganalyticsworkspace_id=$outputs.loganalyticsworkspace_id.value
 $purview_sp_name=$outputs.purview_sp_name.value
-$synapse_workspace_name=if([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
-$synapse_sql_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
-$synapse_spark_pool_name=if([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
-$skipCustomTerraform = if($tout.deploy_custom_terraform) {$false} else {$true}
-$skipWebApp = if($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
-$skipFunctionApp = if($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
-$skipDatabase = if($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
-$skipSampleFiles = if($tout.publish_sample_files){$false} else {$true}
-$skipSIF= if($tout.publish_sif_database){$false} else {$true}
-$skipNetworking = if($tout.configure_networking){$false} else {$true}
-$skipDataFactoryPipelines = if($tout.publish_datafactory_pipelines) {$false} else {$true}
-$AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
+$synapse_workspace_name= if ([string]::IsNullOrEmpty($outputs.synapse_workspace_name.value)) {"Dummy"} else {$outputs.synapse_workspace_name.value}
+$synapse_sql_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_sql_pool_name.value)) {"Dummy"} else {$outputs.synapse_sql_pool_name.value}
+$synapse_spark_pool_name= if ([string]::IsNullOrEmpty($outputs.synapse_spark_pool_name.value)) {"Dummy"} else {$outputs.synapse_spark_pool_name.value}
+$skipCustomTerraform = if ($tout.deploy_custom_terraform) {$false} else {$true}
+$skipWebApp = if ($tout.publish_web_app -and $tout.deploy_web_app) {$false} else {$true}
+$skipFunctionApp = if ($tout.publish_function_app -and $tout.deploy_function_app) {$false} else {$true}
+$skipDatabase = if ($tout.publish_metadata_database -and $tout.deploy_metadata_database) {$false} else {$true}
+$skipSampleFiles = if ($tout.publish_sample_files) {$false} else {$true}
+$skipSIF= if ($tout.publish_sif_database) {$false} else {$true}
+$skipNetworking = if ($tout.configure_networking) {$false} else {$true}
+$skipDataFactoryPipelines = if ($tout.publish_datafactory_pipelines) {$false} else {$true}
+$AddCurrentUserAsWebAppAdmin = if ($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
 
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer
@@ -318,7 +318,12 @@ else {
     $lake_database_container_name = $tout.synapse_lakedatabase_container_name
 
     # This has been updated to use the Azure CLI cred
-    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name --SynapseLakeDatabaseContainerName $lake_database_container_name
+    dotnet AdsGoFastDbUp.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${metadatadb_name};" -v True --DataFactoryName $datafactory_name `
+                             --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id `
+                             --SampleDatabaseName $sampledb_name --StagingDatabaseName $stagingdb_name --MetadataDatabaseName $metadatadb_name --BlobStorageName $blobstorage_name `
+                             --AdlsStorageName $adlsstorage_name --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name `
+                             --SynapseWorkspaceName $synapse_workspace_name --SynapseDatabaseName $synapse_sql_pool_name --SynapseSQLPoolName $synapse_sql_pool_name `
+                             --SynapseSparkPoolName $synapse_spark_pool_name --PurviewAccountName $purview_name --SynapseLakeDatabaseContainerName $lake_database_container_name
     
     # Fix the MSI registrations on the other databases. I'd like a better way of doing this in the future
     $SqlInstalled = false
@@ -334,21 +339,6 @@ else {
     }
 
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
- 	#SIFDatabase
- 	if (!$skipSIF){
-        $databases = @($stagingdb_name, $sampledb_name, $sifdb_name ,$metadatadb_name)
-        Set-Location $deploymentFolderPath
-        Set-Location "..\Database\ADSGoFastDbUp\SIF"
-        dotnet restore
-        dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\' 
-        
-        Set-Location $deploymentFolderPath
-        Set-Location ".\bin\publish\unzipped\database\"
-        
-        dotnet SIF.dll -a True -c "Data Source=tcp:${sqlserver_name}.database.windows.net;Initial Catalog=${sifdb_name};" -v True  --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id --SIFDatabaseName $sifdb_name   --WebAppName $webapp_name --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name
-    } else {
-        $databases = @($stagingdb_name, $sampledb_name ,$metadatadb_name)
-    }
  
     
     $aadUsers =  @($datafactory_name)
@@ -421,7 +411,6 @@ else {
             write-host "Installing SqlServer Module"
             Install-Module -Name SqlServer -Scope CurrentUser -Force
         }
-
 
 
         $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
@@ -499,9 +488,9 @@ else
     #}
     
     
-    #-----------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------
     #   Deploy SIF 
-    #-----------------------------------------------------------------------------------------------------------
+    #-------------------------------------------------------------------------------------------------------
     
     if ($skipSIF) {
         Write-Host "Skipping Deploying SIF files"    
@@ -509,22 +498,52 @@ else
     else {
         Set-Location $deploymentFolderPath
         Set-Location "../SampleFiles/sif/"
+        $RelativePath = "samples/sif/"
         Write-Host "Deploying SIF files"
+        # first true allow
         if ($tout.is_vnet_isolated -eq $true)
         {
             $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Allow
         }
-        $files = Get-ChildItem -Name
-        foreach ($file in $files) {
-            $result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name synapse/sif/$file --account-name $adlsstorage_name --auth-mode login
+
+        $result = az storage container create --name "datalakelanding" --account-name $adlsstorage_name --auth-mode login
+        $result = az storage container create --name "datalakeraw" --account-name $adlsstorage_name --auth-mode login
+
+        $folders = get-childitem -Exclude ".*" -Directory -Name
+        $folders = $folders = $folders + "`r`n."
+
+        foreach ($folder in $folders){
+            Set-Location $folder
+            if ($folder -ne "."){ az storage blob directory create   -c "datalakeraw" -d $folder --account-name $adlsstorage_name }
+            $files = Get-ChildItem -Name | Where { ! $_.PSIsContainer }  
+            foreach ($file in $files) {
+                #metadata inserts have been configured from datalakeraw to datalanding
+                #$result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
+                $result = az storage blob upload --file $file --container-name "datalakeraw" --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
+
+                $name = $file.PSChildName.Replace(".json","")
+            }
+            
+            Set-Location ".."
         }
-    }
+        #SIFDatabase serverless pool
+        Set-Location $deploymentFolderPath
+        Set-Location "..\Database\ADSGoFastDbUp\SIF"
+        dotnet restore
+        dotnet publish --no-restore --configuration Release --output '..\..\..\DeploymentV2\bin\publish\unzipped\database\' 
+        
+        Set-Location $deploymentFolderPath
+        Set-Location ".\bin\publish\unzipped\database\"
 
-    if ($tout.is_vnet_isolated -eq $true)
-    {
-        $result = az storage account update --resource-group $resource_group_name --name $adlsstorage_name --default-action Deny
-    }
+        $synapse_sql_serverless_name = "${synapse_workspace_name}-ondemand.sql.azuresynapse.net"
+        $AdlsStorageurl =  "https://${adlsstorage_name}.blob.core.windows.net/datalakelanding"
 
+
+        dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=master;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
+                       --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id  --WebAppName $webapp_name `
+                       --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name  --SynapseSQLPoolName $synapse_sql_pool_name `
+                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $AdlsStorageurl
+    }
 }
 
 Set-Location $deploymentFolderPath

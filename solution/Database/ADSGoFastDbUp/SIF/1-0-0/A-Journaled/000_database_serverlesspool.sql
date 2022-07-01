@@ -8,5 +8,4 @@ If you're trying to create SQL objects, users, or change permissions in a databa
 Create a separate database and reference the synchronized tables by using three-part names and cross-database queries.
 */
 
-
-CREATE DATABASE [$(sifdb_name)]
+CREATE DATABASE [$SynapseDatabaseName$]

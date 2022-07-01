@@ -38,7 +38,7 @@ VALUES (N'SIF - GradingAssignmentScore', -5, -1, -4, -4, -5, 1, 0, N'Azure', N'{
 GO 
 
  INSERT [dbo].[TaskMaster] ( [TaskMasterName], [TaskTypeId], [TaskGroupId], [ScheduleMasterId], [SourceSystemId], [TargetSystemId], [DegreeOfCopyParallelism], [AllowMultipleActiveInstances], [TaskDatafactoryIR], [TaskMasterJSON], [ActiveYN], [DependencyChainTag], [EngineId]) 
-VALUES (N'SIF - MarkValueInfo', -5, -1, -4, -4, -5, 1, 0, N'Azure', N'{"CustomDefinitions":"","ExecuteNotebook":"SIFParameterizedJson","Purview":"Disabled","QualifiedIDAssociation":"TaskMasterId","Source":{"DataFileName":"GradingAssignmentScore*.json","RelativePath":"/samples/sif/","SchemaFileName":"","Type":"Notebook-Optional","WriteSchemaToPurview":"Disabled"},        "Target":{"DataFileName":"GradingAssignmentScore","RelativePath":"/synapse/sif/GradingAssignmentScore/","SchemaFileName":"","Type":"Notebook-Optional","WriteSchemaToPurview":"Disabled"},"UseNotebookActivity":"Enabled"}', 1, NULL, -2)
+VALUES (N'SIF - MarkValueInfo', -5, -1, -4, -4, -5, 1, 0, N'Azure', N'{"CustomDefinitions":"","ExecuteNotebook":"SIFParameterizedJson","Purview":"Disabled","QualifiedIDAssociation":"TaskMasterId","Source":{"DataFileName":"MarkValueInfo*.json","RelativePath":"/samples/sif/","SchemaFileName":"","Type":"Notebook-Optional","WriteSchemaToPurview":"Disabled"},        "Target":{"DataFileName":"MarkValueInfo","RelativePath":"/synapse/sif/MarkValueInfo/","SchemaFileName":"","Type":"Notebook-Optional","WriteSchemaToPurview":"Disabled"},"UseNotebookActivity":"Enabled"}', 1, NULL, -2)
 GO  
   
   

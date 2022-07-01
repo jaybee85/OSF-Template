@@ -38,6 +38,7 @@ inputs = {
   publish_metadata_database             = false
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
+  publish_sif_database                  = false
   deploy_bastion                        = false
   deploy_sentinel                       = false
   deploy_purview                        = false  

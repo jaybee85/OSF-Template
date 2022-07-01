@@ -1,6 +1,9 @@
-DROP VIEW IF EXISTS [dbo].[vw_TermInfo];
-GO
+Declare @path varchar(200);
 
+SET @path= $(RelativePath)+'/TermInfo/TermInfo/Snapshot/TermInfo/*';
+
+declare @statement varchar(max) =
+'
 CREATE VIEW [dbo].[vw_TermInfo]
 AS
 SELECT 
@@ -18,13 +21,10 @@ SELECT
     ,[SchedulingTerm]
     ,[AttendanceTerm]
 FROM
-    OPENROWSET(
-    BULK 'samples/sif/TermInfo/TermInfo/Snapshot/TermInfo/*.snappy.parquet',
-    --BULK 'samples/sif/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**'
-     DATA_SOURCE ='sif_eds',
-    FORMAT='PARQUET'
-    ----) AS [result]
-
+       OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) WITH (
 [RefId] VARCHAR(36) ,
 [SchoolInfoRefId] VARCHAR(36) ,
@@ -39,6 +39,8 @@ FROM
 [MarkingTerm] VARCHAR(2) ,
 [SchedulingTerm] VARCHAR(2) ,
 [AttendanceTerm] VARCHAR(2) 
-) AS [result];
+) AS [result]';
 
+execute (@statement)
+;
 GO

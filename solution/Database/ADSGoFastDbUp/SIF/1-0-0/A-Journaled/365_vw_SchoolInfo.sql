@@ -1,7 +1,8 @@
+Declare @path varchar(200);
 
-DROP VIEW IF EXISTS [dbo].[vw_SchoolInfo];
-GO
-
+SET @path= $(RelativePath)+'/SchoolInfo/SchoolInfo/Snapshot/SchoolInfo/*' ;
+declare @statement varchar(max) =
+'
 CREATE VIEW [dbo].[vw_SchoolInfo]
 AS
 SELECT 
@@ -13,24 +14,24 @@ SELECT
     , [ACARAId]
 	, [SchoolName]
 	, [LEAInfoRefId]
-    , JSON_VALUE([OtherLEA], '$.value') AS [OtherLEAId] 
-    , JSON_VALUE([OtherLEA], '$.SIF_RefObject') AS [SIF_RefObject]
+    , JSON_VALUE([OtherLEA], ''$.value'') AS [OtherLEAId] 
+    , JSON_VALUE([OtherLEA], ''$.SIF_RefObject'') AS [SIF_RefObject]
     , [SchoolDistrict]
     , [SchoolDistrictId]
     , [SchoolType]
     , [SchoolURL]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.Type') AS [PrincipalInfoType]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.Title') AS [PrincipalInfoTitle]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.FamilyName') AS [PrincipalInfoFamilyName]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.GivenName') AS [PrincipalInfoGivenName]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.MiddleName') AS [PrincipalInfoMiddleName]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.Suffix') AS [PrincipalInfoSuffix]
-    , JSON_VALUE([PrincipalInfo], '$.ContactName.FullName') AS [PrincipalInfoFullName]
-    , JSON_VALUE([PrincipalInfo], '$.ContactTitle') AS [PrincipalInfoContactTitle]
-    , JSON_VALUE([PhoneNumberList], '$.PhoneNumber[0].Number') AS [Telephone1]
-    , JSON_VALUE([PhoneNumberList], '$.PhoneNumber[0].Type') AS [Telephone1TypeDescription]
-    , JSON_VALUE([PhoneNumberList], '$.PhoneNumber[1].Number') AS [Telephone2]
-    , JSON_VALUE([PhoneNumberList], '$.PhoneNumber[1].Type') AS [Telephone2TypeDescription]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.Type'') AS [PrincipalInfoType]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.Title'') AS [PrincipalInfoTitle]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.FamilyName'') AS [PrincipalInfoFamilyName]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.GivenName'') AS [PrincipalInfoGivenName]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.MiddleName'') AS [PrincipalInfoMiddleName]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.Suffix'') AS [PrincipalInfoSuffix]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactName.FullName'') AS [PrincipalInfoFullName]
+    , JSON_VALUE([PrincipalInfo], ''$.ContactTitle'') AS [PrincipalInfoContactTitle]
+    , JSON_VALUE([PhoneNumberList], ''$.PhoneNumber[0].Number'') AS [Telephone1]
+    , JSON_VALUE([PhoneNumberList], ''$.PhoneNumber[0].Type'') AS [Telephone1TypeDescription]
+    , JSON_VALUE([PhoneNumberList], ''$.PhoneNumber[1].Number'') AS [Telephone2]
+    , JSON_VALUE([PhoneNumberList], ''$.PhoneNumber[1].Type'') AS [Telephone2TypeDescription]
     , [SessionType]
     , [ARIA]
     , [OperationalStatus]
@@ -50,11 +51,11 @@ SELECT
     , [EntityClose]
     , [SchoolTimeZone]
 FROM
-OPENROWSET(
-BULK 'samples/sif/SchoolInfo/SchoolInfo/Snapshot/SchoolInfo/*',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
-)
+    OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
+) 
 WITH (
     [RefId] VARCHAR(36) ,	
     [LocalId] VARCHAR(50)  ,
@@ -91,7 +92,10 @@ WITH (
     [EntityClose] VARCHAR(10)  ,	
     [SchoolTimeZone] VARCHAR(10)  
 ) 
-AS [result]
+AS [result]';
+
+execute (@statement)
+;
 GO
 
 

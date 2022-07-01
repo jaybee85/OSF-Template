@@ -1,5 +1,14 @@
+Declare @path varchar(200);
 
-CREATE VIEW dbo.vw_TeachingGroup_old
+SET @path= $(RelativePath)+ '/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**';
+
+select @path;
+
+
+
+declare @statement varchar(max) =
+'
+CREATE VIEW dbo.vw_TeachingGroup_list
 AS
 SELECT DISTINCT
     RefId,
@@ -21,11 +30,11 @@ SELECT DISTINCT
     Semester,
     MinClassSize,
     MaxClassSize    
-FROM OPENROWSET(
-BULK 'samples/sif/TeachingGroup/TeachingGroup/Snapshot/TeachingGroup/**',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
-) 
+FROM     OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
+)  
 WITH(
     RefId VARCHAR(50),
     SchoolYear VARCHAR(4),
@@ -46,6 +55,9 @@ WITH(
     Semester VARCHAR(50),
     MinClassSize VARCHAR(4),
     MaxClassSize VARCHAR(4)
-) AS TG    
+) AS TG '   ;
 
--- SELECT * FROM dbo.vw_TeachingGroup    
+execute (@statement)
+;
+
+go

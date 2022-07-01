@@ -42,6 +42,7 @@ inputs = {
   configure_networking                  = true
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
+  publish_sif_database                  = false
   deploy_synapse_sqlpool                = false
   deploy_selfhostedsql                  = false
   is_onprem_datafactory_ir_registered   = false

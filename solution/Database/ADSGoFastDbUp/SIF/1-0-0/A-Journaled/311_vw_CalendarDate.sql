@@ -1,6 +1,6 @@
+Declare @path varchar(200);
 
-
-declare @path varchar(200)= 'samples/sif/CalendarDate/CalendarDate/Snapshot/CalendarDate/**'
+SET @path= $(RelativePath)+'/CalendarDate/CalendarDate/Snapshot/CalendarDate/**'
 
 
 declare @statement varchar(max)
@@ -29,7 +29,6 @@ FORMAT=''PARQUET''
 )
 as r'
 
-select  @statement
 
 
 exec (@statement )

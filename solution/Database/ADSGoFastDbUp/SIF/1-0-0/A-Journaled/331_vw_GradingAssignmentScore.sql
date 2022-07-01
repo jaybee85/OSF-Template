@@ -1,6 +1,8 @@
-DROP VIEW IF EXISTS dbo.vw_GradingAssignmentScore
-go
-CREATE VIEW dbo.vw_GradingAssignmentScore
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/GradingAssignmentScore/GradingAssignmentScore/Snapshot/GradingAssignmentScore/**'
+
+declare @statement varchar(max) ='CREATE VIEW dbo.vw_GradingAssignmentScore
 AS
 SELECT
 	RefId GradingAssignmentScoreKey
@@ -21,9 +23,9 @@ SELECT
     , AssignmentScoreIteration
 FROM
 OPENROWSET(
-BULK 'samples/sif/GradingAssignmentScore/GradingAssignmentScore/Snapshot/GradingAssignmentScore/**',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
 ) WITH (
     [RefId]  varchar(50),
     [StudentPersonalRefId] varchar(50),
@@ -43,7 +45,9 @@ FORMAT='PARQUET'
     [AssignmentScoreIteration] varchar(255)
 )
 
-    AS [result]
+    AS [result]';
+
+    execute (@statement)
 GO
 
 

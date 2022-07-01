@@ -1,4 +1,9 @@
-CREATE VIEW dbo.vw_StudentDailyAttendance
+Declare @path varchar(200);
+
+SET @path= $(RelativePath)+'/StudentDailyAttendance/StudentDailyAttendance/Snapshot/StudentDailyAttendance/**';
+
+declare @statement varchar(max) =
+'CREATE VIEW dbo.vw_StudentDailyAttendance
 AS
 SELECT 
     RefId,
@@ -7,16 +12,16 @@ SELECT
     Date,
     SchoolYear,
     DayValue,
-    CAST(JSON_VALUE(AttendanceCode, '$.Code') AS VARCHAR(3)) AS AttendanceCode,
+    CAST(JSON_VALUE(AttendanceCode, ''$.Code'') AS VARCHAR(3)) AS AttendanceCode,
     AttendanceStatus,
     TimeIn,
     TimeOut,
     AttendanceNote
-FROM OPENROWSET(
-BULK 'samples/sif/StudentDailyAttendance/StudentDailyAttendance/Snapshot/StudentDailyAttendance/**',
-DATA_SOURCE ='sif_eds',
-FORMAT='PARQUET'
-)
+FROM     OPENROWSET(
+    BULK  '''+@path+''',
+	DATA_SOURCE =''sif_eds'',
+    FORMAT=''PARQUET''
+) 
 WITH(
     RefId VARCHAR(50),
     AttendanceCode VARCHAR(MAX),
@@ -29,6 +34,10 @@ WITH(
     TimeIn VARCHAR(8),
     TimeOut VARCHAR(8),
     AttendanceNote VARCHAR(MAX)   
-) AS SDA
+) AS SDA';
+
+execute (@statement)
+;
+GO
 
 -- SELECT * FROM dbo.vw_StudentDailyAttendance
