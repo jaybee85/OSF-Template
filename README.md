@@ -56,16 +56,16 @@ Once you have set up these pre-requisites you will then need to [Clone](https://
 ## Deployment
 To deploy the solution open **Visual Studio Code** and carry out the following steps.
 
->- [ ] From the menu select "File" then "Open Folder". Navigate the directory into which you cloned the solution. It should look like the image below with a ".devcontainer" folder at the root. Open this folder in Visual Studio Code. 
+>- :white_check_mark: From the menu select "File" then "Open Folder". Navigate the directory into which you cloned the solution. It should look like the image below with a ".devcontainer" folder at the root. Open this folder in Visual Studio Code. 
 ![image](https://user-images.githubusercontent.com/11702150/149238286-314b01ab-4cd8-4ac7-b3f5-32ca5a8d8661.png)
 
->- [ ] Next, from the Visual Studio Code menu, select "View", "Command Palette". When the search box opens type "Remote-Containers: Reopen in Container". **Note** that Docker Desktop needs to be running before you perform this step. 
->- [ ] From the menu select "Terminal", "New Terminal". A new Powershell Core window will open at the bottom of your screen. You are now running within the Docker container.
->- [ ] You are now in the development and deployment environment. Within the new terminal window navigate to the DeploymentV2 directory using the commands below:
+>- :white_check_mark: Next, from the Visual Studio Code menu, select "View", "Command Palette". When the search box opens type "Remote-Containers: Reopen in Container". **Note** that Docker Desktop needs to be running before you perform this step. 
+>- :white_check_mark: From the menu select "Terminal", "New Terminal". A new Powershell Core window will open at the bottom of your screen. You are now running within the Docker container.
+>- :white_check_mark: You are now in the development and deployment environment. Within the new terminal window navigate to the DeploymentV2 directory using the commands below:
 ``` pwsh
 cd ./solution/DeploymentV2
 ```
->- [ ] You are now ready to begin the IAC deployment. To do so follow [this detailed guide.](./solution/DeploymentV2/README.md)
+>- :white_check_mark: You are now ready to begin the IAC deployment. To do so follow [this detailed guide.](./solution/DeploymentV2/README.md)
 
 ## Post Deployment Set-up and Instructions
 =======
