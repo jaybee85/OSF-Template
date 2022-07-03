@@ -53,6 +53,12 @@ The deployment uses a concept of **Developing inside a Container** to containeri
 
 Once you have set up these pre-requisites you will then need to [Clone](https://docs.github.com/en/enterprise-server@3.1/repositories/creating-and-managing-repositories/cloning-a-repository) this repository to your local machine. 
 
+:triangular_flag_on_post: If you want a stable deployment it is highly recommended that you checkout one of the official release tags. For example, if you wish to deploy v1.0.2 run the line below from within the directory into which you cloned the repository.
+
+```bash 
+git switch tags\v1.0.2
+```
+
 ## Deployment
 To deploy the solution open **Visual Studio Code** and carry out the following steps.
 
