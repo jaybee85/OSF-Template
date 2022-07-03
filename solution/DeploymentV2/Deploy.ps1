@@ -509,23 +509,15 @@ else
         $result = az storage container create --name "datalakelanding" --account-name $adlsstorage_name --auth-mode login
         $result = az storage container create --name "datalakeraw" --account-name $adlsstorage_name --auth-mode login
 
-        $folders = get-childitem -Exclude ".*" -Directory -Name
-        $folders = $folders = $folders + "`r`n."
+        $files = Get-ChildItem -Name | Where { ! $_.PSIsContainer }  
+        foreach ($file in $files) {
+            #metadata inserts have been configured from datalakeraw to datalanding
+            #$result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
+            $result = az storage blob upload --file $file --container-name "datalakeraw" --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
 
-        foreach ($folder in $folders){
-            Set-Location $folder
-            if ($folder -ne "."){ az storage blob directory create   -c "datalakeraw" -d $folder --account-name $adlsstorage_name }
-            $files = Get-ChildItem -Name | Where { ! $_.PSIsContainer }  
-            foreach ($file in $files) {
-                #metadata inserts have been configured from datalakeraw to datalanding
-                #$result = az storage blob upload --file $file --container-name $adlsstorage_name.Replace("adsl","") --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
-                $result = az storage blob upload --file $file --container-name "datalakeraw" --name $RelativePath$file --account-name $adlsstorage_name --auth-mode login
-
-                $name = $file.PSChildName.Replace(".json","")
-            }
-            
-            Set-Location ".."
+            $name = $file.PSChildName.Replace(".json","")
         }
+               
         #SIFDatabase serverless pool
         Set-Location $deploymentFolderPath
         Set-Location "..\Database\ADSGoFastDbUp\SIF"
