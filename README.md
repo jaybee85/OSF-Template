@@ -56,7 +56,7 @@ Once you have set up these pre-requisites you will then need to [Clone](https://
 :triangular_flag_on_post: If you want a stable deployment it is highly recommended that you checkout one of the official release tags. For example, if you wish to deploy v1.0.2 run the line below from within the directory into which you cloned the repository.
 
 ```bash 
-git switch tags\v1.0.2
+git checkout tags/v1.0.2
 ```
 
 ## Deployment
