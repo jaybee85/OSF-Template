@@ -229,5 +229,5 @@ output "adf_git_host_url" {
   value = var.adf_git_toggle_integration ? var.adf_git_host_url : ""
 }
 output "synapse_lakedatabase_container_name" {
- value = var.deploy_synapse ? azurerm_storage_data_lake_gen2_filesystem.dlfs[0].name : ""
+  value = var.deploy_synapse ? azurerm_storage_data_lake_gen2_filesystem.dlfs[0].name : ""
 }
