@@ -16,7 +16,6 @@ inputs = {
   deploy_sentinel                       = true
   deploy_purview                        = true      
   deploy_synapse                        = true
-  deploy_synapse_sqlpool                = false
   deploy_metadata_database              = true
   is_vnet_isolated                      = true
   publish_web_app                       = true
