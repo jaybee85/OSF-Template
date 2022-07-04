@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
 using FunctionApp.Models.Options;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Identity.Client;
+using System.Collections.Generic;
 
 namespace FunctionApp.Authentication
 {
@@ -32,8 +34,8 @@ namespace FunctionApp.Authentication
 
                     AuthenticationContext context =
                         new AuthenticationContext("https://login.windows.net/" + _authOptions.TenantId);
-                    ClientCredential cc = new ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
-                    AuthenticationResult result =  await context.AcquireTokenAsync(resourceName, cc).ConfigureAwait(false);
+                    Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential cc = new Microsoft.IdentityModel.Clients.ActiveDirectory.ClientCredential(_authOptions.ClientId, _authOptions.ClientSecret);
+                    Microsoft.IdentityModel.Clients.ActiveDirectory.AuthenticationResult result =  await context.AcquireTokenAsync(resourceName, cc).ConfigureAwait(false);
                     return result.AccessToken;
                 }
             }
@@ -41,6 +43,32 @@ namespace FunctionApp.Authentication
             {
                 throw e;
                 return "Failed to GetAzureRestApiToken";
+            }
+        }
+
+        public async Task<string> GetPowerBIRestApiToken(string resourceName)
+        {
+            try
+            {
+                var tenantSpecificUrl = "https://login.microsoftonline.com/organizations/" + _authOptions.TenantId.ToString();
+
+                // Create a confidential client to authorize the app with the AAD app
+                IConfidentialClientApplication clientApp = ConfidentialClientApplicationBuilder
+                                                                                .Create(azureAd.Value.ClientId)
+                                                                                .WithClientSecret(azureAd.Value.ClientSecret)
+                                                                                .WithAuthority(tenantSpecificUrl)
+                                                                                .Build();
+                // Make a client call if Access token is not available in cache
+                List<string> scopes = new List<string>();
+                scopes.Add("https://analysis.windows.net/powerbi/api/.default");
+                var authenticationResult = clientApp.AcquireTokenForClient(scopes).ExecuteAsync().Result;
+                return authenticationResult.AccessToken;
+
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+                return "Failed to GetPowerBIRestApiToken";
             }
         }
 
