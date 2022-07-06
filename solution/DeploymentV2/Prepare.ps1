@@ -178,7 +178,7 @@ else
             $storageId = az storage account create --resource-group $env:TF_VAR_resource_group_name --name $env:TF_VAR_storage_account_name --sku Standard_LRS --allow-blob-public-access false --https-only true --min-tls-version TLS1_2 --query id -o tsv
 
             $progress+=5
-            $userObjectId = az ad signed-in-user show --query objectId -o tsv
+            $userObjectId = az ad signed-in-user show --query id -o tsv
             Write-Progress -Activity "Assigning Blob Contributor" -Status "${progress}% Complete:" -PercentComplete $progress
             $assignment = az role assignment create --role "Storage Blob Data Contributor" --assignee-object-id $userObjectId --assignee-principal-type User
 
