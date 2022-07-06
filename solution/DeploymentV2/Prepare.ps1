@@ -283,6 +283,7 @@ else
             $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","true")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","true")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","true")
+            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
             $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
             $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
             $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
