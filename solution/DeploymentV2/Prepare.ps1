@@ -279,7 +279,7 @@ else
         {
             $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","true")
+            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","true")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","true")
             $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","true")

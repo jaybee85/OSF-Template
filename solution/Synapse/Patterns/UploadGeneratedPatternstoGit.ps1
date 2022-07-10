@@ -56,7 +56,7 @@ function UploadADFItem ($items, $directory, $subFolder) {
 
             #Make a copy of the file in the repo 
             Copy-Item -Path $fileName -Destination "$($dir)" -Force
-            write-host ($name) -ForegroundColor Yellow -BackgroundColor DarkGreen
+            Write-Information ($name) #-ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             
         }
@@ -93,9 +93,9 @@ else
 
 
 
-Write-Host $GitURL
-Write-Host "$($Directory)/$($tout.synapse_git_repository_name)"
-Write-Host "$($tout.synapse_git_repository_branch_name)"
+Write-Information $GitURL
+Write-Information "$($Directory)/$($tout.synapse_git_repository_name)"
+Write-Information "$($tout.synapse_git_repository_branch_name)"
 
 #Clone Repo
 $FolderPath = "$($Directory)/$($tout.synapse_git_repository_name)"
@@ -132,7 +132,7 @@ foreach($repoDirectory in $repoDirectories)
     if (Test-Path -Path $fullDir) {
         "$($fullDir) directory exists, skipping."
     } else {
-        Write-Host "Creating $($fullDir) directory in repo"
+        Write-Information "Creating $($fullDir) directory in repo"
         New-Item -Path $($fullDir) -ItemType "directory"
     }
 }
@@ -158,7 +158,7 @@ foreach($child in $children.GetEnumerator()) {
     $subFolder = $subFolder -replace "_", "/"
     $inclusions = $child.Value
     $items = (Get-ChildItem -Path "./output/" -Include ($inclusions) -Verbose -recurse)
-    Write-Host "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
+    Write-Information "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
     UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
 }
 
@@ -175,7 +175,7 @@ if ($tout.synapse_git_email_address -ne "") {
 }
 
 git add .
-Write-Host ("Committing to " + $tout.synapse_git_repository_name + "/" + $tout.synapse_git_repository_branch_name)
+Write-Information ("Committing to " + $tout.synapse_git_repository_name + "/" + $tout.synapse_git_repository_branch_name)
 git commit -m "Deployment commit" --quiet
 if ($tout.synapse_git_use_pat) {
     $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($tout.synapse_git_pat)"))
@@ -184,6 +184,6 @@ if ($tout.synapse_git_use_pat) {
     git push origin $($tout.synapse_git_repository_branch_name)
 }
 Set-Location $CurrentFolderPath
-Write-Host "Deleting Temporary Repo"
+Write-Information "Deleting Temporary Repo"
 Remove-Item $Directory -Recurse -Force
-Write-Host "Complete!"
+Write-Information "Complete!"

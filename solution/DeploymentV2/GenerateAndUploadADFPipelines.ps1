@@ -1,10 +1,10 @@
-$CurrDir = Get-Location
+Set-Location $deploymentFolderPath
 
 Write-Host "Reading Terraform Outputs"
 Set-Location "./terraform"
 Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
-Set-Location $CurrDir
+Set-Location $deploymentFolderPath
 
 Write-Host "Starting Adf Patterns" -ForegroundColor Yellow
 Set-Location ../DataFactory/Patterns/
@@ -32,4 +32,4 @@ else {
 Invoke-Expression  ./UploadTaskTypeMappings.ps1
 
 
-Set-Location $CurrDir
+Set-Location $deploymentFolderPath

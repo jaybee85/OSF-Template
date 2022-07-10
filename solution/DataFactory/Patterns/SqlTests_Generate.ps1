@@ -32,8 +32,6 @@ delete from [dbo].[TaskMaster] where taskmasterid <=0;
 delete from [dbo].[TaskInstance] where taskmasterid <=0;
 
 
-
-
 "@
 
 $tests = (Get-Content -Path  ($PWD.ToString() + '../../../FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json') | ConvertFrom-Json -Depth 10)
@@ -41,9 +39,9 @@ $tests = (Get-Content -Path  ($PWD.ToString() + '../../../FunctionApp/FunctionAp
 $i = 0
 foreach ($t in $tests)
 {
-    Write-Host "_____________________________"
-    Write-Host "Writing test number: " $i.ToString()
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose ("Writing test number: " + $i.ToString())
+    Write-Verbose "_____________________________"
     $TaskMasterId = ($t.TaskMasterId)
     $TaskMasterName = $t.TestDescription
     $TaskTypeId = $t.TaskTypeId

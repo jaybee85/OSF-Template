@@ -334,7 +334,7 @@ local pipeline =
                             ],
                             "userProperties": [],
                             "typeProperties": {
-                                "message": "Session Allocation Usines Function Failed",
+                                "message": "Session Allocation Using Azure Function Failed",
                                 "errorCode": "0"
                             }
                         },

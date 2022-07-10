@@ -3,6 +3,7 @@ using FunctionApp.Models.Options;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Identity.Client;
 using System.Collections.Generic;
+using System;
 
 namespace FunctionApp.Authentication
 {
@@ -46,16 +47,23 @@ namespace FunctionApp.Authentication
             }
         }
 
-        public async Task<string> GetPowerBIRestApiToken(string resourceName)
+        public async Task<string> GetPowerBIRestApiToken(string clientId, string clientSecret, string tenantId)
         {
             try
             {
-                var tenantSpecificUrl = "https://login.microsoftonline.com/organizations/" + _authOptions.TenantId.ToString();
+                //if supplied a tenantid we replace it
+                var tenant = _authOptions.TenantId.ToString();
+                if (!String.IsNullOrEmpty(tenantId))
+                {
+                    tenant = tenantId;
+                }
+                var tenantSpecificUrl = "https://login.microsoftonline.com/" + tenant + "/";
 
+                //var tenantSpecificUrl = "https://login.microsoftonline.com/" + "ea6e65c7-8840-425b-a957-8c72609ac812/";
                 // Create a confidential client to authorize the app with the AAD app
                 IConfidentialClientApplication clientApp = ConfidentialClientApplicationBuilder
-                                                                                .Create(azureAd.Value.ClientId)
-                                                                                .WithClientSecret(azureAd.Value.ClientSecret)
+                                                                                .Create(clientId)
+                                                                                .WithClientSecret(clientSecret)
                                                                                 .WithAuthority(tenantSpecificUrl)
                                                                                 .Build();
                 // Make a client call if Access token is not available in cache

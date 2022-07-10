@@ -145,7 +145,7 @@ namespace FunctionApp.Services
             SparkNotebookExecutionHelper sneh = new SparkNotebookExecutionHelper(sner, sc,ssc, nc, logging);
 
             //Loop through to retry if fails
-            while (tryCount < 2)
+            while (tryCount < 5)
             {
                 sneh.Sner = await ExecuteNotebookCore(logging, sneh);
                 if (sneh.Sner.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
@@ -156,7 +156,7 @@ namespace FunctionApp.Services
                 }
                 logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{sneh.Sner.StatementResult}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
-                await Task.Delay(1000);
+                await Task.Delay(2000);
             }
             if (success)
             {
@@ -414,15 +414,15 @@ namespace FunctionApp.Services
                         timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
                     }
 
-
+                    
                     switch (sd.State.ToString())
                     {
                         case "idle":
                             if (timeSinceStarted > 180)
                             {
-                                if (string.IsNullOrEmpty(CandidateSessionId))
+                                if ((string.IsNullOrEmpty(CandidateSessionId)) && (sd.Name.StartsWith("AdsGoFast_")))
                                 {
-                                    
+
                                     if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession)))
                                     {
                                         //Write a session heartbeat file
@@ -447,7 +447,7 @@ namespace FunctionApp.Services
                                 }
                                 SessionCount += 1;
                             }
-                            else                             
+                            else
                             {
                                 //Consider this session busy
                                 busySessions.Add(sd);
@@ -456,19 +456,24 @@ namespace FunctionApp.Services
                             break;
                         case "busy":
                             SessionCount += 1;
-                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
-                            busySessions.Add(sd);
+                            if (sd.Name.StartsWith("AdsGoFast_"))
+                            {
+                                busySessions.Add(sd);
+                            }
                             break;
                         case "not_started":
                             SessionCount += 1;
-                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
-                            busySessions.Add(sd);
                             break;
-                        default: 
+                        case "starting":
+                            SessionCount += 1;
+                            break;
+                        default:
+                            SessionCount += 1;
                             _logging.LogInformation("Unexpected Session State:" + sd.State.ToString());
-                            break ;
+                            break;
 
-                    }                   
+                    }
+                    
 
 
                 }
@@ -557,7 +562,6 @@ namespace FunctionApp.Services
                         sso.Kind = "pyspark";
 
                         sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool1\")" + System.Environment.NewLine + code;
-
                         SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
                         //sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool2\")" + System.Environment.NewLine + code.Replace("-1000", "-1001");
                         //sso.Code =  code.Replace("-1000", "-1001");

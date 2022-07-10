@@ -52,7 +52,7 @@ function UploadADFItem ($items, $directory, $subFolder) {
 
             #Make a copy of the file in the repo 
             Copy-Item -Path $fileName -Destination "$($dir)" -Force
-            write-host ($name) -ForegroundColor Yellow -BackgroundColor DarkGreen
+            Write-Verbose ($name) #-ForegroundColor Yellow -BackgroundColor DarkGreen
                         
             
         }
@@ -68,9 +68,9 @@ $GitURL = "$($tout.adf_git_host_url)/$($owner)/$($tout.adf_git_repository_name)"
 
 
 
-Write-Host $GitURL
-Write-Host "$($Directory)/$($tout.adf_git_repository_name)"
-Write-Host "$($tout.adf_git_repository_branch_name)"
+Write-Verbose $GitURL
+Write-Verbose "$($Directory)/$($tout.adf_git_repository_name)"
+Write-Verbose "$($tout.adf_git_repository_branch_name)"
 
 #Clone Repo
 $FolderPath = "$($Directory)/$($tout.adf_git_repository_name)"
@@ -102,7 +102,7 @@ foreach($repoDirectory in $repoDirectories)
     if (Test-Path -Path $fullDir) {
         "$($fullDir) directory exists, skipping."
     } else {
-        Write-Host "Creating $($fullDir) directory in repo"
+        Write-Verbose "Creating $($fullDir) directory in repo"
         New-Item -Path $($fullDir) -ItemType "directory"
     }
 }
@@ -127,7 +127,7 @@ foreach($child in $children.GetEnumerator()) {
     $subFolder = $subFolder -replace "_", "/"
     $inclusions = $child.Value
     $items = (Get-ChildItem -Path "./output/" -Include ($inclusions) -Verbose -recurse)
-    Write-Host "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
+    Write-Verbose "Copying output $($child.Name) items to $($FolderPath)/$($subFolder)"
     UploadADFItem -items $items -directory $FolderPath -subFolder $subFolder
 }
 
@@ -145,7 +145,7 @@ if ($tout.adf_git_email_address -ne "") {
 }
 
 git add .
-Write-Host ("Committing to " + $tout.adf_git_repository_name + "/" + $tout.adf_git_repository_branch_name)
+Write-Verbose ("Committing to " + $tout.adf_git_repository_name + "/" + $tout.adf_git_repository_branch_name)
 git commit -m "Deployment commit" --quiet
 if ($tout.adf_git_use_pat) {
     $B64Pat = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("$($tout.adf_git_pat)"))
@@ -154,6 +154,6 @@ if ($tout.adf_git_use_pat) {
     git push origin $($tout.adf_git_repository_branch_name)  
 }
 Set-Location $CurrentFolderPath
-Write-Host "Deleting Temporary Repo"
+Write-Verbose "Deleting Temporary Repo"
 Remove-Item $Directory -Recurse -Force
-Write-Host "Complete!"
+Write-Verbose "Complete!"

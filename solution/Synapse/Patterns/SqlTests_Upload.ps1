@@ -8,7 +8,7 @@ $metadatadb_name=$tout.metadatadb_name
 $SqlInstalled = Get-InstalledModule SqlServer
 if($null -eq $SqlInstalled)
 {
-    write-host "Installing SqlServer Module"
+    Write-Information "Installing SqlServer Module"
     Install-Module -Name SqlServer -Scope CurrentUser -Force
 }
 
