@@ -456,7 +456,7 @@ namespace FunctionApp.Services
                         timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
                     }
                     string SessionName = "";
-                    if (string.IsNullOrEmpty(sd.Name)) { SessionName = ""; } else { SessionName = s.Name; }
+                    if (string.IsNullOrEmpty(sd.Name)) { SessionName = ""; } else { SessionName = sd.Name; }
                     switch (sd.State.ToString())
                     {
                         case "idle":
@@ -493,7 +493,10 @@ namespace FunctionApp.Services
                             else
                             {
                                 //Consider this session busy
-                                busySessions.Add(sd);
+                                if (SessionName.StartsWith("AdsGoFast_"))
+                                {
+                                    busySessions.Add(sd);
+                                }
                                 SessionCount += 1;
                             }
                             break;

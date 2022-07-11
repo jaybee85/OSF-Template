@@ -43,7 +43,7 @@ else {
     $databases = @($stagingdb_name, $sampledb_name, $metadatadb_name)
  	#SIFDatabase
  	if (!$skipSIF){
-        $databases = @($stagingdb_name, $sampledb_name, $sifdb_name ,$metadatadb_name)
+        <# $databases = @($stagingdb_name, $sampledb_name, $sifdb_name ,$metadatadb_name)
         Set-Location $deploymentFolderPath
         Set-Location "..\Database\ADSGoFastDbUp\SIF"
         dotnet restore
@@ -59,7 +59,7 @@ else {
         dotnet SIF.dll -a True -c "Data Source=tcp:$synapse_sql_serverless_name;Initial Catalog=master;" -v True --DataFactoryName $datafactory_name --ResourceGroupName $resource_group_name `
                        --KeyVaultName $keyvault_name --LogAnalyticsWorkspaceId $loganalyticsworkspace_id --SubscriptionId $subscription_id  --WebAppName $webapp_name `
                        --FunctionAppName $functionapp_name --SqlServerName $sqlserver_name --SynapseWorkspaceName $synapse_workspace_name  --SynapseSQLPoolName $synapse_sql_pool_name `
-                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $AdlsStorageurl
+                       --SynapseDatabaseName $sifdb_name --SIFDatabaseName $sifdb_name --RelativePath $RelativePath --AdlsStorageName $AdlsStorageurl #>
     
     } else {
         $databases = @($stagingdb_name, $sampledb_name ,$metadatadb_name)
