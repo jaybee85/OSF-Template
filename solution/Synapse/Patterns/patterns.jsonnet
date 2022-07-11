@@ -51,6 +51,19 @@ local Template_Synapse_SQLPool_StartStop = function(SourceType, SourceFormat, Ta
 };
 
 
+local Template_Synapse_Stop_Idle_Spark_Sessions = function(SourceType, SourceFormat, TargetType, TargetFormat)
+{
+        "Folder": "Synpase-Stop-Idle-Spark-Sessions",
+        "GFPIR": "Azure",
+        "SourceType": SourceType,
+        "SourceFormat": SourceFormat,
+        "TargetType": TargetType,
+        "TargetFormat": TargetFormat,
+        "TaskTypeId":-10,
+        "Pipeline":"Synpase_Stop_Idle_Spark_Sessions"
+};
+
+
 #Azure_Storage_to_Azure_Storage 
 [   
     #Parquet to Delta
@@ -178,6 +191,14 @@ local Template_Synapse_SQLPool_StartStop = function(SourceType, SourceFormat, Ta
     Template_Synapse_SQLPool_StartStop("N/A","Not-Applicable","Azure Synapse","Not-Applicable")
 
 ]
+
++
+#Synapse-Stop-Idle-Spark-Sessions
+[
+    Template_Synapse_Stop_Idle_Spark_Sessions("N/A","Not-Applicable","Azure Synapse","Not-Applicable")
+
+]
+
 
 +
 #Rest-API-to-Azure-Storage

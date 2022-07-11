@@ -1,10 +1,10 @@
 /*
 
 Delete [dbo].[TaskGroupDependency]  
-where AncestorTaskGroupid = -8
+where AncestorTaskGroupid in (-8, -9)
 
 Delete TaskGroup
-where TaskGroupId in (-8,-9)
+where TaskGroupId in (-8,-9, -10)
 
 Delete TaskMaster
 where TaskMasterId <= -2000
@@ -19,7 +19,8 @@ Insert into TaskGroup
 ([TaskGroupId],[SubjectAreaId], [TaskGroupName], [TaskGroupPriority],[TaskGroupConcurrency],[TaskGroupJSON],[MaximumTaskRetries],[ActiveYN])
 VALUES
 (-8, 1, N'SIF - Create Codesets & Load Raw Entities to Delta', 0, 10, N'{}', 3, 1),
-(-9, 1, N'SIF - Load Dimensions & Facts', 0, 10, N'{}', 3, 1)
+(-9, 1, N'SIF - Load Dimensions & Facts', 0, 10, N'{}', 3, 1),
+(-10, 1, N'SIF - Shutdown Idle Spark Sessions', 0, 10, N'{}', 3, 1)
 
 SET IDENTITY_INSERT [dbo].[TaskGroup] OFF
 
@@ -880,7 +881,7 @@ INSERT
 VALUES
     (
         -2022,
-        N'Load SIF Raw - Student Personal',
+        N'Load SIF Dimension - Student Personal',
         -5,
         -9,
         -4,
@@ -918,7 +919,7 @@ INSERT
 VALUES
     (
         -2023,
-        N'Load SIF Raw - Staff Personal',
+        N'Load SIF Dimension - Staff Personal',
         -5,
         -9,
         -4,
@@ -933,6 +934,44 @@ VALUES
         -2,
         0
     )
+
+INSERT
+    [dbo].[TaskMaster] (
+        [TaskMasterId],
+        [TaskMasterName],
+        [TaskTypeId],
+        [TaskGroupId],
+        [ScheduleMasterId],
+        [SourceSystemId],
+        [TargetSystemId],
+        [DegreeOfCopyParallelism],
+        [AllowMultipleActiveInstances],
+        [TaskDatafactoryIR],
+        [TaskMasterJSON],
+        [ActiveYN],
+        [DependencyChainTag],
+        [EngineId],
+        [InsertIntoCurrentSchedule]
+    )
+VALUES
+    (
+        -2024,
+        N'SIF - Stop Idle Spark Sessions',
+        -10,
+        -10,
+        -4,
+        -16,
+        -16,
+        1,
+        0,
+        N'Azure',
+        N'{"Source": {"Type":"Not-Applicable"},"Target": {"Type":"Not-Applicable"}, "SparkPoolName": ""}',
+        0,
+        NULL,
+        -2,
+        0
+    )
+
 
 SET
     IDENTITY_INSERT [dbo].[TaskMaster] OFF
@@ -951,6 +990,11 @@ Select a.* from
 	Select 
 		-8 AncestorTaskGroupid,
 		-9 DescendantTaskGroupId,
+		'EntireGroup' DependencyType
+    union 
+    Select 
+		-9 AncestorTaskGroupid,
+		-10 DescendantTaskGroupId,
 		'EntireGroup' DependencyType
 ) a
 left outer join [dbo].[TaskGroupDependency]  b on a.AncestorTaskGroupid = b.AncestorTaskGroupid and a.DescendantTaskGroupId = b.DescendantTaskGroupId

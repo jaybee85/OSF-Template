@@ -148,7 +148,7 @@ foreach ($patternFolder in $patternFolders)
         $TargetFormat = $pattern.TargetFormat
         $TaskTypeId = $pattern.TaskTypeId
 
-        $schemafileguid = ($schemafiles | where-object {$_.SourceFormat -eq $SourceFormat -and $_.SourceType -eq $SourceType -and $_.TargetFormat -eq $TargetFormat -and $_.TargetType -eq $TargetType}).Guid
+        $schemafileguid = ($schemafiles | where-object {$_.SourceFormat -eq $SourceFormat -and $_.SourceType -eq $SourceType -and $_.TargetFormat -eq $TargetFormat -and $_.TargetType -eq $TargetType -and $_.Pipeline -eq $pipeline}).Guid
         $tschemafile = $folder + "/output/schemas/taskmasterjson/"+ $schemafileguid + ".json"
 
         #$SourceType = $psplit[1]
@@ -176,7 +176,7 @@ foreach ($patternFolder in $patternFolders)
         $TargetFormat = "Table"
         }
 
-        if ($TaskTypeId -eq -6) 
+        if ($TaskTypeId -eq -6 -or $TaskTypeId -eq -10) 
         {
             $MappingType = 'DLL'
         }

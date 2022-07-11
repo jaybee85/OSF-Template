@@ -170,6 +170,46 @@ namespace FunctionApp.Services
             }
         }
 
+        public async Task StopIdleSessions(Uri endpoint, string poolName, Logging.Logging logging, JObject TaskObject)
+        {                                 
+            Int32 TaskInstanceId = System.Convert.ToInt32(TaskObject["TaskInstanceId"]);
+            var ssc = GetSessionClient(endpoint, poolName);
+            var sc = await GetSynapseClient();
+
+            int reqSessionCount = 20;
+            int reqFromSession = 0;
+            while (reqSessionCount >= 20)
+            {
+                
+                Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession, 20, true);
+                foreach (SparkSession s in ss.Value.Sessions)
+                {
+                    string SessionName = "";
+                    if (string.IsNullOrEmpty(s.Name)) { SessionName = ""; } else { SessionName = s.Name; }
+                    if (s.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle && SessionName.StartsWith("AdsGoFast_"))
+                    {
+                        //Azure.Response response = await ssc.CancelSparkSessionAsync(s.Id);
+                        HttpResponseMessage response = await sc.DeleteAsync($"{endpoint.ToString()}/livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions/" + s.Id.ToString());
+                        var responseContent = response.Content;
+                        var status = response.StatusCode;
+                        var content = await responseContent.ReadAsStringAsync();                        
+
+                    if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
+                        {
+                            logging.LogErrors(new Exception($"Synapse Session Cancellation via Rest Failed. StatusCode: {status}; Message: {content}"));
+                        }
+                    }
+
+                }
+
+                reqSessionCount = ss.Value.Total;
+                if (reqSessionCount > 0)
+                {
+                    reqFromSession += ss.Value.Total;
+                }
+            }           
+        }
+
         private async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Logging.Logging logging, SparkNotebookExecutionHelper sneh)
         {
 
@@ -286,6 +326,8 @@ namespace FunctionApp.Services
             }
 
         }
+
+
 
         public async Task<HttpClient> GetSynapseClient()
         {
@@ -413,14 +455,15 @@ namespace FunctionApp.Services
                     {
                         timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
                     }
-
-                    
+                    string SessionName = "";
+                    if (string.IsNullOrEmpty(sd.Name)) { SessionName = ""; } else { SessionName = s.Name; }
                     switch (sd.State.ToString())
                     {
                         case "idle":
                             if (timeSinceStarted > 180)
                             {
-                                if ((string.IsNullOrEmpty(CandidateSessionId)) && (sd.Name.StartsWith("AdsGoFast_")))
+
+                                if ((string.IsNullOrEmpty(CandidateSessionId)) && (SessionName.StartsWith("AdsGoFast_")))
                                 {
 
                                     if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession)))
@@ -456,7 +499,7 @@ namespace FunctionApp.Services
                             break;
                         case "busy":
                             SessionCount += 1;
-                            if (sd.Name.StartsWith("AdsGoFast_"))
+                            if (SessionName.StartsWith("AdsGoFast_"))
                             {
                                 busySessions.Add(sd);
                             }
@@ -466,6 +509,10 @@ namespace FunctionApp.Services
                             break;
                         case "starting":
                             SessionCount += 1;
+                            if (SessionName.StartsWith("AdsGoFast_"))
+                            {
+                                busySessions.Add(sd);
+                            }
                             break;
                         default:
                             SessionCount += 1;
