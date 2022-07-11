@@ -28,11 +28,11 @@ if ($gitDeploy)
     $synapseWorkspaceName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_SYNAPSE_WORKSPACE_NAME')
     $specificuser = [System.Environment]::GetEnvironmentVariable('specificUserIdForWebAppAdmin')
     if ($specificuser -ne "") {
-        $AddSpecificUserAsWebAppAdmin = $true
+        $AddSpecificUserAsWebAppAdmin = $true        
     } else {
         $AddSpecificUserAsWebAppAdmin = $false
     }
-
+    $env:AdsGf_AddSpecificUserAsWebAppAdmin = $AddSpecificUserAsWebAppAdmin 
 
 }
 else
@@ -95,6 +95,6 @@ if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
-$myIp = (Invoke-WebRequest ifconfig.me/ip).Content
+
 
 

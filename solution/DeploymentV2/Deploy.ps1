@@ -20,15 +20,30 @@
 # 
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
-$deploymentFolderPath = (Get-Location).Path #Mandatory
-Invoke-Expression  ./Deploy_0_Prep.ps1 #Mandatory
-$environmentName = [System.Environment]::GetEnvironmentVariable('environmentName') #Mandatory
 
+
+
+#------------------------------------------------------------------------------------------------------------
+# Preparation #Mandatory
+#------------------------------------------------------------------------------------------------------------
+$deploymentFolderPath = (Get-Location).Path 
+
+Invoke-Expression  ./Deploy_0_Prep.ps1 
+
+$environmentName = [System.Environment]::GetEnvironmentVariable('environmentName') 
+$myIp = (Invoke-WebRequest ifconfig.me/ip).Content 
+$env:TF_VAR_ip_address = $myIp 
+$AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin 
+
+
+#------------------------------------------------------------------------------------------------------------
+# Main Terraform
+#------------------------------------------------------------------------------------------------------------
 Invoke-Expression  ./Deploy_1_Infra0.ps1
 
 
 #------------------------------------------------------------------------------------------------------------
-# Get all the outputs from terraform so we can use them in subsequent steps
+# Get all the outputs from terraform so we can use them in subsequent steps #Mandatory
 #------------------------------------------------------------------------------------------------------------
     Set-Location "./terraform"
     Write-Host "Reading Terraform Outputs"
@@ -74,7 +89,7 @@ Invoke-Expression  ./Deploy_3_Infra1.ps1
 Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
 Invoke-Expression  ./Deploy_5_WebApp.ps1
 Invoke-Expression  ./Deploy_6_FuncApp.ps1
-Invoke-Expression  ./Deploy_7_MetaDataDB.ps1
+Invoke-Expression  ./Deploy_7_MetadataDB.ps1
 Invoke-Expression  ./Deploy_8_SQLLogins.ps1
 Invoke-Expression  ./Deploy_9_DataFactory.ps1
 

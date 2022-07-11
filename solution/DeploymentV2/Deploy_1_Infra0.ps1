@@ -8,7 +8,6 @@
 # - If you havn't run prepare but want to run this script on its own, set the TF_VAR_jumphost_password and TF_VAR_domain env vars
 #------------------------------------------------------------------------------------------------------------
 Set-Location "./terraform"
-$env:TF_VAR_ip_address = $myIp
 
 terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
 
