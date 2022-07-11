@@ -21,6 +21,7 @@ inputs = {
   publish_web_app                       = true
   publish_function_app                  = true
   publish_sample_files                  = true
+  publish_sif_database                  = true
   publish_metadata_database             = true
   configure_networking                  = true
   publish_datafactory_pipelines         = true

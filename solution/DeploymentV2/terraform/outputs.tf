@@ -231,3 +231,10 @@ output "adf_git_host_url" {
 output "synapse_lakedatabase_container_name" {
   value = var.deploy_synapse ? azurerm_storage_data_lake_gen2_filesystem.dlfs[0].name : ""
 }
+output "publish_sif_database" {
+  value = var.publish_sif_database
+}
+output "sif_database_name" {
+  value = var.sif_database_name
+}
+

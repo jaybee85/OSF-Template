@@ -260,6 +260,8 @@ else
         $environmentFileContents = $environmentFileContents.Replace("{tenant_id}","$env:TF_VAR_tenant_id")
         $environmentFileContents = $environmentFileContents.Replace("{ip_address}","$env:TF_VAR_ip_address")
         $environmentFileContents = $environmentFileContents.Replace("{domain}","$env:TF_VAR_domain")
+        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","true")
+        
         
         
         #------------------------------------------------------------------------------------------------------------

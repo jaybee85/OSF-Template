@@ -92,6 +92,7 @@ Invoke-Expression  ./Deploy_6_FuncApp.ps1
 Invoke-Expression  ./Deploy_7_MetadataDB.ps1
 Invoke-Expression  ./Deploy_8_SQLLogins.ps1
 Invoke-Expression  ./Deploy_9_DataFactory.ps1
+Invoke-Expression  ./Deploy_10_SampleFiles.ps1
 
 #----------------------------------------------------------------------------------------------------------------
 #   Set up Purview
