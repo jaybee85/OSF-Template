@@ -668,7 +668,7 @@ variable "synapse_spark_min_node_count" {
 
 variable "synapse_spark_max_node_count" {
   description = "The maximum number of spark nodes in the autoscale pool"
-  default     = 3
+  default     = 12
   type        = number
 }
 
