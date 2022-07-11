@@ -27,6 +27,8 @@
 # Preparation #Mandatory
 #------------------------------------------------------------------------------------------------------------
 $deploymentFolderPath = (Get-Location).Path 
+$gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
+$skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 
 Invoke-Expression  ./Deploy_0_Prep.ps1 
 
@@ -85,6 +87,10 @@ Invoke-Expression  ./Deploy_1_Infra0.ps1
     $AddCurrentUserAsWebAppAdmin = if($tout.publish_web_app_addcurrentuserasadmin) {$true} else {$false}
     Set-Location $deploymentFolderPath
 
+
+#------------------------------------------------------------------------------------------------------------
+# Run Each SubModule
+#------------------------------------------------------------------------------------------------------------
 Invoke-Expression  ./Deploy_3_Infra1.ps1
 Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
 Invoke-Expression  ./Deploy_5_WebApp.ps1
