@@ -1,12 +1,12 @@
 function(shortIRName = "", fullIRName = "")
 {
-    "name": "GLS_OracleDatabase_" + shortIRName,
+    "name": "GLS_OracleDatabase_SN_" + shortIRName,
     "properties": {
 		"connectVia": {
 			"referenceName": fullIRName,
 			"type": "IntegrationRuntimeReference"
 		},
-		"description": "Generic Oracle DB",
+		"description": "Generic Service Principal Oracle DB Connection using Service Name",
         "parameters": {
             "Host": {
                 "type": "string"
@@ -14,7 +14,7 @@ function(shortIRName = "", fullIRName = "")
             "Port": {
                 "type": "string"
             },
-            "SID": {
+            "ServiceName": {
                 "type": "string"
             },
             "UserName": {
@@ -30,7 +30,7 @@ function(shortIRName = "", fullIRName = "")
         "annotations": [],
         "type": "Oracle",
         "typeProperties": {
-            "connectionString": "host=@{linkedService().Host};port=@{linkedService().Port};sid=@{linkedService().SID};user id=@{linkedService().UserName}",
+        "connectionString": "host=@{linkedService().Host};port=@{linkedService().Port};serviceName=@{linkedService().ServiceName};user id=@{linkedService().UserName}",
             "password": {
                 "type": "AzureKeyVaultSecret",
                 "store": {

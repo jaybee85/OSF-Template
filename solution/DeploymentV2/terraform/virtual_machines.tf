@@ -104,7 +104,6 @@ resource "azurerm_windows_virtual_machine" "selfhostedsqlvm" {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
-
   source_image_reference {
     publisher = "MicrosoftSQLServer"
     offer     = "sql2019-ws2019"
@@ -193,3 +192,121 @@ resource "azurerm_linux_virtual_machine" "h2o-ai" {
   }
 }
 
+#---------------------------------------------------------------
+# Custom Image VM
+#---------------------------------------------------------------
+resource "random_password" "custom_vm" {
+  count       = var.deploy_custom_vm ? 1 : 0
+  length      = 32
+  min_numeric = 1
+  min_upper   = 1
+  min_lower   = 1
+  min_special = 1
+  special     = true
+  lower       = true
+  number      = true
+  upper       = true
+}
+
+
+resource "azurerm_network_interface" "custom_vm_nic" {
+  count               = var.deploy_custom_vm ? 1 : 0
+  name                = "custom_vm_nic"
+  location            = var.resource_location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = local.vm_subnet_id
+  }
+}
+
+
+resource "azurerm_linux_virtual_machine" "custom_vm_linux" {
+  count                           = var.deploy_custom_vm && var.custom_vm_os == "linux" ? 1 : 0
+  name                            = local.custom_vm_name
+  location                        = var.resource_location
+  resource_group_name             = var.resource_group_name
+  size                            = "Standard_D4_v3"
+  admin_username                  = "adminuser"
+  disable_password_authentication = false
+  admin_password                  = random_password.custom_vm[0].result
+  network_interface_ids = [
+    azurerm_network_interface.custom_vm_nic[0].id,
+  ]
+
+  dynamic "plan" {
+    for_each = ((var.custom_vm_plan_name != "" && var.custom_vm_plan_publisher != "" && var.custom_vm_plan_product != "") ? [true] : [])
+    content {
+      name      = var.custom_vm_plan_name
+      publisher = var.custom_vm_plan_publisher
+      product   = var.custom_vm_plan_product
+    }
+  }
+
+  dynamic "source_image_reference" {
+    for_each = ((var.custom_vm_image_publisher != "" && var.custom_vm_image_offer != "" && var.custom_vm_image_sku != "") ? [true] : [])
+    content {
+      publisher = var.custom_vm_image_publisher
+      offer     = var.custom_vm_image_offer
+      sku       = var.custom_vm_image_sku
+      version   = var.custom_vm_image_version
+    }
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      admin_password
+    ]
+  }
+}
+
+
+resource "azurerm_windows_virtual_machine" "custom_vm_windows" {
+  count                           = var.deploy_custom_vm && var.custom_vm_os == "windows" ? 1 : 0
+  name                            = local.custom_vm_name
+  location                        = var.resource_location
+  resource_group_name             = var.resource_group_name
+  size                            = "Standard_D4_v3"
+  admin_username                  = "adminuser"
+  admin_password                  = random_password.custom_vm[0].result
+  network_interface_ids = [
+    azurerm_network_interface.custom_vm_nic[0].id,
+  ]
+
+  dynamic "plan" {
+    for_each = ((var.custom_vm_plan_name != "" && var.custom_vm_plan_publisher != "" && var.custom_vm_plan_product != "") ? [true] : [])
+    content {
+      name      = var.custom_vm_plan_name
+      publisher = var.custom_vm_plan_publisher
+      product   = var.custom_vm_plan_product
+    }
+  }
+
+  dynamic "source_image_reference" {
+    for_each = ((var.custom_vm_image_publisher != "" && var.custom_vm_image_offer != "" && var.custom_vm_image_sku != "") ? [true] : [])
+    content {
+      publisher = var.custom_vm_image_publisher
+      offer     = var.custom_vm_image_offer
+      sku       = var.custom_vm_image_sku
+      version   = var.custom_vm_image_version
+    }
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      admin_password
+    ]
+  }
+}

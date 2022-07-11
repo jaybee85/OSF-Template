@@ -13,9 +13,9 @@ $patterns = ((Get-Content "Patterns.json") | ConvertFrom-Json).Folder | Sort-Obj
 
 foreach ($folder in $patterns)
 {   
-    Write-Host "_____________________________"
-    Write-Host  $folder
-    Write-Host "_____________________________" 
+    Write-Verbose "_____________________________"
+    Write-Verbose  $folder
+    Write-Verbose "_____________________________" 
     
     $tests = (Get-ChildItem -Path ("./pipeline/"+$folder+"/tests/") -Verbose -recurse)
     foreach ($test in $tests)

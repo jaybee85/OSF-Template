@@ -8,19 +8,19 @@ function(GenerateArm="false",GFPIR="IRA")
     "type": "DatasetReference",
     "parameters": {
         "Host": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.Host",
+            "value": "@pipeline().parameters.TaskObject.SystemServer",
             "type": "Expression"
         },
         "Port": {
             "value": "@pipeline().parameters.TaskObject.Source.System.Port",
             "type": "Expression"
         },
-        "SID": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.SID",
+        "ServiceName": {
+            "value": "@pipeline().parameters.TaskObject.Source.System.ServiceName",
             "type": "Expression"
         },
         "UserName": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.Username",
+            "value": "@pipeline().parameters.TaskObject.UserName",
             "type": "Expression"
         },
         "KeyVaultBaseUrl": {
@@ -28,7 +28,7 @@ function(GenerateArm="false",GFPIR="IRA")
             "type": "Expression"
         },
         "Secret": {
-            "value": "@pipeline().parameters.TaskObject.Source.System.PasswordKeyVaultSecretName",
+            "value": "@pipeline().parameters.TaskObject.SystemSecretName",
             "type": "Expression"
         },
         "TableSchema": {

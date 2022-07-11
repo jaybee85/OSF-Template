@@ -8,7 +8,7 @@ if (!(Test-Path "./output"))
 }
 else
 {
-    Write-Information "Output Folder already exists"
+    Write-Verbose "Output Folder already exists"
 }
 
 #Remove Previous Outputs
@@ -22,9 +22,9 @@ $toutjson = $tout | ConvertTo-Json -Depth 10 | Set-Content($newfolder + "tout.js
 if($($tout.adf_git_toggle_integration)) {
     #LINKED SERVICES
     $folder = "./linkedService/"
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF linked services for Git Integration: " 
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose "Generating ADF linked services for Git Integration: " 
+    Write-Verbose "_____________________________"
     #GLS
     $files = (Get-ChildItem -Path $folder -Filter "GLS*" -Verbose)
     foreach ($ir in $tout.integration_runtimes)
@@ -60,9 +60,9 @@ if($($tout.adf_git_toggle_integration)) {
     }
     #DATASETS
     $folder = "./dataset/"
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF datasets for Git Integration: " 
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose "Generating ADF datasets for Git Integration: " 
+    Write-Verbose "_____________________________"
     #GDS
     $files = (Get-ChildItem -Path $folder -Filter "GDS*" -Verbose)
     foreach ($ir in $tout.integration_runtimes)
@@ -88,9 +88,9 @@ if($($tout.adf_git_toggle_integration)) {
 
     $folder = "./managedVirtualNetwork/"
     $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF managed virtual networks for Git Integration: " 
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose "Generating ADF managed virtual networks for Git Integration: " 
+    Write-Verbose "_____________________________"
     foreach ($file in $files)
     {
         $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
@@ -104,9 +104,9 @@ if($($tout.adf_git_toggle_integration)) {
     #if our vnet isolation isnt on, we only want the standard files
     if ($tout.is_vnet_isolated) {
         $files = (Get-ChildItem -Path $folder -Filter *is_vnet_isolated*)
-        Write-Host "_____________________________"
-        Write-Host "Generating ADF managed private endpoints for Git Integration: " 
-        Write-Host "_____________________________"
+        Write-Verbose "_____________________________"
+        Write-Verbose "Generating ADF managed private endpoints for Git Integration: " 
+        Write-Verbose "_____________________________"
         foreach ($file in $files)
         {
             $schemafiletemplate = (Get-ChildItem -Path ($folder) -Filter "$($file.PSChildName)"  -Verbose)
@@ -120,9 +120,9 @@ if($($tout.adf_git_toggle_integration)) {
 
     #INTEGRATION RUNTIMES
     $folder = "./integrationRuntime/"
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF integration runtimes for Git Integration: " 
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose "Generating ADF integration runtimes for Git Integration: " 
+    Write-Verbose "_____________________________"
     #IR
     foreach ($ir in $tout.integration_runtimes)
     {
@@ -163,9 +163,9 @@ if($($tout.adf_git_toggle_integration)) {
 
     }
     $folder = "./factory/"
-    Write-Host "_____________________________"
-    Write-Host "Generating ADF factories for Git Integration: " 
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose "Generating ADF factories for Git Integration: " 
+    Write-Verbose "_____________________________"
     #FA
     $files = (Get-ChildItem -Path $folder -Filter "*.libsonnet" -Verbose)
     foreach ($file in $files){

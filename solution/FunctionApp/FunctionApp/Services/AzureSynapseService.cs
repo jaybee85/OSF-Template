@@ -145,7 +145,7 @@ namespace FunctionApp.Services
             SparkNotebookExecutionHelper sneh = new SparkNotebookExecutionHelper(sner, sc,ssc, nc, logging);
 
             //Loop through to retry if fails
-            while (tryCount < 2)
+            while (tryCount < 5)
             {
                 sneh.Sner = await ExecuteNotebookCore(logging, sneh);
                 if (sneh.Sner.StatementResult == SparkNotebookExecutionResult.statementResult.succeeded)
@@ -156,7 +156,7 @@ namespace FunctionApp.Services
                 }
                 logging.LogWarning($"Task Named {taskName} Failed To Start. Result status was '{sneh.Sner.StatementResult}' Attempt Number {tryCount.ToString()}");
                 tryCount++;
-                await Task.Delay(1000);
+                await Task.Delay(45000);
             }
             if (success)
             {
@@ -170,6 +170,46 @@ namespace FunctionApp.Services
             }
         }
 
+        public async Task StopIdleSessions(Uri endpoint, string poolName, Logging.Logging logging, JObject TaskObject)
+        {                                 
+            Int32 TaskInstanceId = System.Convert.ToInt32(TaskObject["TaskInstanceId"]);
+            var ssc = GetSessionClient(endpoint, poolName);
+            var sc = await GetSynapseClient();
+
+            int reqSessionCount = 20;
+            int reqFromSession = 0;
+            while (reqSessionCount >= 20)
+            {
+                
+                Response<SparkSessionCollection> ss = await ssc.GetSparkSessionsAsync(reqFromSession, 20, true);
+                foreach (SparkSession s in ss.Value.Sessions)
+                {
+                    string SessionName = "";
+                    if (string.IsNullOrEmpty(s.Name)) { SessionName = ""; } else { SessionName = s.Name; }
+                    if (s.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle && SessionName.StartsWith("AdsGoFast_"))
+                    {
+                        //Azure.Response response = await ssc.CancelSparkSessionAsync(s.Id);
+                        HttpResponseMessage response = await sc.DeleteAsync($"{endpoint.ToString()}/livyApi/versions/2019-11-01-preview/sparkPools/{poolName}/sessions/" + s.Id.ToString());
+                        var responseContent = response.Content;
+                        var status = response.StatusCode;
+                        var content = await responseContent.ReadAsStringAsync();                        
+
+                        if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                        {
+                            logging.LogErrors(new Exception($"Synapse Session Cancellation via Rest Failed. StatusCode: {status}; Message: {content}"));
+                        }
+                    }
+
+                }
+
+                reqSessionCount = ss.Value.Total;
+                if (reqSessionCount > 0)
+                {
+                    reqFromSession += ss.Value.Total;
+                }
+            }           
+        }
+
         private async Task<SparkNotebookExecutionResult> ExecuteNotebookCore(Logging.Logging logging, SparkNotebookExecutionHelper sneh)
         {
 
@@ -178,8 +218,11 @@ namespace FunctionApp.Services
                 //ToDo Delete Old Sessions waiting to Start                
                 //Get Sessions Waiting To Start
                 sneh.GetSessionsWaitingToStartFromDisk();
+                //logging.LogInformation($"TaskInstance:{sneh.Sner.TaskInstanceId}; SessionsFromDisk:{sneh.Sner.sessionsWaitingToStart.ToString()}; SessionsTotal:{sneh.SessionCount.ToString()}");
                 await sneh.GetCandidateSessions();
+                //logging.LogInformation($"TaskInstance:{sneh.Sner.TaskInstanceId}; SessionsFromDisk:{sneh.Sner.sessionsWaitingToStart.ToString()}; SessionsTotal:{sneh.SessionCount.ToString()}");
                 await sneh.ProcessCandidateSessions();
+                logging.LogInformation($"TaskInstance:{sneh.Sner.TaskInstanceId}; SessionsFromDisk:{sneh.Sner.sessionsWaitingToStart.ToString()}; SessionsTotal:{sneh.SessionCount.ToString()}");
                 await sneh.NewSessionCheck();
 
                 //Run code                
@@ -287,6 +330,8 @@ namespace FunctionApp.Services
 
         }
 
+
+
         public async Task<HttpClient> GetSynapseClient()
         {
             string token = await _authProvider.GetAzureRestApiToken("https://dev.azuresynapse.net");
@@ -329,7 +374,7 @@ namespace FunctionApp.Services
             private bool CandidateAllowedToRun { get; set; }
 
             private Guid ProcessingGuid { get; set; }
-            private int SessionCount { get; set; }
+            public int SessionCount { get; set; }
 
             public SparkNotebookExecutionHelper(SparkNotebookExecutionResult sner, HttpClient httpClient, SparkSessionClient sparkSessionClient, NotebookClient notebookClient, Logging.Logging logging)
             {
@@ -350,7 +395,7 @@ namespace FunctionApp.Services
             public void GetSessionsWaitingToStartFromDisk()
             {
                 //Todo Remove very old Files
-
+                
                 DirectoryInfo folder = Directory.CreateDirectory(Path.Combine(Sner.SessionFolder));
                 var files = folder.GetFiles();
                 var matchedFiles = files.Where(f => f.Name.StartsWith($"cs_"));
@@ -413,16 +458,17 @@ namespace FunctionApp.Services
                     {
                         timeSinceStarted = (DateTimeOffset.Now - (DateTimeOffset)sd.LivyInfo.StartingAt).TotalSeconds;
                     }
-
-
+                    string SessionName = "";
+                    if (string.IsNullOrEmpty(sd.Name)) { SessionName = ""; } else { SessionName = sd.Name; }
                     switch (sd.State.ToString())
                     {
                         case "idle":
                             if (timeSinceStarted > 180)
                             {
-                                if (string.IsNullOrEmpty(CandidateSessionId))
+
+                                if ((string.IsNullOrEmpty(CandidateSessionId)) && (SessionName.StartsWith("AdsGoFast_")))
                                 {
-                                    
+
                                     if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession)))
                                     {
                                         //Write a session heartbeat file
@@ -431,11 +477,15 @@ namespace FunctionApp.Services
                                         await Task.Delay(1000);
                                         //Now Check again To Make sure that you locked the session first                                        
                                         if (CheckForHeartBeatFiles("us", System.Convert.ToInt32(loopSession), ProcessingGuid))
-                                        { CandidateSessionId = loopSession; }
+                                        {
+                                            _logging.LogInformation($"Processing Task {Sner.TaskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {SessionCount}. Succeeded in signalling intent to use.");
+                                            CandidateSessionId = loopSession; 
+                                        }
                                         else
                                         {
                                             //Consider this session busy
                                             busySessions.Add(sd);
+                                            _logging.LogWarning($"Processing Task {Sner.TaskName}. PreExisting Session number {loopSession} detected for application AdsGoFast {SessionCount}. Failed in signalling intent to use.");
                                         }
 
                                     }
@@ -447,28 +497,36 @@ namespace FunctionApp.Services
                                 }
                                 SessionCount += 1;
                             }
-                            else                             
+                            else
                             {
                                 //Consider this session busy
-                                busySessions.Add(sd);
+                                if (SessionName.StartsWith("AdsGoFast_"))
+                                {
+                                    busySessions.Add(sd);
+                                }
                                 SessionCount += 1;
                             }
                             break;
                         case "busy":
                             SessionCount += 1;
-                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
-                            busySessions.Add(sd);
+                            if (SessionName.StartsWith("AdsGoFast_"))
+                            {
+                                busySessions.Add(sd);
+                            }
                             break;
                         case "not_started":
-                            SessionCount += 1;
-                            //logging.LogInformation($"Processing Task {taskName}. PreExisting Session number {loopSession} for application AdsGoFast {sessionCount} ignored as it is busy.");
-                            busySessions.Add(sd);
+                            SessionCount += 1;                           
                             break;
-                        default: 
+                        case "starting":
+                            SessionCount += 1;                            
+                            break;
+                        default:
+                            SessionCount += 1;
                             _logging.LogInformation("Unexpected Session State:" + sd.State.ToString());
-                            break ;
+                            break;
 
-                    }                   
+                    }
+                    
 
 
                 }
@@ -557,7 +615,6 @@ namespace FunctionApp.Services
                         sso.Kind = "pyspark";
 
                         sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool1\")" + System.Environment.NewLine + code;
-
                         SparkStatementOperation statemento = ssc.StartCreateSparkStatement(System.Convert.ToInt32(idleSession.Id), sso);
                         //sso.Code = "spark.sparkContext.setLocalProperty(\"spark.scheduler.pool\", \"pool2\")" + System.Environment.NewLine + code.Replace("-1000", "-1001");
                         //sso.Code =  code.Replace("-1000", "-1001");
@@ -632,34 +689,43 @@ namespace FunctionApp.Services
                     {
                         int? MinStatements = null;
                         int MinStatementSessonId = -1;
+                        bool ValidBusySessionFound = false;
                         foreach (SparkSession session in busySessions)
                         {
-                            var sss = this.ssc.GetSparkStatements(session.Id);
                             Int64 RunningStatementCount = 0;
-                            foreach(var ss in sss.Value.Statements)
+                            if (session.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Busy || session.State == Azure.Analytics.Synapse.Spark.Models.LivyStates.Idle )
                             {
-                                if (ss.State == LivyStatementStates.Running || ss.State == LivyStatementStates.Waiting || ss.State == LivyStatementStates.Cancelling)
-                                {
-                                    RunningStatementCount++;
-                                }
-                            }
-                            
+                                ValidBusySessionFound = true;
+                                var sss = this.ssc.GetSparkStatements(session.Id);
 
-                            if (MinStatements == null)
-                            {
-                                MinStatements = (int?)RunningStatementCount;
-                                MinStatementSessonId = session.Id;
-                            }
-                            if (RunningStatementCount <= MinStatements)
-                            { 
-                                MinStatements = (int?)RunningStatementCount;
-                                MinStatementSessonId = session.Id;
+                                foreach (var ss in sss.Value.Statements)
+                                {
+                                    if (ss.State == LivyStatementStates.Running || ss.State == LivyStatementStates.Waiting || ss.State == LivyStatementStates.Cancelling)
+                                    {
+                                        RunningStatementCount++;
+                                    }
+                                }
+                                                                                          
+                                if (MinStatements == null)
+                                {
+                                    MinStatements = (int?)RunningStatementCount;
+                                    MinStatementSessonId = session.Id;
+                                }
+                                if (RunningStatementCount <= MinStatements)
+                                {
+                                    MinStatements = (int?)RunningStatementCount;
+                                    MinStatementSessonId = session.Id;
+                                }
                             }
 
                         }
 
-                        CandidateSessionId = MinStatementSessonId.ToString();
-                        Sner.UsingBusySession = true;
+
+                        if (ValidBusySessionFound)
+                        {
+                            CandidateSessionId = MinStatementSessonId.ToString();
+                            Sner.UsingBusySession = true;
+                        }
                     }
                     else
                     {
@@ -795,10 +861,14 @@ namespace FunctionApp.Services
                 //Remove very old files 
                 foreach (var file in files)
                 {
-                    if (file.CreationTimeUtc > DateTime.UtcNow.AddHours(-48))
+                    if (file.CreationTimeUtc < DateTime.UtcNow.AddHours(-48))
                     {
                         //Wrapping Delete in Try Catch in case another thread has already deleted the old files
-                        try { file.Delete(); } catch { }
+                        try { 
+
+                            file.Delete(); 
+                        } 
+                        catch { }
                     }
                 }
 

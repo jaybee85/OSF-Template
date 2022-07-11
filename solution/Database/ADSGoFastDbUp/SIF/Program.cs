@@ -46,7 +46,7 @@ namespace AdsGoFastDbUp
 
         [Option("BlobStorageName", Required = false, HelpText = "BlobStorageName Parameter for the scripts.")]
         public string BlobStorageName { get; set; }
-        [Option("AdlsStorageName", Required = false, HelpText = "AdlsStorageName Parameter for the scripts.")]
+        [Option("AdlsStorageName", Required = true, HelpText = "AdlsStorageName Parameter for the scripts.")]
         public string AdlsStorageName { get;set; }
         [Option("DataFactoryName", Required = false, HelpText = "DataFactoryName Parameter for the scripts.")]
         public string DataFactoryName { get; set; }
@@ -54,16 +54,18 @@ namespace AdsGoFastDbUp
         public string WebAppName { get; set; }
         [Option("FunctionAppName", Required = false, HelpText = "FunctionAppName Parameter for the scripts.")]
         public string FunctionAppName { get; set; }
-        [Option("SqlServerName", Required = true, HelpText = "SqlServerName Parameter for the scripts.")]
+        [Option("SqlServerName", Required = false, HelpText = "SqlServerName Parameter for the scripts.")]
         public string SqlServerName { get; set; }
         [Option("SynapseWorkspaceName", Required = false, HelpText = "SynapseWorkspaceName Parameter for the scripts.")]
         public string SynapseWorkspaceName { get; set; }
-        [Option("SynapseDatabaseName", Required = false, HelpText = "SynapseDatabaseName Parameter for the scripts.")]
+        [Option("SynapseDatabaseName", Required = true, HelpText = "SynapseDatabaseName Parameter for the scripts.")]
         public string SynapseDatabaseName { get; set; }
         [Option("SynapseSQLPoolName", Required = false, HelpText = "SynapseSQLPoolName Parameter for the scripts.")]
         public string SynapseSQLPoolName { get; set; }
         [Option("PurviewAccountName", Required = false, HelpText = "PurviewAccountName Parameter for the scripts.")]
         public string PurviewAccountName { get; set; }
+        [Option("RelativePath", Required = true, HelpText = "Parameter for the vw scripts.")]
+        public string RelativePath { get; set; }
 
     }
 
@@ -80,6 +82,11 @@ namespace AdsGoFastDbUp
             //Set args from local.settings
             using FileStream openStream = File.OpenRead("local.settings.json");
             var o = JsonSerializer.DeserializeAsync<Options>(openStream).Result;
+            //1 connection stream in o contains initial catalog(DB) this is an issue, for create db cmd must be master, 
+
+
+            //for the other scripts initial catalog must be the new DB created in 1
+
             RetVal = MethodBody(o);
 #else
             Parser.Default.ParseArguments<Options>(args).WithParsed<Options>(o => { RetVal = MethodBody(o);  });
@@ -104,7 +111,6 @@ namespace AdsGoFastDbUp
             var engine = GetEngine(o, null, true);
             List<SqlScript> AllScripts = engine.GetDiscoveredScripts();
 
-
             List<string> Releases = new List<string>();
             foreach (var script in AllScripts)
             {
@@ -118,7 +124,7 @@ namespace AdsGoFastDbUp
 
             foreach (string r in Releases.OrderBy(r => r))
             {
-                var A = GetEngine(o, r + "." + "A_Journaled", true);
+                var A = GetEngine(o, r + "." + "A_Journaled", false);
 
                 var result_A = A.PerformUpgrade();
                 if (!result_A.Successful)
@@ -162,9 +168,12 @@ namespace AdsGoFastDbUp
                 builder = DeployChanges.To.AzureSqlDatabaseWithIntegratedSecurity(o.connectionString, "dbo");
             }
 
-            builder.WithTransactionPerScript()
-                            .LogToConsole()
+            builder.WithoutTransaction().LogToConsole()
                             .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), s => filterstring == null || s.Contains(filterstring));
+
+
+            //builder.WithTransactionPerScript().LogToConsole()
+                      //      .WithScriptsEmbeddedInAssembly(Assembly.GetExecutingAssembly(), s => filterstring == null || s.Contains(filterstring));
 
             if (JournalYN)
             {
@@ -194,7 +203,7 @@ namespace AdsGoFastDbUp
             builder.WithVariable("SynapseDatabaseName", o.SynapseDatabaseName);
             builder.WithVariable("SynapseSQLPoolName", o.SynapseSQLPoolName);
             builder.WithVariable("PurviewAccountName", o.PurviewAccountName);
-
+            builder.WithVariable("RelativePath", o.RelativePath);
 
             return builder.Build();
         }

@@ -5,9 +5,9 @@ $AllTests = @()
 $counter = 0
 foreach ($pattern in $patterns) {   
 
-    Write-Host "_____________________________"
-    Write-Host  $pattern
-    Write-Host "_____________________________"
+    Write-Verbose "_____________________________"
+    Write-Verbose  $pattern
+    Write-Verbose "_____________________________"
     $folder = "/pipeline/" + $pattern + "/functionapptests"
 
     Set-Location -path ($CurDir + $folder)
@@ -18,7 +18,7 @@ foreach ($pattern in $patterns) {
     }
     else
     {
-        write-host "Tests Folder already exists"
+        Write-Verbose "Tests Folder already exists"
     }
 
     $testfile = "./tests/tests.json"
@@ -32,6 +32,6 @@ foreach ($pattern in $patterns) {
 }
 
 Set-Location -path ($CurDir + '../../../')
-Write-Host $PWD.ToString()
+Write-Verbose $PWD.ToString()
 $AllTests | ConvertTo-Json -Depth 10 | Set-Content -Path  ($PWD.ToString() + '/FunctionApp/FunctionApp.TestHarness/UnitTests/tests.json')
 Set-Location $CurDir

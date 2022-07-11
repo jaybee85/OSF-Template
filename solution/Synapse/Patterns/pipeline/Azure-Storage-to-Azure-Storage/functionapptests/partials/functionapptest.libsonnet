@@ -49,7 +49,7 @@ function(
         "UseNotebookActivity": UseNotebookActivity,
         "Source":{
             "Type": SourceFormat,                       
-            "RelativePath": "samples/",
+            "RelativePath": "samples/SalesLT_Customer_CDC/",
             "DataFileName": SourceDataFilename,
             "SchemaFileName": SourceSchemaFileName,
             "MaxConcurrentConnections": SourceMaxConcurrentConnections,

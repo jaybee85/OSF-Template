@@ -38,8 +38,8 @@
                             "value": "@dataset().Port",
                             "type": "Expression"
                         },
-                        "SID": {
-                            "value": "@dataset().SID",
+                        "ServiceName": {
+                            "value": "@dataset().ServiceName",
                             "type": "Expression"
                         },
                         "UserName": {
@@ -63,7 +63,7 @@
                     "Port": {
                         "type": "string"
                     },
-                    "SID": {
+                    "ServiceName": {
                         "type": "string"
                     },
                     "UserName": {

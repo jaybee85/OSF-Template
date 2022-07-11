@@ -48,6 +48,7 @@ inputs = {
   deploy_metadata_database              = false
   deploy_h2o-ai                         = false
   is_onprem_datafactory_ir_registered   = false
+  publish_sif_database                  = {publish_sif_database}
 
   #Below is a space for providing details of EXISTING resources so that the deployment can integrate with your management zone.
   #Please ensure that you enter everything that is relevant otherwise deployed resources may not work properly.

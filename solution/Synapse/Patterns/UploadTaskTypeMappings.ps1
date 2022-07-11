@@ -11,7 +11,7 @@ $patterns = (Get-Content "Patterns.json") | ConvertFrom-Json
 $SqlInstalled = Get-InstalledModule SqlServer
 if($null -eq $SqlInstalled)
 {
-    write-host "Installing SqlServer Module"
+    Write-Information "Installing SqlServer Module"
     Install-Module -Name SqlServer -Scope CurrentUser -Force
 }
 
@@ -21,9 +21,9 @@ if($null -eq $SqlInstalled)
 foreach ($pattern in ($patterns.Folder | Sort-Object | Get-Unique))
 {    
     $file = "./pipeline/" + $pattern + "/output/schemas/taskmasterjson/TaskTypeMapping.sql"
-    Write-Host "_____________________________"
-    Write-Host "Updating TaskTypeMappings: " $file
-    Write-Host "_____________________________"
+    Write-Information "_____________________________"
+    Write-Information "Updating TaskTypeMappings: " $file
+    Write-Information "_____________________________"
     $sqlcommand = (Get-Content $file -raw)
     $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
     Invoke-Sqlcmd -ServerInstance "$sqlserver_name.database.windows.net,1433" -Database $metadatadb_name -AccessToken $token -query $sqlcommand   

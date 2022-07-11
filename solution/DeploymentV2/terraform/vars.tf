@@ -251,7 +251,16 @@ variable "deploy_h2o-ai" {
   default     = false
   type        = bool
 }
-
+variable "deploy_custom_vm" {
+  description = "Feature toggle for deploying a custom virtual machine"
+  default     = false
+  type        = bool
+}
+variable "custom_vm_os" {
+  description = "User must define whether they wish deploy a 'windows' or 'linux' virtual machine."
+  default     = "linux"
+  type        = string
+}
 variable "synapse_git_toggle_integration" {
   description = "Feature toggle for enabling synapse github integration"
   default     = false
@@ -311,7 +320,22 @@ variable "publish_metadata_database" {
   default     = true
   type        = bool
 }
+variable "publish_sql_logins" {
+  description = "Feature toggle for Publishing Synapse / SQL database logins for lockbox"
+  default     = true
+  type        = bool
+}
+variable "publish_functional_tests" {
+  description = "Feature toggle for Publishing Functional Tests to the Web App"
+  default     = false
+  type        = bool
+}
 
+variable "publish_purview_configuration" {
+  description = "Feature toggle for deploying the Purview configuration script (WIP)"
+  default     = false
+  type        = bool
+}
 variable "configure_networking" {
   description = "Feature toggle for post IAC network configuration"
   default     = true
@@ -330,7 +354,17 @@ variable "publish_web_app_addcurrentuserasadmin" {
   type        = bool
 }
 
+variable "publish_sif_database" {
+  description = "Feature toggle for Publishing SIF Database"
+  default     = false
+  type        = bool
+}
 
+variable "sif_database_name" {
+  description = "SIF DataMart Name"
+  default     = "sif"
+  type        = string
+}
 
 #---------------------------------------------------------------
 # Naming Prefix Settings
@@ -553,7 +587,17 @@ variable "synapse_git_pat" {
   default     = ""
   type        = string
 }
+variable "synapse_git_user_name" {
+  description = "The user name to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 
+variable "synapse_git_email_address" {
+  description = "The email address to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 variable "adf_git_repository_owner" {
   description = "The owner of the github repository to be used for adf. Eg. for the repository https://github.com/contoso/ads, the owner is contoso"
   default     = ""
@@ -588,7 +632,17 @@ variable "adf_git_pat" {
   default     = ""
   type        = string
 }
+variable "adf_git_user_name" {
+  description = "The user name to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 
+variable "adf_git_email_address" {
+  description = "The email address to be associated with the commit being done for the pipeline upload."
+  default     = ""
+  type        = string
+}
 #---------------------------------------------------------------
 # Scale settings
 #---------------------------------------------------------------
@@ -624,7 +678,7 @@ variable "synapse_spark_min_node_count" {
 
 variable "synapse_spark_max_node_count" {
   description = "The maximum number of spark nodes in the autoscale pool"
-  default     = 3
+  default     = 12
   type        = number
 }
 
@@ -736,5 +790,47 @@ variable "existing_private_dns_zone_synapse_sql_id" {
 variable "existing_synapse_private_link_hub_id" {
   description = "An existing private link hub for synapse studio."
   default     = ""
+  type        = string
+}
+
+variable "web_app_admin_security_group" {
+  description = "A web app Azure security group used for admin access."
+  default     = ""
+  type        = string
+}
+
+variable "custom_vm_plan_name" {
+  description = "An Azure vm plan name to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_plan_product" {
+  description = "An Azure vm plan product to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_plan_publisher" {
+  description = "An Azure vm plan publisher to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_offer" {
+  description = "An Azure custom image marketplace image offer to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_publisher" {
+  description = "An Azure custom image marketplace image publisher to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_sku" {
+  description = "An Azure custom image marketplace image sku to be referenced for a custom vm image."
+  default     = ""
+  type        = string
+}
+variable "custom_vm_image_version" {
+  description = "An Azure custom image marketplace image version to be referenced for a custom vm image."
+  default     = "latest"
   type        = string
 }
