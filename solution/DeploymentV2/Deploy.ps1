@@ -65,13 +65,13 @@ $env:TF_VAR_ip_address = $myIp
 $AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin 
 
 
-PersistEnvVariable $Name = "deploymentFolderPath" $Value = (Get-Location).Path 
-PersistEnvVariable $Name = "gitDeploy" $Value = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true') 
-PersistEnvVariable $Name = "skipTerraformDeployment" $Value = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
-PersistEnvVariable $Name = "environmentName" $Value = [System.Environment]::GetEnvironmentVariable('environmentName') 
-PersistEnvVariable $Name = "myIp" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
-PersistEnvVariable $Name = "TF_VAR_ip_address" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
-PersistEnvVariable $Name = "AddSpecificUserAsWebAppAdmin" $Value = [System.Environment]::GetEnvironmentVariable('AddSpecificUserAsWebAppAdmin') 
+#PersistEnvVariable $Name = "deploymentFolderPath" $Value = (Get-Location).Path 
+#PersistEnvVariable $Name = "gitDeploy" $Value = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true') 
+#PersistEnvVariable $Name = "skipTerraformDeployment" $Value = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
+#PersistEnvVariable $Name = "environmentName" $Value = [System.Environment]::GetEnvironmentVariable('environmentName') 
+#PersistEnvVariable $Name = "myIp" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
+#PersistEnvVariable $Name = "TF_VAR_ip_address" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
+#PersistEnvVariable $Name = "AddSpecificUserAsWebAppAdmin" $Value = [System.Environment]::GetEnvironmentVariable('AdsGf_AddSpecificUserAsWebAppAdmin') 
 
 
 #------------------------------------------------------------------------------------------------------------
