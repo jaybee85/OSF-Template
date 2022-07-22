@@ -77,6 +77,11 @@ jobs:
         working-directory: ./solution/DeploymentV2/terraform
         run: |
           brew install terragrunt    
+     
+      - name: Open Firewalls for Agent
+        id: open_firewalls
+        working-directory: ./solution/DeploymentV2/terraform
+        run: |  
           az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
           az synapse workspace firewall-rule create --name AllowCICD --resource-group ${{ env.TF_VAR_resource_group_name }} --start-ip-address ${{ steps.ip.outputs.ipv4 }} --end-ip-address ${{ steps.ip.outputs.ipv4 }} --workspace-name ${{ env.synapseWorkspaceName }} 
           az storage account network-rule add --resource-group ${{ env.TF_VAR_resource_group_name }} --account-name ${{ env.datalakeName }} --ip-address ${{ steps.ip.outputs.ipv4 }}
