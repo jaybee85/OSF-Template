@@ -70,6 +70,18 @@ cd infrastructure
 terragrunt init --terragrunt-config vars/development/terragrunt.hcl
 ```
 
+## If you need to import existing resources
+ 
+
+1. Grant you service principal rights to the resources.
+
+eg. az ad app owner add --id db2c4f38-1566-41af-a1d4-495cd59097cc --owner-object-id 4c732d19-4076-4a76-87f3-6fbfd77f007d
+
+2. Then import resources into state 
+
+terraform import azuread_application.web_reg[0] 497fb46f-3d88-4445-b9e8-7065970e3b40
+terraform import azuread_application.function_app_reg[0] db2c4f38-1566-41af-a1d4-495cd59097cc
+
 
 # Required Azure resource providers
 Microsoft.Storage
