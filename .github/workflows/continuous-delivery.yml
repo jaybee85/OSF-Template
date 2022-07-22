@@ -3,7 +3,7 @@ name: Continuous Delivery
 on:
   workflow_dispatch:
   push:
-    branches: feature-1.0.4
+    branches: [feature-1.0.4]
 
 jobs:
     deploy-to-nonprod:
@@ -47,7 +47,7 @@ jobs:
 
         #TF_LOG : TRACE
       environment: 
-        name: default
+        name: development
       runs-on: ubuntu-latest
       steps:
       
