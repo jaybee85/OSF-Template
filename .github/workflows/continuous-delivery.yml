@@ -86,6 +86,7 @@ jobs:
      
       - name: Open Firewalls for Agent
         id: open_firewalls
+        continue-on-error: true
         working-directory: ./solution/DeploymentV2/terraform
         run: |  
           az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
