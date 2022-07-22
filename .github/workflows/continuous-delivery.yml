@@ -6,7 +6,9 @@ on:
     branches: [feature-1.0.4]
 
 jobs:
-    deploy-to-nonprod:
+    
+    deploy:
+    
       name: Deploy to NonProd Environment
       concurrency: terraform
       env:
