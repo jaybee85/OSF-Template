@@ -52,6 +52,12 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       
+      - name: PrintInfo
+        run: |
+          echo "Deploying to Resource Group:  ${{ env.TF_VAR_resource_group_name }} "
+          echo  "echo Hcl file name:  ${{ env.environmentName}} "
+          echo  "echo Hcl file name:  ${{ env.ARM_CLIENT_ID}} "
+
       - name: Checkout
         uses: actions/checkout@v3.0.0
 
