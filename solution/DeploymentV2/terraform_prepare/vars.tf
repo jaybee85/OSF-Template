@@ -89,3 +89,33 @@ variable "aad_functionapp_name" {
   default     = ""
   type        = string
 }
+
+
+
+#---------------------------------------------------------------
+# Feature Toggles
+#---------------------------------------------------------------
+
+
+variable "deploy_web_app" {
+  description = "Feature toggle for deploying the Web App"
+  default     = true
+  type        = bool
+}
+variable "deploy_function_app" {
+  description = "Feature toggle for deploying the Function App"
+  default     = true
+  type        = bool
+}
+
+
+variable "deploy_azure_ad_web_app_registration" {
+  description = "Feature toggle for deploying the Azure AD App registration for the Web Portal"
+  default     = true
+  type        = bool
+}
+variable "deploy_azure_ad_function_app_registration" {
+  description = "Feature toggle for deploying the Azure AD App registration for the Function App"
+  default     = true
+  type        = bool
+}

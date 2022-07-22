@@ -75,7 +75,11 @@ terragrunt init --terragrunt-config vars/development/terragrunt.hcl
 
 1. Grant you service principal rights to the resources.
 eg. $assignment = az role assignment create --role "Owner" --assignee 4c732d19-4076-4a76-87f3-6fbfd77f007d --resource-group "gft2"
-eg. az ad app owner add --id db2c4f38-1566-41af-a1d4-495cd59097cc --owner-object-id 4c732d19-4076-4a76-87f3-6fbfd77f007d
+
+az ad app owner add --id db2c4f38-1566-41af-a1d4-495cd59097cc --owner-object-id 4c732d19-4076-4a76-87f3-6fbfd77f007d
+az ad app owner add --id d2e89752-2e75-48ba-a5a7-cb4bbc7bcfc8 --owner-object-id 4c732d19-4076-4a76-87f3-6fbfd77f007d
+
+
 
 2. Then import resources into state 
 
