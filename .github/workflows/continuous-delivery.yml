@@ -48,7 +48,7 @@ jobs:
 
         #TF_LOG : TRACE
       environment: 
-        name: development
+        name: staging
       runs-on: ubuntu-latest
       steps:
       
