@@ -52,6 +52,7 @@ function PersistEnvVariable($Name, $Value)
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory
 #------------------------------------------------------------------------------------------------------------
+
 $deploymentFolderPath = (Get-Location).Path 
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
@@ -64,10 +65,19 @@ $env:TF_VAR_ip_address = $myIp
 $AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin 
 
 
+PersistEnvVariable $Name = "deploymentFolderPath" $Value = (Get-Location).Path 
+PersistEnvVariable $Name = "gitDeploy" $Value = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true') 
+PersistEnvVariable $Name = "skipTerraformDeployment" $Value = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
+PersistEnvVariable $Name = "environmentName" $Value = [System.Environment]::GetEnvironmentVariable('environmentName') 
+PersistEnvVariable $Name = "myIp" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
+PersistEnvVariable $Name = "TF_VAR_ip_address" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
+PersistEnvVariable $Name = "AddSpecificUserAsWebAppAdmin" $Value = [System.Environment]::GetEnvironmentVariable('AddSpecificUserAsWebAppAdmin') 
+
+
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
 #------------------------------------------------------------------------------------------------------------
-#Invoke-Expression  ./Deploy_1_Infra0.ps1
+Invoke-Expression  ./Deploy_1_Infra0.ps1
 
 
 #------------------------------------------------------------------------------------------------------------
@@ -75,7 +85,8 @@ $AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin
 #------------------------------------------------------------------------------------------------------------
     Set-Location "./terraform"
     Write-Host "Reading Terraform Outputs"
-    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+    #Run Init Just in Case we skipped the Infra Section
+    $init = terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
     $tout = GatherOutputsFromTerraform    
     $outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
