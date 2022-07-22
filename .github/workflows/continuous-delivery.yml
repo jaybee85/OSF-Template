@@ -11,7 +11,7 @@ jobs:
       concurrency: terraform
       env:
         # This determines the location of the .hcl file that will be used
-        environmentName: local 
+        environmentName: staging 
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
