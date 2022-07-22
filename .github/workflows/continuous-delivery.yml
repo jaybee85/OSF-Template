@@ -10,7 +10,7 @@ jobs:
       name: Deploy to Environment One
       concurrency: terraform
       env:
-        environmentName: development
+        environmentName: local
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
