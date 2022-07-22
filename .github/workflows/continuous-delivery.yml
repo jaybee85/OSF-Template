@@ -10,8 +10,7 @@ jobs:
       name: Deploy to Environment One
       concurrency: terraform
       env:
-        # This determines the location of the .hcl file that will be used
-        environmentName: local 
+        environmentName: local
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
@@ -52,12 +51,6 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       
-      - name: PrintInfo
-        run: |
-          echo "Deploying to Resource Group:  ${{ env.TF_VAR_resource_group_name }} "
-          echo  "echo Hcl file name:  ${{ env.environmentName}} "
-          echo  "echo Hcl file name:  ${{ env.ARM_CLIENT_ID}} "
-
       - name: Checkout
         uses: actions/checkout@v3.0.0
 
@@ -77,8 +70,6 @@ jobs:
         run: |
           az extension add --name managementpartner
           az managementpartner update --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }} || az managementpartner create --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }}
-
-
       - name: Terragrunt Install
         id: terragrunt_install
         working-directory: ./solution/DeploymentV2/terraform
@@ -92,7 +83,6 @@ jobs:
           az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
           az synapse workspace firewall-rule create --name AllowCICD --resource-group ${{ env.TF_VAR_resource_group_name }} --start-ip-address ${{ steps.ip.outputs.ipv4 }} --end-ip-address ${{ steps.ip.outputs.ipv4 }} --workspace-name ${{ env.synapseWorkspaceName }} 
           az storage account network-rule add --resource-group ${{ env.TF_VAR_resource_group_name }} --account-name ${{ env.datalakeName }} --ip-address ${{ steps.ip.outputs.ipv4 }}
-
       - name: Install Jsonnet
         id: jsonnet-install
         working-directory: ./solution/DeploymentV2/
@@ -167,4 +157,3 @@ jobs:
       - name: Get public IP
         id: ip
         uses: haythem/public-ip@v1.2
-
