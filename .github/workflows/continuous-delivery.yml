@@ -12,7 +12,7 @@ jobs:
       environment: 
         name: development
       env:
-        environmentName: staging
+        environmentName: development
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
