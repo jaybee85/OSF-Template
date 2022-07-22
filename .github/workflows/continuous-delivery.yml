@@ -9,8 +9,10 @@ jobs:
     deploy-to-env-one:
       name: Deploy to Environment One
       concurrency: terraform
+      environment: 
+        name: development
       env:
-        environmentName: local
+        environmentName: staging
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
@@ -45,9 +47,7 @@ jobs:
         TF_VAR_adf_git_user_name : ${{secrets.GIT_USER_NAME}}
         TF_VAR_adf_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
 
-        #TF_LOG : TRACE
-      environment: 
-        name: development
+        #TF_LOG : TRACE  
       runs-on: ubuntu-latest
       steps:
       
