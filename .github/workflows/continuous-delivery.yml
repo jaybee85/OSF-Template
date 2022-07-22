@@ -10,7 +10,8 @@ jobs:
       name: Deploy to Environment One
       concurrency: terraform
       env:
-        environmentName: local #This determines the location of the .hcl file that will be used
+        # This determines the location of the .hcl file that will be used
+        environmentName: local 
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
