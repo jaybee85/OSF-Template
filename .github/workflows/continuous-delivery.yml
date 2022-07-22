@@ -10,7 +10,7 @@ jobs:
       name: Deploy to NonProd Environment
       concurrency: terraform
       env:
-        environmentName: staging
+        environmentName: development
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
@@ -19,6 +19,7 @@ jobs:
         datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
         # Required for Terraform
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_PAL_PARTNER_ID: ${{ secrets.ARM_PAL_PARTNER_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}      
@@ -46,7 +47,7 @@ jobs:
 
         #TF_LOG : TRACE
       environment: 
-        name: NonProd
+        name: development
       runs-on: ubuntu-latest
       steps:
       
@@ -68,7 +69,8 @@ jobs:
         continue-on-error: true
         run: |
           az extension add --name managementpartner
-          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669
+          az managementpartner update --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }} || az managementpartner create --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }}
+
 
       - name: Terragrunt Install
         id: terragrunt_install
