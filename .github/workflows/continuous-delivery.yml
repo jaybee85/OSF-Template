@@ -6,8 +6,8 @@ on:
     branches: feature-1.0.4
 
 jobs:
-    deploy-to-nonprod:
-      name: Deploy to NonProd Environment
+    deploy-to-env-one:
+      name: Deploy to Environment1
       concurrency: terraform
       env:
         environmentName: development
@@ -106,10 +106,10 @@ jobs:
            
     
     #PROD ENVIRONMENT
-    deploy-to-prod:
-      name: Deploy to Prod Environment
+    deploy-to-env-two:
+      name: Deploy to Environment Two
       concurrency: terraform
-      needs: [deploy-to-nonprod]
+      needs: [deploy-to-env-one]
       env:
         environmentName: production
         gitDeploy : true
@@ -146,8 +146,8 @@ jobs:
         TF_VAR_adf_git_user_name : ${{secrets.GIT_USER_NAME}}
         TF_VAR_adf_git_email_address : ${{secrets.GIT_EMAIL_ADDRESS}}
 
-
-        #TF_LOG : TRACE
+      #PROD ENVIRONMENT
+      #TF_LOG : TRACE
       environment: 
         name: Prod
       runs-on: ubuntu-latest
@@ -160,8 +160,3 @@ jobs:
         id: ip
         uses: haythem/public-ip@v1.2
 
-      - name: Login via Az module
-        uses: azure/login@v1
-        with:
-          creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
-          enable-AzPSSession: true      
