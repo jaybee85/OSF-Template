@@ -3,14 +3,14 @@ name: Continuous Delivery
 on:
   workflow_dispatch:
   push:
-    branches: $default-branch
+    branches: feature-1.0.4
 
 jobs:
     deploy-to-nonprod:
       name: Deploy to NonProd Environment
       concurrency: terraform
       env:
-        environmentName: staging
+        environmentName: development
         gitDeploy : true
         skipTerraformDeployment: false
         specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
@@ -19,6 +19,7 @@ jobs:
         datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
         # Required for Terraform
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_PAL_PARTNER_ID: ${{ secrets.ARM_PAL_PARTNER_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}      
@@ -46,7 +47,7 @@ jobs:
 
         #TF_LOG : TRACE
       environment: 
-        name: NonProd
+        name: development
       runs-on: ubuntu-latest
       steps:
       
@@ -68,7 +69,8 @@ jobs:
         continue-on-error: true
         run: |
           az extension add --name managementpartner
-          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669
+          az managementpartner update --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }} || az managementpartner create --partner-id ${{ secrets.ARM_PAL_PARTNER_ID }}
+
 
       - name: Terragrunt Install
         id: terragrunt_install
@@ -157,39 +159,4 @@ jobs:
         uses: azure/login@v1
         with:
           creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
-          enable-AzPSSession: true 
-
-      - name: Set PAL
-        id: set_pal
-        continue-on-error: true
-        run: |
-          az extension add --name managementpartner
-          az managementpartner update --partner-id 6372669 || az managementpartner create --partner-id 6372669
-
-      - name: Terragrunt Install
-        id: terragrunt_install
-        working-directory: ./solution/DeploymentV2/terraform
-        run: |
-          brew install terragrunt    
-          az keyvault network-rule add -g ${{ env.TF_VAR_resource_group_name }} --name ${{ env.keyVaultName }} --ip-address ${{ steps.ip.outputs.ipv4 }}/32
-          az synapse workspace firewall-rule create --name AllowCICD --resource-group ${{ env.TF_VAR_resource_group_name }} --start-ip-address ${{ steps.ip.outputs.ipv4 }} --end-ip-address ${{ steps.ip.outputs.ipv4 }} --workspace-name ${{ env.synapseWorkspaceName }} 
-          az storage account network-rule add --resource-group ${{ env.TF_VAR_resource_group_name }} --account-name ${{ env.datalakeName }} --ip-address ${{ steps.ip.outputs.ipv4 }}
-
-      - name: Install Jsonnet
-        id: jsonnet-install
-        working-directory: ./solution/DeploymentV2/
-        env:
-          TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
-        run: |
-          wget https://github.com/google/go-jsonnet/releases/download/v0.17.0/jsonnet-go_0.17.0_linux_amd64.deb   
-          sudo dpkg -i jsonnet-go_0.17.0_linux_amd64.deb 
-          
-      - name: Deploy Solution
-        id: solution-deployment
-        working-directory: ./solution/DeploymentV2/
-        shell: pwsh
-        env:
-          TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
-        run: |
-          git update-index --chmod=+x ./Deploy.ps1  
-          ./Deploy.ps1           
+          enable-AzPSSession: true      
