@@ -7,13 +7,14 @@ on:
 
 jobs:
     deploy-to-env-one:
-      name: Deploy to Environment1
+      name: Deploy to Environment One
       concurrency: terraform
       env:
-        environmentName: development
+        # This determines the location of the .hcl file that will be used
+        environmentName: staging 
         gitDeploy : true
         skipTerraformDeployment: false
-        specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
+        specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         synapseWorkspaceName: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
         datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
@@ -51,6 +52,11 @@ jobs:
       runs-on: ubuntu-latest
       steps:
       
+      - name: PrintInfo
+        run: |
+          echo "Deploying to Resource Group:  ${{ env.TF_VAR_resource_group_name }} "
+          echo  "echo Hcl file name:  ${{ env.environmentName}} "
+
       - name: Checkout
         uses: actions/checkout@v3.0.0
 
@@ -102,7 +108,8 @@ jobs:
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          git update-index --chmod=+x ./Deploy.ps1  
+          git update-index --chmod=+x ./Deploy.ps1
+          ./Deploy.ps1  
            
     
     #PROD ENVIRONMENT
@@ -114,13 +121,13 @@ jobs:
         environmentName: production
         gitDeploy : true
         skipTerraformDeployment: false
-        specificUserIdForWebAppAdmin: 45672f90-82f9-4108-b389-da7139e938a1
-        # Required for updating firewall for runner
+        specificUserIdForWebAppAdmin:  ${{ secrets.WEB_APP_ADMIN_USER }}
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         synapseWorkspaceName: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
         datalakeName: ${{ secrets.ARM_DATALAKE_NAME }}
         # Required for Terraform
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+        ARM_PAL_PARTNER_ID: ${{ secrets.ARM_PAL_PARTNER_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}      
