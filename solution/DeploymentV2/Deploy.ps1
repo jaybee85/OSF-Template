@@ -75,8 +75,9 @@ $AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin
 #------------------------------------------------------------------------------------------------------------
     Set-Location "./terraform"
     Write-Host "Reading Terraform Outputs"
+    terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
-    $tout = GatherOutputsFromTerraform
+    $tout = GatherOutputsFromTerraform    
     $outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
     $subscription_id =$outputs.subscription_id.value
     $resource_group_name =$outputs.resource_group_name.value
