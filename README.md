@@ -114,6 +114,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+Recommended Maintenance activities when contributing:
+1. Check Azure Cli for new versions - upgrade, test and remediate where necessary
+1. Check Terraform Providers for new versions - upgrade, test and remediate where necessary
+1. Check Dependecny Libraies for Function Application and Web Application for new versions - upgrade, test and remediate where necessary
+
 ## Security
 Microsoft takes the security of our software products and services seriously, which includes all source code repositories managed through our GitHub organizations, which include Microsoft, Azure, DotNet, AspNet, Xamarin, and our GitHub organizations. Please review this repository's [security section](../../security) for more details.
 
