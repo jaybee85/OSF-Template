@@ -10,7 +10,7 @@ remote_state {
     resource_group_name  = "gft2"
     storage_account_name = "gft2state"
     container_name       = "tstate"
-    key                  = "terraform_prepare.tfstate"
+    key                  = "terraform_layer2.tfstate"
   }
 }
 
