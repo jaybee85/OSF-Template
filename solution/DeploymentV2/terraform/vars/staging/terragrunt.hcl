@@ -1,3 +1,22 @@
+generate "layer1.tf" {
+  path      = "layer1.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+    data "terraform_remote_state" "layer1" {
+      # The settings here should match the "backend" settings in the
+      # configuration that manages the network resources.
+      backend = "azurerm"
+      
+      config = {
+        container_name       = "tstate"
+        key                  = "terraform_layer1.tfstate"
+        resource_group_name  = "gft2"
+        storage_account_name = "gft2state"
+      }
+    }
+  EOF
+}
+
 remote_state {
   backend = "azurerm"
   generate = {
@@ -10,7 +29,7 @@ remote_state {
     resource_group_name  = "gft2"
     storage_account_name = "gft2state"
     container_name       = "tstate"
-    key                  = "terraform.tfstate"
+    key                  = "terraform_layer2.tfstate"
   }
 }
 

@@ -36,6 +36,7 @@ data "azurerm_client_config" "current" {
 module "naming" {
   source  = "Azure/naming/azurerm"
   version = "0.1.1"
+  unique-seed = data.terraform_remote_state.layer1.outputs.naming_unique_seed
   prefix = [
     var.prefix,
     var.environment_tag
@@ -44,6 +45,7 @@ module "naming" {
     var.app_name
   ]
 }
+
 
 resource "random_id" "rg_deployment_unique" {
   byte_length = 4

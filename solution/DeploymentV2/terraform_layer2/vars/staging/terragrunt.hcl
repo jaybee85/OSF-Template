@@ -1,3 +1,22 @@
+generate "layer1.tf" {
+  path      = "layer1.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+    data "terraform_remote_state" "layer1" {
+      # The settings here should match the "backend" settings in the
+      # configuration that manages the network resources.
+      backend = "azurerm"
+      
+      config = {
+        container_name       = "tstate"
+        key                  = "terraform_layer1.tfstate"
+        resource_group_name  = "gft2"
+        storage_account_name = "gft2state"
+      }
+    }
+  EOF
+}
+
 remote_state {
   backend = "azurerm"
   generate = {
@@ -29,4 +48,23 @@ inputs = {
   ip_address                            = "144.138.148.220"          # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_web_app                        = true
   deploy_function_app                   = true
+  deploy_custom_terraform               = false # This is whether the infrastructure located in the terraform_custom folder is deployed or not.
+  deploy_app_service_plan               = true
+  deploy_data_factory                   = true
+  deploy_sentinel                       = true
+  deploy_purview                        = false      
+  deploy_synapse                        = true
+  deploy_metadata_database              = true
+  is_vnet_isolated                      = false
+  publish_web_app                       = true
+  publish_function_app                  = true
+  publish_sample_files                  = true
+  publish_metadata_database             = true
+  configure_networking                  = false
+  publish_datafactory_pipelines         = true
+  publish_web_app_addcurrentuserasadmin = true
+  deploy_selfhostedsql                  = false
+  is_onprem_datafactory_ir_registered   = false
+  publish_sif_database                  = true
+  deployment_principal_layers1and3      = "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
 } 
