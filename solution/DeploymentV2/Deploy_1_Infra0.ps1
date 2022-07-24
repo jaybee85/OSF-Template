@@ -9,14 +9,14 @@
 #------------------------------------------------------------------------------------------------------------
 Set-Location "./terraform"
 
-terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+terragrunt init --terragrunt-config vars/$env:environmentName/terragrunt.hcl -reconfigure
 
 if ($skipTerraformDeployment) {
     Write-Host "Skipping Terraform Deployment"
 }
 else {
     Write-Host "Starting Terraform Deployment"
-    terragrunt apply -auto-approve --terragrunt-config vars/$environmentName/terragrunt.hcl
+    terragrunt apply -auto-approve --terragrunt-config vars/$env:environmentName/terragrunt.hcl
 }
 
 Set-Location $deploymentFolderPath

@@ -15,7 +15,18 @@ else {
     
     #Add Ip to SQL Firewall
     $result = az sql server update -n $sqlserver_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
-    $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
+
+    $myIp = $env:TF_VAR_ip_address
+    $myIp2 = $env:TF_VAR_ip_address2
+
+    if($myIp -ne $null)
+    {
+        $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "DeploymentAgent" --start-ip-address $myIp --end-ip-address $myIp
+    }
+    if($myIp2 -ne $null)
+    {        
+        $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "DeploymentUser" --start-ip-address $myIp2 --end-ip-address $myIp2
+    }
     #Allow Azure services and resources to access this server
     $result = az sql server firewall-rule create -g $resource_group_name -s $sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0
 

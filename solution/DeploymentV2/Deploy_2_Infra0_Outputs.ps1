@@ -6,7 +6,7 @@ Write-Host "Reading Terraform Outputs"
 Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 
-$outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
+$outputs = terragrunt output -json --terragrunt-config ./vars/$env:environmentName/terragrunt.hcl | ConvertFrom-Json
 
 $subscription_id =$outputs.subscription_id.value
 $resource_group_name =$outputs.resource_group_name.value

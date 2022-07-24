@@ -128,6 +128,14 @@ resource "azurerm_synapse_firewall_rule" "cicd" {
   end_ip_address       = var.ip_address
 }
 
+resource "azurerm_synapse_firewall_rule" "cicd_user" {
+  count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
+  name                 = "AllowCICDUser"
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  start_ip_address     = var.ip_address2
+  end_ip_address       = var.ip_address2
+}
+
 # --------------------------------------------------------------------------------------------------------------------
 # Synapse Workspace Firewall Rules (Allow Public Access)
 # --------------------------------------------------------------------------------------------------------------------
@@ -152,6 +160,18 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
   principal_id         = azurerm_function_app.function_app[0].identity[0].principal_id
+  depends_on = [
+    azurerm_synapse_firewall_rule.public_access,
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
+  ]
+
+}
+
+resource "azurerm_synapse_role_assignment" "synapse_adminuser_assignment" {
+  count                = var.deploy_synapse ? 1 : 0
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  role_name            = "Synapse Administrator"
+  principal_id         = var.deployment_principal_layers1and3
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd

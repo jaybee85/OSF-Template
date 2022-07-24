@@ -6,6 +6,11 @@ variable "ip_address" {
   type        = string
 }
 
+variable "ip_address2" {
+  description = "The CICD ipaddress. We add an IP whitelisting to allow the setting of keyvault secrets"
+  type        = string
+}
+
 variable "tenant_id" {
   description = "The AAD tenant ID"
   type        = string

@@ -23,6 +23,14 @@ resource "azurerm_storage_account" "adls" {
   }
 }
 
+
+resource "azurerm_role_assignment" "adls_deployment_agent" {
+  count                = var.deploy_adls ? 1 : 0
+  scope                = azurerm_storage_account.adls[0].id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id         = data.azurerm_client_config.current.object_id
+}
+
 resource "azurerm_role_assignment" "adls_function_app" {
   count                = var.deploy_adls && var.deploy_function_app ? 1 : 0
   scope                = azurerm_storage_account.adls[0].id

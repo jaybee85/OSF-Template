@@ -21,34 +21,6 @@
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
 
-if ($null -eq $Env:GITHUB_ENV) 
-    {
-        [Environment]::SetEnvironmentVariable("GITHUB_ENV",".\bin\GitEnv.txt")
-        $FileNameOnly = Split-Path $env:GITHUB_ENV -leaf
-        $PathOnly =  Split-Path $env:GITHUB_ENV
-        if ((Test-Path $env:GITHUB_ENV))
-        {      
-        #    Remove-Item -Path $env:GITHUB_ENV
-        }
-        else 
-        {
-        
-            New-Item -Path $PathOnly -Name $FileNameOnly -type "file" -value ""
-        }
-        
-}
-
-function PersistEnvVariable($Name, $Value)
-{
-    Write-Debug "Writing $Name to env file"
-    echo "$Name=$Value" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-    #Also Push Variables to the Session Env Variables for local testing
-    [Environment]::SetEnvironmentVariable($Name, "$Value")
-
-}
-
-
-
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory
 #------------------------------------------------------------------------------------------------------------
@@ -58,21 +30,6 @@ $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'tr
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 
 Invoke-Expression  ./Deploy_0_Prep.ps1 
-
-$environmentName = [System.Environment]::GetEnvironmentVariable('environmentName') 
-$myIp = (Invoke-WebRequest ifconfig.me/ip).Content 
-$env:TF_VAR_ip_address = $myIp 
-$AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin 
-
-
-#PersistEnvVariable $Name = "deploymentFolderPath" $Value = (Get-Location).Path 
-#PersistEnvVariable $Name = "gitDeploy" $Value = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true') 
-#PersistEnvVariable $Name = "skipTerraformDeployment" $Value = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
-#PersistEnvVariable $Name = "environmentName" $Value = [System.Environment]::GetEnvironmentVariable('environmentName') 
-#PersistEnvVariable $Name = "myIp" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
-#PersistEnvVariable $Name = "TF_VAR_ip_address" $Value = (Invoke-WebRequest ifconfig.me/ip).Content 
-#PersistEnvVariable $Name = "AddSpecificUserAsWebAppAdmin" $Value = [System.Environment]::GetEnvironmentVariable('AdsGf_AddSpecificUserAsWebAppAdmin') 
-
 
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
@@ -89,7 +46,7 @@ Invoke-Expression  ./Deploy_1_Infra0.ps1
     #$init = terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
     $tout = GatherOutputsFromTerraform    
-    $outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
+    $outputs = terragrunt output -json --terragrunt-config ./vars/$env:environmentName/terragrunt.hcl | ConvertFrom-Json
     $subscription_id =$outputs.subscription_id.value
     $resource_group_name =$outputs.resource_group_name.value
     $webapp_name =$outputs.webapp_name.value
@@ -130,13 +87,13 @@ Invoke-Expression  ./Deploy_1_Infra0.ps1
 # Run Each SubModule
 #------------------------------------------------------------------------------------------------------------
 #Invoke-Expression  ./Deploy_3_Infra1.ps1
-#Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
-#Invoke-Expression  ./Deploy_5_WebApp.ps1
-#Invoke-Expression  ./Deploy_6_FuncApp.ps1
-#Invoke-Expression  ./Deploy_7_MetadataDB.ps1
-#Invoke-Expression  ./Deploy_8_SQLLogins.ps1
-#Invoke-Expression  ./Deploy_9_DataFactory.ps1
-#Invoke-Expression  ./Deploy_10_SampleFiles.ps1
+Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
+Invoke-Expression  ./Deploy_5_WebApp.ps1
+Invoke-Expression  ./Deploy_6_FuncApp.ps1
+Invoke-Expression  ./Deploy_7_MetadataDB.ps1
+Invoke-Expression  ./Deploy_8_SQLLogins.ps1
+Invoke-Expression  ./Deploy_9_DataFactory.ps1
+Invoke-Expression  ./Deploy_10_SampleFiles.ps1
 
 #----------------------------------------------------------------------------------------------------------------
 #   Set up Purview

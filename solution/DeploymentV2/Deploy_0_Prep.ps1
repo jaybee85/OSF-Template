@@ -26,14 +26,7 @@ if ($gitDeploy)
 {
     $resourceGroupName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_GROUP_NAME')
     $synapseWorkspaceName = [System.Environment]::GetEnvironmentVariable('ARM_RESOURCE_SYNAPSE_WORKSPACE_NAME')
-    $specificuser = [System.Environment]::GetEnvironmentVariable('specificUserIdForWebAppAdmin')
-    if ($specificuser -ne "") {
-        $AddSpecificUserAsWebAppAdmin = $true        
-    } else {
-        $AddSpecificUserAsWebAppAdmin = $false
-    }
-    $env:AdsGf_AddSpecificUserAsWebAppAdmin = $AddSpecificUserAsWebAppAdmin 
-
+    $env:TF_VAR_ip_address = (Invoke-WebRequest ifconfig.me/ip).Content 
 }
 else
 {
@@ -78,6 +71,8 @@ else
         $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
         [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
     }
+
+    $env:TF_VAR_ip_address2 = (Invoke-WebRequest ifconfig.me/ip).Content 
 }
 
 
