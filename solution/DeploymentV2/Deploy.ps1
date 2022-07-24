@@ -77,16 +77,16 @@ $AddSpecificUserAsWebAppAdmin = $env:AdsGf_AddSpecificUserAsWebAppAdmin
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
 #------------------------------------------------------------------------------------------------------------
-#Invoke-Expression  ./Deploy_1_Infra0.ps1
+Invoke-Expression  ./Deploy_1_Infra0.ps1
 
 
 #------------------------------------------------------------------------------------------------------------
 # Get all the outputs from terraform so we can use them in subsequent steps #Mandatory
 #------------------------------------------------------------------------------------------------------------
-    Set-Location "./terraform"
+    Set-Location "./terraform_layer2"
     Write-Host "Reading Terraform Outputs"
     #Run Init Just in Case we skipped the Infra Section
-    $init = terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
+    #$init = terragrunt init --terragrunt-config vars/$environmentName/terragrunt.hcl -reconfigure
     Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
     $tout = GatherOutputsFromTerraform    
     $outputs = terragrunt output -json --terragrunt-config ./vars/$environmentName/terragrunt.hcl | ConvertFrom-Json
