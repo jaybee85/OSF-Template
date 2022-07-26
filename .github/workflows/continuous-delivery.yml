@@ -110,7 +110,7 @@ jobs:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
           git update-index --chmod=+x ./Deploy.ps1
-          ./Deploy.ps1 -RunTerraformLayer2 $true -FeatureTemplate $featureTemplate
+          ./Deploy.ps1 -RunTerraformLayer2 $true -FeatureTemplate ${{ env.featureTemplate}}
            
     
     #PROD ENVIRONMENT
