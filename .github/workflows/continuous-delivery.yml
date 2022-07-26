@@ -16,7 +16,7 @@ jobs:
         environmentName: staging 
         gitDeploy : true
         skipTerraformDeployment: false
-        featureTemplate: basic_deployment
+        featureTemplate: ${{ secrets.ARM_FEATURE_TEMPLATE }}  
         WEB_APP_ADMIN_USER:  ${{ secrets.WEB_APP_ADMIN_USER }}
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         ARM_SYNAPSE_WORKSPACE_NAME: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
