@@ -3,7 +3,7 @@ name: Continuous Delivery
 on:
   workflow_dispatch:
   push:
-    branches: $default-branch
+    branches: feature-1.0.4
 
 jobs:
     deploy-to-env-one:
@@ -14,6 +14,7 @@ jobs:
         environmentName: staging 
         gitDeploy : true
         skipTerraformDeployment: false
+        featureTemplate: basic_deployment
         WEB_APP_ADMIN_USER:  ${{ secrets.WEB_APP_ADMIN_USER }}
         keyVaultName: ${{ secrets.ARM_KEYVAULT_NAME }}
         ARM_SYNAPSE_WORKSPACE_NAME: ${{ secrets.ARM_SYNAPSE_WORKSPACE_NAME }}
@@ -110,7 +111,7 @@ jobs:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
           git update-index --chmod=+x ./Deploy.ps1
-          ./Deploy.ps1  
+          ./Deploy.ps1 -RunTerraformLayer2 $true -FeatureTemplate $featureTemplate
            
     
     #PROD ENVIRONMENT

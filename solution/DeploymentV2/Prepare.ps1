@@ -258,12 +258,9 @@ else
         }
 
         Set-Location ./environments/vars/
-        ./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $templateName
-        Set-Location $deploymentFolderPath
-       
-        
-        
-        $environmentFileContents | Set-Content $environmentFileTarget
+        ./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $templateName -gitDeploy $gitDeploy
+        Set-Location $deploymentFolderPath 
+           
 
 
     }

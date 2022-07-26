@@ -7,7 +7,9 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$Environment="staging",
     [Parameter(Mandatory=$true)]
-    [string]$FeatureTemplate="full_deployment"
+    [string]$FeatureTemplate="full_deployment",
+    [Parameter(Mandatory=$false)]
+    [bool]$gitDeploy=$false
 )
 
 $Environment = $Environment.ToLower()
@@ -51,5 +53,9 @@ foreach($t in $obj.Variables)
 
 #Write the Terraform Element common_vars.yaml - this is then injected into the hcl file
 $HCLYAML | ConvertTo-YAML | Set-Content ./$Environment/common_vars.yaml
-#Write the Git Secrets to the Git Template .env
-$GithubEnvTemplate|Set-Content ./$Environment/GetSecretsTemplate.env
+
+if($gitDeploy -eq $false)
+{
+    #Write the Git Secrets to the Git Template .env
+    $GithubEnvTemplate|Set-Content ./$Environment/GetSecretsTemplate.env
+}

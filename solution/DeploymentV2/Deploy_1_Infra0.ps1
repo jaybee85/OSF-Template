@@ -1,5 +1,7 @@
 param (
     [Parameter(Mandatory=$false)]
+    [System.Boolean]$skipTerraformDeployment=$true,
+    [Parameter(Mandatory=$false)]
     [System.Boolean]$RunTerraformLayer1=$false,
     [Parameter(Mandatory=$false)]
     [System.Boolean]$RunTerraformLayer2=$false,

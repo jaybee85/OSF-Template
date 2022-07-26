@@ -26,7 +26,9 @@ param (
     [Parameter(Mandatory=$false)]
     [bool]$RunTerraformLayer2=$false,
     [Parameter(Mandatory=$false)]
-    [bool]$RunTerraformLayer3=$false
+    [bool]$RunTerraformLayer3=$false,
+    [Parameter(Mandatory=$false)]
+    [string]$FeatureTemplate="full_deployment"
 )
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory
@@ -35,12 +37,12 @@ $deploymentFolderPath = (Get-Location).Path
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 
-Invoke-Expression  ./Deploy_0_Prep.ps1 
+Invoke-Expression  ./Deploy_0_Prep.ps1 -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderPath -FeatureTemplate $FeatureTemplate
 
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
 #------------------------------------------------------------------------------------------------------------
-Invoke-Expression  ./Deploy_1_Infra0.ps1 -RunTerraformLayer1 $RunTerraformLayer1 -RunTerraformLayer2 $RunTerraformLayer2 -RunTerraformLayer3 $RunTerraformLayer3
+Invoke-Expression  ./Deploy_1_Infra0.ps1 -RunTerraformLayer1 $RunTerraformLayer1 -RunTerraformLayer2 $RunTerraformLayer2 -RunTerraformLayer3 $RunTerraformLayer3 -skipTerraformDeployment $skipTerraformDeployment
 
 
 #------------------------------------------------------------------------------------------------------------

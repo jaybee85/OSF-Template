@@ -1,4 +1,11 @@
-$gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
+param (
+    [Parameter(Mandatory=$true)]
+    [System.Boolean]$gitDeploy=$false,
+    [Parameter(Mandatory=$true)]
+    [String]$deploymentFolderPath,
+    [Parameter(Mandatory=$true)]
+    [String]$FeatureTemplate
+)
 
 #Check for SQLServer Module
 $SqlInstalled = false
@@ -16,11 +23,12 @@ if($null -eq $SqlInstalled)
 #needed for git integration
 az extension add --upgrade --name datafactory
 
-
 #accept custom image terms
 #https://docs.microsoft.com/en-us/cli/azure/vm/image/terms?view=azure-cli-latest
 
 #az vm image terms accept --urn h2o-ai:h2o-driverles-ai:h2o-dai-lts:latest
+
+
 
 if ($gitDeploy)
 {
@@ -40,18 +48,14 @@ else
         [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
     }
 
-    $env:TF_VAR_ip_address2 = (Invoke-WebRequest ifconfig.me/ip).Content 
-
-    #Re-process Environment Config Files. 
-    Set-Location ./environments/vars/
-    ./PreprocessEnvironment.ps1 -Environment $environmentName
-    Set-Location $deploymentFolderPath
+    $env:TF_VAR_ip_address2 = (Invoke-WebRequest ifconfig.me/ip).Content     
 
 }
 
+
+
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 
-$skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
 {
     write-host "environmentName is currently: $environmentName"
@@ -59,6 +63,11 @@ if ($environmentName -eq "Quit" -or [string]::IsNullOrEmpty($environmentName))
     Exit
 }
 
+
+#Re-process Environment Config Files. 
+Set-Location ./environments/vars/
+./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $FeatureTemplate -gitDeploy $gitDeploy
+Set-Location $deploymentFolderPath
 
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
