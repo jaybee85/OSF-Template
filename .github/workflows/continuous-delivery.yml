@@ -28,6 +28,7 @@ jobs:
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}      
         # Customizing Terraform vars
+        TF_VAR_ip_address2 : ${{ secrets.ARM_IP_ADDRESS2 }}   
         TF_VAR_domain : ${{ secrets.ARM_DOMAIN }}
         TF_VAR_subscription_id : ${{ secrets.ARM_SUBSCRIPTION_ID }}
         TF_VAR_tenant_id : ${{ secrets.ARM_TENANT_ID }}

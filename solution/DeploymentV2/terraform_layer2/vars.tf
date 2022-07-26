@@ -4,11 +4,13 @@
 variable "ip_address" {
   description = "The CICD ipaddress. We add an IP whitelisting to allow the setting of keyvault secrets"
   type        = string
+  default     = ""
 }
 
 variable "ip_address2" {
   description = "The CICD ipaddress. We add an IP whitelisting to allow the setting of keyvault secrets"
   type        = string
+  default     = ""
 }
 
 variable "tenant_id" {

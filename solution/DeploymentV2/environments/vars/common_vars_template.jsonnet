@@ -143,14 +143,14 @@ local AllVariables = [
             "Value": locals[environment].resource_group_name
         },
         {
-            "CICDSecretName": "",
-            "EnvVarName": "",
+            "CICDSecretName": "ARM_IP_ADDRESS",
+            "EnvVarName": "TF_VAR_ip_address",
             "HCLName": "ip_address",
             "Value": locals[environment].ip_address
         },
         {
-            "CICDSecretName": "",
-            "EnvVarName": "",
+            "CICDSecretName": "ARM_IP_ADDRESS2",
+            "EnvVarName": "TF_VAR_ip_address2",
             "HCLName": "ip_address2",
             "Value": locals[environment].ip_address2
         },
