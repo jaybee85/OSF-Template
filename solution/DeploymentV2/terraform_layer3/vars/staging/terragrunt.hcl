@@ -1,5 +1,5 @@
 locals {
-  common_vars = yamldecode(file("../../../environments/vars/staging/common_vars.yaml"))
+  common_vars = jsondecode(file("../../../environments/vars/staging/common_vars_for_hcl.json"))
 }
 
 generate "layer2.tf" {

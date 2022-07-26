@@ -37,12 +37,12 @@ $deploymentFolderPath = (Get-Location).Path
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 
-Invoke-Expression  ./Deploy_0_Prep.ps1 -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderPath -FeatureTemplate $FeatureTemplate
+./Deploy_0_Prep.ps1 -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderPath -FeatureTemplate $FeatureTemplate
 
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
 #------------------------------------------------------------------------------------------------------------
-Invoke-Expression  ./Deploy_1_Infra0.ps1 -RunTerraformLayer1 $RunTerraformLayer1 -RunTerraformLayer2 $RunTerraformLayer2 -RunTerraformLayer3 $RunTerraformLayer3 -skipTerraformDeployment $skipTerraformDeployment
+./Deploy_1_Infra0.ps1 -RunTerraformLayer1 $RunTerraformLayer1 -RunTerraformLayer2 $RunTerraformLayer2 -RunTerraformLayer3 $RunTerraformLayer3 -skipTerraformDeployment $skipTerraformDeployment
 
 
 #------------------------------------------------------------------------------------------------------------

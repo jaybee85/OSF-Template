@@ -3,7 +3,7 @@ name: Continuous Delivery
 on:
   workflow_dispatch:
   push:
-    branches: feature-1.0.4
+    branches: $default-branch
 
 jobs:
     deploy-to-env-one:
@@ -118,6 +118,8 @@ jobs:
       name: Deploy to Environment Two
       concurrency: terraform
       needs: [deploy-to-env-one]
+      environment: 
+        name: Prod
       env:
         environmentName: production
         gitDeploy : true
@@ -156,8 +158,7 @@ jobs:
 
       #PROD ENVIRONMENT
       #TF_LOG : TRACE
-      environment: 
-        name: Prod
+      
       runs-on: ubuntu-latest
       steps:
       

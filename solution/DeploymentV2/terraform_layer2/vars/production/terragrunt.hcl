@@ -1,5 +1,5 @@
 locals {
-  common_vars = yamldecode(file("../../../environments/vars/production/common_vars.yaml"))
+  common_vars = jsondecode(file("../../../environments/vars/production/common_vars_for_hcl.json"))
 }
 
 

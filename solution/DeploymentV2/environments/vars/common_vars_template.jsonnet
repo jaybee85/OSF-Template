@@ -9,7 +9,7 @@ local locals = {
 local featuretemplates = {
     "basic_deployment" : import './../featuretemplates/basic_deployment.jsonc',
     "full_deployment" : import './../featuretemplates/full_deployment.jsonc',
-    "functional_tests" : import './../featuretemplates/full_deployment.jsonc',
+    "functional_tests" : import './../featuretemplates/functional_tests.jsonc',
 };
 
 local featuretemplate =     [  // Object comprehension.
@@ -23,8 +23,7 @@ local featuretemplate =     [  // Object comprehension.
     ];
 
 
-{    
-    "Variables": [            
+local AllVariables = [            
         /*Attributes: 
             CICDSecretName: Name of the Secret that will hold the value in CICD. This mapps to the Env section of the CICD yaml",
             EnvVarName:     Name to be used when creating local environment Variable if this is blank no local environment variable will be created
@@ -190,7 +189,7 @@ local featuretemplate =     [  // Object comprehension.
         */
         {
             "CICDSecretName": "GIT_REPOSITORY_NAME",
-            "EnvVarName": "TF_VAR_adf_git_repository_name",
+            "EnvVarName": "TF_VAR_synapse_git_repository_name",
             "HCLName": "",
             "Value": "#####"
         },
@@ -248,5 +247,29 @@ local featuretemplate =     [  // Object comprehension.
             "HCLName": "",
             "Value": "#####"
         }
-    ]+featuretemplate
+    ]+featuretemplate;
+
+
+
+local HCLVariables =     {  // Object comprehension.
+    [sd.HCLName]: sd.Value        
+    for sd in AllVariables
+    if sd.HCLName != ""
+};
+
+local EnvironmentVariables =     {  // Object comprehension.
+    [sd.EnvVarName]: sd.Value        
+    for sd in AllVariables
+    if sd.EnvVarName != ""
+};
+
+local SecretFileVars =     {  // Object comprehension.
+    [sd.CICDSecretName]: sd.Value        
+    for sd in AllVariables
+    if sd.CICDSecretName != ""
+};
+{        
+    "ForHCL": HCLVariables,
+    "ForEnvVar": EnvironmentVariables,
+    "ForSecretFile": SecretFileVars
 }

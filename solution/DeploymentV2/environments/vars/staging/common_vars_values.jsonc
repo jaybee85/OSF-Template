@@ -13,7 +13,7 @@
   "synapse_administrators": 
     {"Jorampon":"ccbdbba4-669c-48d6-86b8-75c9ab2ee578"},
   "WEB_APP_ADMIN_USER":"ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
-  "ARM_SYNAPSE_WORKSPACE_NAME": "adsdevsynwadskhpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
-  "ARM_KEYVAULT_NAME": "ads-dev-kv-ads-khpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
-  "ARM_DATALAKE_NAME": "adsdevdlsadskhpvadsl" //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
+  "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadskhpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
+  "ARM_KEYVAULT_NAME": "ads-stg-kv-ads-khpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
+  "ARM_DATALAKE_NAME": "adsstgdlsadskhpvadsl" //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
 }

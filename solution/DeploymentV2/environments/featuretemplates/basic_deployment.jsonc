@@ -13,7 +13,7 @@
     {"Name":"publish_function_app","Value":true},
     {"Name":"publish_sample_files","Value":true},
     {"Name":"publish_metadata_database","Value":true},
-    {"Name":"configure_networking","Value":true},
+    {"Name":"configure_networking","Value":false},
     {"Name":"publish_datafactory_pipelines","Value":true},
     {"Name":"publish_web_app_addcurrentuserasadmin","Value":true},
     {"Name":"deploy_selfhostedsql","Value":false},

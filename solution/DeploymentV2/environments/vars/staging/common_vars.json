@@ -1,330 +1,94 @@
 {
-   "Variables": [
-      {
-         "CICDSecretName": "WEB_APP_ADMIN_USER",
-         "EnvVarName": "WEB_APP_ADMIN_USER",
-         "HCLName": "",
-         "Value": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
+   "ForEnvVar": {
+      "ARM_CLIENT_ID": "#####",
+      "ARM_CLIENT_SECRET": "#####",
+      "ARM_PAL_PARTNER_ID": "#####",
+      "ARM_SUBSCRIPTION_ID": "#####",
+      "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadskhpv",
+      "ARM_TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+      "TF_VAR_adf_git_email_address": "#####",
+      "TF_VAR_adf_git_pat": "#####",
+      "TF_VAR_adf_git_repository_branch_name": "#####",
+      "TF_VAR_adf_git_repository_name": "#####",
+      "TF_VAR_adf_git_user_name": "#####",
+      "TF_VAR_configure_networking": false,
+      "TF_VAR_deploy_app_service_plan": true,
+      "TF_VAR_deploy_custom_terraform": false,
+      "TF_VAR_deploy_data_factory": true,
+      "TF_VAR_deploy_function_app": true,
+      "TF_VAR_deploy_metadata_database": true,
+      "TF_VAR_deploy_purview": false,
+      "TF_VAR_deploy_selfhostedsql": false,
+      "TF_VAR_deploy_sentinel": true,
+      "TF_VAR_deploy_synapse": true,
+      "TF_VAR_deploy_web_app": true,
+      "TF_VAR_domain": "microsoft.com",
+      "TF_VAR_environment_tag": "stg",
+      "TF_VAR_is_onprem_datafactory_ir_registered": false,
+      "TF_VAR_is_vnet_isolated": false,
+      "TF_VAR_jumphost_password": "#####",
+      "TF_VAR_publish_datafactory_pipelines": true,
+      "TF_VAR_publish_function_app": true,
+      "TF_VAR_publish_metadata_database": true,
+      "TF_VAR_publish_sample_files": true,
+      "TF_VAR_publish_sif_database": true,
+      "TF_VAR_publish_web_app": true,
+      "TF_VAR_publish_web_app_addcurrentuserasadmin": true,
+      "TF_VAR_resource_group_name": "gft2",
+      "TF_VAR_state_storage_account_name": "#####",
+      "TF_VAR_synapse_git_email_address": "#####",
+      "TF_VAR_synapse_git_pat": "#####",
+      "TF_VAR_synapse_git_repository_branch_name": "#####",
+      "TF_VAR_synapse_git_repository_name": "#####",
+      "TF_VAR_synapse_git_user_name": "#####",
+      "TF_VAR_synapse_sql_password": "#####",
+      "TF_VAR_web_app_admin_security_group": "#####",
+      "WEB_APP_ADMIN_USER": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
+      "datalakeName": "adsstgdlsadskhpvadsl",
+      "keyVaultName": "ads-stg-kv-ads-khpv"
+   },
+   "ForHCL": {
+      "deployment_principal_layers1and3": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
+      "domain": "microsoft.com",
+      "environment_tag": "stg",
+      "ip_address": "144.138.148.220",
+      "ip_address2": "144.138.148.220",
+      "owner_tag": "Contoso",
+      "prefix": "ads",
+      "resource_group_name": "gft2",
+      "resource_location": "AustraliaEast",
+      "subscription_id": "035a1364-f00d-48e2-b582-4fe125905ee3",
+      "synapse_administrators": {
+         "Jorampon": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
       },
-      {
-         "CICDSecretName": "ARM_SYNAPSE_WORKSPACE_NAME",
-         "EnvVarName": "ARM_SYNAPSE_WORKSPACE_NAME",
-         "HCLName": "",
-         "Value": "adsdevsynwadskhpv"
-      },
-      {
-         "CICDSecretName": "ARM_KEYVAULT_NAME",
-         "EnvVarName": "keyVaultName",
-         "HCLName": "",
-         "Value": "ads-dev-kv-ads-khpv"
-      },
-      {
-         "CICDSecretName": "ARM_DATALAKE_NAME",
-         "EnvVarName": "datalakeName",
-         "HCLName": "",
-         "Value": "adsdevdlsadskhpvadsl"
-      },
-      {
-         "CICDSecretName": "ARM_CLIENT_ID",
-         "EnvVarName": "ARM_CLIENT_ID",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_PAL_PARTNER_ID",
-         "EnvVarName": "ARM_PAL_PARTNER_ID",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_CLIENT_SECRET",
-         "EnvVarName": "ARM_CLIENT_SECRET",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_SUBSCRIPTION_ID",
-         "EnvVarName": "ARM_SUBSCRIPTION_ID",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_TENANT_ID",
-         "EnvVarName": "ARM_TENANT_ID",
-         "HCLName": "tenant_id",
-         "Value": "72f988bf-86f1-41af-91ab-2d7cd011db47"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "owner_tag",
-         "Value": "Contoso"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "deployment_principal_layers1and3",
-         "Value": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "resource_location",
-         "Value": "AustraliaEast"
-      },
-      {
-         "CICDSecretName": "ENVIRONMENT_TAG",
-         "EnvVarName": "TF_VAR_environment_tag",
-         "HCLName": "environment_tag",
-         "Value": "stg"
-      },
-      {
-         "CICDSecretName": "ARM_DOMAIN",
-         "EnvVarName": "TF_VAR_domain",
-         "HCLName": "domain",
-         "Value": "microsoft.com"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "subscription_id",
-         "Value": "035a1364-f00d-48e2-b582-4fe125905ee3"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "prefix",
-         "Value": "ads"
-      },
-      {
-         "CICDSecretName": "ARM_RESOURCE_GROUP_NAME",
-         "EnvVarName": "TF_VAR_resource_group_name",
-         "HCLName": "resource_group_name",
-         "Value": "gft2"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "ip_address",
-         "Value": "144.138.148.220"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "ip_address2",
-         "Value": "144.138.148.220"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "",
-         "HCLName": "synapse_administrators",
-         "Value": {
-            "Jorampon": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
-         }
-      },
-      {
-         "CICDSecretName": "ARM_STORAGE_NAME",
-         "EnvVarName": "TF_VAR_state_storage_account_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_SYNAPSE_PASSWORD",
-         "EnvVarName": "TF_VAR_synapse_sql_password",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "ARM_JUMPHOST_PASSWORD",
-         "EnvVarName": "TF_VAR_jumphost_password",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "WEB_APP_ADMIN_SECURITY_GROUP",
-         "EnvVarName": "TF_VAR_web_app_admin_security_group",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_REPOSITORY_NAME",
-         "EnvVarName": "TF_VAR_adf_git_repository_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_SYNAPSE_REPOSITORY_BRANCH_NAME",
-         "EnvVarName": "TF_VAR_synapse_git_repository_branch_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_PAT",
-         "EnvVarName": "TF_VAR_synapse_git_pat",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_USER_NAME",
-         "EnvVarName": "TF_VAR_synapse_git_user_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_EMAIL_ADDRESS",
-         "EnvVarName": "TF_VAR_synapse_git_email_address",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_ADF_REPOSITORY_NAME",
-         "EnvVarName": "TF_VAR_adf_git_repository_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_ADF_REPOSITORY_BRANCH_NAME",
-         "EnvVarName": "TF_VAR_adf_git_repository_branch_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_ADF_PAT",
-         "EnvVarName": "TF_VAR_adf_git_pat",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_ADF_USER_NAME",
-         "EnvVarName": "TF_VAR_adf_git_user_name",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "GIT_ADF_EMAIL_ADDRESS",
-         "EnvVarName": "TF_VAR_adf_git_email_address",
-         "HCLName": "",
-         "Value": "#####"
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_web_app",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_function_app",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_custom_terraform",
-         "HCLName": "",
-         "Value": false
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_app_service_plan",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_data_factory",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_sentinel",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_purview",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_synapse",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_metadata_database",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_is_vnet_isolated",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_web_app",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_function_app",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_sample_files",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_metadata_database",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_configure_networking",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_datafactory_pipelines",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_web_app_addcurrentuserasadmin",
-         "HCLName": "",
-         "Value": true
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_deploy_selfhostedsql",
-         "HCLName": "",
-         "Value": false
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_is_onprem_datafactory_ir_registered",
-         "HCLName": "",
-         "Value": false
-      },
-      {
-         "CICDSecretName": "",
-         "EnvVarName": "TF_VAR_publish_sif_database",
-         "HCLName": "",
-         "Value": true
-      }
-   ]
+      "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+   },
+   "ForSecretFile": {
+      "ARM_CLIENT_ID": "#####",
+      "ARM_CLIENT_SECRET": "#####",
+      "ARM_DATALAKE_NAME": "adsstgdlsadskhpvadsl",
+      "ARM_DOMAIN": "microsoft.com",
+      "ARM_JUMPHOST_PASSWORD": "#####",
+      "ARM_KEYVAULT_NAME": "ads-stg-kv-ads-khpv",
+      "ARM_PAL_PARTNER_ID": "#####",
+      "ARM_RESOURCE_GROUP_NAME": "gft2",
+      "ARM_STORAGE_NAME": "#####",
+      "ARM_SUBSCRIPTION_ID": "#####",
+      "ARM_SYNAPSE_PASSWORD": "#####",
+      "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadskhpv",
+      "ARM_TENANT_ID": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+      "ENVIRONMENT_TAG": "stg",
+      "GIT_ADF_EMAIL_ADDRESS": "#####",
+      "GIT_ADF_PAT": "#####",
+      "GIT_ADF_REPOSITORY_BRANCH_NAME": "#####",
+      "GIT_ADF_REPOSITORY_NAME": "#####",
+      "GIT_ADF_USER_NAME": "#####",
+      "GIT_EMAIL_ADDRESS": "#####",
+      "GIT_PAT": "#####",
+      "GIT_REPOSITORY_NAME": "#####",
+      "GIT_SYNAPSE_REPOSITORY_BRANCH_NAME": "#####",
+      "GIT_USER_NAME": "#####",
+      "WEB_APP_ADMIN_SECURITY_GROUP": "#####",
+      "WEB_APP_ADMIN_USER": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
+   }
 }
