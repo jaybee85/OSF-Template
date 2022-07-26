@@ -20,11 +20,17 @@
 # 
 # You can run this script multiple times if needed.
 #----------------------------------------------------------------------------------------------------------------
-
+param (
+    [Parameter(Mandatory=$false)]
+    [bool]$RunTerraformLayer1=$false,
+    [Parameter(Mandatory=$false)]
+    [bool]$RunTerraformLayer2=$false,
+    [Parameter(Mandatory=$false)]
+    [bool]$RunTerraformLayer3=$false
+)
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory
 #------------------------------------------------------------------------------------------------------------
-
 $deploymentFolderPath = (Get-Location).Path 
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
@@ -34,7 +40,7 @@ Invoke-Expression  ./Deploy_0_Prep.ps1
 #------------------------------------------------------------------------------------------------------------
 # Main Terraform
 #------------------------------------------------------------------------------------------------------------
-Invoke-Expression  ./Deploy_1_Infra0.ps1
+Invoke-Expression  ./Deploy_1_Infra0.ps1 -RunTerraformLayer1 $RunTerraformLayer1 -RunTerraformLayer2 $RunTerraformLayer2 -RunTerraformLayer3 $RunTerraformLayer3
 
 
 #------------------------------------------------------------------------------------------------------------
@@ -87,13 +93,13 @@ Invoke-Expression  ./Deploy_1_Infra0.ps1
 # Run Each SubModule
 #------------------------------------------------------------------------------------------------------------
 #Invoke-Expression  ./Deploy_3_Infra1.ps1
-Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
-Invoke-Expression  ./Deploy_5_WebApp.ps1
-Invoke-Expression  ./Deploy_6_FuncApp.ps1
-Invoke-Expression  ./Deploy_7_MetadataDB.ps1
-Invoke-Expression  ./Deploy_8_SQLLogins.ps1
-Invoke-Expression  ./Deploy_9_DataFactory.ps1
-Invoke-Expression  ./Deploy_10_SampleFiles.ps1
+#Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
+#Invoke-Expression  ./Deploy_5_WebApp.ps1
+#Invoke-Expression  ./Deploy_6_FuncApp.ps1
+#Invoke-Expression  ./Deploy_7_MetadataDB.ps1
+#Invoke-Expression  ./Deploy_8_SQLLogins.ps1
+#Invoke-Expression  ./Deploy_9_DataFactory.ps1
+#Invoke-Expression  ./Deploy_10_SampleFiles.ps1
 
 #----------------------------------------------------------------------------------------------------------------
 #   Set up Purview

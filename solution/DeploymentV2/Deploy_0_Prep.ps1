@@ -30,52 +30,24 @@ if ($gitDeploy)
 }
 else
 {
-    function Get-SelectionFromUser {
-        param (
-            [Parameter(Mandatory=$true)]
-            [string[]]$Options,
-            [Parameter(Mandatory=$true)]
-            [string]$Prompt        
-        )
-        
-        [int]$Response = 0;
-        [bool]$ValidResponse = $false    
-    
-        while (!($ValidResponse)) {            
-            [int]$OptionNo = 0
-    
-            Write-Host $Prompt -ForegroundColor DarkYellow
-            Write-Host "[0]: Quit"
-    
-            foreach ($Option in $Options) {
-                $OptionNo += 1
-                Write-Host ("[$OptionNo]: {0}" -f $Option)
-            }
-    
-            if ([Int]::TryParse((Read-Host), [ref]$Response)) {
-                if ($Response -eq 0) {
-                    return ''
-                }
-                elseif($Response -le $OptionNo) {
-                    $ValidResponse = $true
-                }
-            }
-        }
-    
-        return $Options.Get($Response - 1)
-    } 
-    
+   
     #Only Prompt if Environment Variable has not been set
     if ($null -eq [System.Environment]::GetEnvironmentVariable('environmentName'))
-    {
-        $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
+    {        
+        $envlist = (Get-ChildItem -Directory -Path ./environments/vars | Select-Object -Property Name).Name
+        Import-Module ./pwshmodules/GetSelectionFromUser.psm1 -Force   
+        $environmentName = Get-SelectionFromUser -Options ($envlist) -Prompt "Select deployment environment"
         [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
     }
 
     $env:TF_VAR_ip_address2 = (Invoke-WebRequest ifconfig.me/ip).Content 
+
+    #Re-process Environment Config Files. 
+    Set-Location ./environments/vars/
+    ./PreprocessEnvironment.ps1 -Environment $environmentName
+    Set-Location $deploymentFolderPath
+
 }
-
-
 
 $environmentName = [System.Environment]::GetEnvironmentVariable('environmentName')
 

@@ -1,22 +1,3 @@
-generate "layer1.tf" {
-  path      = "layer1.tf"
-  if_exists = "overwrite_terragrunt"
-  contents = <<EOF
-    data "terraform_remote_state" "layer1" {
-      # The settings here should match the "backend" settings in the
-      # configuration that manages the network resources.
-      backend = "azurerm"
-      
-      config = {
-        container_name       = "tstate"
-        key                  = "terraform_layer1.tfstate"
-        resource_group_name  = "gft2"
-        storage_account_name = "gft2state"
-      }
-    }
-  EOF
-}
-
 remote_state {
   backend = "azurerm"
   generate = {
@@ -29,7 +10,7 @@ remote_state {
     resource_group_name  = "gft2"
     storage_account_name = "gft2state"
     container_name       = "tstate"
-    key                  = "terraform_layer2.tfstate"
+    key                  = "terraform.tfstate"
   }
 }
 
@@ -52,15 +33,15 @@ inputs = {
   deploy_app_service_plan               = true
   deploy_data_factory                   = true
   deploy_sentinel                       = true
-  deploy_purview                        = false      
+  deploy_purview                        = true      
   deploy_synapse                        = true
   deploy_metadata_database              = true
-  is_vnet_isolated                      = false
+  is_vnet_isolated                      = true
   publish_web_app                       = true
   publish_function_app                  = true
   publish_sample_files                  = true
   publish_metadata_database             = true
-  configure_networking                  = false
+  configure_networking                  = true
   publish_datafactory_pipelines         = true
   publish_web_app_addcurrentuserasadmin = true
   deploy_selfhostedsql                  = false

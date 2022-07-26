@@ -845,3 +845,10 @@ variable "deployment_principal_layers1and3" {
   default     = ""
   type        = string
 }
+
+variable "synapse_administrators" {
+   description = "List of Synapse Administrators"
+   type = map(string)
+   default = {	
+   }
+}

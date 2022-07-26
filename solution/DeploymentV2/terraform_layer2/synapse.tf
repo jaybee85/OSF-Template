@@ -167,17 +167,19 @@ resource "azurerm_synapse_role_assignment" "synapse_function_app_assignment" {
 
 }
 
-resource "azurerm_synapse_role_assignment" "synapse_adminuser_assignment" {
-  count                = var.deploy_synapse ? 1 : 0
+
+resource "azurerm_synapse_role_assignment" "synapse_admin_assignments" {  
+  for_each = ( var.synapse_administrators)  
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
-  principal_id         = var.deployment_principal_layers1and3
+  principal_id         = each.value
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
-  ]
-
+  ]      
 }
+
+
 
 resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
   count                = var.deploy_synapse ? 1 : 0

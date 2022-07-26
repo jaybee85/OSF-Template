@@ -45,7 +45,6 @@ locals {
   h2o-ai_name                  = replace(module.naming.virtual_machine.name,"-vm-ads","-vm-h2o")
   custom_vm_name               = replace(module.naming.virtual_machine.name,"-vm-ads","-vm-custom")
 
-
   tags = {
     Environment = var.environment_tag
     Owner       = var.owner_tag

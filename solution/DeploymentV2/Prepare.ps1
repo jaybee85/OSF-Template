@@ -22,8 +22,11 @@
 # Once this script has finished, you then run Deploy.ps1 to create your environment
 # ------------------------------------------------------------------------------------------------------------
 
+
 #by default $gitDeploy will not be true, only being set by the git environment - meaning if not using a runner it will default to a standard execution.
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
+
+$envlist = (Get-ChildItem -Directory -Path ./environments/vars | Select-Object -Property Name).Name
 
 if ($gitDeploy)
 {
@@ -35,44 +38,9 @@ if ($gitDeploy)
 else
 {
     Write-Host "Standard Deployment"
-    function Get-SelectionFromUser {
-        param (
-            [Parameter(Mandatory=$true)]
-            [string[]]$Options,
-            [Parameter(Mandatory=$true)]
-            [string]$Prompt        
-        )
-        
-        [int]$Response = 0;
-        [bool]$ValidResponse = $false    
-    
-        while (!($ValidResponse)) {            
-            [int]$OptionNo = 0
-    
-            Write-Host $Prompt -ForegroundColor DarkYellow
-            Write-Host "[0]: Quit"
-    
-            foreach ($Option in $Options) {
-                $OptionNo += 1
-                Write-Host ("[$OptionNo]: {0}" -f $Option)
-            }
-    
-            if ([Int]::TryParse((Read-Host), [ref]$Response)) {
-                if ($Response -eq 0) {
-                    return ''
-                }
-                elseif($Response -le $OptionNo) {
-                    $ValidResponse = $true
-                }
-            }
-        }
-    
-        return $Options.Get($Response - 1)
-    } 
-    
-    $environmentName = Get-SelectionFromUser -Options ('local','staging', 'admz') -Prompt "Select deployment environment"
+    Import-Module ./pwshmodules/GetSelectionFromUser.psm1 -Force   
+    $environmentName = Get-SelectionFromUser -Options ($envlist) -Prompt "Select deployment environment"
     [System.Environment]::SetEnvironmentVariable('environmentName', $environmentName)
-
 }
 
 
@@ -108,11 +76,11 @@ if ($gitDeploy)
     az storage container create --name tstate --account-name $stateStorageName --auth-mode login 
 }
 else 
-{
+{    
     $environmentFile = "./EnvironmentTemplate_" + $environmentName + ".hcl"
     $environmentFileContents = Get-Content $environmentFile
     $env:TF_VAR_resource_group_name = Read-Host "Enter the name of the resource group to create (enter to skip)"
-    $env:TF_VAR_storage_account_name = Read-Host "Enter a unique name for the terraform state storage account (enter to skip)"
+    $env:TF_VAR_storage_account_name = $env:TF_VAR_resource_group_name+"state"
     $CONTAINER_NAME="tstate"
     # ------------------------------------------------------------------------------------------------------------
     # Ensure that you have all of the require Azure resource providers enabled before you begin deploying the solution.
@@ -240,7 +208,7 @@ else
     #------------------------------------------------------------------------------------------------------------
     # Persist into relevant environment file
     #------------------------------------------------------------------------------------------------------------
-    $PersistEnv = Get-SelectionFromUser -Options ('Yes','No') -Prompt "Do you want to automatically persist the configuration information into your environment file? WARNING this will overwrite your existing hcl file."
+    $PersistEnv = Get-SelectionFromUser -Options ('Yes','No') -Prompt "Do you want to automatically persist the configuration information into the files in your environment folder? WARNING this will overwrite your existing configurations."
     if ($PersistEnv -eq "Quit")
     {
         ## Changed so the prepare does not close if you do not wish to persist.
@@ -250,20 +218,32 @@ else
 
     if ($PersistEnv -eq "Yes")
     {
-        $environmentFileTarget = "./terraform/vars/" + $environmentName.ToLower() + "/terragrunt.hcl"
+        $common_vars_values = Get-Content ./environments/vars/$environmentName/common_vars_values.jsonc | ConvertFrom-Json -Depth 10
+        $common_vars_values.resource_group_name = $env:TF_VAR_resource_group_name 
+        $common_vars_values.domain =  $env:TF_VAR_domain
+        $common_vars_values.subscription_id =  $env:TF_VAR_subscription_id 
+        $common_vars_values.ip_address2 =  $env:TF_VAR_ip_address
+        $common_vars_values.tenant_id =  $env:TF_VAR_tenant_id 
+        $common_vars_values.WEB_APP_ADMIN_USER = (az ad signed-in-user show --query id -o tsv)
+        $common_vars_values.deployment_principal_layers1and3 = $common_vars_values.WEB_APP_ADMIN_USER
+        $common_vars_values.synapse_administrators = $common_vars_values.deployment_principal_layers1and3
+        $foundUser = $false
         
-        $environmentFileContents = $environmentFileContents.Replace("{prefix}","ads")
-
-        $environmentFileContents = $environmentFileContents.Replace("{resource_group_name}","$env:TF_VAR_resource_group_name")
-        $environmentFileContents = $environmentFileContents.Replace("{storage_account_name}","$env:TF_VAR_storage_account_name")
-        $environmentFileContents = $environmentFileContents.Replace("{subscription_id}","$env:TF_VAR_subscription_id")
-        $environmentFileContents = $environmentFileContents.Replace("{tenant_id}","$env:TF_VAR_tenant_id")
-        $environmentFileContents = $environmentFileContents.Replace("{ip_address}","$env:TF_VAR_ip_address")
-        $environmentFileContents = $environmentFileContents.Replace("{domain}","$env:TF_VAR_domain")
-        $environmentFileContents = $environmentFileContents.Replace("{publish_sif_database}","true")
+        foreach($u in $common_vars_values.synapse_administrators)
+        {
+            if ($u.(($u | Get-Member)[-1].Name) -eq ($common_vars_values.WEB_APP_ADMIN_USER))
+            {
+                $foundUser = $true                
+                break
+            }
+        }
+        if($foundUser -eq $false)
+        {                        
+            $common_vars_values.synapse_administrators | Add-Member -Name $common_vars_values.WEB_APP_ADMIN_USER -Value $common_vars_values.WEB_APP_ADMIN_USER -Type NoteProperty                      
+        }
         
         
-        
+        $fts = (Get-ChildItem -Path ./environments/featuretemplates | Select-Object -Property Name).Name.replace(".jsonc","")
         #------------------------------------------------------------------------------------------------------------
         # Templated Configurations
         #------------------------------------------------------------------------------------------------------------
@@ -271,126 +251,16 @@ else
         {
             Exit
         }
-        $templateName = Get-SelectionFromUser -Options ('Minimal-NoVNET,No Purview, No Synapse','Full-AllFeatures','FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS', 'Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines', 'Lockbox Light Including Vnet & Networking') -Prompt "Select deployment fast start template"
+        $templateName = Get-SelectionFromUser -Options ($fts) -Prompt "Select deployment fast start template"
         if ($templateName -eq "Quit")
         {
             Exit
         }
 
-        if ($templateName -eq "Full-AllFeatures")
-        {
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
-        } 
-
-        if ($templateName -eq "Minimal-NoVNET,No Purview, No Synapse")
-        {
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
-        } 
-
-        if ($templateName -eq "FunctionalTests-NoVNET,No Purview, No Synapse, Includes SQL IAAS")
-        {
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
-        } 
-
-            if ($templateName -eq "Lockbox Light No Vnet - No FuncApp,WebApp,MetadataDB,Synapse,ADF Pipelines")
-        {
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
-        } 
-
-                if ($templateName -eq "Lockbox Light Including Vnet & Networking")
-        {
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_web_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_function_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_custom_terraform}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_sentinel}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_purview}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_synapse}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_metadata_database}","false")        
-            $environmentFileContents = $environmentFileContents.Replace("{is_vnet_isolated}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_function_app}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_sample_files}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_metadata_database}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{configure_networking}","true")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_datafactory_pipelines}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{publish_web_app_addcurrentuserasadmin}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_selfhostedsql}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{is_onprem_datafactory_ir_registered}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_app_service_plan}","false")
-            $environmentFileContents = $environmentFileContents.Replace("{deploy_data_factory}","true")
-        } 
+        Set-Location ./environments/vars/
+        ./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $templateName
+        Set-Location $deploymentFolderPath
+       
         
         
         $environmentFileContents | Set-Content $environmentFileTarget

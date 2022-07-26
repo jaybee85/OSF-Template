@@ -36,7 +36,11 @@ RUN bash /tmp/library-scripts/common-debian.sh "${INSTALL_ZSH}" "${USERNAME}" "$
     && wget https://github.com/gruntwork-io/terragrunt/releases/download/v0.35.14/terragrunt_linux_amd64 \
     && mv terragrunt_linux_amd64 terragrunt \
     && chmod u+x terragrunt \
-    && mv terragrunt /usr/local/bin/terragrunt
+    && mv terragrunt /usr/local/bin/terragrunt 
+    && curl -sSLo install.sh https://install.hclq.sh
+    && sh install.sh
+    && rm install.sh
+    
     
 
 # [Optional] Uncomment this section to install additional OS packages.
