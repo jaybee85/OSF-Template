@@ -119,3 +119,11 @@ variable "deploy_azure_ad_function_app_registration" {
   default     = true
   type        = bool
 }
+
+
+variable "resource_owners" {
+  description = "A web app Azure security group used for admin access."
+  default = {	
+  }
+  type        = map(string)
+}

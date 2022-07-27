@@ -24,11 +24,13 @@ resource "azurerm_storage_account" "adls" {
 }
 
 
-resource "azurerm_role_assignment" "adls_deployment_agent" {
-  count                = var.deploy_adls ? 1 : 0
+resource "azurerm_role_assignment" "adls_deployment_agents" {
+  for_each = {
+    for ro in var.resource_owners : ro => ro
+  }    
   scope                = azurerm_storage_account.adls[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = data.azurerm_client_config.current.object_id
+  principal_id         = each.value
 }
 
 resource "azurerm_role_assignment" "adls_function_app" {
@@ -56,7 +58,7 @@ resource "azurerm_role_assignment" "adls_purview_sp" {
   count                = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
   scope                = azurerm_storage_account.adls[0].id
   role_definition_name = "Storage Blob Data Contributor"
-  principal_id         = azuread_service_principal.purview_ir[0].object_id
+  principal_id         = data.terraform_remote_state.layer1.outputs.purview_sp_object_id 
 }
 
 

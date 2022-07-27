@@ -32,6 +32,7 @@ inputs = {
   owner_tag                             = "${local.common_vars.owner_tag}"                              # Owner tag value for Azure resources
   environment_tag                       = "${local.common_vars.environment_tag}"                                  # This is used on Azure tags as well as all resource names
   ip_address                            = "${local.common_vars.ip_address}"                      # This is the ip address of the agent/current IP. Used to create firewall exemptions.
+  resource_owners                       = "${local.common_vars.resource_owners}"
   deploy_web_app                        = true
   deploy_function_app                   = true
 } 

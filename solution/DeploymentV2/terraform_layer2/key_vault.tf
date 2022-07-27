@@ -24,11 +24,13 @@ resource "azurerm_key_vault" "app_vault" {
 
 // Grant secret and key access to the current app to store the secret values --------------------------
 // Allows the deployment service principal to compare / check state later
-resource "azurerm_key_vault_access_policy" "user_access" {
-  count        = (var.cicd_sp_id == data.azurerm_client_config.current.object_id ? 0 : 1)
+resource "azurerm_key_vault_access_policy" "cicd_and_admin_access" {
+  for_each = {
+    for ro in var.resource_owners : ro => ro
+  }  
   key_vault_id = azurerm_key_vault.app_vault.id
   tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = data.azurerm_client_config.current.object_id
+  object_id    = each.value
 
   key_permissions = [
     "Delete", "List", "Get", "Create", "Update", "Purge"
@@ -42,23 +44,6 @@ resource "azurerm_key_vault_access_policy" "user_access" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "cicd_access" {
-  count        = (var.cicd_sp_id == "" ? 0 : 1)
-  key_vault_id = azurerm_key_vault.app_vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = (var.cicd_sp_id == data.azurerm_client_config.current.object_id ? var.cicd_sp_id : data.azurerm_client_config.current.object_id)
-
-  key_permissions = [
-    "Delete", "List", "Get", "Create", "Update", "Purge"
-  ]
-
-  secret_permissions = [
-    "Delete", "List", "Get", "Set", "Purge"
-  ]
-  depends_on = [
-    azurerm_key_vault.app_vault,
-  ]
-}
 
 resource "azurerm_key_vault_access_policy" "cicd_access_layers1and3" {
   count        = (var.deployment_principal_layers1and3 == "" ? 0 : 1)
@@ -79,7 +64,7 @@ resource "azurerm_key_vault_access_policy" "cicd_access_layers1and3" {
 }
 
 resource "time_sleep" "cicd_access" {
-  depends_on      = [azurerm_key_vault_access_policy.cicd_access, azurerm_key_vault_access_policy.user_access]
+  depends_on      = [azurerm_key_vault_access_policy.cicd_and_admin_access]
   create_duration = "10s"
 }
 
@@ -102,24 +87,6 @@ resource "azurerm_key_vault_access_policy" "adf_access" {
   ]
 }
 
-// Allows purview to retrieve the IR service principal password
-resource "azurerm_key_vault_access_policy" "purview_access" {
-  count        = var.deploy_purview ? 1 : 0
-  key_vault_id = azurerm_key_vault.app_vault.id
-  tenant_id    = var.tenant_id
-  object_id    = azurerm_purview_account.purview[0].identity[0].principal_id
-
-  key_permissions = [
-    "Get", "List"
-  ]
-
-  secret_permissions = [
-    "List", "Get"
-  ]
-  depends_on = [
-    azurerm_key_vault.app_vault,
-  ]
-}
 
 // Allows the Azure function to retrieve the Function App - AAD App Reg - Client Secret
 resource "azurerm_key_vault_access_policy" "function_app" {
@@ -253,15 +220,6 @@ resource "azurerm_key_vault_secret" "function_app_key" {
   ]
 }
 
-resource "azurerm_key_vault_secret" "purview_ir_sp_password" {
-  count        = var.deploy_purview && var.is_vnet_isolated ? 1 : 0
-  name         = "AzurePurviewIr"
-  value        = azuread_application_password.purview_ir[0].value
-  key_vault_id = azurerm_key_vault.app_vault.id
-  depends_on = [
-    time_sleep.cicd_access,
-  ]
-}
 
 resource "azurerm_key_vault_secret" "selfhostedsql_password" {
   count        = var.deploy_selfhostedsql ? 1 : 0

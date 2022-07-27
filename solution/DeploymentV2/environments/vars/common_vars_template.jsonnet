@@ -161,6 +161,12 @@ local AllVariables = [
             "Value": locals[environment].synapse_administrators
         },
         {            
+            "CICDSecretName": "",            
+            "EnvVarName": "",            
+            "HCLName": "resource_owners",
+            "Value": locals[environment].resource_owners
+        },
+        {            
             "CICDSecretName": "ARM_FEATURE_TEMPLATE",            
             "EnvVarName": "",            
             "HCLName": "",

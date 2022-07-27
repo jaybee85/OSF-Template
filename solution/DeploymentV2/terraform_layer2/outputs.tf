@@ -79,7 +79,7 @@ output "aad_funcreg_id" {
   value = data.terraform_remote_state.layer1.outputs.aad_funcreg_id 
 }
 output "purview_sp_id" {
-  value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].application_id : "0"
+  value = data.terraform_remote_state.layer1.outputs.purview_sp_id 
 }
 output "integration_runtimes" {
   value = local.integration_runtimes

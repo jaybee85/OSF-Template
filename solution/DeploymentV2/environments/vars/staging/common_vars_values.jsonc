@@ -10,10 +10,22 @@
   "ip_address": "144.138.148.220",
   "ip_address2": "144.138.148.220",
   "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-  "synapse_administrators": 
-    {"Jorampon":"ccbdbba4-669c-48d6-86b8-75c9ab2ee578"},
+  
   "WEB_APP_ADMIN_USER":"ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
   "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadskhpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
   "ARM_KEYVAULT_NAME": "ads-stg-kv-ads-khpv", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
-  "ARM_DATALAKE_NAME": "adsstgdlsadskhpvadsl" //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
+  "ARM_DATALAKE_NAME": "adsstgdlsadskhpvadsl", //Required by deployment script (pwsh) to openfirewall and provide access.. note that this will not be known until first deployment
+
+  "resource_owners":
+    [
+      /*Jorampon*/"ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
+      /*Agent_Deployer*/ "4c732d19-4076-4a76-87f3-6fbfd77f007d"
+    ],  
+  "synapse_administrators": 
+    {
+      "Jorampon":"ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
+      "Agent_Deployer": "4c732d19-4076-4a76-87f3-6fbfd77f007d" 
+    },
+  "synapse_publishers": {},
+  "synapse_contributors": {}
 }

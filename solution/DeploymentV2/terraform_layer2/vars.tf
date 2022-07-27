@@ -355,11 +355,6 @@ variable "publish_datafactory_pipelines" {
   type        = bool
 }
 
-variable "publish_web_app_addcurrentuserasadmin" {
-  description = "Feature toggle for adding user running deployment as a webapp admin"
-  default     = false
-  type        = bool
-}
 
 variable "publish_sif_database" {
   description = "Feature toggle for Publishing SIF Database"
@@ -800,12 +795,6 @@ variable "existing_synapse_private_link_hub_id" {
   type        = string
 }
 
-variable "web_app_admin_security_group" {
-  description = "A web app Azure security group used for admin access."
-  default     = ""
-  type        = string
-}
-
 variable "custom_vm_plan_name" {
   description = "An Azure vm plan name to be referenced for a custom vm image."
   default     = ""
@@ -842,6 +831,13 @@ variable "custom_vm_image_version" {
   type        = string
 }
 
+
+
+
+#---------------------------------------------------------------
+# User Access and Ownership/
+#---------------------------------------------------------------
+
 variable "deployment_principal_layers1and3" {
   description = "Object Id of the azure account that will deploy layers 1 & 3. If it is the same as the layer 2 user then leave as empty string."
   default     = ""
@@ -851,6 +847,38 @@ variable "deployment_principal_layers1and3" {
 variable "synapse_administrators" {
    description = "List of Synapse Administrators"
    type = map(string)
-   default = {	
-   }
+   default = {}
 }
+
+variable "synapse_contributors" {
+   description = "List of Synapse Contributors"
+   type = map(string)
+   default = {}
+}
+
+variable "synapse_publishers" {
+   description = "List of Synapse Publishers"
+   type = map(string)
+   default = {}
+}
+
+variable "publish_web_app_addcurrentuserasadmin" {
+  description = "Feature toggle for adding user running deployment as a webapp admin"
+  default     = false
+  type        = bool
+}
+
+
+variable "web_app_admin_security_group" {
+  description = "A web app Azure security group used for admin access."
+  default     = ""
+  type        = string
+}
+
+
+variable "resource_owners" {
+  description = "A web app Azure security group used for admin access."
+  default     = []
+  type        = list(string)
+}
+

@@ -26,7 +26,7 @@ resource "azurerm_mssql_server" "sqlserver" {
 
   azuread_administrator {
     login_username = "sqladmin"
-    object_id      = data.azurerm_client_config.current.object_id
+    object_id      = var.resource_owners[0]
   }
   identity {
     type = "SystemAssigned"

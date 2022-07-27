@@ -179,6 +179,29 @@ resource "azurerm_synapse_role_assignment" "synapse_admin_assignments" {
   ]      
 }
 
+resource "azurerm_synapse_role_assignment" "synapse_contributor_assignments" {  
+  for_each = ( var.synapse_contributors)  
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  role_name            = "Synapse Contributor"
+  principal_id         = each.value
+  depends_on = [
+    azurerm_synapse_firewall_rule.public_access,
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
+  ]      
+}
+
+resource "azurerm_synapse_role_assignment" "synapse_publisher_assignments" {  
+  for_each = ( var.synapse_publishers)  
+  synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
+  role_name            = "Synapse Artifact Publisher"
+  principal_id         = each.value
+  depends_on = [
+    azurerm_synapse_firewall_rule.public_access,
+    time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
+  ]      
+}
+
+
 
 
 resource "azurerm_synapse_linked_service" "synapse_keyvault_linkedservice" {
