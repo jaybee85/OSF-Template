@@ -5,7 +5,7 @@ function GatherOutputsFromTerraform()
     $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
 
     $CurrentFolderPath = $PWD
-    Set-Location "../../DeploymentV2/terraform"
+    Set-Location "../../DeploymentV2/terraform_layer2"
     $env:TF_VAR_ip_address = $myIp
 
     #------------------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 Set-Location $deploymentFolderPath
 
 Write-Host "Reading Terraform Outputs"
-Set-Location "./terraform"
+Set-Location "./terraform_layer2"
 Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 Set-Location $deploymentFolderPath
