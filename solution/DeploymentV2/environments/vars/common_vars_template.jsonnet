@@ -90,6 +90,12 @@ local AllVariables = [
             "HCLName": "tenant_id",
             "Value": locals[environment].tenant_id
         },
+        {
+            "CICDSecretName": "",
+            "EnvVarName": "TF_VAR_tenant_id",
+            "HCLName": "",
+            "Value": locals[environment].tenant_id
+        },
 
         /*
             HCL Common Vars & Terraform Customisations 
@@ -126,7 +132,7 @@ local AllVariables = [
         },
         {
             "CICDSecretName": "",
-            "EnvVarName": "",
+            "EnvVarName": "TF_VAR_subscription_id",
             "HCLName": "subscription_id",
             "Value": locals[environment].subscription_id
         },

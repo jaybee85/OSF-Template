@@ -52,4 +52,5 @@ inputs = {
   ip_address                            = "${local.common_vars.ip_address}"                      # This is the ip address of the agent/current IP. Used to create firewall exemptions.
   deploy_web_app                        = true
   deploy_function_app                   = true
+  deploy_purview                        = false
 } 

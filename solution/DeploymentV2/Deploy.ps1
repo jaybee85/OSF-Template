@@ -22,13 +22,13 @@
 #----------------------------------------------------------------------------------------------------------------
 param (
     [Parameter(Mandatory=$false)]
-    [bool]$RunTerraformLayer1=$false,
+    [bool]$RunTerraformLayer1=0,
     [Parameter(Mandatory=$false)]
-    [bool]$RunTerraformLayer2=$false,
+    [bool]$RunTerraformLayer2=0,
     [Parameter(Mandatory=$false)]
-    [bool]$RunTerraformLayer3=$false,
+    [bool]$RunTerraformLayer3=0,
     [Parameter(Mandatory=$false)]
-    [string]$FeatureTemplate="full_deployment"
+    [string]$FeatureTemplate="basic_deployment"
 )
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory

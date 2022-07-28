@@ -25,7 +25,7 @@
 
 #by default $gitDeploy will not be true, only being set by the git environment - meaning if not using a runner it will default to a standard execution.
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
-
+$deploymentFolderPath = (Get-Location).Path 
 $envlist = (Get-ChildItem -Directory -Path ./environments/vars | Select-Object -Property Name).Name
 
 if ($gitDeploy)
@@ -216,8 +216,10 @@ else
         ##Exit
     }
 
+    
     if ($PersistEnv -eq "Yes")
     {
+       
         $common_vars_values = Get-Content ./environments/vars/$environmentName/common_vars_values.jsonc | ConvertFrom-Json -Depth 10
         $common_vars_values.resource_group_name = $env:TF_VAR_resource_group_name 
         $common_vars_values.domain =  $env:TF_VAR_domain
@@ -225,8 +227,7 @@ else
         $common_vars_values.ip_address2 =  $env:TF_VAR_ip_address
         $common_vars_values.tenant_id =  $env:TF_VAR_tenant_id 
         $common_vars_values.WEB_APP_ADMIN_USER = (az ad signed-in-user show --query id -o tsv)
-        $common_vars_values.deployment_principal_layers1and3 = $common_vars_values.WEB_APP_ADMIN_USER
-        $common_vars_values.synapse_administrators = $common_vars_values.deployment_principal_layers1and3
+        $common_vars_values.deployment_principal_layers1and3 = $common_vars_values.WEB_APP_ADMIN_USER        
         $foundUser = $false
         
         foreach($u in $common_vars_values.synapse_administrators)
@@ -237,34 +238,37 @@ else
                 break
             }
         }
-        if($foundUser -eq $false)
+        if($foundUser -eq $true)
         {                        
-            $common_vars_values.synapse_administrators | Add-Member -Name $common_vars_values.WEB_APP_ADMIN_USER -Value $common_vars_values.WEB_APP_ADMIN_USER -Type NoteProperty                      
+            $common_vars_values.synapse_administrators.Deploy_User = $common_vars_values.WEB_APP_ADMIN_USER                    
         }
         
-        
-        $fts = (Get-ChildItem -Path ./environments/featuretemplates | Select-Object -Property Name).Name.replace(".jsonc","")
-        #------------------------------------------------------------------------------------------------------------
-        # Templated Configurations
-        #------------------------------------------------------------------------------------------------------------
+        $common_vars_values | Convertto-Json -Depth 10 | Set-Content ./environments/vars/$environmentName/common_vars_values.jsonc
+
+
         if($environmentName -eq "admz")
         {
             Exit
         }
+        #------------------------------------------------------------------------------------------------------------
+        # Templated Configurations
+        #------------------------------------------------------------------------------------------------------------
+        $fts = (Get-ChildItem -Path ./environments/featuretemplates | Select-Object -Property Name).Name.replace(".jsonc","")
         $templateName = Get-SelectionFromUser -Options ($fts) -Prompt "Select deployment fast start template"
         if ($templateName -eq "Quit")
         {
             Exit
         }
-
-        Set-Location ./environments/vars/
-        ./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $templateName -gitDeploy $gitDeploy
-        Set-Location $deploymentFolderPath 
-           
-
+        else 
+        {
+            Set-Location ./environments/vars/
+            ./PreprocessEnvironment.ps1 -Environment $environmentName -FeatureTemplate $templateName -gitDeploy $gitDeploy         
+        }
 
     }
 }
+
+Set-Location $deploymentFolderPath
 
 
 

@@ -1,6 +1,6 @@
 param (
     [Parameter(Mandatory=$false)]
-    [System.Boolean]$skipTerraformDeployment=$true,
+    [System.Boolean]$skipTerraformDeployment=$false,
     [Parameter(Mandatory=$false)]
     [System.Boolean]$RunTerraformLayer1=$false,
     [Parameter(Mandatory=$false)]
@@ -8,7 +8,9 @@ param (
     [Parameter(Mandatory=$false)]
     [System.Boolean]$RunTerraformLayer3=$false
 )
-
+#Write-Host $RunTerraformLayer1
+#Write-Host $RunTerraformLayer2
+#Write-Host $RunTerraformLayer3
 #----------------------------------------------------------------------------------------------------------------
 #   Deploy Infrastructure
 #----------------------------------------------------------------------------------------------------------------

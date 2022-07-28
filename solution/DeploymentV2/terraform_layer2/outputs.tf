@@ -261,6 +261,14 @@ output "azuread_application_function_app_reg_object_id" {
   value = data.terraform_remote_state.layer1.outputs.azuread_application_function_app_reg_object_id
 }
 
+output "purview_sp_object_id" {
+  value = data.terraform_remote_state.layer1.outputs.purview_sp_object_id
+}
+
+output "purview_account_principal_id" {
+  value = var.deploy_purview && var.is_vnet_isolated ? azurerm_purview_account.purview[0].identity[0].principal_id : "0"
+}
+
 /*Variables for Naming Module*/
 output "naming_unique_seed" {
   value = data.terraform_remote_state.layer1.outputs.naming_unique_seed

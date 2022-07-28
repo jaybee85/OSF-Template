@@ -6,7 +6,7 @@
   "ip_address2": "144.138.148.220",
   "owner_tag": "Contoso",
   "prefix": "ads",
-  "resource_group_name": "gft2",
+  "resource_group_name": "gft3",
   "resource_location": "AustraliaEast",
   "resource_owners": [
     "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
@@ -14,8 +14,8 @@
   ],
   "subscription_id": "035a1364-f00d-48e2-b582-4fe125905ee3",
   "synapse_administrators": {
-    "Agent_Deployer": "4c732d19-4076-4a76-87f3-6fbfd77f007d",
-    "Jorampon": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
+    "deploy_agent": "4c732d19-4076-4a76-87f3-6fbfd77f007d",
+    "deploy_user": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
   },
   "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47"
 }

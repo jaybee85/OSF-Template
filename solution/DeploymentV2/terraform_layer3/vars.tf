@@ -90,8 +90,6 @@ variable "aad_functionapp_name" {
   type        = string
 }
 
-
-
 #---------------------------------------------------------------
 # Feature Toggles
 #---------------------------------------------------------------
@@ -120,6 +118,18 @@ variable "deploy_azure_ad_function_app_registration" {
   type        = bool
 }
 
+variable "deploy_purview" {
+  description = "Feature toggle for deploying Azure Purview"
+  default     = false
+  type        = bool
+}
+
+
+variable "is_vnet_isolated" {
+  description = "Whether to deploy the resources as vnet attached / private linked"
+  default     = true
+  type        = bool
+}
 
 variable "resource_owners" {
   description = "A web app Azure security group used for admin access."

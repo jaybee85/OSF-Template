@@ -54,7 +54,7 @@ output "purview_sp_name" {
 output "purview_sp_id" {
   value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].application_id : "0"
 }
+
 output "purview_sp_object_id" {
   value = var.deploy_purview && var.is_vnet_isolated ? azuread_application.purview_ir[0].object_id : "0"
 }
-
