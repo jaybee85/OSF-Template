@@ -1,3 +1,11 @@
+param (
+    [Parameter(Mandatory=$true)]
+    [String]$deploymentFolderPath,
+    [Parameter(Mandatory=$true)]
+    [bool]$skipCustomTerraform=$true,
+    [Parameter(Mandatory=$true)]
+    [bool]$skipTerraformDeployment=$true
+)
 
 #------------------------------------------------------------------------------------------------------------
 # Deploy the customisable terraform layer

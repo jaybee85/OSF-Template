@@ -94,14 +94,16 @@ $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTe
 #------------------------------------------------------------------------------------------------------------
 # Run Each SubModule
 #------------------------------------------------------------------------------------------------------------
-#Invoke-Expression  ./Deploy_3_Infra1.ps1
-#Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
-#Invoke-Expression  ./Deploy_5_WebApp.ps1
-#Invoke-Expression  ./Deploy_6_FuncApp.ps1
-#Invoke-Expression  ./Deploy_7_MetadataDB.ps1
-#Invoke-Expression  ./Deploy_8_SQLLogins.ps1
-#Invoke-Expression  ./Deploy_9_DataFactory.ps1
-#Invoke-Expression  ./Deploy_10_SampleFiles.ps1
+./Deploy_3_Infra1.ps1 -deploymentFolderPath $deploymentFolderPath -skipTerraformDeployment $skipTerraformDeployment -skipCustomTerraform $skipCustomTerraform
+
+Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
+
+Invoke-Expression  ./Deploy_5_WebApp.ps1
+Invoke-Expression  ./Deploy_6_FuncApp.ps1
+Invoke-Expression  ./Deploy_7_MetadataDB.ps1
+Invoke-Expression  ./Deploy_8_SQLLogins.ps1
+Invoke-Expression  ./Deploy_9_DataFactory.ps1
+Invoke-Expression  ./Deploy_10_SampleFiles.ps1
 
 #----------------------------------------------------------------------------------------------------------------
 #   Set up Purview
