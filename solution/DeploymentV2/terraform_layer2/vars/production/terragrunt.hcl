@@ -1,5 +1,5 @@
 locals {
-  common_vars = jsondecode(file("../../../environments/vars/production/common_vars_for_hcl.json"))
+  common_vars = jsondecode(file("../../../bin/environments/production/common_vars_for_hcl.json"))
 }
 
 

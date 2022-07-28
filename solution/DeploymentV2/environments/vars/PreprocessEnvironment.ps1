@@ -17,11 +17,41 @@ $Environment = $Environment.ToLower()
 #First Convert Terraform Commons to YAML
 #Install-Module powershell-yaml -Force
 $GithubEnvTemplate = ""
+$GithubEnvTemplateSensitive = ""
+
+#Preprocessing common_vars_template.jsonnet
+#Feature Templates
+$cvjns = Get-Content "./common_vars_template.jsonnet" -raw
+$cvjnss = $cvjns.Split("/*DONOTREMOVETHISCOMMENT:SOFTS*/")
+$fts = (Get-ChildItem -Path ./../featuretemplates | Select-Object -Property Name).Name.replace(".jsonc","")
+$str = "/*DONOTREMOVETHISCOMMENT:SOFTS*/" + [System.Environment]::NewLine
+foreach($ft in $fts)
+{
+    $str = $str + "     " + "'$ft' : import './../featuretemplates/$ft.jsonc'," + [System.Environment]::NewLine
+}
+$str = $str + "/*DONOTREMOVETHISCOMMENT:SOFTS*/"
+($cvjnss[0] + $Str + $cvjnss[2]) | Set-Content "./common_vars_template.jsonnet"
+#Environments
+$cvjns = Get-Content "./common_vars_template.jsonnet" -raw
+$cvjnss = $cvjns.Split("/*DONOTREMOVETHISCOMMENT:ENVS*/")
+$fts = (Get-ChildItem -Directory | Select-Object -Property Name).Name
+$str = "/*DONOTREMOVETHISCOMMENT:ENVS*/" + [System.Environment]::NewLine
+foreach($ft in $fts)
+{
+    $str = $str + "     " + "'$ft' : import './$ft/common_vars_values.jsonc'," + [System.Environment]::NewLine
+}
+$str = $str + "/*DONOTREMOVETHISCOMMENT:ENVS*/"
+($cvjnss[0] + $Str + $cvjnss[2]) | Set-Content "./common_vars_template.jsonnet"
+
 
 Write-Host "Preparing Environment: $Environment Using $FeatureTemplate Template"
 
-(jsonnet "./common_vars_template.jsonnet" --tla-str featuretemplatename=$FeatureTemplate --tla-str environment=$Environment  ) | Set-Content("./$Environment/common_vars.json")
-$obj = Get-Content ./$Environment/common_vars.json | ConvertFrom-Json
+#Prep Output Folder
+$newfolder = "./../../bin/environments/$Environment/"
+$hiddenoutput = !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
+
+(jsonnet "./common_vars_template.jsonnet" --tla-str featuretemplatename=$FeatureTemplate --tla-str environment=$Environment  ) | Set-Content($newfolder +"/common_vars.json")
+$obj = Get-Content ($newfolder + "/common_vars.json") | ConvertFrom-Json
 
 foreach($t in ($obj.ForEnvVar | Get-Member | Where-Object {$_.MemberType -eq "NoteProperty"}))
 {
@@ -42,15 +72,24 @@ foreach($t in ($obj.ForSecretFile | Get-Member | Where-Object {$_.MemberType -eq
 {
     $Name = $t.Name
     $Value = $obj.ForSecretFile[0].$Name
-    #Add to GitHubSecretFile
+    #Add to GitHubSecretFile    
     $GithubEnvTemplate = $GithubEnvTemplate + "$Name=$Value" + [System.Environment]::NewLine
 }
 
+foreach($t in ($obj.ForSecretFileSensitive | Get-Member | Where-Object {$_.MemberType -eq "NoteProperty"}))
+{
+    $Name = $t.Name
+    $Value = $obj.ForSecretFile[0].$Name
+    #Add to GitHubSecretFile    
+    $GithubEnvTemplateSensitive = $GithubEnvTemplateSensitive + "$Name=$Value" + [System.Environment]::NewLine
+}
+
+
 #Write the Terraform Element common_vars_for_hcl.json - this is then injected into the hcl file
-($obj.ForHCL | ConvertTo-Json -Depth 10) | Set-Content ./$Environment/common_vars_for_hcl.json 
+($obj.ForHCL | ConvertTo-Json -Depth 10) | Set-Content ($newfolder+"/common_vars_for_hcl.json")
 
 if($gitDeploy -eq $false)
 {
     #Write the Git Secrets to the Git Template .env
-    $GithubEnvTemplate|Set-Content ./$Environment/GetSecretsTemplate.env
+    ($GithubEnvTemplateSensitive + [System.Environment]::NewLine + $GithubEnvTemplate)|Set-Content ($newfolder+"/GetSecretsTemplate.env")
 }

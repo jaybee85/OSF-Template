@@ -32,3 +32,14 @@ az ad app delete --id $tout.aad_funcreg_id
 #Remove Terraform State and Backend Files 
 rm ./terraform.tfstate
 rm ./backend.tf
+
+<# 
+If you want to delete all ADS Go Fast App Registrations owned by you.. RUN AT YOUR OWN RISK!!!:
+
+$apps = (az ad sp list --show-mine | ConvertFrom-Json | Where-Object {$_.displayName.StartsWith("ADS GoFast")}).id
+foreach($app in $apps) {az ad sp delete --id $app}
+
+
+
+
+ #>
