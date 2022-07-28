@@ -1,8 +1,11 @@
-
+param (
+    [Parameter(Mandatory=$false)]
+    [bool]$PublishSQLLogins=$false    
+)
 #----------------------------------------------------------------------------------------------------------------
 #   Configure SQL Server Logins
 #----------------------------------------------------------------------------------------------------------------
-if($skipSQLLogins) {
+if($PublishSQLLogins -eq $false) {
     Write-Host "Skipping configuration of SQL Server Users"    
 }
 else {
@@ -52,15 +55,19 @@ else {
 #----------------------------------------------------------------------------------------------------------------
 #   Configure Synapse Logins
 #----------------------------------------------------------------------------------------------------------------
-if($skipSynapseLogins) {
+if($PublishSQLLogins -eq $false) {
     Write-Host "Skipping configuration of Synapse SQL Users"    
 }
 else {
     Write-Host "Configuring Synapse SQL Users"
 
+    $myIp = $env:TF_VAR_ip_address
+    $myIp2 = $env:TF_VAR_ip_address2
+
     #Add Ip to SQL Firewall
     #$result = az synapse workspace update -n $synapse_workspace_name -g $resource_group_name  --set publicNetworkAccess="Enabled"
-    $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "Deploy.ps1" --start-ip-address $myIp --end-ip-address $myIp
+    $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "DeploymentAgent" --start-ip-address $myIp --end-ip-address $myIp
+    $result = az synapse workspace firewall-rule create --resource-group $resource_group_name --workspace-name $synapse_workspace_name --name "DeploymentUser" --start-ip-address $myIp2 --end-ip-address $myIp2
 
     if ($tout.is_vnet_isolated -eq $false)
     {

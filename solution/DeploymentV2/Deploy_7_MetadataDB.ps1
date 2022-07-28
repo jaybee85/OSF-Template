@@ -1,7 +1,11 @@
+param (
+    [Parameter(Mandatory=$false)]
+    [bool]$publish_metadata_database=$false    
+)
 #----------------------------------------------------------------------------------------------------------------
 #   Populate the Metadata Database
 #----------------------------------------------------------------------------------------------------------------
-if($skipDatabase) {
+if($publish_metadata_database -eq $false) {
     Write-Host "Skipping Populating Metadata Database"    
 }
 else {

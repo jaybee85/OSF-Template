@@ -28,7 +28,12 @@ param (
     [Parameter(Mandatory=$false)]
     [bool]$RunTerraformLayer3=0,
     [Parameter(Mandatory=$false)]
+    [bool]$PublishMetadataDatabase=0,
+    [Parameter(Mandatory=$false)]
+    [bool]$PublishSQLLogins=0,
+    [Parameter(Mandatory=$false)]
     [string]$FeatureTemplate="basic_deployment"
+
 )
 #------------------------------------------------------------------------------------------------------------
 # Preparation #Mandatory
@@ -36,7 +41,8 @@ param (
 $deploymentFolderPath = (Get-Location).Path 
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
-
+$ipaddress = $env:TF_VAR_ip_address
+$ipaddress2 = $env:TF_VAR_ip_address2
 ./Deploy_0_Prep.ps1 -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderPath -FeatureTemplate $FeatureTemplate
 
 #------------------------------------------------------------------------------------------------------------
@@ -97,11 +103,20 @@ $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTe
 ./Deploy_3_Infra1.ps1 -deploymentFolderPath $deploymentFolderPath -skipTerraformDeployment $skipTerraformDeployment -skipCustomTerraform $skipCustomTerraform
 
 Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
-
 Invoke-Expression  ./Deploy_5_WebApp.ps1
 Invoke-Expression  ./Deploy_6_FuncApp.ps1
-Invoke-Expression  ./Deploy_7_MetadataDB.ps1
-Invoke-Expression  ./Deploy_8_SQLLogins.ps1
+
+#------------------------------------------------------------------------------------------------------------
+# SQL Deployment and Users 
+# In order for a deployment agent service principal to execute the two scripts below you need to give directory read to the Azure SQL Instance Managed Identity and the Synapse Managed Identity
+#------------------------------------------------------------------------------------------------------------
+./Deploy_7_MetadataDB.ps1 -publish_metadata_database $PublishMetadataDatabase
+./Deploy_8_SQLLogins.ps1 -PublishSQLLogins $PublishSQLLogins
+
+#------------------------------------------------------------------------------------------------------------
+# Data Factory & Synapse  Artefacts and Samplefiles 
+#------------------------------------------------------------------------------------------------------------
+
 Invoke-Expression  ./Deploy_9_DataFactory.ps1
 Invoke-Expression  ./Deploy_10_SampleFiles.ps1
 

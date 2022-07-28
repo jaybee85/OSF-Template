@@ -14,8 +14,11 @@
   //Owners & User Access
   "deployment_principal_layers1and3": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
   "resource_owners": [
-    "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
-    "4c732d19-4076-4a76-87f3-6fbfd77f007d"
+    //Deployment Agent - Note that the first element here will become the SQL server AAD Admin
+    "4c732d19-4076-4a76-87f3-6fbfd77f007d",
+    //Admin User - Jorampon
+    "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
+    
   ],
   "synapse_administrators": {
     //"deploy_user": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
@@ -25,10 +28,11 @@
   "synapse_contributors": {},
   "WEB_APP_ADMIN_USER": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
   "WEB_APP_ADMIN_SECURITY_GROUP": "#####",
-  //Post Layer 1 Reources
-  "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadsvroj",
-  "ARM_KEYVAULT_NAME": "ads-stg-kv-ads-vroj",
-  "ARM_DATALAKE_NAME": "adsstgdlsadsvrojadsl",
+  
+  //Post Layer 1 Reources. Deployment of Terraform Layer One will give you these values. They are required to allow subsequent agent deployments to open firewall rules to allow deployment updates. 
+  "ARM_SYNAPSE_WORKSPACE_NAME": "adsstgsynwadslwra",
+  "ARM_KEYVAULT_NAME": "ads-stg-kv-ads-lwra",
+  "ARM_DATALAKE_NAME": "adsstgdlsadslwraadsl",
   
   //PAL
   "ARM_PAL_PARTNER_ID": "0",
