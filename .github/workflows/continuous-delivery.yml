@@ -3,7 +3,7 @@ name: Continuous Delivery
 on:
   workflow_dispatch:
   push:
-    branches: main
+    branches: feature-1.0.4
 
 jobs:
     deploy-to-env-one:
