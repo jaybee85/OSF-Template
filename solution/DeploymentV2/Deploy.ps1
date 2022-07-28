@@ -32,6 +32,8 @@ param (
     [Parameter(Mandatory=$false)]
     [bool]$PublishSQLLogins=0,
     [Parameter(Mandatory=$false)]
+    [bool]$PerformPostIACPublishing=0,    
+    [Parameter(Mandatory=$false)]
     [string]$FeatureTemplate="basic_deployment"
 
 )
@@ -102,10 +104,6 @@ $ipaddress2 = $env:TF_VAR_ip_address2
 #------------------------------------------------------------------------------------------------------------
 ./Deploy_3_Infra1.ps1 -deploymentFolderPath $deploymentFolderPath -skipTerraformDeployment $skipTerraformDeployment -skipCustomTerraform $skipCustomTerraform
 
-Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
-Invoke-Expression  ./Deploy_5_WebApp.ps1
-Invoke-Expression  ./Deploy_6_FuncApp.ps1
-
 #------------------------------------------------------------------------------------------------------------
 # SQL Deployment and Users 
 # In order for a deployment agent service principal to execute the two scripts below you need to give directory read to the Azure SQL Instance Managed Identity and the Synapse Managed Identity
@@ -117,8 +115,17 @@ Invoke-Expression  ./Deploy_6_FuncApp.ps1
 # Data Factory & Synapse  Artefacts and Samplefiles 
 #------------------------------------------------------------------------------------------------------------
 
-Invoke-Expression  ./Deploy_9_DataFactory.ps1
-Invoke-Expression  ./Deploy_10_SampleFiles.ps1
+if($PerformPostIACPublishing -eq $false) {
+    Write-Host "Skipping Post IAC Publishing"
+}
+else {
+    Invoke-Expression  ./Deploy_4_PrivateLinks.ps1
+    Invoke-Expression  ./Deploy_5_WebApp.ps1
+    Invoke-Expression  ./Deploy_6_FuncApp.ps1
+    Invoke-Expression  ./Deploy_9_DataFactory.ps1
+    Invoke-Expression  ./Deploy_10_SampleFiles.ps1
+}
+
 
 #----------------------------------------------------------------------------------------------------------------
 #   Set up Purview
