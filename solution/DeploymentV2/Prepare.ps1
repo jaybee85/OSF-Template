@@ -77,8 +77,6 @@ if ($gitDeploy)
 }
 else 
 {    
-    $environmentFile = "./EnvironmentTemplate_" + $environmentName + ".hcl"
-    $environmentFileContents = Get-Content $environmentFile
     $env:TF_VAR_resource_group_name = Read-Host "Enter the name of the resource group to create (enter to skip)"
     $env:TF_VAR_storage_account_name = $env:TF_VAR_resource_group_name+"state"
     $CONTAINER_NAME="tstate"

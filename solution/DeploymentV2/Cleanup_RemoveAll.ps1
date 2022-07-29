@@ -13,8 +13,6 @@ if ($environmentName -eq "Quit")
 }
 [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
-Set-Location ".\terraform"
-
 #------------------------------------------------------------------------------------------------------------
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
