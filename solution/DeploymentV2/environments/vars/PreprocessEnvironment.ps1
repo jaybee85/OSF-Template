@@ -60,8 +60,12 @@ foreach($t in ($obj.ForEnvVar | Get-Member | Where-Object {$_.MemberType -eq "No
     if($Value.GetType().Name -eq "Boolean")
     {
         $Value = $Value.ToString().ToLower()
-    }           
-        
+    }  
+    if($Value.GetType().Name -eq "PSCustomObject")
+    {
+        $Value = ($Value | ConvertTo-Json -Depth 10)
+    }  
+    
     if([string]::IsNullOrEmpty($Value) -eq $false -and $Value -ne '#####')
     {          
         [Environment]::SetEnvironmentVariable($Name, $Value) 

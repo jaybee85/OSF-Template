@@ -2,8 +2,8 @@ Set-Location $deploymentFolderPath
 
 Write-Host "Reading Terraform Outputs"
 Set-Location "./terraform_layer2"
-Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
-$tout = GatherOutputsFromTerraform
+Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform -TerraformFolderPath './'
 Set-Location $deploymentFolderPath
 
 Write-Host "Starting Adf Patterns" -ForegroundColor Yellow

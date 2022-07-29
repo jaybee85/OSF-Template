@@ -1,12 +1,12 @@
 $deploymentFolderPath = (Get-Location).Path
-Set-Location "./terraform"
+Set-Location "./terraform_layer2"
 
 #------------------------------------------------------------------------------------------------------------
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
 Write-Host "Reading Terraform Outputs"
-Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
-$tout = GatherOutputsFromTerraform
+Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform -TerraformFolderPath './'
 
 $irKey1 = az datafactory integration-runtime list-auth-key --factory-name $tout.datafactory_name --name $tout.integration_runtimes[1].name --resource-group $tout.resource_group_name --query authKey1 --out tsv
 Write-Debug " irKey1 retrieved."

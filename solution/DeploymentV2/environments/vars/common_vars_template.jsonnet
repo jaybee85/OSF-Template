@@ -194,6 +194,13 @@ local AllVariables = [
         },
         {            
             "CICDSecretName": "",            
+            "EnvVarName": "TF_VAR_azure_sql_aad_administrators",            
+            "HCLName": "azure_sql_aad_administrators",
+            "Value": locals[environment].azure_sql_aad_administrators,
+            "Sensitive": false
+        },        
+        {            
+            "CICDSecretName": "",            
             "EnvVarName": "",            
             "HCLName": "resource_owners",
             "Value": locals[environment].resource_owners,
@@ -341,6 +348,32 @@ local SecretFileSensitiveVars =     {  // Object comprehension.
     "ForSecretFile": SecretFileVars,
     "ForSecretFileSensitive": SecretFileSensitiveVars
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

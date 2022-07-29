@@ -20,6 +20,17 @@ else {
         $aadUsers +=  $purview_sp_name
     }
     
+    $sqladmins = ($env:TF_VAR_azure_sql_aad_administrators | ConvertFrom-Json -Depth 10)
+    $sqladmins2 = ($Sqladmins | Get-Member)  | Where-Object {$_.MemberType -eq "NoteProperty"} | Select-Object -Property Name
+    foreach($user in $sqladmins2)
+    {
+        if($user.Name -ne "sql_aad_admin")
+        {
+            $aadUsers += $user.Name
+        }
+    }
+
+
     $token=$(az account get-access-token --resource=https://database.windows.net --query accessToken --output tsv)
     foreach($database in $databases)
     {
@@ -29,12 +40,18 @@ else {
             if (![string]::IsNullOrEmpty($user))
             {
                 $sqlcommand = "
-                        DROP USER IF EXISTS [$user] 
-                        CREATE USER [$user] FROM EXTERNAL PROVIDER;
-                        ALTER ROLE db_datareader ADD MEMBER [$user];
-                        ALTER ROLE db_datawriter ADD MEMBER [$user];
-                        GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
-                        GO
+
+                IF NOT EXISTS (SELECT *
+                FROM [sys].[database_principals]
+                WHERE [type] = N'E' AND [name] = N'$user') 
+                BEGIN
+                    CREATE USER [$user] FROM EXTERNAL PROVIDER;		
+                END
+                ALTER ROLE db_datareader ADD MEMBER [$user];
+                ALTER ROLE db_datawriter ADD MEMBER [$user];
+                GRANT EXECUTE ON SCHEMA::[dbo] TO [$user];
+                GO
+                        
                 "
     
                 write-host "Granting MSI Privileges on $database DB to $user"
@@ -92,7 +109,7 @@ else {
 
         $token=$(az account get-access-token --resource=https://sql.azuresynapse.net --query accessToken --output tsv)
         if ((![string]::IsNullOrEmpty($datafactory_name)) -and ($synapse_sql_pool_name -ne 'Dummy') -and (![string]::IsNullOrEmpty($synapse_sql_pool_name)))
-        {
+        {            
             # For a Spark user to read and write directly from Spark into or from a SQL pool, db_owner permission is required.
             Invoke-Sqlcmd -ServerInstance "$synapse_workspace_name.sql.azuresynapse.net,1433" -Database $synapse_sql_pool_name -AccessToken $token -query "IF NOT EXISTS (SELECT name
     FROM [sys].[database_principals]

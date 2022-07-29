@@ -844,6 +844,12 @@ variable "deployment_principal_layers1and3" {
   type        = string
 }
 
+variable "azure_sql_aad_administrators" {
+   description = "List of Azure SQL Administrators"
+   type = map(string)
+   default = {}
+}
+
 variable "synapse_administrators" {
    description = "List of Synapse Administrators"
    type = map(string)

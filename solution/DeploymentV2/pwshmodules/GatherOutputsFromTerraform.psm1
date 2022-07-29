@@ -1,5 +1,8 @@
-function GatherOutputsFromTerraform()
+function GatherOutputsFromTerraform($TerraformFolderPath)
 {
+
+    $currentPath = (Get-Location).Path 
+    Set-Location $TerraformFolderPath 
     $environmentName = $env:TFenvironmentName
     #$environmentName = "local" # currently supports (local, staging)
     $myIp = (Invoke-WebRequest ifconfig.me/ip).Content
@@ -26,5 +29,6 @@ function GatherOutputsFromTerraform()
     #Set-Location $CurrentFolderPath
     Write-Host "Reading Terraform Outputs - Finished"
     Write-Host "-------------------------------------------------------------------------------------------------"
+    Set-Location $currentPath
     return $tout
 }

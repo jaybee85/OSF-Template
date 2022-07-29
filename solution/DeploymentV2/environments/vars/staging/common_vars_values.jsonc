@@ -1,7 +1,8 @@
 {
+  "$schema": "./../common_vars_schema.json",
   //Core
   "owner_tag": "Contoso",
-  "resource_location": "AustraliaEast",
+  "resource_location": "australiaeast",
   "environment_tag": "stg",
   "domain": "microsoft.com",
   "subscription_id": "035a1364-f00d-48e2-b582-4fe125905ee3",
@@ -14,7 +15,7 @@
   //Owners & User Access
   "deployment_principal_layers1and3": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
   "resource_owners": [
-    //Deployment Agent - Note that the first element here will become the SQL server AAD Admin
+    //Deployment Agent 
     "4c732d19-4076-4a76-87f3-6fbfd77f007d",
     //Admin User - Jorampon
     "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"
@@ -23,6 +24,11 @@
   "synapse_administrators": {
     //"deploy_user": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
     "deploy_agent": "4c732d19-4076-4a76-87f3-6fbfd77f007d"
+  },
+  "azure_sql_aad_administrators": /*Note that you must designate a SQL AAD Admin*/{
+    "sql_aad_admin": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
+    "jorampon@microsoft.com": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",    
+    "AdsGoFastDeployerjkcgkaibkungm": "4c732d19-4076-4a76-87f3-6fbfd77f007d"    
   },
   "synapse_publishers": {},
   "synapse_contributors": {},

@@ -17,8 +17,8 @@ Set-Location ".\terraform"
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
 Write-Host "Reading Terraform Outputs"
-Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
-$tout = GatherOutputsFromTerraform
+Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
+$tout = GatherOutputsFromTerraform -TerraformFolderPath ./terraform_layer2
 
 #Delete Resource Group
 az group delete --name $tout.resource_group_name 

@@ -26,7 +26,7 @@ resource "azurerm_mssql_server" "sqlserver" {
 
   azuread_administrator {
     login_username = "sqladmin"
-    object_id      = var.resource_owners[0]
+    object_id      = var.azure_sql_aad_administrators["sql_aad_admin"]
   }
   identity {
     type = "SystemAssigned"
@@ -109,3 +109,12 @@ resource "azurerm_private_endpoint" "db_private_endpoint_with_dns" {
     ]
   }
 }
+
+/* resource "null_resource" "metadatadb_admins" {
+  for_each = (var.azure_sql_aad_administrators)  
+  provisioner "local-exec" {
+    working_dir = path.module
+    command = "pwsh -file database.ps1 -user ${each.key} -sqlserver_name ${local.sql_server_name} -database ${local.metadata_database_name}"    
+  }
+  
+} */

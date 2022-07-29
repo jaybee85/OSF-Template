@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------------------------------------------
 Set-Location "./terraform"
 Write-Host "Reading Terraform Outputs"
-Import-Module .\..\GatherOutputsFromTerraform.psm1 -force
+Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
 $tout = GatherOutputsFromTerraform
 
 $outputs = terragrunt output -json --terragrunt-config ./vars/$env:environmentName/terragrunt.hcl | ConvertFrom-Json

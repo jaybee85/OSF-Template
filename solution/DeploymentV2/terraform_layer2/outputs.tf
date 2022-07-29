@@ -141,6 +141,9 @@ output "publish_datafactory_pipelines" {
 output "publish_web_app_addcurrentuserasadmin" {
   value = var.publish_web_app_addcurrentuserasadmin
 }
+output "azure_sql_aad_administrators" {
+  value = var.azure_sql_aad_administrators
+}
 output "synapse_workspace_name" {
   value = var.deploy_synapse ? azurerm_synapse_workspace.synapse[0].name : ""
 }
