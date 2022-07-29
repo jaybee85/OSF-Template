@@ -1,11 +1,12 @@
 $deploymentFolderPath = (Get-Location).Path
+Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
 Set-Location "./terraform_layer2"
 
 #------------------------------------------------------------------------------------------------------------
 # Get all the outputs from terraform so we can use them in subsequent steps
 #------------------------------------------------------------------------------------------------------------
 Write-Host "Reading Terraform Outputs"
-Import-Module .\pwshmodules\GatherOutputsFromTerraform.psm1 -force
+
 $tout = GatherOutputsFromTerraform -TerraformFolderPath './'
               
 $ScriptUri = "https://gist.githubusercontent.com/jrampono/91076c406345c1d2487a82b1f106dfaa/raw/AW_EnableCDC.ps1"
