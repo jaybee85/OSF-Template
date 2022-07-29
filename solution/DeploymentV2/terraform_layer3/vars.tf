@@ -94,6 +94,11 @@ variable "aad_functionapp_name" {
 # Feature Toggles
 #---------------------------------------------------------------
 
+variable "deploy_data_factory" {
+  description = "Feature toggle for deploying the Azure Data Factory"
+  default     = true
+  type        = bool
+}
 
 variable "deploy_web_app" {
   description = "Feature toggle for deploying the Web App"
@@ -129,6 +134,18 @@ variable "is_vnet_isolated" {
   description = "Whether to deploy the resources as vnet attached / private linked"
   default     = true
   type        = bool
+}
+
+
+
+#---------------------------------------------------------------
+# User Access and Ownership/
+#---------------------------------------------------------------
+
+variable "azure_sql_aad_administrators" {
+   description = "List of Azure SQL Administrators"
+   type = map(string)
+   default = {}
 }
 
 variable "resource_owners" {
