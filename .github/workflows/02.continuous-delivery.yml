@@ -110,8 +110,8 @@ jobs:
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          git update-index --chmod=+x ./02_deploy.ps1          
-          ./02_deploy.ps1
+          git update-index --chmod=+x ./02-deploy.ps1          
+          ./02-deploy.ps1
 
       - name: Build and Publish Code Artefacts
         id: solution-deployment-code
@@ -120,8 +120,8 @@ jobs:
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          git update-index --chmod=+x ./02_publish.ps1          
-          ./02_publish.ps1
+          git update-index --chmod=+x ./02-publish.ps1          
+          ./02-publish.ps1
     
     #PROD ENVIRONMENT
     deploy-to-env-two:
