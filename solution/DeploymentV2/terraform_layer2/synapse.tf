@@ -173,6 +173,9 @@ resource "azurerm_synapse_role_assignment" "synapse_admin_assignments" {
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   role_name            = "Synapse Administrator"
   principal_id         = each.value
+  lifecycle {
+    ignore_changes = all
+  }
   depends_on = [
     azurerm_synapse_firewall_rule.public_access,
     time_sleep.azurerm_synapse_firewall_rule_wait_30_seconds_cicd
