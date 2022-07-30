@@ -90,7 +90,7 @@ jobs:
 
       - name: Terragrunt Install
         id: terragrunt_install
-        working-directory: ./solution/DeploymentV2/terraform/terraform_layer2
+        working-directory: ./solution/DeploymentV2/terraform_layer2
         run: |
           brew install terragrunt    
           
