@@ -4,7 +4,9 @@ function PrepareDeployment (
     [Parameter(Mandatory=$true)]
     [String]$deploymentFolderPath,
     [Parameter(Mandatory=$true)]
-    [String]$FeatureTemplate
+    [String]$FeatureTemplate,
+    [Parameter(Mandatory=$false)]
+    [String]$PathToReturnTo=""
 )
 {
     Set-Location $deploymentFolderPath
@@ -73,7 +75,13 @@ function PrepareDeployment (
 
     [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
-
-
+    if([string]::IsNullOrEmpty($PathToReturnTo) -ne $true)
+    {
+        Write-Debug "Returning to $PathToReturnTo"
+        Set-Location $PathToReturnTo
+    }
+    else {
+        Write-Debug "Path to return to is null"
+    }
 
 }

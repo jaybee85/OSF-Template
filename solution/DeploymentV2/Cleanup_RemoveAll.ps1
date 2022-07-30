@@ -40,6 +40,9 @@ $apps = (az ad sp list --show-mine | ConvertFrom-Json | Where-Object {$_.display
 foreach($app in $apps) {az ad sp delete --id $app}
 
 
+$apps = (az ad app list --show-mine | ConvertFrom-Json | Where-Object {$_.displayName.StartsWith("ADS GoFast")}).id
+foreach($app in $apps) {az ad app delete --id $app}
+
 
 
  #>

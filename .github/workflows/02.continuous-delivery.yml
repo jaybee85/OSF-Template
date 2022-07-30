@@ -90,7 +90,7 @@ jobs:
 
       - name: Terragrunt Install
         id: terragrunt_install
-        working-directory: ./solution/DeploymentV2/terraform
+        working-directory: ./solution/DeploymentV2/terraform/terraform_layer2
         run: |
           brew install terragrunt    
           
@@ -103,16 +103,25 @@ jobs:
           wget https://github.com/google/go-jsonnet/releases/download/v0.17.0/jsonnet-go_0.17.0_linux_amd64.deb   
           sudo dpkg -i jsonnet-go_0.17.0_linux_amd64.deb 
           
-      - name: Deploy Solution
-        id: solution-deployment
-        working-directory: ./solution/DeploymentV2/
+      - name: Deploy Solution IAC
+        id: solution-deployment-iac
+        working-directory: ./solution/DeploymentV2/terraform_layer2
         shell: pwsh
         env:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
-          git update-index --chmod=+x ./Deploy.ps1
-          ./Deploy.ps1 -RunTerraformLayer2 $true -FeatureTemplate ${{ env.featureTemplate}} -PerformPostIACPublishing $true
-           
+          git update-index --chmod=+x ./02_deploy.ps1          
+          ./02_deploy.ps1
+
+      - name: Build and Publish Code Artefacts
+        id: solution-deployment-code
+        working-directory: ./solution/DeploymentV2/terraform_layer2
+        shell: pwsh
+        env:
+          TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
+        run: |
+          git update-index --chmod=+x ./02_publish.ps1          
+          ./02_publish.ps1
     
     #PROD ENVIRONMENT
     deploy-to-env-two:
