@@ -92,7 +92,7 @@
         "required": [],
         "properties": {},
         "default": {},
-        "description": "Object with a property for each user that is to be a Synapse Administrator. The property name is descriptive only and should be unique. The property value is the object_id of the user. Leave as empty object when not is use.",
+        "description": "Object with a property for each user that is to be a Synapse Administrator. The property name is descriptive only and should be unique. The property value is the object_id of the user. Leave as empty object when not is use. NOTE - do not include the Synpase Workspace creator in this list as it will be added automatically.",
         "examples": [
             {
                 "user_1": "5c736d19-4076-4a76-87f3-6fbfd77f007d",

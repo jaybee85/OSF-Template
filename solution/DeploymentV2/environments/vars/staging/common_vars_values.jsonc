@@ -20,8 +20,8 @@
   },
   "azure_sql_aad_administrators": {
     "sql_aad_admin": "4c732d19-4076-4a76-87f3-6fbfd77f007d",
-    "jorampon@microsoft.com": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578",
-    "AdsGoFastDeployerjkcgkaibkungm": "4c732d19-4076-4a76-87f3-6fbfd77f007d"
+    "jorampon@microsoft.com": "ccbdbba4-669c-48d6-86b8-75c9ab2ee578"//,
+    //"AdsGoFastDeployerjkcgkaibkungm": "4c732d19-4076-4a76-87f3-6fbfd77f007d"
   },
   "synapse_publishers": {},
   "synapse_contributors": {},
