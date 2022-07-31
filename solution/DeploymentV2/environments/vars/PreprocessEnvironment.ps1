@@ -50,7 +50,7 @@ Write-Host "Preparing Environment: $Environment Using $FeatureTemplate Template"
 $newfolder = "./../../bin/environments/$Environment/"
 $hiddenoutput = !(Test-Path $newfolder) ? ($F = New-Item -itemType Directory -Name $newfolder) : ($F = "")
 
-(jsonnet "./common_vars_template.jsonnet" --tla-str featuretemplatename=$FeatureTemplate --tla-str environment=$Environment  ) | Set-Content($newfolder +"/common_vars.json")
+(jsonnet "./common_vars_template.jsonnet" --tla-str featuretemplatename=$FeatureTemplate --tla-str environment=$Environment --tla-str gitDeploy=$gitDeploy  ) | Set-Content($newfolder +"/common_vars.json")
 $obj = Get-Content ($newfolder + "/common_vars.json") | ConvertFrom-Json
 
 foreach($t in ($obj.ForEnvVar | Get-Member | Where-Object {$_.MemberType -eq "NoteProperty"}))
