@@ -33,8 +33,10 @@ import-Module ./../pwshmodules/Deploy_0_Prep.psm1 -force
 $PathToReturnTo = (Get-Location).Path
 $deploymentFolderPath = Convert-Path -Path ((Get-Location).tostring() + './../')
 $gitDeploy = ([System.Environment]::GetEnvironmentVariable('gitDeploy')  -eq 'true')
+Write-Host "gitDeploy: " & $gitDeploy.ToString()
 $skipTerraformDeployment = ([System.Environment]::GetEnvironmentVariable('skipTerraformDeployment')  -eq 'true')
 $ipaddress = $env:TF_VAR_ip_address
+Write-Host "ipaddress: " & $ipaddress.ToString()
 $ipaddress2 = $env:TF_VAR_ip_address2
 
 PrepareDeployment -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderPath -FeatureTemplate $FeatureTemplate -PathToReturnTo $PathToReturnTo
