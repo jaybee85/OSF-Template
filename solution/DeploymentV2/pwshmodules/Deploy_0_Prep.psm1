@@ -75,6 +75,28 @@ function PrepareDeployment (
 
     [System.Environment]::SetEnvironmentVariable('TFenvironmentName',$environmentName)
 
+    try
+    {
+        $hiddenoutput = az keyvault network-rule add -g $env:TF_VAR_resource_group_name --name $env:keyVaultName --ip-address $env:TF_VAR_ip_address/32
+        $hiddenoutput = az synapse workspace firewall-rule create --name AllowCICD --resource-group $env:TF_VAR_resource_group_name --start-ip-address $env:TF_VAR_ip_address --end-ip-address $env:TF_VAR_ip_address --workspace-name $env:ARM_SYNAPSE_WORKSPACE_NAME
+        $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name $env:datalakeName --ip-address $env:TF_VAR_ip_address
+    }
+    catch
+    {
+        Write-Warning 'Opening Firewalls for IP Address One Failed'
+    }
+
+    try
+    {
+        $hiddenoutput = az keyvault network-rule add -g $env:TF_VAR_resource_group_name --name $env:keyVaultName --ip-address $env:TF_VAR_ip_address2/32
+        $hiddenoutput = az synapse workspace firewall-rule create --name AllowCICD --resource-group $env:TF_VAR_resource_group_name --start-ip-address $env:TF_VAR_ip_address2 --end-ip-address $env:TF_VAR_ip_address2 --workspace-name $env:ARM_SYNAPSE_WORKSPACE_NAME
+        $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name $env:datalakeName --ip-address $env:TF_VAR_ip_address2
+    }
+    catch
+    {
+        Write-Warning 'Opening Firewalls for IP Address Two Failed'
+    }
+
     if([string]::IsNullOrEmpty($PathToReturnTo) -ne $true)
     {
         Write-Debug "Returning to $PathToReturnTo"

@@ -1,4 +1,4 @@
-function (featuretemplatename="full_deployment",environment="staging", gitDeploy=false)
+function (featuretemplatename="full_deployment",environment="staging", gitDeploy="False")
 local locals = {
 /*DONOTREMOVETHISCOMMENT:ENVS*/
      'admz' : import './admz/common_vars_values.jsonc',
@@ -366,7 +366,7 @@ local HCLVariables =     {  // Object comprehension.
 local EnvironmentVariables =     {  // Object comprehension.
     [sd.EnvVarName]: sd.Value        
     for sd in AllVariables
-    if sd.EnvVarName != "" && ((gitDeploy == false) || (gitDeploy == true && sd.DoNotReplaceDuringAgentDeployment == false))
+    if sd.EnvVarName != "" && ((std.asciiLower(gitDeploy) == "false") || (std.asciiLower(gitDeploy) == "true" && sd.DoNotReplaceDuringAgentDeployment == false))
 };
 
 local SecretFileVars =     {  // Object comprehension.
@@ -387,6 +387,22 @@ local SecretFileSensitiveVars =     {  // Object comprehension.
     "ForSecretFile": SecretFileVars,
     "ForSecretFileSensitive": SecretFileSensitiveVars
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
