@@ -6,6 +6,19 @@ output "resource_group_name" {
   value = var.resource_group_name
 }
 
+output "sqlserver_name" {
+  value = data.terraform_remote_state.layer2.outputs.sqlserver_name
+}
+output "stagingdb_name" {
+  value = data.terraform_remote_state.layer2.outputs.stagingdb_name
+}
+output "sampledb_name" {
+  value = data.terraform_remote_state.layer2.outputs.sampledb_name
+}
+output "metadatadb_name" {
+  value = data.terraform_remote_state.layer2.outputs.metadatadb_name
+}
+
 /*Variables for Naming Module*/
 output "naming_unique_seed" {
   value = data.terraform_remote_state.layer2.outputs.naming_unique_seed
