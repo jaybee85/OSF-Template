@@ -57,6 +57,7 @@ foreach($t in ($obj.ForEnvVar | Get-Member | Where-Object {$_.MemberType -eq "No
 {
     $Name = $t.Name
     $Value = $obj.ForEnvVar[0].$Name
+    
     if($Value.GetType().Name -eq "Boolean")
     {
         $Value = $Value.ToString().ToLower()
