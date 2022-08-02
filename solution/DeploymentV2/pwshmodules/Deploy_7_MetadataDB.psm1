@@ -31,10 +31,10 @@ function DeployMataDataDB (
         $myIp2 = $env:TF_VAR_ip_address2
 
         if ($myIp -ne $null) {
-            $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "DeploymentAgent" --start-ip-address $myIp --end-ip-address $myIp
+            $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "CICDAgent" --start-ip-address $myIp --end-ip-address $myIp
         }
         if ($myIp2 -ne $null) {        
-            $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "DeploymentUser" --start-ip-address $myIp2 --end-ip-address $myIp2
+            $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "CICDUser" --start-ip-address $myIp2 --end-ip-address $myIp2
         }
         #Allow Azure services and resources to access this server
         $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "Azure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0

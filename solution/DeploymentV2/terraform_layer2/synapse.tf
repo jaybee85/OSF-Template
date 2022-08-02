@@ -122,7 +122,7 @@ resource "azurerm_synapse_spark_pool" "synapse_spark_pool" {
 # --------------------------------------------------------------------------------------------------------------------
 resource "azurerm_synapse_firewall_rule" "cicd" {
   count                = var.deploy_adls && var.deploy_synapse ? 1 : 0
-  name                 = "AllowGitHub"
+  name                 = "CICDAgent"
   synapse_workspace_id = azurerm_synapse_workspace.synapse[0].id
   start_ip_address     = var.ip_address
   end_ip_address       = var.ip_address

@@ -17,6 +17,25 @@ if($PublishSQLLogins -eq $false) {
 }
 else {
     Write-Host "Configuring SQL Server Users"
+
+    #Add this deployment principal as SQL Server Admin -- Need to revert afterwards
+    
+    $currentsqladmin = (az sql server ad-admin list -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name | ConvertFrom-Json)
+
+    $currentAccount = (az account show | ConvertFrom-Json)
+    az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name --object-id  $currentAccount.id --display-name $currentAccount.name
+    
+    #OpenFirewall
+    $myIp = $env:TF_VAR_ip_address
+    $myIp2 = $env:TF_VAR_ip_address2
+
+    if ($myIp -ne $null) {
+        $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "CICDAgent" --start-ip-address $myIp --end-ip-address $myIp
+    }
+    if ($myIp2 -ne $null) {        
+        $result = az sql server firewall-rule create -g $tout.resource_group_name -s $tout.sqlserver_name -n "CICDUser" --start-ip-address $myIp2 --end-ip-address $myIp2
+    }
+
     $databases = @($tout.stagingdb_name, $tout.sampledb_name, $tout.metadatadb_name)
 
     $aadUsers =  @($tout.datafactory_name,$tout.functionapp_name, $tout.webapp_name )
@@ -60,8 +79,8 @@ else {
                 GO
                         
                 "
-    
-                write-host "Granting MSI Privileges on $database DB to $user"
+                
+                write-host ("Granting MSI Privileges on Database: " + $database + "to " + $user)
                 Invoke-Sqlcmd -ServerInstance "$($tout.sqlserver_name).database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
             }
         }
@@ -73,6 +92,9 @@ else {
             write-host "Granting DDL Role on $database DB to $($tout.datafactory_name)"
             Invoke-Sqlcmd -ServerInstance "$($tout.sqlserver_name).database.windows.net,1433" -Database $database -AccessToken $token -query $ddlCommand   
     }
+
+    #Replace Original SQL Admin
+    az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name "ads-stg-sql-ads-hqve" --object-id $currentsqladmin.sid --display-name $currentsqladmin.login
     
 }
 
