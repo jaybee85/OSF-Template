@@ -5,6 +5,7 @@ local locals = {
      'local' : import './local/common_vars_values.jsonc',
      'production' : import './production/common_vars_values.jsonc',
      'staging' : import './staging/common_vars_values.jsonc',
+     'uat' : import './uat/common_vars_values.jsonc',
 /*DONOTREMOVETHISCOMMENT:ENVS*/
 };
 
@@ -387,6 +388,46 @@ local SecretFileSensitiveVars =     {  // Object comprehension.
     "ForSecretFile": SecretFileVars,
     "ForSecretFileSensitive": SecretFileSensitiveVars
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -18,6 +18,16 @@ output "sampledb_name" {
 output "metadatadb_name" {
   value = data.terraform_remote_state.layer2.outputs.metadatadb_name
 }
+output "datafactory_name" {
+  value = data.terraform_remote_state.layer2.outputs.datafactory_name
+}
+output "synapse_workspace_name" {
+  value = data.terraform_remote_state.layer2.outputs.synapse_workspace_name
+}
+output "synapse_sql_pool_name" {
+  value = data.terraform_remote_state.layer2.outputs.synapse_sql_pool_name
+}
+
 
 /*Variables for Naming Module*/
 output "naming_unique_seed" {

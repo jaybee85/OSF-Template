@@ -103,7 +103,7 @@
         "type": "object",
         "required": [],        
         "default": {"sql_aad_admin": ""},
-        "description": "Object with a property for each user that is to be a Azure SQL Administrator. The property name should be the username of the user in AAD and should be unique. The property value is the object_id of the user. Leave as empty object when not is use. You MUST provide the sql_aad_admin property.",
+        "description": "Object with a property for each user that is to be a Azure SQL Administrator. This should be a user or AAD Group. The property name should be the username of the user in AAD and should be unique. The property value is the object_id of the user. You MUST provide the sql_aad_admin property which will determine the AAD Admin setting for the Azure SQL Server. ",
         "properties": {
           "sql_aad_admin": {
             "type": "string"

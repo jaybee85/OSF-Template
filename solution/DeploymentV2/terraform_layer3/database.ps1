@@ -20,10 +20,10 @@ else {
 
     #Add this deployment principal as SQL Server Admin -- Need to revert afterwards
     
-    $currentsqladmin = (az sql server ad-admin list -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name | ConvertFrom-Json)
+    #$currentsqladmin = (az sql server ad-admin list -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name | ConvertFrom-Json)
 
-    $currentAccount = (az account show | ConvertFrom-Json)
-    az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name --object-id  $currentAccount.id --display-name $currentAccount.name
+    #$currentAccount = (az account show | ConvertFrom-Json)
+    #az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name $tout.sqlserver_name --object-id  $currentAccount.id --display-name $currentAccount.name
     
     #OpenFirewall
     $myIp = $env:TF_VAR_ip_address
@@ -39,7 +39,8 @@ else {
     $databases = @($tout.stagingdb_name, $tout.sampledb_name, $tout.metadatadb_name)
 
     $aadUsers =  @($tout.datafactory_name,$tout.functionapp_name, $tout.webapp_name )
-    
+    $aadAdminUsers =  @($tout.datafactory_name,$tout.functionapp_name, $tout.webapp_name )
+
     if($env:TF_VAR_deploy_purview -eq $true)
     {
         $aadUsers +=  ($tout.purview_name)
@@ -52,7 +53,7 @@ else {
     {
         if($user.Name -ne "sql_aad_admin")
         {
-            $aadUsers += $user.Name
+            $aadAdminUsers += $user.Name
         }
     }
 
@@ -61,6 +62,7 @@ else {
     foreach($database in $databases)
     {
         
+        #Accounts that Read & Write Data
         foreach($user in $aadUsers)        
         {
             if (![string]::IsNullOrEmpty($user))
@@ -84,6 +86,29 @@ else {
                 Invoke-Sqlcmd -ServerInstance "$($tout.sqlserver_name).database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
             }
         }
+    
+        #Accounts with full ownership rights
+        foreach($user in $aadAdminUsers)        
+        {
+            if (![string]::IsNullOrEmpty($user))
+            {
+                $sqlcommand = "
+
+                IF NOT EXISTS (SELECT *
+                FROM [sys].[database_principals]
+                WHERE [type] = N'E' AND [name] = N'$user') 
+                BEGIN
+                    CREATE USER [$user] FROM EXTERNAL PROVIDER;		
+                END
+                ALTER ROLE db_owner ADD MEMBER [$user]
+                GO
+                        
+                "
+                
+                write-host ("Granting MSI Privileges on Database: " + $database + "to " + $user)
+                Invoke-Sqlcmd -ServerInstance "$($tout.sqlserver_name).database.windows.net,1433" -Database $database -AccessToken $token -query $sqlcommand    
+            }
+        }
     }
     
     $ddlCommand = "ALTER ROLE db_ddladmin ADD MEMBER [$($tout.datafactory_name)];"
@@ -94,7 +119,7 @@ else {
     }
 
     #Replace Original SQL Admin
-    az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name "ads-stg-sql-ads-hqve" --object-id $currentsqladmin.sid --display-name $currentsqladmin.login
+    #az sql server ad-admin create -g $env:TF_VAR_resource_group_name --server-name "ads-stg-sql-ads-hqve" --object-id $currentsqladmin.sid --display-name $currentsqladmin.login
     
 }
 
