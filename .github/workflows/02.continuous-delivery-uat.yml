@@ -10,7 +10,7 @@ jobs:
       name: Deploy to Environment One
       concurrency: terraform
       environment: 
-        name: development
+        name: uat
       env:
         # This determines the location of the .hcl file that will be used
         environmentName: uat 

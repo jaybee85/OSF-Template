@@ -77,6 +77,7 @@ function PrepareDeployment (
 
     try
     {
+        $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name  $env:TF_VAR_state_storage_account_name --ip-address $env:TF_VAR_ip_address
         $hiddenoutput = az keyvault network-rule add -g $env:TF_VAR_resource_group_name --name $env:keyVaultName --ip-address $env:TF_VAR_ip_address/32
         $hiddenoutput = az synapse workspace firewall-rule create --name CICDAgent --resource-group $env:TF_VAR_resource_group_name --start-ip-address $env:TF_VAR_ip_address --end-ip-address $env:TF_VAR_ip_address --workspace-name $env:ARM_SYNAPSE_WORKSPACE_NAME
         $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name $env:datalakeName --ip-address $env:TF_VAR_ip_address
@@ -88,6 +89,7 @@ function PrepareDeployment (
 
     try
     {
+        $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name  $env:TF_VAR_state_storage_account_name --ip-address $env:TF_VAR_ip_address2
         $hiddenoutput = az keyvault network-rule add -g $env:TF_VAR_resource_group_name --name $env:keyVaultName --ip-address $env:TF_VAR_ip_address2/32
         $hiddenoutput = az synapse workspace firewall-rule create --name CICDUser --resource-group $env:TF_VAR_resource_group_name --start-ip-address $env:TF_VAR_ip_address2 --end-ip-address $env:TF_VAR_ip_address2 --workspace-name $env:ARM_SYNAPSE_WORKSPACE_NAME
         $hiddenoutput = az storage account network-rule add --resource-group $env:TF_VAR_resource_group_name --account-name $env:datalakeName --ip-address $env:TF_VAR_ip_address2

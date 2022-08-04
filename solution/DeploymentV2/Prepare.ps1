@@ -72,7 +72,7 @@ if ($gitDeploy)
         az provider register --namespace $provider
     }
     
-    az storage account create --resource-group $resourceGroupName --name $stateStorageName --sku Standard_LRS --allow-blob-public-access false --https-only true --min-tls-version TLS1_2   
+    az storage account create --resource-group $resourceGroupName --name $stateStorageName --sku Standard_LRS --allow-blob-public-access false --https-only true --min-tls-version TLS1_2 --public-network-access Disabled
     az storage container create --name tstate --account-name $stateStorageName --auth-mode login 
 }
 else 
