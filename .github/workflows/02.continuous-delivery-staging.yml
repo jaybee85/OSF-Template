@@ -111,7 +111,7 @@ jobs:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
           git update-index --chmod=+x ./02-deploy.ps1          
-          ./02-deploy.ps1
+          ./02-deploy.ps1 -FeatureTemplate $featureTemplate
 
       - name: Build and Publish Code Artefacts
         id: solution-deployment-code
@@ -121,7 +121,7 @@ jobs:
           TF_VAR_ip_address : ${{steps.ip.outputs.ipv4}}
         run: |
           git update-index --chmod=+x ./02-publish.ps1          
-          ./02-publish.ps1
+          ./02-publish.ps1 -FeatureTemplate $featureTemplate
     
     #PROD ENVIRONMENT
     deploy-to-env-two:
