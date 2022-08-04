@@ -46,3 +46,4 @@ PrepareDeployment -gitDeploy $gitDeploy -deploymentFolderPath $deploymentFolderP
 $tout = GatherOutputsFromTerraform -TerraformFolderPath $PathToReturnTo
 
 ./database.ps1 -tout $tout -deploymentFolderPath $deploymentFolderPath -PathToReturnTo $PathToReturnTo -PublishSQLLogins $true
+./app_service.ps1 -aad_webreg_id $tout.aad_webreg_id

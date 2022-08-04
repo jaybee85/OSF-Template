@@ -79,7 +79,9 @@
         "type": "string"
       },
       "deployment_principal_layers1and3": {
-        "type": "string"
+        "description": "Object Id of the AAD account that will manage layer's 1 & 3. Note leave this blank if you are going to also include this principal in the resource owner's collection.",
+        "type": "string",
+        "default": ""
       },
       "resource_owners": {
         "type": "array",
