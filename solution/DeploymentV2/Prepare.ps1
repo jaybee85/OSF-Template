@@ -157,6 +157,10 @@ else
 
     }
 
+
+    $assigneeobject = Read-Host "Enter the object id of the AAD account that you would like to have ownership of the new resource group"
+
+    az role assignment create --role "Owner" --scope "/subscriptions/${env:TF_VAR_subscription_id}/resourcegroups/${env:TF_VAR_resource_group_name}" --assignee-object-id $assigneeobject
     #------------------------------------------------------------------------------------------------------------
     # Print pretty output for user
     #------------------------------------------------------------------------------------------------------------
