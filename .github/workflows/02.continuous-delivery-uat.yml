@@ -3,7 +3,7 @@ name: Continuous Delivery - Uat
 on:
   workflow_dispatch:
   push:
-    branches: feature-1.0.4
+    branches: main #feature-1.0.4
 
 jobs:
     deploy-to-env-one:

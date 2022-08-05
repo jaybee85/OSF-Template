@@ -280,3 +280,5 @@ output "naming_unique_seed" {
 output "naming_unique_suffix" {
   value = data.terraform_remote_state.layer1.outputs.naming_unique_suffix
 }
+
+

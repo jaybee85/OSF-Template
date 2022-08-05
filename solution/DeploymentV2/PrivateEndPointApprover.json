@@ -1,0 +1,14 @@
+{
+    "Name": "Private Endpoint Approver",
+    "IsCustom": true,
+    "Description": "Approve Private Endpoints",
+    "Actions": [
+      "PrivateEndpointConnectionsApproval/action"
+    ],
+    "NotActions": [],
+    "DataActions": [],
+    "NotDataActions": [],
+    "AssignableScopes": [
+      "/"
+    ]
+}

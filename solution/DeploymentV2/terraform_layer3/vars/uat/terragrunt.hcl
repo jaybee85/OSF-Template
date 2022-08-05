@@ -1,5 +1,5 @@
 locals {
-  common_vars = jsondecode(file("../../../bin/environments/uat/common_vars_for_hcl.json"))
+  common_vars = jsondecode(file("../../../bin/environments/staging/common_vars_for_hcl.json"))
 }
 
 generate "layer2.tf" {
