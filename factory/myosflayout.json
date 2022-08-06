@@ -1,0 +1,9 @@
+{
+	"name": "myosflayout",
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a2888370-df76-4266-8d30-dc12fcf0523d",
+		"tenantId": "0cb09623-aeaf-4018-a223-80d95a375884"
+	}
+}
