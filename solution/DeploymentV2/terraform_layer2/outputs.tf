@@ -69,6 +69,9 @@ output "purview_name" {
 output "purview_sp_name" {
   value = local.purview_ir_app_reg_name
 }
+output "azurerm_purview_account_purview_id" {
+  value = azurerm_purview_account.purview[0].id
+}
 output "is_vnet_isolated" {
   value = var.is_vnet_isolated
 }
@@ -272,6 +275,12 @@ output "purview_account_principal_id" {
   value = var.deploy_purview && var.is_vnet_isolated ? azurerm_purview_account.purview[0].identity[0].principal_id : "0"
 }
 
+
+output "azuread_application_purview_ir_object_id" {
+  value = data.terraform_remote_state.layer1.outputs.azuread_application_purview_ir_object_id
+}
+
+
 /*Variables for Naming Module*/
 output "naming_unique_seed" {
   value = data.terraform_remote_state.layer1.outputs.naming_unique_seed
@@ -281,4 +290,31 @@ output "naming_unique_suffix" {
   value = data.terraform_remote_state.layer1.outputs.naming_unique_suffix
 }
 
+/*DNS Zone*/
+output "private_dns_zone_servicebus_id" {
+  value = local.private_dns_zone_servicebus_id
+}
 
+output "private_dns_zone_queue_id" {
+  value = local.private_dns_zone_queue_id
+}
+
+output "private_dns_zone_blob_id" {
+  value = local.private_dns_zone_blob_id
+}
+
+output "private_dns_zone_purview_id" {
+  value = local.private_dns_zone_purview_id
+}
+
+output "private_dns_zone_purview_studio_id" {
+  value = local.private_dns_zone_purview_studio_id
+}
+
+output "azurerm_purview_account_purview_name" {
+  value = azurerm_purview_account.purview[0].name
+}
+
+output "plink_subnet_id" {
+  value = local.plink_subnet_id
+}
